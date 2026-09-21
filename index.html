@@ -61,7 +61,9 @@ form.addEventListener('submit',async e=>{
   description:document.getElementById('desc').value.trim(),
   name:document.getElementById('name').value.trim(),
   phone:document.getElementById('phone').value.trim(),
-  email:document.getElementById('email').value.trim()
+  email:document.getElementById('email').value.trim(),
+  status:'neu',
+  created_at:new Date().toISOString()
  };
  try {
   const {error}=await db.from('bauanfragen').insert(data);
@@ -78,4 +80,5 @@ form.addEventListener('submit',async e=>{
  }
 });
 </script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("./sw.js").catch(()=>{});}</script>
 </body></html>
