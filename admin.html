@@ -1,131 +1,85 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Riemer BauConnect – Admin</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 *{box-sizing:border-box}
-
 body{
   margin:0;
   background:#171717;
   color:#fff;
   font-family:Arial,sans-serif;
 }
-
 .wrap{
-  max-width:950px;
+  max-width:1000px;
   margin:auto;
-  padding:20px;
+  padding:25px 18px;
 }
-
-h1{
-  margin:0 0 6px;
-  font-size:28px;
-}
-
-.yellow{
-  color:#ffd400;
-}
-
-.small{
+h1{margin:0;font-size:32px}
+.yellow{color:#ffd400}
+.sub{
   color:#aaa;
-  margin-bottom:18px;
+  margin:10px 0 25px;
 }
-
 .card{
   background:#222;
-  border:1px solid #3a3a3a;
-  border-radius:14px;
-  padding:18px;
-  margin-bottom:18px;
+  border:1px solid #383838;
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:20px;
 }
-
 input,button{
   width:100%;
-  padding:13px;
-  border-radius:9px;
+  padding:15px;
+  margin-top:10px;
+  border-radius:10px;
+  border:1px solid #444;
   font-size:16px;
 }
-
 input{
   background:#111;
   color:#fff;
-  border:1px solid #555;
-  margin:6px 0 10px;
 }
-
 button{
-  border:0;
   background:#ffd400;
   color:#111;
-  font-weight:700;
-  margin-top:6px;
+  border:0;
+  font-weight:bold;
 }
-
-button.secondary{
+.logout{
   background:#333;
   color:#fff;
 }
-
-.hidden{
-  display:none;
-}
-
 .error{
-  background:#5a2020;
-  padding:12px;
-  border-radius:9px;
-  margin-top:10px;
+  background:#702020;
+  padding:15px;
+  border-radius:10px;
+  margin-top:15px;
 }
-
-.tablewrap{
-  overflow-x:auto;
+.success{
+  background:#185c32;
+  padding:15px;
+  border-radius:10px;
+  margin-top:15px;
 }
-
 table{
   width:100%;
   border-collapse:collapse;
-  min-width:760px;
+  margin-top:15px;
 }
-
 th,td{
   text-align:left;
-  padding:10px;
-  border-bottom:1px solid #3a3a3a;
-  vertical-align:top;
+  padding:12px 8px;
+  border-bottom:1px solid #444;
 }
-
-th{
-  color:#ffd400;
-}
-
-.muted{
-  color:#aaa;
-}
-
-.badge{
-  display:inline-block;
-  padding:4px 8px;
-  border-radius:20px;
-  background:#333;
-}
-
-.top{
-  display:flex;
-  gap:10px;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.top button{
-  width:auto;
-  padding:10px 16px;
-}
+th{color:#ffd400}
+.small{color:#aaa;font-size:14px}
+.hidden{display:none}
 </style>
 </head>
 
@@ -133,413 +87,189 @@ th{
 
 <div class="wrap">
 
-  <div class="top">
-
-    <div>
-      <h1>
-        RIEMER <span class="yellow">BAUCONNECT</span>
-      </h1>
-
-      <div class="small">
-        Verwaltungsbereich – Bauanfragen
-      </div>
-    </div>
-
-    <button id="logoutBtn" class="secondary hidden">
-      Abmelden
-    </button>
-
-  </div>
-
+  <h1>RIEMER <span class="yellow">BAUCONNECT</span></h1>
+  <div class="sub">Verwaltungsbereich – Bauanfragen</div>
 
   <!-- LOGIN -->
-
-  <section id="loginCard" class="card">
-
+  <div id="loginCard" class="card">
     <h2>Admin-Login</h2>
 
-    <label>E-Mail</label>
+    <input id="email"
+           type="email"
+           placeholder="E-Mail">
 
-    <input
-      id="email"
-      type="email"
-      autocomplete="username"
-      placeholder="Deine Admin-E-Mail"
-    >
+    <input id="password"
+           type="password"
+           placeholder="Passwort">
 
-    <label>Passwort</label>
+    <button id="loginBtn">Anmelden</button>
 
-    <input
-      id="password"
-      type="password"
-      autocomplete="current-password"
-      placeholder="Dein Passwort"
-    >
-
-    <button id="loginBtn">
-      Anmelden
-    </button>
-
-    <div id="loginMsg"></div>
-
-  </section>
-
+    <div id="loginError" class="error hidden"></div>
+  </div>
 
   <!-- ADMIN -->
+  <div id="adminArea" class="hidden">
 
-  <section id="adminCard" class="card hidden">
+    <div class="card">
+      <button id="logoutBtn" class="logout">Abmelden</button>
+    </div>
 
-    <div class="top">
+    <div class="card">
 
       <h2>Bauanfragen</h2>
 
-      <button id="refreshBtn" class="secondary">
+      <button id="refreshBtn">
         Aktualisieren
       </button>
 
-    </div>
+      <div id="message"></div>
 
-    <div id="adminMsg"></div>
+      <div style="overflow-x:auto">
 
-    <div class="tablewrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Datum</th>
+              <th>Leistung</th>
+              <th>PLZ</th>
+              <th>Ort</th>
+              <th>Name</th>
+              <th>Telefon</th>
+              <th>E-Mail</th>
+              <th>Status</th>
+            </tr>
+          </thead>
 
-      <table>
+          <tbody id="requestsBody"></tbody>
 
-        <thead>
+        </table>
 
-          <tr>
-            <th>Datum</th>
-            <th>Leistung</th>
-            <th>PLZ</th>
-            <th>Ort</th>
-            <th>Name</th>
-            <th>Telefon</th>
-            <th>E-Mail</th>
-            <th>Status</th>
-          </tr>
-
-        </thead>
-
-        <tbody id="requestsBody">
-
-          <tr>
-            <td colspan="8" class="muted">
-              Noch keine Daten geladen.
-            </td>
-          </tr>
-
-        </tbody>
-
-      </table>
+      </div>
 
     </div>
 
-  </section>
+  </div>
 
 </div>
-
 
 <script>
 
 const SUPABASE_URL =
 "https://ehzugjmltfcvllftpjpp.supabase.co";
 
-const SUPABASE_PUBLISHABLE_KEY =
+const SUPABASE_KEY =
 "sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
 
-
-const client = window.supabase.createClient(
+const client =
+supabase.createClient(
   SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
+  SUPABASE_KEY
 );
-
 
 const loginCard =
 document.getElementById("loginCard");
 
-const adminCard =
-document.getElementById("adminCard");
+const adminArea =
+document.getElementById("adminArea");
 
-const logoutBtn =
-document.getElementById("logoutBtn");
+const loginError =
+document.getElementById("loginError");
 
-const loginMsg =
-document.getElementById("loginMsg");
-
-const adminMsg =
-document.getElementById("adminMsg");
+const message =
+document.getElementById("message");
 
 const body =
 document.getElementById("requestsBody");
 
 
-function showLoginError(text){
+async function login(){
 
-  loginMsg.innerHTML =
-  '<div class="error">' +
-  text +
-  '</div>';
+  loginError.classList.add("hidden");
 
+  const email =
+    document.getElementById("email").value.trim();
+
+  const password =
+    document.getElementById("password").value;
+
+  const {error} =
+    await client.auth.signInWithPassword({
+      email,
+      password
+    });
+
+  if(error){
+
+    loginError.textContent =
+      "Anmeldung fehlgeschlagen: " +
+      error.message;
+
+    loginError.classList.remove("hidden");
+
+    return;
+  }
+
+  updateUI();
+
+  loadRequests();
 }
 
 
-function showAdminError(text){
+async function logout(){
 
-  adminMsg.innerHTML =
-  '<div class="error">' +
-  text +
-  '</div>';
+  await client.auth.signOut();
 
+  updateUI();
 }
 
 
 async function loadRequests(){
 
-  adminMsg.innerHTML = "";
+  message.innerHTML = "";
 
   body.innerHTML =
-  '<tr><td colspan="8" class="muted">' +
-  'Lade Bauanfragen …' +
-  '</td></tr>';
+    "<tr><td colspan='8'>Lade Bauanfragen...</td></tr>";
 
-
-  const { data, error } =
-  await client
-    .from("bauanfragen")
-    .select(
-      "id,service,plz,area,description,name,phone,email,status,created_at"
-    )
-    .order(
-      "created_at",
-      { ascending:false }
-    );
-
+  const {data,error} =
+    await client
+      .from("bauanfragen")
+      .select("*")
+      .order("created_at",{ascending:false});
 
   if(error){
 
     body.innerHTML = "";
 
-    showAdminError(
+    message.innerHTML =
+      "<div class='error'>" +
       "Bauanfragen konnten nicht geladen werden: " +
-      error.message
-    );
+      error.message +
+      "</div>";
 
     return;
   }
-
 
   if(!data || data.length === 0){
 
     body.innerHTML =
-    '<tr><td colspan="8" class="muted">' +
-    'Keine Bauanfragen vorhanden.' +
-    '</td></tr>';
+      "<tr><td colspan='8'>Noch keine Bauanfragen vorhanden.</td></tr>";
 
     return;
   }
 
-
-  body.innerHTML =
-  data.map(row => {
-
-    const date =
-    row.created_at
-    ? new Date(row.created_at)
-        .toLocaleString("de-DE")
-    : "—";
-
-
-    return `
-
-      <tr>
-
-        <td>
-          ${escapeHtml(date)}
-        </td>
-
-        <td>
-
-          <strong>
-            ${escapeHtml(row.service || "—")}
-          </strong>
-
-          <br>
-
-          <span class="muted">
-            ${escapeHtml(row.description || "")}
-          </span>
-
-        </td>
-
-        <td>
-          ${escapeHtml(row.plz || "—")}
-        </td>
-
-        <td>
-          ${escapeHtml(row.area || "—")}
-        </td>
-
-        <td>
-          ${escapeHtml(row.name || "—")}
-        </td>
-
-        <td>
-          ${escapeHtml(row.phone || "—")}
-        </td>
-
-        <td>
-          ${escapeHtml(row.email || "—")}
-        </td>
-
-        <td>
-
-          <span class="badge">
-            ${escapeHtml(row.status || "—")}
-          </span>
-
-        </td>
-
-      </tr>
-
-    `;
-
-  }).join("");
-
-}
-
-
-function escapeHtml(value){
-
-  return String(value)
-
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
-}
-
-
-async function updateUI(){
-
-  const {
-    data:{session}
-  } =
-  await client.auth.getSession();
-
-
-  if(session){
-
-    loginCard.classList.add("hidden");
-
-    adminCard.classList.remove("hidden");
-
-    logoutBtn.classList.remove("hidden");
-
-    await loadRequests();
-
-  }else{
-
-    loginCard.classList.remove("hidden");
-
-    adminCard.classList.add("hidden");
-
-    logoutBtn.classList.add("hidden");
-
-  }
-
-}
-
-
-document
-.getElementById("loginBtn")
-.addEventListener(
-  "click",
-  async () => {
-
-    loginMsg.innerHTML = "";
-
-    const email =
-    document
-      .getElementById("email")
-      .value
-      .trim();
-
-    const password =
-    document
-      .getElementById("password")
-      .value;
-
-
-    if(!email || !password){
-
-      showLoginError(
-        "Bitte E-Mail und Passwort eingeben."
-      );
-
-      return;
-    }
-
-
-    const { error } =
-    await client.auth.signInWithPassword({
-
-      email:email,
-
-      password:password
-
-    });
-
-
-    if(error){
-
-      showLoginError(
-        "Anmeldung fehlgeschlagen. Bitte Zugangsdaten prüfen."
-      );
-
-      return;
-    }
-
-
-    await updateUI();
-
-  }
-);
-
-
-logoutBtn.addEventListener(
-  "click",
-  async () => {
-
-    await client.auth.signOut();
-
-    await updateUI();
-
-  }
-);
-
-
-document
-.getElementById("refreshBtn")
-.addEventListener(
-  "click",
-  loadRequests
-);
-
-
-client.auth.onAuthStateChange(
-  () => {
-
-    updateUI();
-
-  }
-);
-
-
-updateUI();
-
-</script>
-
-</body>
-</html>
+  body.innerHTML = "";
+
+  data.forEach(row => {
+
+    const tr =
+      document.createElement("tr");
+
+    tr.innerHTML = `
+      <td>${escapeHtml(formatDate(row.created_at))}</td>
+      <td>${escapeHtml(row.service || "")}</td>
+      <td>${escapeHtml(row.plz || "")}</td>
+      <td>${escapeHtml(row.area || "")}</td>
+      <td>${escapeHtml(row.name || "")}</td>
+      <td>${escapeHtml(row.phone || "")}</td>
+      <td>${escapeHtml(row.email || "")}</td>
+      <td>${escapeHtml(row.status || "")
