@@ -1,833 +1,199 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Riemer BauConnect – Admin</title>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
 *{box-sizing:border-box}
-
-body{
-  margin:0;
-  background:#171717;
-  color:#fff;
-  font-family:Arial,sans-serif
-}
-
-.wrap{
-  max-width:1100px;
-  margin:auto;
-  padding:24px
-}
-
-h1{
-  margin:0;
-  font-size:36px
-}
-
-.brand{
-  color:#ffd000
-}
-
-.subtitle{
-  color:#aaa;
-  font-size:20px;
-  margin:8px 0 30px
-}
-
-.card{
-  background:#222;
-  border:1px solid #3a3a3a;
-  border-radius:20px;
-  padding:24px;
-  margin-bottom:20px
-}
-
-input,button{
-  width:100%;
-  padding:15px;
-  border-radius:12px;
-  border:1px solid #444;
-  font-size:16px
-}
-
-input{
-  background:#111;
-  color:#fff;
-  margin:8px 0 15px
-}
-
-button{
-  background:#ffd000;
-  color:#111;
-  border:0;
-  font-weight:bold;
-  cursor:pointer
-}
-
-button.secondary{
-  background:#333;
-  color:#fff
-}
-
-.hidden{
-  display:none
-}
-
-.error{
-  background:#6b2222;
-  padding:15px;
-  border-radius:12px;
-  margin-top:15px
-}
-
-.success{
-  background:#235c32;
-  padding:15px;
-  border-radius:12px;
-  margin-top:15px
-}
-
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-  margin-bottom:20px
-}
-
-.topbar button{
-  width:auto;
-  padding:12px 20px
-}
-
-.request{
-  background:#292929;
-  border:1px solid #444;
-  border-radius:15px;
-  padding:18px;
-  margin-top:15px;
-  cursor:pointer
-}
-
-.request:hover{
-  border-color:#ffd000
-}
-
-.request-title{
-  display:flex;
-  justify-content:space-between;
-  gap:10px
-}
-
-.request-service{
-  color:#ffd000;
-  font-size:20px;
-  font-weight:bold
-}
-
-.request-date{
-  color:#999;
-  font-size:14px
-}
-
-.request-info{
-  color:#ccc;
-  margin-top:8px
-}
-
-.badge{
-  display:inline-block;
-  background:#333;
-  padding:6px 10px;
-  border-radius:8px;
-  margin-top:10px
-}
-
-.detail{
-  margin-top:20px
-}
-
-.detail-row{
-  border-bottom:1px solid #3b3b3b;
-  padding:14px 0
-}
-
-.detail-label{
-  color:#ffd000;
-  font-size:14px;
-  margin-bottom:5px
-}
-
-.detail-value{
-  font-size:17px;
-  word-break:break-word
-}
-
-.back{
-  margin-bottom:15px
-}
-
-@media(max-width:600px){
-
-  .wrap{
-    padding:16px
-  }
-
-  h1{
-    font-size:30px
-  }
-
-  .topbar{
-    align-items:flex-start;
-    flex-direction:column
-  }
-
-  .topbar button{
-    width:100%
-  }
-
-  .request-title{
-    flex-direction:column
-  }
-}
+body{margin:0;background:#171717;color:#fff;font-family:Arial,sans-serif}
+.wrap{max-width:950px;margin:auto;padding:20px}
+h1{margin:0 0 6px;font-size:28px}.yellow{color:#ffd400}
+.small{color:#aaa;margin-bottom:18px}
+.card{background:#222;border:1px solid #3a3a3a;border-radius:14px;padding:18px;margin-bottom:18px}
+input,button{width:100%;padding:13px;border-radius:9px;font-size:16px}
+input{background:#111;color:#fff;border:1px solid #555;margin:6px 0 10px}
+button{border:0;background:#ffd400;color:#111;font-weight:700;margin-top:6px}
+button.secondary{background:#333;color:#fff}
+button.danger{background:#a52a2a;color:#fff}
+.hidden{display:none}.error{background:#5a2020;padding:12px;border-radius:9px;margin-top:10px}
+.success{background:#245b2d;padding:12px;border-radius:9px;margin-top:10px}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:760px}
+th,td{text-align:left;padding:10px;border-bottom:1px solid #3a3a3a;vertical-align:top}
+th{color:#ffd400}.muted{color:#aaa}
+.badge{display:inline-block;padding:4px 8px;border-radius:20px;background:#333}
+.top{display:flex;gap:10px;justify-content:space-between;align-items:center}
+.top button{width:auto;padding:10px 16px}
 </style>
 </head>
-
 <body>
-
 <div class="wrap">
+  <div class="top">
+    <div>
+      <h1>RIEMER <span class="yellow">BAUCONNECT</span></h1>
+      <div class="small">Verwaltungsbereich – Bauanfragen</div>
+    </div>
+    <button id="logoutBtn" class="secondary hidden">Abmelden</button>
+  </div>
 
-<h1>
-RIEMER <span class="brand">BAUCONNECT</span>
-</h1>
+  <section id="loginCard" class="card">
+    <h2>Admin-Login</h2>
+    <label>E-Mail</label>
+    <input id="email" type="email" autocomplete="username" placeholder="Deine Admin-E-Mail">
+    <label>Passwort</label>
+    <input id="password" type="password" autocomplete="current-password" placeholder="Dein Passwort">
+    <button id="loginBtn">Anmelden</button>
+    <div id="loginMsg"></div>
+  </section>
 
-<div class="subtitle">
-Verwaltungsbereich – Bauanfragen
+  <section id="adminCard" class="card hidden">
+    <div class="top">
+      <h2>Bauanfragen</h2>
+      <button id="refreshBtn" class="secondary">Aktualisieren</button>
+    </div>
+    <div id="adminMsg"></div>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Datum</th>
+            <th>Leistung</th>
+            <th>PLZ</th>
+            <th>Ort</th>
+            <th>Name</th>
+            <th>Telefon</th>
+            <th>E-Mail</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="requestsBody">
+          <tr><td colspan="8" class="muted">Noch keine Daten geladen.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 </div>
-
-
-<!-- LOGIN -->
-
-<div id="loginBox" class="card">
-
-<h2>Admin-Login</h2>
-
-<label>E-Mail</label>
-
-<input
-id="email"
-type="email"
-placeholder="E-Mail-Adresse"
-autocomplete="username"
->
-
-<label>Passwort</label>
-
-<input
-id="password"
-type="password"
-placeholder="Passwort"
-autocomplete="current-password"
->
-
-<button id="loginBtn">
-Anmelden
-</button>
-
-<div id="loginMessage"></div>
-
-</div>
-
-
-<!-- ADMIN -->
-
-<div id="adminBox" class="hidden">
-
-<div class="topbar">
-
-<div>
-
-<h2 style="margin:0">
-Bauanfragen
-</h2>
-
-<div class="small">
-Eingegangene Kundenanfragen
-</div>
-
-</div>
-
-<button id="logoutBtn" class="secondary">
-Abmelden
-</button>
-
-</div>
-
-
-<!-- LISTE -->
-
-<div id="listView" class="card">
-
-<button id="refreshBtn">
-Aktualisieren
-</button>
-
-<div id="message"></div>
-
-<div id="requestList"></div>
-
-</div>
-
-
-<!-- DETAIL -->
-
-<div id="detailView" class="card hidden">
-
-<button id="backBtn" class="secondary back">
-← Zurück zu den Bauanfragen
-</button>
-
-<h2>
-Bauanfrage
-</h2>
-
-<div id="detailContent"></div>
-
-</div>
-
-</div>
-
-</div>
-
 
 <script>
+const SUPABASE_URL = "https://ehzugjmltfcvllftpjpp.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
 
-const SUPABASE_URL =
-"https://ehzugjmltfcvllftpjpp.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
-
-const client =
-window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
+const client = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
 );
 
+const loginCard = document.getElementById("loginCard");
+const adminCard = document.getElementById("adminCard");
+const logoutBtn = document.getElementById("logoutBtn");
+const loginMsg = document.getElementById("loginMsg");
+const adminMsg = document.getElementById("adminMsg");
+const body = document.getElementById("requestsBody");
 
-const loginBox =
-document.getElementById("loginBox");
-
-const adminBox =
-document.getElementById("adminBox");
-
-const listView =
-document.getElementById("listView");
-
-const detailView =
-document.getElementById("detailView");
-
-const requestList =
-document.getElementById("requestList");
-
-const detailContent =
-document.getElementById("detailContent");
-
-const message =
-document.getElementById("message");
-
-const loginMessage =
-document.getElementById("loginMessage");
-
-
-
-async function login(){
-
-const email =
-document.getElementById("email")
-.value
-.trim();
-
-const password =
-document.getElementById("password")
-.value;
-
-loginMessage.innerHTML = "";
-
-if(!email || !password){
-
-loginMessage.innerHTML =
-'<div class="error">Bitte E-Mail und Passwort eingeben.</div>';
-
-return;
+function showLoginError(text){
+  loginMsg.innerHTML = '<div class="error">' + text + '</div>';
 }
-
-const {error} =
-await client.auth.signInWithPassword({
-email,
-password
-});
-
-if(error){
-
-loginMessage.innerHTML =
-'<div class="error">'
-+
-escapeHtml(error.message)
-+
-'</div>';
-
-return;
+function showAdminError(text){
+  adminMsg.innerHTML = '<div class="error">' + text + '</div>';
 }
-
-updateUI();
-
-}
-
-
-
-async function logout(){
-
-await client.auth.signOut();
-
-updateUI();
-
-}
-
-
 
 async function loadRequests(){
+  adminMsg.innerHTML = "";
+  body.innerHTML = '<tr><td colspan="8" class="muted">Lade Bauanfragen …</td></tr>';
 
-message.innerHTML =
-'<div class="success">Bauanfragen werden geladen...</div>';
+  const { data, error } = await client
+    .from("bauanfragen")
+    .select("id,service,plz,area,description,name,phone,email,status,created_at")
+    .order("created_at", { ascending:false });
 
-requestList.innerHTML = "";
+  if(error){
+    body.innerHTML = "";
+    showAdminError("Bauanfragen konnten nicht geladen werden: " + error.message);
+    return;
+  }
 
+  if(!data || data.length === 0){
+    body.innerHTML = '<tr><td colspan="8" class="muted">Keine Bauanfragen vorhanden.</td></tr>';
+    return;
+  }
 
-/*
-WICHTIG:
-Die Tabelle heißt in Supabase:
-bauanfragen
-*/
-
-const {data,error} =
-await client
-.from("bauanfragen")
-.select("*")
-.order("created_at",{ascending:false});
-
-
-if(error){
-
-message.innerHTML =
-'<div class="error">'
-+
-'Bauanfragen konnten nicht geladen werden: '
-+
-escapeHtml(error.message)
-+
-'</div>';
-
-return;
+  body.innerHTML = data.map(row => {
+    const date = row.created_at
+      ? new Date(row.created_at).toLocaleString("de-DE")
+      : "—";
+    return `
+      <tr>
+        <td>${escapeHtml(date)}</td>
+        <td><strong>${escapeHtml(row.service || "—")}</strong><br>
+            <span class="muted">${escapeHtml(row.description || "")}</span></td>
+        <td>${escapeHtml(row.plz || "—")}</td>
+        <td>${escapeHtml(row.area || "—")}</td>
+        <td>${escapeHtml(row.name || "—")}</td>
+        <td>${escapeHtml(row.phone || "—")}</td>
+        <td>${escapeHtml(row.email || "—")}</td>
+        <td><span class="badge">${escapeHtml(row.status || "—")}</span></td>
+      </tr>`;
+  }).join("");
 }
-
-message.innerHTML = "";
-
-
-if(!data || data.length === 0){
-
-requestList.innerHTML =
-'<div class="success">Noch keine Bauanfragen vorhanden.</div>';
-
-return;
-}
-
-
-data.forEach(row => {
-
-const item =
-document.createElement("div");
-
-item.className =
-"request";
-
-
-item.innerHTML = `
-
-<div class="request-title">
-
-<div class="request-service">
-
-${escapeHtml(
-row.service || "Sonstige Anfrage"
-)}
-
-</div>
-
-<div class="request-date">
-
-${escapeHtml(
-formatDate(row.created_at)
-)}
-
-</div>
-
-</div>
-
-
-<div class="request-info">
-
-📍
-${escapeHtml(row.plz || "")}
-
-${
-row.area
-?
-" – " + escapeHtml(row.area)
-:
-""
-}
-
-</div>
-
-
-<div class="request-info">
-
-👤
-${escapeHtml(row.name || "")}
-
-</div>
-
-
-<div class="request-info">
-
-📞
-${escapeHtml(row.phone || "")}
-
-</div>
-
-
-<div class="badge">
-
-${escapeHtml(row.status || "offen")}
-
-</div>
-
-`;
-
-
-item.addEventListener(
-"click",
-() => showDetail(row)
-);
-
-
-requestList.appendChild(item);
-
-});
-
-}
-
-
-
-function showDetail(row){
-
-listView.classList.add("hidden");
-
-detailView.classList.remove("hidden");
-
-
-detailContent.innerHTML = `
-
-<div class="detail">
-
-
-<div class="detail-row">
-
-<div class="detail-label">
-Leistung
-</div>
-
-<div class="detail-value">
-${escapeHtml(row.service || "")}
-</div>
-
-</div>
-
-
-<div class="detail-row">
-
-<div class="detail-label">
-Datum
-</div>
-
-<div class="detail-value">
-${escapeHtml(
-formatDate(row.created_at)
-)}
-</div>
-
-</div>
-
-
-<div class="detail-row">
-
-<div class="detail-label">
-PLZ
-</div>
-
-<div class="detail-value">
-${escapeHtml(row.plz || "")}
-</div>
-
-</div>
-
-
-<div class="detail-row">
-
-<div class="detail-label">
-Gebiet / Ort
-</div>
-
-<div class="detail-value">
-${escapeHtml(
-row.area || "Keine Angabe"
-)}
-</div>
-
-</div>
-
-
-<div class="detail-row">
-
-<div class="detail-label">
-Beschreibung
-</div>
-
-<div class="detail-value">
-${escapeHtml(
-row.description ||
-"Keine Beschreibung angegeben."
-)}
-</div>
-
-</div>
-
-
-<div class="detail-row">
-
-<div class="detail-label">
-Kunde
-</div>
-
-<div class="detail-value">
-${escapeHtml(row.name || "")}
-</div>
-
-</div>
-
-
-<div class="detail-row">
-
-<div class="detail-label">
-Telefon
-</div>
-
-<div class="detail-value">
-
-<a
-href="tel:${escapeHtml(row.phone || "")}"
-style="color:#ffd000"
->
-
-${escapeHtml(row.phone || "")}
-
-</a>
-
-</div>
-
-</div>
-
-
-<div class="detail-row">
-
-<div class="detail-label">
-E-Mail
-</div>
-
-<div class="detail-value">
-
-${
-row.email
-
-?
-
-`<a
-href="mailto:${escapeHtml(row.email)}"
-style="color:#ffd000"
->
-${escapeHtml(row.email)}
-</a>`
-
-:
-
-"Keine E-Mail angegeben."
-}
-
-</div>
-
-</div>
-
-
-<div class="detail-row">
-
-<div class="detail-label">
-Status
-</div>
-
-<div class="detail-value">
-
-<span class="badge">
-
-${escapeHtml(
-row.status || "offen"
-)}
-
-</span>
-
-</div>
-
-</div>
-
-
-</div>
-
-`;
-
-}
-
-
-
-function showList(){
-
-detailView.classList.add("hidden");
-
-listView.classList.remove("hidden");
-
-}
-
-
-
-async function updateUI(){
-
-const {
-data:{session}
-} =
-await client.auth.getSession();
-
-
-if(session){
-
-loginBox.classList.add("hidden");
-
-adminBox.classList.remove("hidden");
-
-loadRequests();
-
-}
-
-else{
-
-loginBox.classList.remove("hidden");
-
-adminBox.classList.add("hidden");
-
-}
-
-}
-
-
-
-function formatDate(value){
-
-if(!value)
-return "";
-
-return new Date(value)
-.toLocaleString(
-"de-DE",
-{
-dateStyle:"short",
-timeStyle:"medium"
-}
-);
-
-}
-
-
 
 function escapeHtml(value){
-
-return String(value)
-
-.replaceAll("&","&amp;")
-
-.replaceAll("<","&lt;")
-
-.replaceAll(">","&gt;")
-
-.replaceAll('"',"&quot;")
-
-.replaceAll("'","&#039;");
-
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
 }
 
+async function updateUI(){
+  const { data:{ session } } = await client.auth.getSession();
 
+  if(session){
+    loginCard.classList.add("hidden");
+    adminCard.classList.remove("hidden");
+    logoutBtn.classList.remove("hidden");
+    await loadRequests();
+  }else{
+    loginCard.classList.remove("hidden");
+    adminCard.classList.add("hidden");
+    logoutBtn.classList.add("hidden");
+  }
+}
 
-document
-.getElementById("loginBtn")
-.addEventListener(
-"click",
-login
-);
+document.getElementById("loginBtn").addEventListener("click", async () => {
+  loginMsg.innerHTML = "";
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
 
+  if(!email || !password){
+    showLoginError("Bitte E-Mail und Passwort eingeben.");
+    return;
+  }
 
-document
-.getElementById("logoutBtn")
-.addEventListener(
-"click",
-logout
-);
+  const { error } = await client.auth.signInWithPassword({ email, password });
 
+  if(error){
+    showLoginError("Anmeldung fehlgeschlagen. Bitte Zugangsdaten prüfen.");
+    return;
+  }
 
-document
-.getElementById("refreshBtn")
-.addEventListener(
-"click",
-loadRequests
-);
+  await updateUI();
+});
 
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+  await client.auth.signOut();
+  await updateUI();
+});
 
-document
-.getElementById("backBtn")
-.addEventListener(
-"click",
-showList
-);
+document.getElementById("refreshBtn").addEventListener("click", loadRequests);
 
-
-client.auth.onAuthStateChange(
-() => updateUI()
-);
-
+client.auth.onAuthStateChange(() => {
+  updateUI();
+});
 
 updateUI();
-
 </script>
-
 </body>
 </html>
