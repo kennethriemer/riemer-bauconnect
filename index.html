@@ -564,8 +564,9 @@ document
  if(error){
 
   alert(
-   "Die Anfrage konnte gerade nicht gesendet werden. Bitte später erneut versuchen."
-  );
+  alert(
+  "SUPABASE FEHLER: " + error.message
+);
 
   button.disabled = false;
   button.textContent =
