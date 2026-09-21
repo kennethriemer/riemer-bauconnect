@@ -17,6 +17,7 @@ nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid 
 footer{background:#0d1419;color:#dce2e5;padding:30px 18px 80px}.yellow{color:var(--y)}
 @media(min-width:700px){body{max-width:900px;margin:auto}.hero{padding:80px 60px}.hero h1{font-size:65px}section{padding:55px 60px}}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 <header><div class="logo">RIEMER <b>BAUCONNECT</b></div><a href="#anfrage">Projekt starten</a></header>
@@ -33,21 +34,48 @@ footer{background:#0d1419;color:#dce2e5;padding:30px 18px 80px}.yellow{color:var
 <label>Name</label><input id="name" required>
 <label>Telefon</label><input id="phone" type="tel" required>
 <label>E-Mail</label><input id="email" type="email" required>
-<p class="small">Die Live-Version wird erst nach Einrichtung der sicheren Datenbank aktiviert. Bis dahin werden keine Kundendaten an einen externen Dienst gesendet.</p>
+<p class="small">Deine Anfrage wird verschlüsselt über Supabase an Riemer BauConnect übertragen. Weitere Datenschutz- und Impressumsangaben müssen vor dem öffentlichen Produktivbetrieb ergänzt werden.</p>
 <button class="btn" type="submit">Anfrage absenden →</button><div class="ok" id="ok"></div><div class="error" id="err"></div>
 </form></section>
 
 <section class="admin" id="admin"><h2 class="title">Mein Bereich</h2><div class="adminbox"><b>Admin-Bereich</b><p class="small">Noch nicht online verbunden. Nach Einrichtung der Datenbank werden hier deine echten Anfragen erscheinen.</p><div class="lead"><span class="status">VORBEREITET</span><br>Lead-Verwaltung · Firmen-Zuordnung · Status · Kontakt</div></div></section>
 <section><h2 class="title">Für Fachbetriebe</h2><p>Erhalte passende Bauanfragen aus deiner Region und spare Zeit bei der Kundensuche.</p><a class="btn" href="#anfrage">Als Partnerbetrieb Interesse zeigen</a></section>
-<footer><b>RIEMER <span class="yellow">BAUCONNECT</span></b><p>Starke Projekte. Starke Verbindungen.</p><p class="small">MVP v2 – vor dem Produktivbetrieb müssen Datenschutz, Impressum, Einwilligungen, sichere Datenverarbeitung und ein passendes Geschäftsmodell eingerichtet werden.</p></footer>
+<footer><b>RIEMER <span class="yellow">BAUCONNECT</span></b><p>Starke Projekte. Starke Verbindungen.</p><p class="small">MVP v3 – vor dem Produktivbetrieb müssen Datenschutz, Impressum, Einwilligungen, sichere Datenverarbeitung und ein passendes Geschäftsmodell eingerichtet werden.</p></footer>
 <nav><a href="#"><b>⌂</b>Start</a><a href="#leistungen"><b>⌁</b>Leistungen</a><a href="#anfrage"><b>＋</b>Projekt</a></nav>
 <script>
+const SUPABASE_URL='https://ehzugjmltfcvllftpjpp.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY='sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm';
+const db=supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
 const form=document.getElementById('leadForm');
-form.addEventListener('submit',e=>{
+const ok=document.getElementById('ok');
+const err=document.getElementById('err');
+form.addEventListener('submit',async e=>{
  e.preventDefault();
- const data={service:service.value,plz:plz.value,area:area.value,description:desc.value,name:name.value,phone:phone.value,email:email.value,created_at:new Date().toISOString()};
- localStorage.setItem('riemer_demo_lead',JSON.stringify(data));
- const ok=document.getElementById('ok');ok.textContent='Demo-Anfrage gespeichert. Als Nächstes verbinden wir das Formular mit einer sicheren Online-Datenbank.';ok.style.display='block';
+ ok.style.display='none'; err.style.display='none';
+ const btn=form.querySelector('button[type="submit"]');
+ btn.disabled=true; btn.textContent='Wird gesendet…';
+ const data={
+  service:document.getElementById('service').value,
+  plz:document.getElementById('plz').value.trim(),
+  area:document.getElementById('area').value.trim(),
+  description:document.getElementById('desc').value.trim(),
+  name:document.getElementById('name').value.trim(),
+  phone:document.getElementById('phone').value.trim(),
+  email:document.getElementById('email').value.trim()
+ };
+ try {
+  const {error}=await db.from('bauanfragen').insert(data);
+  if(error) throw error;
+  ok.textContent='✓ Anfrage erfolgreich übermittelt. Wir melden uns bei dir.';
+  ok.style.display='block';
+  form.reset();
+ } catch (error) {
+  console.error(error);
+  err.textContent='Die Anfrage konnte gerade nicht gesendet werden. Bitte später erneut versuchen.';
+  err.style.display='block';
+ } finally {
+  btn.disabled=false; btn.textContent='Anfrage absenden →';
+ }
 });
 </script>
 </body></html>
