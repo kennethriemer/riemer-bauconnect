@@ -1,0 +1,19 @@
+{
+  "name": "Riemer BauConnect Admin",
+  "short_name": "BauConnect Admin",
+  "id": "/riemer-bauconnect/admin.html",
+  "start_url": "/riemer-bauconnect/admin.html",
+  "scope": "/riemer-bauconnect/",
+  "display": "standalone",
+  "background_color": "#171717",
+  "theme_color": "#171717",
+  "description": "Verwaltung der Bauanfragen von Riemer BauConnect.",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
