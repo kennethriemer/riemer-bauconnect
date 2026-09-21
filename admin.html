@@ -272,4 +272,79 @@ async function loadRequests(){
       <td>${escapeHtml(row.name || "")}</td>
       <td>${escapeHtml(row.phone || "")}</td>
       <td>${escapeHtml(row.email || "")}</td>
-      <td>${escapeHtml(row.status || "")
+      <td>${escapeHtml(row.status || "")}</td>
+    `;
+
+    body.appendChild(tr);
+
+  });
+}
+
+
+function formatDate(value){
+
+  if(!value) return "";
+
+  return new Date(value).toLocaleString("de-DE");
+}
+
+
+function escapeHtml(value){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+
+async function updateUI(){
+
+  const {data} =
+    await client.auth.getSession();
+
+  const loggedIn =
+    !!data.session;
+
+  if(loggedIn){
+
+    loginCard.classList.add("hidden");
+    adminArea.classList.remove("hidden");
+
+  }else{
+
+    loginCard.classList.remove("hidden");
+    adminArea.classList.add("hidden");
+
+  }
+}
+
+
+document
+  .getElementById("loginBtn")
+  .addEventListener("click",login);
+
+
+document
+  .getElementById("logoutBtn")
+  .addEventListener("click",logout);
+
+
+document
+  .getElementById("refreshBtn")
+  .addEventListener("click",loadRequests);
+
+
+client.auth.onAuthStateChange(
+  () => updateUI()
+);
+
+
+updateUI();
+
+</script>
+
+</body>
+</html>
