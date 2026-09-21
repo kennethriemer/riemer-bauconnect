@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Riemer BauConnect – Admin</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+body{margin:0;background:#171717;color:#fff;font-family:Arial,sans-serif;padding:20px}
+.wrap{max-width:900px;margin:auto}.yellow{color:#f4c400}
+.card{background:#222;border:1px solid #3a3a3a;border-radius:14px;padding:18px;margin:16px 0}
+input,button{width:100%;box-sizing:border-box;padding:13px;border-radius:10px;margin:7px 0;font-size:16px}
+input{background:#111;color:#fff;border:1px solid #555}button{background:#f4c400;color:#111;border:0;font-weight:700}
+.secondary{background:#333;color:#fff}.hidden{display:none}.msg{padding:10px;border-radius:8px;margin-top:8px}
+.error{background:#4a2020}.small{color:#aaa;font-size:13px}table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:10px;border-bottom:1px solid #444;text-align:left;vertical-align:top}th{color:#f4c400}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>RIEMER <span class="yellow">BAUCONNECT</span></h1>
+<div class="small">Adminbereich – Bauanfragen</div>
+<section id="loginCard" class="card">
+<h2>Admin Login</h2>
+<input id="email" type="email" placeholder="E-Mail">
+<input id="password" type="password" placeholder="Passwort">
+<button id="loginBtn">Einloggen</button><div id="loginMsg"></div>
+</section>
+<section id="adminCard" class="card hidden">
+<h2>Eingegangene Bauanfragen</h2>
+<button id="refreshBtn">Anfragen aktualisieren</button>
+<button id="logoutBtn" class="secondary">Abmelden</button>
+<div id="dataMsg"></div>
+<div style="overflow:auto"><table><thead><tr><th>Datum</th><th>Service</th><th>PLZ</th><th>Name</th><th>Telefon</th><th>E-Mail</th><th>Beschreibung</th></tr></thead>
+<tbody id="rows"></tbody></table></div>
+</section>
+</div>
+<script>
+const client=supabase.createClient("https://ehzugjmltfcvllftpjpp.supabase.co","sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm");
+const loginCard=document.getElementById("loginCard"),adminCard=document.getElementById("adminCard"),loginMsg=document.getElementById("loginMsg"),dataMsg=document.getElementById("dataMsg"),rows=document.getElementById("rows");
+function msg(el,t){el.className="msg error";el.textContent=t}
+async function load(){
+dataMsg.className="";dataMsg.textContent="";rows.innerHTML="";
+const {data,error}=await client.from("bauanfragen").select("created_at,service,plz,name,phone,email,description").order("created_at",{ascending:false});
+if(error){msg(dataMsg,"Fehler: "+error.message);return}
+if(!data.length){rows.innerHTML="<tr><td colspan='7'>Noch keine Bauanfragen vorhanden.</td></tr>";return}
+data.forEach(r=>{const tr=document.createElement("tr");[r.created_at?new Date(r.created_at).toLocaleString("de-DE"):"",r.service,r.plz,r.name,r.phone,r.email,r.description].forEach(v=>{const td=document.createElement("td");td.textContent=v??"";tr.appendChild(td)});rows.appendChild(tr)})
+}
+async function session(){const {data:{session}}=await client.auth.getSession();loginCard.classList.toggle("hidden",!!session);adminCard.classList.toggle("hidden",!session);if(session)await load()}
+document.getElementById("loginBtn").onclick=async()=>{loginMsg.textContent="";const email=document.getElementById("email").value.trim(),password=document.getElementById("password").value;if(!email||!password){msg(loginMsg,"Bitte E-Mail und Passwort eingeben.");return}const {error}=await client.auth.signInWithPassword({email,password});if(error){msg(loginMsg,"Login fehlgeschlagen: "+error.message);return}await session()};
+document.getElementById("logoutBtn").onclick=async()=>{await client.auth.signOut();await session()};
+document.getElementById("refreshBtn").onclick=load;
+session();
+</script>
+</body>
+</html>
