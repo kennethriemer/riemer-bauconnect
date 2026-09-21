@@ -1,598 +1,681 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0d1419">
-<title>Riemer BauConnect</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0d1419">
 
-<style>
-:root{
- --y:#f7bd19;
- --d:#0d1419;
- --g:#f4f6f7;
- --m:#667078
-}
+  <title>Riemer BauConnect</title>
 
-*{box-sizing:border-box}
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-html{scroll-behavior:smooth}
+  <style>
+    :root {
+      --yellow: #f7bd19;
+      --dark: #0d1419;
+      --gray: #667078;
+      --light: #f4f6f7;
+      --white: #ffffff;
+      --red: #b42318;
+      --green: #087443;
+    }
 
-body{
- margin:0;
- font-family:Arial,Helvetica,sans-serif;
- background:var(--g);
- color:#111820
-}
+    * {
+      box-sizing: border-box;
+    }
 
-header{
- position:sticky;
- top:0;
- z-index:20;
- background:#fff;
- border-bottom:1px solid #ddd;
- height:70px;
- display:flex;
- align-items:center;
- justify-content:space-between;
- padding:0 34px
-}
+    html {
+      scroll-behavior: smooth;
+    }
 
-.logo{
- font-weight:800;
- font-size:25px;
- letter-spacing:-.5px
-}
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--light);
+      color: var(--dark);
+    }
 
-.logo span{color:#e8ad00}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-header a{
- color:#111;
- text-decoration:none;
- font-weight:700;
- font-size:18px
-}
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: white;
+      border-bottom: 1px solid #ddd;
+    }
 
-.hero{
- padding:52px 20px 45px;
- background:linear-gradient(135deg,#0d1419,#1e2b31);
- color:#fff
-}
+    .header-inner {
+      max-width: 1100px;
+      margin: auto;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
 
-.wrap{
- max-width:900px;
- margin:auto
-}
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
 
-.kicker{
- color:var(--y);
- font-weight:800;
- letter-spacing:2px;
- font-size:14px
-}
+    .logo span {
+      color: var(--yellow);
+    }
 
-h1{
- font-size:58px;
- line-height:1.02;
- margin:26px 0 28px;
- letter-spacing:-2px
-}
+    .header-button {
+      font-size: 18px;
+      font-weight: 700;
+    }
 
-h1 span{color:var(--y)}
+    .hero {
+      background: var(--dark);
+      color: white;
+      padding: 70px 24px;
+    }
 
-.hero p{
- font-size:21px;
- line-height:1.5;
- color:#dce2e5;
- max-width:650px
-}
+    .hero-inner {
+      max-width: 1100px;
+      margin: auto;
+    }
 
-.cta{
- display:block;
- background:var(--y);
- color:#111;
- text-decoration:none;
- text-align:center;
- font-weight:800;
- font-size:20px;
- padding:20px;
- border-radius:15px;
- margin-top:30px
-}
+    .hero h1 {
+      font-size: clamp(40px, 8vw, 72px);
+      line-height: 1;
+      margin: 0 0 20px;
+    }
 
-.checks{
- display:grid;
- gap:12px;
- margin-top:28px;
- font-size:18px;
- font-weight:700
-}
+    .hero h1 span {
+      color: var(--yellow);
+    }
 
-.checks div:before{
- content:"✓";
- color:var(--y);
- font-weight:900;
- margin-right:12px
-}
+    .hero p {
+      max-width: 700px;
+      font-size: 21px;
+      line-height: 1.6;
+      color: #dce2e5;
+      margin-bottom: 30px;
+    }
 
-section{
- padding:45px 20px
-}
+    .button {
+      display: inline-block;
+      background: var(--yellow);
+      color: #111;
+      border: 0;
+      border-radius: 12px;
+      padding: 17px 25px;
+      font-size: 18px;
+      font-weight: 800;
+      cursor: pointer;
+    }
 
-.title{
- font-size:36px;
- margin:0 0 25px
-}
+    section {
+      padding: 55px 20px;
+    }
 
-.cards{
- display:grid;
- grid-template-columns:repeat(2,1fr);
- gap:14px
-}
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
 
-.card{
- background:#fff;
- border:1px solid #d5d8da;
- border-radius:18px;
- padding:25px;
- text-align:center;
- font-size:20px;
- font-weight:800
-}
+    h2 {
+      font-size: 34px;
+      margin-top: 0;
+    }
 
-.formsec{
- background:#f4f6f7
-}
+    .services {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
 
-form{
- background:#fff;
- border-radius:22px;
- padding:30px;
- box-shadow:0 5px 25px #00000010
-}
+    .service {
+      background: white;
+      border-radius: 14px;
+      padding: 20px;
+      font-size: 18px;
+      font-weight: 700;
+      border: 1px solid #ddd;
+    }
 
-label{
- display:block;
- font-weight:800;
- font-size:18px;
- margin:18px 0 8px
-}
+    .form-card {
+      background: white;
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.08);
+    }
 
-input,select,textarea{
- width:100%;
- padding:16px;
- border:1px solid #cbd0d3;
- border-radius:13px;
- font-size:17px;
- background:#fff
-}
+    label {
+      display: block;
+      font-size: 18px;
+      font-weight: 700;
+      margin: 20px 0 8px;
+    }
 
-textarea{
- min-height:145px;
- resize:vertical
-}
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 17px;
+      border: 1px solid #cdd2d5;
+      border-radius: 12px;
+      font-size: 17px;
+      font-family: inherit;
+      background: white;
+    }
 
-button{
- width:100%;
- padding:18px;
- border:0;
- border-radius:14px;
- background:var(--y);
- color:#111;
- font-weight:800;
- font-size:19px;
- margin-top:24px
-}
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
 
-.notice{
- font-size:14px;
- color:#6b747a;
- line-height:1.6;
- margin-top:18px
-}
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: 3px solid rgba(247,189,25,.25);
+      border-color: var(--yellow);
+    }
 
-#success{
- display:none;
- background:#e8f7ed;
- border:1px solid #9ad2aa;
- color:#176331;
- border-radius:14px;
- padding:18px;
- margin-top:18px;
- font-weight:700
-}
+    .privacy-note {
+      color: var(--gray);
+      line-height: 1.6;
+      margin: 20px 0;
+    }
 
-.partner{
- background:#fff
-}
+    .submit-button {
+      width: 100%;
+      margin-top: 10px;
+      background: var(--yellow);
+      color: #111;
+      border: 0;
+      border-radius: 12px;
+      padding: 19px;
+      font-size: 19px;
+      font-weight: 800;
+      cursor: pointer;
+    }
 
-footer{
- background:var(--d);
- color:#dce2e5;
- padding:38px 20px 90px
-}
+    .submit-button:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
 
-footer strong{
- color:#fff;
- font-size:21px
-}
+    .success {
+      display: none;
+      margin-top: 20px;
+      padding: 18px;
+      background: #e9f8ef;
+      color: var(--green);
+      border-radius: 12px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
 
-footer p{
- line-height:1.6;
- color:#aeb8bd
-}
+    .error {
+      display: none;
+      margin-top: 20px;
+      padding: 18px;
+      background: #fdecec;
+      color: var(--red);
+      border-radius: 12px;
+      font-weight: 700;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
 
-nav{
- position:fixed;
- bottom:0;
- left:0;
- right:0;
- z-index:30;
- background:#fff;
- border-top:1px solid #ddd;
- display:grid;
- grid-template-columns:repeat(3,1fr)
-}
+    .admin-card {
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      border: 1px solid #ddd;
+    }
 
-nav a{
- text-decoration:none;
- color:#111;
- text-align:center;
- padding:13px 5px 11px;
- font-weight:700;
- font-size:14px
-}
+    .admin-link {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 14px 20px;
+      background: var(--dark);
+      color: white;
+      border-radius: 10px;
+      font-weight: 700;
+    }
 
-nav b{
- display:block;
- font-size:22px;
- line-height:22px;
- margin-bottom:3px
-}
+    footer {
+      background: var(--dark);
+      color: #ccd2d6;
+      padding: 35px 20px 100px;
+      line-height: 1.6;
+    }
 
-@media(min-width:700px){
- h1{font-size:68px}
- .hero{padding-top:75px}
- .cards{grid-template-columns:repeat(3,1fr)}
- nav{display:none}
-}
-</style>
+    footer .container {
+      font-size: 14px;
+    }
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    .bottom-nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 50;
+      display: flex;
+      justify-content: space-around;
+      background: white;
+      border-top: 1px solid #ddd;
+      padding: 10px 5px;
+    }
+
+    .bottom-nav a {
+      text-align: center;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 8px 15px;
+    }
+
+    .bottom-nav .icon {
+      display: block;
+      font-size: 24px;
+      margin-bottom: 3px;
+    }
+
+    @media (min-width: 700px) {
+      .services {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .bottom-nav {
+        display: none;
+      }
+
+      footer {
+        padding-bottom: 35px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .header-inner {
+        padding: 16px;
+      }
+
+      .logo {
+        font-size: 20px;
+      }
+
+      .header-button {
+        font-size: 16px;
+      }
+
+      .hero {
+        padding: 55px 20px;
+      }
+
+      .services {
+        grid-template-columns: 1fr;
+      }
+
+      .form-card {
+        padding: 20px;
+      }
+
+      section {
+        padding: 45px 16px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
- <div class="logo">
-  RIEMER <span>BAUCONNECT</span>
- </div>
- <a href="#projekt">Projekt starten</a>
+  <div class="header-inner">
+    <a href="#start" class="logo">
+      RIEMER <span>BAUCONNECT</span>
+    </a>
+
+    <a href="#projekt" class="header-button">
+      Projekt starten
+    </a>
+  </div>
 </header>
 
 <main>
 
-<section class="hero" id="start">
- <div class="wrap">
+  <section class="hero" id="start">
+    <div class="hero-inner">
+      <h1>
+        Bauprojekt einstellen.<br>
+        <span>Fachbetrieb finden.</span>
+      </h1>
 
-  <div class="kicker">
-   REGIONAL · EINFACH · DIREKT
-  </div>
+      <p>
+        Riemer BauConnect bringt Bauherren und passende Fachbetriebe
+        für Bau- und Straßenbauprojekte zusammen.
+      </p>
 
-  <h1>
-   Dein Bauprojekt.<br>
-   <span>Der passende Betrieb.</span>
-  </h1>
+      <a href="#projekt" class="button">
+        Projekt starten →
+      </a>
+    </div>
+  </section>
 
-  <p>
-   Beschreibe dein Bauprojekt und finde passende Fachbetriebe in deiner Region.
-  </p>
 
-  <a class="cta" href="#projekt">
-   Kostenlose Anfrage stellen →
-  </a>
+  <section id="leistungen">
+    <div class="container">
 
-  <div class="checks">
-   <div>Kostenlos & unverbindlich</div>
-   <div>Regionale Fachbetriebe</div>
-   <div>Einfach vom Handy</div>
-  </div>
+      <h2>Unsere Leistungen</h2>
 
- </div>
-</section>
+      <div class="services">
 
-<section>
- <div class="wrap">
+        <div class="service">🚧 Straßenbau</div>
+        <div class="service">🛣️ Asphaltarbeiten</div>
+        <div class="service">🧱 Pflasterarbeiten</div>
+        <div class="service">🚜 Erdarbeiten</div>
+        <div class="service">🏗️ Tiefbau</div>
+        <div class="service">💧 Entwässerung</div>
+        <div class="service">🏠 Einfahrt</div>
+        <div class="service">🅿️ Parkplatz / Hof</div>
+        <div class="service">🔧 Reparatur</div>
+        <div class="service">➕ Sonstiges</div>
 
-  <h2 class="title">
-   Was brauchst du?
-  </h2>
+      </div>
 
-  <div class="cards">
+    </div>
+  </section>
 
-   <div class="card">🛣️<br>Straßenbau</div>
-   <div class="card">🏗️<br>Tiefbau</div>
-   <div class="card">🚜<br>Erdarbeiten</div>
-   <div class="card">🧱<br>Pflaster</div>
-   <div class="card">🚗<br>Einfahrt</div>
-   <div class="card">🅿️<br>Parkplatz / Hof</div>
-   <div class="card">💧<br>Entwässerung</div>
-   <div class="card">🔧<br>Reparatur</div>
-   <div class="card">➕<br>Sonstiges</div>
 
-  </div>
- </div>
-</section>
+  <section id="projekt">
+    <div class="container">
 
-<section class="formsec" id="projekt">
+      <h2>Projekt starten</h2>
 
- <div class="wrap">
+      <div class="form-card">
 
-  <h2 class="title">
-   Projektanfrage
-  </h2>
+        <form id="projectForm">
 
-  <form id="projectForm">
+          <label for="service">
+            Welche Leistung benötigen Sie?
+          </label>
 
-   <label for="service">
-    Leistung *
-   </label>
+          <select id="service" required>
+            <option value="">Bitte auswählen</option>
+            <option value="Straßenbau">Straßenbau</option>
+            <option value="Asphaltarbeiten">Asphaltarbeiten</option>
+            <option value="Pflasterarbeiten">Pflasterarbeiten</option>
+            <option value="Erdarbeiten">Erdarbeiten</option>
+            <option value="Tiefbau">Tiefbau</option>
+            <option value="Entwässerung">Entwässerung</option>
+            <option value="Einfahrt">Einfahrt</option>
+            <option value="Parkplatz / Hof">Parkplatz / Hof</option>
+            <option value="Reparatur">Reparatur</option>
+            <option value="Sonstiges">Sonstiges</option>
+          </select>
 
-   <select id="service" required>
-    <option value="">Bitte auswählen</option>
-    <option>Straßenbau</option>
-    <option>Tiefbau</option>
-    <option>Erdarbeiten</option>
-    <option>Pflaster</option>
-    <option>Einfahrt</option>
-    <option>Parkplatz / Hof</option>
-    <option>Entwässerung</option>
-    <option>Reparatur</option>
-    <option>Sonstiges</option>
-   </select>
 
-   <label for="plz">
-    PLZ *
-   </label>
+          <label for="plz">
+            PLZ
+          </label>
 
-   <input
-    id="plz"
-    inputmode="numeric"
-    maxlength="5"
-    placeholder="z. B. 24955"
-    required
-   >
+          <input
+            id="plz"
+            type="text"
+            inputmode="numeric"
+            maxlength="5"
+            placeholder="z. B. 24955"
+            required
+          >
 
-   <label for="area">
-    Fläche / Umfang
-   </label>
 
-   <input
-    id="area"
-    placeholder="z. B. 120 m²"
-   >
+          <label for="area">
+            Fläche / Umfang
+          </label>
 
-   <label for="description">
-    Beschreibung
-   </label>
+          <input
+            id="area"
+            type="text"
+            placeholder="z. B. 80 m²"
+          >
 
-   <textarea
-    id="description"
-    placeholder="Was soll gemacht werden?"
-   ></textarea>
 
-   <label for="name">
-    Name *
-   </label>
+          <label for="description">
+            Beschreibung des Projekts
+          </label>
 
-   <input
-    id="name"
-    autocomplete="name"
-    required
-   >
+          <textarea
+            id="description"
+            placeholder="Beschreiben Sie kurz Ihr Bauprojekt..."
+          ></textarea>
 
-   <label for="phone">
-    Telefon *
-   </label>
 
-   <input
-    id="phone"
-    type="tel"
-    autocomplete="tel"
-    required
-   >
+          <label for="name">
+            Name
+          </label>
 
-   <label for="email">
-    E-Mail
-   </label>
+          <input
+            id="name"
+            type="text"
+            placeholder="Ihr Name"
+            required
+          >
 
-   <input
-    id="email"
-    type="email"
-    autocomplete="email"
-   >
 
-   <button type="submit">
-    Anfrage absenden →
-   </button>
+          <label for="phone">
+            Telefon
+          </label>
 
-   <div class="notice">
-    Deine Anfrage wird über Supabase an Riemer BauConnect übertragen.
-    Vor dem öffentlichen Produktivbetrieb müssen Datenschutzerklärung,
-    Impressum, Einwilligungen und sichere Datenverarbeitung vollständig
-    eingerichtet werden.
-   </div>
+          <input
+            id="phone"
+            type="tel"
+            placeholder="Ihre Telefonnummer"
+            required
+          >
 
-   <div id="success">
-    ✅ Deine Bauanfrage wurde erfolgreich übermittelt.
-    Wir kümmern uns um die weitere Zuordnung.
-   </div>
 
-  </form>
+          <label for="email">
+            E-Mail
+          </label>
 
- </div>
-</section>
+          <input
+            id="email"
+            type="email"
+            placeholder="ihre@email.de"
+          >
 
-<section class="partner">
 
- <div class="wrap">
+          <p class="privacy-note">
+            Ihre Anfrage wird über Supabase an Riemer BauConnect
+            übertragen. Datenschutz, Impressum und Einwilligungen
+            müssen vor dem öffentlichen Produktivbetrieb ergänzt werden.
+          </p>
 
-  <h2 class="title">
-   Für Fachbetriebe
-  </h2>
 
-  <p style="font-size:19px;line-height:1.5">
-   Erhalte passende Bauanfragen aus deiner Region und spare Zeit
-   bei der Kundensuche.
-  </p>
+          <button
+            type="submit"
+            class="submit-button"
+            id="submitButton"
+          >
+            Anfrage absenden →
+          </button>
 
-  <a
-   class="cta"
-   href="mailto:info@riemer-bauconnect.de"
-  >
-   Als Partnerbetrieb Interesse zeigen
-  </a>
 
- </div>
+          <div id="success" class="success">
+            ✅ Ihre Bauanfrage wurde erfolgreich übermittelt.
+            Wir kümmern uns um die weitere Zuordnung.
+          </div>
 
-</section>
+
+          <div id="error" class="error"></div>
+
+        </form>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <section>
+    <div class="container">
+
+      <h2>Mein Bereich</h2>
+
+      <div class="admin-card">
+
+        <h3>Admin-Bereich</h3>
+
+        <p>
+          Eingegangene Bauanfragen verwalten und bearbeiten.
+        </p>
+
+        <a
+          href="admin.html"
+          class="admin-link"
+        >
+          Admin öffnen →
+        </a>
+
+      </div>
+
+    </div>
+  </section>
 
 </main>
 
+
 <footer>
+  <div class="container">
 
- <div class="wrap">
+    <strong>Riemer BauConnect</strong><br>
 
-  <strong>
-   RIEMER
-   <span style="color:#f7bd19">
-    BAUCONNECT
-   </span>
-  </strong>
+    Bauprojekt einstellen. Fachbetrieb finden.
 
-  <p>
-   Starke Projekte. Starke Verbindungen.
-  </p>
+    <br><br>
 
-  <p>
-   Vor dem Produktivbetrieb müssen Datenschutz, Impressum,
-   Einwilligungen, sichere Datenverarbeitung und ein passendes
-   Geschäftsmodell eingerichtet werden.
-  </p>
+    MVP – Vor dem Produktivbetrieb müssen Datenschutz,
+    Impressum, Einwilligungen und sichere Datenverarbeitung
+    vollständig eingerichtet werden.
 
- </div>
-
+  </div>
 </footer>
 
-<nav>
 
- <a href="#start">
-  <b>⌂</b>
-  Start
- </a>
+<nav class="bottom-nav">
 
- <a href="#projekt">
-  <b>⌁</b>
-  Leistungen
- </a>
+  <a href="#start">
+    <span class="icon">⌂</span>
+    Start
+  </a>
 
- <a href="#projekt">
-  <b>＋</b>
-  Projekt
- </a>
+  <a href="#leistungen">
+    <span class="icon">⚒</span>
+    Leistungen
+  </a>
+
+  <a href="#projekt">
+    <span class="icon">＋</span>
+    Projekt
+  </a>
 
 </nav>
 
+
 <script>
+  const SUPABASE_URL =
+    "https://ehzugjmltfcvllftpjpp.supabase.co";
 
-const SUPABASE_URL =
-"https://ehzugjmltfcvllftpjpp.supabase.co";
+  const SUPABASE_KEY =
+    "sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
 
-const SUPABASE_KEY =
-"sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
+  const db = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
-const db =
-supabase.createClient(
- SUPABASE_URL,
- SUPABASE_KEY
-);
 
-document
-.getElementById("projectForm")
-.addEventListener("submit", async (e) => {
+  const form = document.getElementById("projectForm");
+  const button = document.getElementById("submitButton");
+  const success = document.getElementById("success");
+  const errorBox = document.getElementById("error");
 
- e.preventDefault();
 
- const button =
- e.target.querySelector("button");
+  form.addEventListener("submit", async function(e) {
 
- button.disabled = true;
- button.textContent = "Wird gesendet …";
+    e.preventDefault();
 
- const payload = {
+    success.style.display = "none";
+    errorBox.style.display = "none";
 
-  service:
-  document.getElementById("service").value,
+    button.disabled = true;
+    button.textContent = "Wird gesendet ...";
 
-  plz:
-  document.getElementById("plz").value.trim(),
 
-  area:
-  document.getElementById("area").value.trim() || null,
+    const payload = {
 
-  description:
-  document.getElementById("description").value.trim() || null,
+      service:
+        document.getElementById("service").value.trim(),
 
-  name:
-  document.getElementById("name").value.trim(),
+      plz:
+        document.getElementById("plz").value.trim(),
 
-  phone:
-  document.getElementById("phone").value.trim(),
+      area:
+        document.getElementById("area").value.trim(),
 
-  email:
-  document.getElementById("email").value.trim() || null,
+      description:
+        document.getElementById("description").value.trim(),
 
-  status:
-  "neu"
- };
+      name:
+        document.getElementById("name").value.trim(),
 
- const {error} =
- await db
- .from("bauanfragen")
- .insert(payload);
+      phone:
+        document.getElementById("phone").value.trim(),
 
- if(error){
+      email:
+        document.getElementById("email").value.trim(),
 
-  alert(
-  alert(
-  "SUPABASE FEHLER: " + error.message
-);
+      status: "neu"
 
-  button.disabled = false;
-  button.textContent =
-  "Anfrage absenden →";
+    };
 
-  return;
- }
 
- document.getElementById("success")
- .style.display = "block";
+    const result = await db
+      .from("bauanfragen")
+      .insert([payload]);
 
- e.target.reset();
 
- button.disabled = false;
+    if (result.error) {
 
- button.textContent =
- "Anfrage absenden →";
+      console.error(result.error);
 
- document.getElementById("success")
- .scrollIntoView({
-  behavior:"smooth",
-  block:"center"
- });
+      errorBox.textContent =
+        "Die Anfrage konnte nicht gesendet werden.\n\n" +
+        "Fehler: " +
+        result.error.message;
 
-});
+      errorBox.style.display = "block";
 
+      button.disabled = false;
+      button.textContent = "Anfrage absenden →";
+
+      return;
+    }
+
+
+    form.reset();
+
+    success.style.display = "block";
+
+    button.disabled = false;
+    button.textContent = "Anfrage absenden →";
+
+    success.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+  });
 </script>
 
 </body>
