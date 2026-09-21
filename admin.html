@@ -14,22 +14,28 @@ body{
   margin:0;
   background:#171717;
   color:#fff;
-  font-family:Arial,sans-serif;
+  font-family:Arial,sans-serif
 }
 
 .wrap{
   max-width:1100px;
   margin:auto;
-  padding:24px;
+  padding:24px
 }
 
-h1{margin:0;font-size:36px}
-.brand{color:#ffd000}
+h1{
+  margin:0;
+  font-size:36px
+}
+
+.brand{
+  color:#ffd000
+}
 
 .subtitle{
   color:#aaa;
   font-size:20px;
-  margin:8px 0 30px;
+  margin:8px 0 30px
 }
 
 .card{
@@ -37,7 +43,7 @@ h1{margin:0;font-size:36px}
   border:1px solid #3a3a3a;
   border-radius:20px;
   padding:24px;
-  margin-bottom:20px;
+  margin-bottom:20px
 }
 
 input,button{
@@ -45,13 +51,13 @@ input,button{
   padding:15px;
   border-radius:12px;
   border:1px solid #444;
-  font-size:16px;
+  font-size:16px
 }
 
 input{
   background:#111;
   color:#fff;
-  margin:8px 0 15px;
+  margin:8px 0 15px
 }
 
 button{
@@ -59,28 +65,30 @@ button{
   color:#111;
   border:0;
   font-weight:bold;
-  cursor:pointer;
+  cursor:pointer
 }
 
 button.secondary{
   background:#333;
-  color:#fff;
+  color:#fff
 }
 
-.hidden{display:none}
+.hidden{
+  display:none
+}
 
 .error{
   background:#6b2222;
   padding:15px;
   border-radius:12px;
-  margin-top:15px;
+  margin-top:15px
 }
 
 .success{
   background:#235c32;
   padding:15px;
   border-radius:12px;
-  margin-top:15px;
+  margin-top:15px
 }
 
 .topbar{
@@ -88,12 +96,12 @@ button.secondary{
   justify-content:space-between;
   align-items:center;
   gap:15px;
-  margin-bottom:20px;
+  margin-bottom:20px
 }
 
 .topbar button{
   width:auto;
-  padding:12px 20px;
+  padding:12px 20px
 }
 
 .request{
@@ -102,33 +110,33 @@ button.secondary{
   border-radius:15px;
   padding:18px;
   margin-top:15px;
-  cursor:pointer;
+  cursor:pointer
 }
 
 .request:hover{
-  border-color:#ffd000;
+  border-color:#ffd000
 }
 
 .request-title{
   display:flex;
   justify-content:space-between;
-  gap:10px;
+  gap:10px
 }
 
 .request-service{
   color:#ffd000;
   font-size:20px;
-  font-weight:bold;
+  font-weight:bold
 }
 
 .request-date{
   color:#999;
-  font-size:14px;
+  font-size:14px
 }
 
 .request-info{
   color:#ccc;
-  margin-top:8px;
+  margin-top:8px
 }
 
 .badge{
@@ -136,49 +144,54 @@ button.secondary{
   background:#333;
   padding:6px 10px;
   border-radius:8px;
-  margin-top:10px;
+  margin-top:10px
 }
 
 .detail{
-  margin-top:20px;
+  margin-top:20px
 }
 
 .detail-row{
   border-bottom:1px solid #3b3b3b;
-  padding:14px 0;
+  padding:14px 0
 }
 
 .detail-label{
   color:#ffd000;
   font-size:14px;
-  margin-bottom:5px;
+  margin-bottom:5px
 }
 
 .detail-value{
   font-size:17px;
-  word-break:break-word;
+  word-break:break-word
 }
 
 .back{
-  margin-bottom:15px;
+  margin-bottom:15px
 }
 
 @media(max-width:600px){
-  .wrap{padding:16px}
 
-  h1{font-size:30px}
+  .wrap{
+    padding:16px
+  }
+
+  h1{
+    font-size:30px
+  }
 
   .topbar{
     align-items:flex-start;
-    flex-direction:column;
+    flex-direction:column
   }
 
   .topbar button{
-    width:100%;
+    width:100%
   }
 
   .request-title{
-    flex-direction:column;
+    flex-direction:column
   }
 }
 </style>
@@ -237,6 +250,7 @@ Anmelden
 <div class="topbar">
 
 <div>
+
 <h2 style="margin:0">
 Bauanfragen
 </h2>
@@ -244,12 +258,10 @@ Bauanfragen
 <div class="small">
 Eingegangene Kundenanfragen
 </div>
+
 </div>
 
-<button
-id="logoutBtn"
-class="secondary"
->
+<button id="logoutBtn" class="secondary">
 Abmelden
 </button>
 
@@ -275,10 +287,7 @@ Aktualisieren
 
 <div id="detailView" class="card hidden">
 
-<button
-id="backBtn"
-class="secondary back"
->
+<button id="backBtn" class="secondary back">
 ← Zurück zu den Bauanfragen
 </button>
 
@@ -335,17 +344,19 @@ const loginMessage =
 document.getElementById("loginMessage");
 
 
-/* LOGIN */
 
 async function login(){
 
 const email =
-document.getElementById("email").value.trim();
+document.getElementById("email")
+.value
+.trim();
 
 const password =
-document.getElementById("password").value;
+document.getElementById("password")
+.value;
 
-loginMessage.innerHTML="";
+loginMessage.innerHTML = "";
 
 if(!email || !password){
 
@@ -357,15 +368,17 @@ return;
 
 const {error} =
 await client.auth.signInWithPassword({
-email:email,
-password:password
+email,
+password
 });
 
 if(error){
 
 loginMessage.innerHTML =
-'<div class="error">' +
-escapeHtml(error.message) +
+'<div class="error">'
++
+escapeHtml(error.message)
++
 '</div>';
 
 return;
@@ -376,7 +389,6 @@ updateUI();
 }
 
 
-/* LOGOUT */
 
 async function logout(){
 
@@ -387,38 +399,46 @@ updateUI();
 }
 
 
-/* ANFRAGEN LADEN */
 
 async function loadRequests(){
 
 message.innerHTML =
 '<div class="success">Bauanfragen werden geladen...</div>';
 
-requestList.innerHTML="";
+requestList.innerHTML = "";
+
+
+/*
+WICHTIG:
+Die Tabelle heißt in Supabase:
+bauanfragen
+*/
 
 const {data,error} =
 await client
-.from("Bauanfragen")
+.from("bauanfragen")
 .select("*")
-.order(
-"created_at",
-{ascending:false}
-);
+.order("created_at",{ascending:false});
+
 
 if(error){
 
 message.innerHTML =
-'<div class="error">' +
-"Bauanfragen konnten nicht geladen werden: " +
-escapeHtml(error.message) +
+'<div class="error">'
++
+'Bauanfragen konnten nicht geladen werden: '
++
+escapeHtml(error.message)
++
 '</div>';
 
 return;
 }
 
-message.innerHTML="";
+message.innerHTML = "";
 
-if(!data || data.length===0){
+
+if(!data || data.length === 0){
 
 requestList.innerHTML =
 '<div class="success">Noch keine Bauanfragen vorhanden.</div>';
@@ -427,52 +447,84 @@ return;
 }
 
 
-data.forEach(row=>{
+data.forEach(row => {
 
 const item =
 document.createElement("div");
 
-item.className="request";
+item.className =
+"request";
 
-item.innerHTML=`
+
+item.innerHTML = `
 
 <div class="request-title">
 
 <div class="request-service">
-${escapeHtml(row.service || "Sonstige Anfrage")}
+
+${escapeHtml(
+row.service || "Sonstige Anfrage"
+)}
+
 </div>
 
 <div class="request-date">
-${escapeHtml(formatDate(row.created_at))}
-</div>
+
+${escapeHtml(
+formatDate(row.created_at)
+)}
 
 </div>
 
-<div class="request-info">
-📍 ${escapeHtml(row.plz || "")}
-${row.area ? " – " + escapeHtml(row.area) : ""}
 </div>
 
-<div class="request-info">
-👤 ${escapeHtml(row.name || "")}
-</div>
 
 <div class="request-info">
-📞 ${escapeHtml(row.phone || "")}
+
+📍
+${escapeHtml(row.plz || "")}
+
+${
+row.area
+?
+" – " + escapeHtml(row.area)
+:
+""
+}
+
 </div>
+
+
+<div class="request-info">
+
+👤
+${escapeHtml(row.name || "")}
+
+</div>
+
+
+<div class="request-info">
+
+📞
+${escapeHtml(row.phone || "")}
+
+</div>
+
 
 <div class="badge">
+
 ${escapeHtml(row.status || "offen")}
+
 </div>
 
 `;
 
+
 item.addEventListener(
 "click",
-()=>{
-showDetail(row);
-}
+() => showDetail(row)
 );
+
 
 requestList.appendChild(item);
 
@@ -481,7 +533,6 @@ requestList.appendChild(item);
 }
 
 
-/* DETAILANSICHT */
 
 function showDetail(row){
 
@@ -489,85 +540,169 @@ listView.classList.add("hidden");
 
 detailView.classList.remove("hidden");
 
-detailContent.innerHTML=`
+
+detailContent.innerHTML = `
 
 <div class="detail">
 
+
 <div class="detail-row">
-<div class="detail-label">Leistung</div>
+
+<div class="detail-label">
+Leistung
+</div>
+
 <div class="detail-value">
 ${escapeHtml(row.service || "")}
 </div>
+
 </div>
 
+
 <div class="detail-row">
-<div class="detail-label">Datum</div>
+
+<div class="detail-label">
+Datum
+</div>
+
 <div class="detail-value">
-${escapeHtml(formatDate(row.created_at))}
-</div>
+${escapeHtml(
+formatDate(row.created_at)
+)}
 </div>
 
+</div>
+
+
 <div class="detail-row">
-<div class="detail-label">PLZ</div>
+
+<div class="detail-label">
+PLZ
+</div>
+
 <div class="detail-value">
 ${escapeHtml(row.plz || "")}
 </div>
+
 </div>
 
+
 <div class="detail-row">
-<div class="detail-label">Gebiet / Ort</div>
+
+<div class="detail-label">
+Gebiet / Ort
+</div>
+
 <div class="detail-value">
-${escapeHtml(row.area || "Keine Angabe")}
-</div>
+${escapeHtml(
+row.area || "Keine Angabe"
+)}
 </div>
 
+</div>
+
+
 <div class="detail-row">
-<div class="detail-label">Beschreibung</div>
+
+<div class="detail-label">
+Beschreibung
+</div>
+
 <div class="detail-value">
-${escapeHtml(row.description || "Keine Beschreibung angegeben.")}
-</div>
+${escapeHtml(
+row.description ||
+"Keine Beschreibung angegeben."
+)}
 </div>
 
+</div>
+
+
 <div class="detail-row">
-<div class="detail-label">Kunde</div>
+
+<div class="detail-label">
+Kunde
+</div>
+
 <div class="detail-value">
 ${escapeHtml(row.name || "")}
 </div>
+
 </div>
 
+
 <div class="detail-row">
-<div class="detail-label">Telefon</div>
+
+<div class="detail-label">
+Telefon
+</div>
+
 <div class="detail-value">
+
 <a
 href="tel:${escapeHtml(row.phone || "")}"
 style="color:#ffd000"
 >
+
 ${escapeHtml(row.phone || "")}
+
 </a>
-</div>
+
 </div>
 
+</div>
+
+
 <div class="detail-row">
-<div class="detail-label">E-Mail</div>
+
+<div class="detail-label">
+E-Mail
+</div>
+
 <div class="detail-value">
-${row.email
-? `<a
+
+${
+row.email
+
+?
+
+`<a
 href="mailto:${escapeHtml(row.email)}"
 style="color:#ffd000"
->${escapeHtml(row.email)}</a>`
-: "Keine E-Mail angegeben."
+>
+${escapeHtml(row.email)}
+</a>`
+
+:
+
+"Keine E-Mail angegeben."
 }
-</div>
+
 </div>
 
+</div>
+
+
 <div class="detail-row">
-<div class="detail-label">Status</div>
+
+<div class="detail-label">
+Status
+</div>
+
 <div class="detail-value">
+
 <span class="badge">
-${escapeHtml(row.status || "offen")}
+
+${escapeHtml(
+row.status || "offen"
+)}
+
 </span>
+
 </div>
+
 </div>
+
 
 </div>
 
@@ -576,7 +711,6 @@ ${escapeHtml(row.status || "offen")}
 }
 
 
-/* ZURÜCK */
 
 function showList(){
 
@@ -587,16 +721,14 @@ listView.classList.remove("hidden");
 }
 
 
-/* UI */
 
 async function updateUI(){
 
 const {
-data:{
-session
-}
+data:{session}
 } =
 await client.auth.getSession();
+
 
 if(session){
 
@@ -606,7 +738,9 @@ adminBox.classList.remove("hidden");
 
 loadRequests();
 
-}else{
+}
+
+else{
 
 loginBox.classList.remove("hidden");
 
@@ -617,18 +751,14 @@ adminBox.classList.add("hidden");
 }
 
 
-/* HILFSFUNKTIONEN */
 
 function formatDate(value){
 
-if(!value){
+if(!value)
 return "";
-}
 
-const date =
-new Date(value);
-
-return date.toLocaleString(
+return new Date(value)
+.toLocaleString(
 "de-DE",
 {
 dateStyle:"short",
@@ -639,19 +769,24 @@ timeStyle:"medium"
 }
 
 
+
 function escapeHtml(value){
 
 return String(value)
+
 .replaceAll("&","&amp;")
+
 .replaceAll("<","&lt;")
+
 .replaceAll(">","&gt;")
+
 .replaceAll('"',"&quot;")
+
 .replaceAll("'","&#039;");
 
 }
 
 
-/* BUTTONS */
 
 document
 .getElementById("loginBtn")
@@ -660,6 +795,7 @@ document
 login
 );
 
+
 document
 .getElementById("logoutBtn")
 .addEventListener(
@@ -667,12 +803,14 @@ document
 logout
 );
 
+
 document
 .getElementById("refreshBtn")
 .addEventListener(
 "click",
 loadRequests
 );
+
 
 document
 .getElementById("backBtn")
@@ -683,9 +821,7 @@ showList
 
 
 client.auth.onAuthStateChange(
-()=>{
-updateUI();
-}
+() => updateUI()
 );
 
 
