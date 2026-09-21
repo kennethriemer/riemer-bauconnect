@@ -23,14 +23,8 @@ body{
   padding:24px;
 }
 
-h1{
-  margin:0;
-  font-size:36px;
-}
-
-.brand{
-  color:#ffd000;
-}
+h1{margin:0;font-size:36px}
+.brand{color:#ffd000}
 
 .subtitle{
   color:#aaa;
@@ -73,13 +67,7 @@ button.secondary{
   color:#fff;
 }
 
-button:hover{
-  opacity:.9;
-}
-
-.hidden{
-  display:none;
-}
+.hidden{display:none}
 
 .error{
   background:#6b2222;
@@ -95,35 +83,6 @@ button:hover{
   margin-top:15px;
 }
 
-.table-wrap{
-  overflow-x:auto;
-  margin-top:20px;
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:900px;
-}
-
-th{
-  color:#ffd000;
-  text-align:left;
-  padding:12px;
-  border-bottom:1px solid #444;
-}
-
-td{
-  padding:12px;
-  border-bottom:1px solid #333;
-  vertical-align:top;
-}
-
-.small{
-  color:#aaa;
-  font-size:14px;
-}
-
 .topbar{
   display:flex;
   justify-content:space-between;
@@ -137,21 +96,77 @@ td{
   padding:12px 20px;
 }
 
-.status{
+.request{
+  background:#292929;
+  border:1px solid #444;
+  border-radius:15px;
+  padding:18px;
+  margin-top:15px;
+  cursor:pointer;
+}
+
+.request:hover{
+  border-color:#ffd000;
+}
+
+.request-title{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.request-service{
+  color:#ffd000;
+  font-size:20px;
+  font-weight:bold;
+}
+
+.request-date{
+  color:#999;
+  font-size:14px;
+}
+
+.request-info{
+  color:#ccc;
+  margin-top:8px;
+}
+
+.badge{
   display:inline-block;
+  background:#333;
   padding:6px 10px;
   border-radius:8px;
-  background:#333;
+  margin-top:10px;
+}
+
+.detail{
+  margin-top:20px;
+}
+
+.detail-row{
+  border-bottom:1px solid #3b3b3b;
+  padding:14px 0;
+}
+
+.detail-label{
+  color:#ffd000;
+  font-size:14px;
+  margin-bottom:5px;
+}
+
+.detail-value{
+  font-size:17px;
+  word-break:break-word;
+}
+
+.back{
+  margin-bottom:15px;
 }
 
 @media(max-width:600px){
-  .wrap{
-    padding:16px;
-  }
+  .wrap{padding:16px}
 
-  h1{
-    font-size:30px;
-  }
+  h1{font-size:30px}
 
   .topbar{
     align-items:flex-start;
@@ -161,6 +176,10 @@ td{
   .topbar button{
     width:100%;
   }
+
+  .request-title{
+    flex-direction:column;
+  }
 }
 </style>
 </head>
@@ -169,105 +188,109 @@ td{
 
 <div class="wrap">
 
-  <h1>
-    RIEMER <span class="brand">BAUCONNECT</span>
-  </h1>
+<h1>
+RIEMER <span class="brand">BAUCONNECT</span>
+</h1>
 
-  <div class="subtitle">
-    Verwaltungsbereich – Bauanfragen
-  </div>
-
-
-  <!-- LOGIN -->
-
-  <div id="loginBox" class="card">
-
-    <h2>Admin-Login</h2>
-
-    <label>E-Mail</label>
-    <input
-      id="email"
-      type="email"
-      placeholder="E-Mail-Adresse"
-      autocomplete="username"
-    >
-
-    <label>Passwort</label>
-    <input
-      id="password"
-      type="password"
-      placeholder="Passwort"
-      autocomplete="current-password"
-    >
-
-    <button id="loginBtn">
-      Anmelden
-    </button>
-
-    <div id="loginMessage"></div>
-
-  </div>
+<div class="subtitle">
+Verwaltungsbereich – Bauanfragen
+</div>
 
 
-  <!-- ADMIN -->
+<!-- LOGIN -->
 
-  <div id="adminBox" class="hidden">
+<div id="loginBox" class="card">
 
-    <div class="topbar">
+<h2>Admin-Login</h2>
 
-      <div>
-        <h2 style="margin:0">Bauanfragen</h2>
-        <div class="small">
-          Eingegangene Kundenanfragen
-        </div>
-      </div>
+<label>E-Mail</label>
 
-      <button
-        id="logoutBtn"
-        class="secondary"
-      >
-        Abmelden
-      </button>
+<input
+id="email"
+type="email"
+placeholder="E-Mail-Adresse"
+autocomplete="username"
+>
 
-    </div>
+<label>Passwort</label>
+
+<input
+id="password"
+type="password"
+placeholder="Passwort"
+autocomplete="current-password"
+>
+
+<button id="loginBtn">
+Anmelden
+</button>
+
+<div id="loginMessage"></div>
+
+</div>
 
 
-    <div class="card">
+<!-- ADMIN -->
 
-      <button id="refreshBtn">
-        Aktualisieren
-      </button>
+<div id="adminBox" class="hidden">
 
-      <div id="message"></div>
+<div class="topbar">
 
-      <div class="table-wrap">
+<div>
+<h2 style="margin:0">
+Bauanfragen
+</h2>
 
-        <table>
+<div class="small">
+Eingegangene Kundenanfragen
+</div>
+</div>
 
-          <thead>
-            <tr>
-              <th>Datum</th>
-              <th>Leistung</th>
-              <th>PLZ</th>
-              <th>Gebiet</th>
-              <th>Beschreibung</th>
-              <th>Name</th>
-              <th>Telefon</th>
-              <th>E-Mail</th>
-              <th>Status</th>
-            </tr>
-          </thead>
+<button
+id="logoutBtn"
+class="secondary"
+>
+Abmelden
+</button>
 
-          <tbody id="requestBody">
-          </tbody>
+</div>
 
-        </table>
 
-      </div>
+<!-- LISTE -->
 
-    </div>
+<div id="listView" class="card">
 
-  </div>
+<button id="refreshBtn">
+Aktualisieren
+</button>
+
+<div id="message"></div>
+
+<div id="requestList"></div>
+
+</div>
+
+
+<!-- DETAIL -->
+
+<div id="detailView" class="card hidden">
+
+<button
+id="backBtn"
+class="secondary back"
+>
+← Zurück zu den Bauanfragen
+</button>
+
+<h2>
+Bauanfrage
+</h2>
+
+<div id="detailContent"></div>
+
+</div>
+
+</div>
 
 </div>
 
@@ -275,71 +298,81 @@ td{
 <script>
 
 const SUPABASE_URL =
-  "https://ehzugjmltfcvllftpjpp.supabase.co";
+"https://ehzugjmltfcvllftpjpp.supabase.co";
 
 const SUPABASE_KEY =
-  "sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
+"sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
 
 const client =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
 
 
 const loginBox =
-  document.getElementById("loginBox");
+document.getElementById("loginBox");
 
 const adminBox =
-  document.getElementById("adminBox");
+document.getElementById("adminBox");
 
-const loginMessage =
-  document.getElementById("loginMessage");
+const listView =
+document.getElementById("listView");
+
+const detailView =
+document.getElementById("detailView");
+
+const requestList =
+document.getElementById("requestList");
+
+const detailContent =
+document.getElementById("detailContent");
 
 const message =
-  document.getElementById("message");
+document.getElementById("message");
 
-const requestBody =
-  document.getElementById("requestBody");
+const loginMessage =
+document.getElementById("loginMessage");
 
 
 /* LOGIN */
 
 async function login(){
 
-  const email =
-    document.getElementById("email").value.trim();
+const email =
+document.getElementById("email").value.trim();
 
-  const password =
-    document.getElementById("password").value;
+const password =
+document.getElementById("password").value;
 
-  loginMessage.innerHTML = "";
+loginMessage.innerHTML="";
 
-  if(!email || !password){
+if(!email || !password){
 
-    loginMessage.innerHTML =
-      '<div class="error">Bitte E-Mail und Passwort eingeben.</div>';
+loginMessage.innerHTML =
+'<div class="error">Bitte E-Mail und Passwort eingeben.</div>';
 
-    return;
-  }
+return;
+}
 
-  const {error} =
-    await client.auth.signInWithPassword({
-      email,
-      password
-    });
+const {error} =
+await client.auth.signInWithPassword({
+email:email,
+password:password
+});
 
-  if(error){
+if(error){
 
-    loginMessage.innerHTML =
-      '<div class="error">' +
-      escapeHtml(error.message) +
-      '</div>';
+loginMessage.innerHTML =
+'<div class="error">' +
+escapeHtml(error.message) +
+'</div>';
 
-    return;
-  }
+return;
+}
 
-  updateUI();
+updateUI();
+
 }
 
 
@@ -347,100 +380,209 @@ async function login(){
 
 async function logout(){
 
-  await client.auth.signOut();
+await client.auth.signOut();
 
-  updateUI();
+updateUI();
+
 }
 
 
-/* DATEN LADEN */
+/* ANFRAGEN LADEN */
 
 async function loadRequests(){
 
-  message.innerHTML =
-    '<div class="success">Bauanfragen werden geladen...</div>';
+message.innerHTML =
+'<div class="success">Bauanfragen werden geladen...</div>';
 
-  requestBody.innerHTML = "";
+requestList.innerHTML="";
 
-  const {data,error} =
-    await client
-      .from("Bauanfragen")
-      .select("*")
-      .order("created_at", {
-        ascending:false
-      });
+const {data,error} =
+await client
+.from("Bauanfragen")
+.select("*")
+.order(
+"created_at",
+{ascending:false}
+);
 
-  if(error){
+if(error){
 
-    message.innerHTML =
-      '<div class="error">' +
-      "Bauanfragen konnten nicht geladen werden: " +
-      escapeHtml(error.message) +
-      '</div>';
+message.innerHTML =
+'<div class="error">' +
+"Bauanfragen konnten nicht geladen werden: " +
+escapeHtml(error.message) +
+'</div>';
 
-    return;
-  }
+return;
+}
 
-  if(!data || data.length === 0){
+message.innerHTML="";
 
-    message.innerHTML =
-      '<div class="success">Noch keine Bauanfragen vorhanden.</div>';
+if(!data || data.length===0){
 
-    return;
-  }
+requestList.innerHTML =
+'<div class="success">Noch keine Bauanfragen vorhanden.</div>';
 
-  message.innerHTML = "";
+return;
+}
 
-  data.forEach(row => {
 
-    const tr =
-      document.createElement("tr");
+data.forEach(row=>{
 
-    tr.innerHTML = `
-      <td>
-        ${escapeHtml(formatDate(row.created_at))}
-      </td>
+const item =
+document.createElement("div");
 
-      <td>
-        <strong>
-          ${escapeHtml(row.service || "")}
-        </strong>
-      </td>
+item.className="request";
 
-      <td>
-        ${escapeHtml(row.plz || "")}
-      </td>
+item.innerHTML=`
 
-      <td>
-        ${escapeHtml(row.area || "")}
-      </td>
+<div class="request-title">
 
-      <td>
-        ${escapeHtml(row.description || "")}
-      </td>
+<div class="request-service">
+${escapeHtml(row.service || "Sonstige Anfrage")}
+</div>
 
-      <td>
-        ${escapeHtml(row.name || "")}
-      </td>
+<div class="request-date">
+${escapeHtml(formatDate(row.created_at))}
+</div>
 
-      <td>
-        ${escapeHtml(row.phone || "")}
-      </td>
+</div>
 
-      <td>
-        ${escapeHtml(row.email || "")}
-      </td>
+<div class="request-info">
+📍 ${escapeHtml(row.plz || "")}
+${row.area ? " – " + escapeHtml(row.area) : ""}
+</div>
 
-      <td>
-        <span class="status">
-          ${escapeHtml(row.status || "")}
-        </span>
-      </td>
-    `;
+<div class="request-info">
+👤 ${escapeHtml(row.name || "")}
+</div>
 
-    requestBody.appendChild(tr);
+<div class="request-info">
+📞 ${escapeHtml(row.phone || "")}
+</div>
 
-  });
+<div class="badge">
+${escapeHtml(row.status || "offen")}
+</div>
+
+`;
+
+item.addEventListener(
+"click",
+()=>{
+showDetail(row);
+}
+);
+
+requestList.appendChild(item);
+
+});
+
+}
+
+
+/* DETAILANSICHT */
+
+function showDetail(row){
+
+listView.classList.add("hidden");
+
+detailView.classList.remove("hidden");
+
+detailContent.innerHTML=`
+
+<div class="detail">
+
+<div class="detail-row">
+<div class="detail-label">Leistung</div>
+<div class="detail-value">
+${escapeHtml(row.service || "")}
+</div>
+</div>
+
+<div class="detail-row">
+<div class="detail-label">Datum</div>
+<div class="detail-value">
+${escapeHtml(formatDate(row.created_at))}
+</div>
+</div>
+
+<div class="detail-row">
+<div class="detail-label">PLZ</div>
+<div class="detail-value">
+${escapeHtml(row.plz || "")}
+</div>
+</div>
+
+<div class="detail-row">
+<div class="detail-label">Gebiet / Ort</div>
+<div class="detail-value">
+${escapeHtml(row.area || "Keine Angabe")}
+</div>
+</div>
+
+<div class="detail-row">
+<div class="detail-label">Beschreibung</div>
+<div class="detail-value">
+${escapeHtml(row.description || "Keine Beschreibung angegeben.")}
+</div>
+</div>
+
+<div class="detail-row">
+<div class="detail-label">Kunde</div>
+<div class="detail-value">
+${escapeHtml(row.name || "")}
+</div>
+</div>
+
+<div class="detail-row">
+<div class="detail-label">Telefon</div>
+<div class="detail-value">
+<a
+href="tel:${escapeHtml(row.phone || "")}"
+style="color:#ffd000"
+>
+${escapeHtml(row.phone || "")}
+</a>
+</div>
+</div>
+
+<div class="detail-row">
+<div class="detail-label">E-Mail</div>
+<div class="detail-value">
+${row.email
+? `<a
+href="mailto:${escapeHtml(row.email)}"
+style="color:#ffd000"
+>${escapeHtml(row.email)}</a>`
+: "Keine E-Mail angegeben."
+}
+</div>
+</div>
+
+<div class="detail-row">
+<div class="detail-label">Status</div>
+<div class="detail-value">
+<span class="badge">
+${escapeHtml(row.status || "offen")}
+</span>
+</div>
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* ZURÜCK */
+
+function showList(){
+
+detailView.classList.add("hidden");
+
+listView.classList.remove("hidden");
 
 }
 
@@ -449,27 +591,28 @@ async function loadRequests(){
 
 async function updateUI(){
 
-  const {
-    data:{
-      session
-    }
-  } = await client.auth.getSession();
+const {
+data:{
+session
+}
+} =
+await client.auth.getSession();
 
-  if(session){
+if(session){
 
-    loginBox.classList.add("hidden");
+loginBox.classList.add("hidden");
 
-    adminBox.classList.remove("hidden");
+adminBox.classList.remove("hidden");
 
-    loadRequests();
+loadRequests();
 
-  }else{
+}else{
 
-    loginBox.classList.remove("hidden");
+loginBox.classList.remove("hidden");
 
-    adminBox.classList.add("hidden");
+adminBox.classList.add("hidden");
 
-  }
+}
 
 }
 
@@ -478,62 +621,71 @@ async function updateUI(){
 
 function formatDate(value){
 
-  if(!value){
-    return "";
-  }
+if(!value){
+return "";
+}
 
-  const date =
-    new Date(value);
+const date =
+new Date(value);
 
-  return date.toLocaleString(
-    "de-DE",
-    {
-      dateStyle:"short",
-      timeStyle:"medium"
-    }
-  );
+return date.toLocaleString(
+"de-DE",
+{
+dateStyle:"short",
+timeStyle:"medium"
+}
+);
+
 }
 
 
 function escapeHtml(value){
 
-  return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+return String(value)
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
+
 }
 
 
 /* BUTTONS */
 
 document
-  .getElementById("loginBtn")
-  .addEventListener(
-    "click",
-    login
-  );
+.getElementById("loginBtn")
+.addEventListener(
+"click",
+login
+);
 
 document
-  .getElementById("logoutBtn")
-  .addEventListener(
-    "click",
-    logout
-  );
+.getElementById("logoutBtn")
+.addEventListener(
+"click",
+logout
+);
 
 document
-  .getElementById("refreshBtn")
-  .addEventListener(
-    "click",
-    loadRequests
-  );
+.getElementById("refreshBtn")
+.addEventListener(
+"click",
+loadRequests
+);
+
+document
+.getElementById("backBtn")
+.addEventListener(
+"click",
+showList
+);
 
 
 client.auth.onAuthStateChange(
-  () => {
-    updateUI();
-  }
+()=>{
+updateUI();
+}
 );
 
 
