@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0d1419"><meta name="description" content="Riemer BauConnect – Bauprojekt einstellen und passende Fachbetriebe finden.">
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon.svg">
+<title>Riemer BauConnect</title>
+<style>
+:root{--y:#f7bd19;--d:#0d1419;--g:#f4f6f7;--m:#68747d}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Arial;color:#111820;background:#fff}
+header{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #e8ebed;padding:14px 18px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:950;font-size:19px}.logo b{color:var(--y)}header a{color:#111;text-decoration:none;font-weight:800}
+.hero{padding:58px 20px 45px;background:linear-gradient(135deg,#0b1217,#26343b);color:white}.tag{color:var(--y);font-size:12px;font-weight:900;letter-spacing:1.2px}.hero h1{font-size:45px;line-height:.98;margin:13px 0}.hero h1 span{color:var(--y)}.hero p{font-size:17px;line-height:1.55;color:#dce2e5}.btn{display:block;text-align:center;background:var(--y);color:#111;padding:15px 18px;border-radius:9px;text-decoration:none;font-weight:950;border:0;font-size:16px;width:100%;cursor:pointer}.checks{display:grid;gap:8px;margin-top:18px;font-size:14px;font-weight:750}.checks span:before{content:"✓";color:var(--y);margin-right:7px}
+section{padding:42px 18px}.title{font-size:29px;margin:0 0 20px}.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}.card{padding:18px 10px;border:1px solid #ddd;border-radius:10px;text-align:center;font-weight:850;background:#fff}
+.dark{background:var(--d);color:#fff}.steps{display:grid;gap:20px}.step{display:flex;gap:14px}.num{min-width:38px;height:38px;border-radius:50%;background:var(--y);color:#111;display:grid;place-items:center;font-weight:950}.step p{color:#cbd2d6;margin-top:4px;line-height:1.45}
+.formsec{background:var(--g)}form{background:#fff;padding:18px;border-radius:13px;box-shadow:0 5px 22px #0001}label{display:block;font-weight:850;margin:13px 0 6px}input,select,textarea{width:100%;padding:13px;border:1px solid #ccd3d7;border-radius:8px;font:inherit}textarea{min-height:115px}.small{font-size:12px;color:var(--m);line-height:1.45}.ok{display:none;background:#e9f7ec;padding:13px;border-radius:8px;margin-top:12px;font-weight:800}
+nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #ddd;display:grid;grid-template-columns:repeat(3,1fr);z-index:20;padding-bottom:env(safe-area-inset-bottom)}nav a{text-align:center;padding:11px 4px;font-size:12px;text-decoration:none;color:#111;font-weight:800}nav a b{display:block;font-size:18px;margin-bottom:2px}
+footer{background:#0d1419;color:#dce2e5;padding:30px 18px 80px}.yellow{color:var(--y)}
+@media(min-width:700px){body{max-width:900px;margin:auto}.hero{padding:80px 60px}.hero h1{font-size:65px}section{padding:55px 60px}}
+</style>
+</head>
+<body>
+<header><div class="logo">RIEMER <b>BAUCONNECT</b></div><a href="#anfrage">Projekt starten</a></header>
+<section class="hero" id="home">
+<div class="tag">REGIONAL · EINFACH · DIREKT</div>
+<h1>Dein Bauprojekt.<br><span>Der passende Betrieb.</span></h1>
+<p>Beschreibe dein Bauprojekt und finde passende Fachbetriebe in deiner Region.</p>
+<a class="btn" href="#anfrage">Kostenlose Anfrage stellen →</a>
+<div class="checks"><span>Kostenlos & unverbindlich</span><span>Regionale Fachbetriebe</span><span>Einfach vom Handy</span></div>
+</section>
+
+<section id="leistungen"><h2 class="title">Was brauchst du?</h2>
+<div class="cards">
+<div class="card">🛣️<br>Straßenbau</div><div class="card">🏗️<br>Tiefbau</div>
+<div class="card">🚜<br>Erdarbeiten</div><div class="card">🧱<br>Pflaster</div>
+<div class="card">🚗<br>Einfahrt</div><div class="card">🅿️<br>Parkplatz / Hof</div>
+<div class="card">💧<br>Entwässerung</div><div class="card">🔧<br>Reparatur</div>
+</div></section>
+
+<section class="dark" id="so"><h2 class="title">So funktioniert's</h2>
+<div class="steps">
+<div class="step"><div class="num">1</div><div><b>Projekt beschreiben</b><p>Leistung, Ort, Fläche und Beschreibung angeben.</p></div></div>
+<div class="step"><div class="num">2</div><div><b>Anfrage absenden</b><p>Deine Kontaktdaten eintragen und Anfrage abschicken.</p></div></div>
+<div class="step"><div class="num">3</div><div><b>Passende Fachbetriebe</b><p>Deine Anfrage wird passenden regionalen Betrieben zugeordnet.</p></div></div>
+<div class="step"><div class="num">4</div><div><b>Angebote vergleichen</b><p>Du entscheidest selbst, welcher Betrieb für dich passt.</p></div></div>
+</div></section>
+
+<section class="formsec" id="anfrage"><h2 class="title">Projektanfrage</h2>
+<form id="f">
+<label>Leistung</label><select id="service" required><option value="">Bitte auswählen</option><option>Straßenbau</option><option>Asphaltarbeiten</option><option>Pflasterarbeiten</option><option>Erdarbeiten</option><option>Tiefbau</option><option>Entwässerung</option><option>Einfahrt</option><option>Parkplatz / Hof</option><option>Reparatur</option><option>Sonstiges</option></select>
+<label>PLZ</label><input id="plz" inputmode="numeric" maxlength="5" required placeholder="24955">
+<label>Fläche / Umfang</label><input id="area" placeholder="z. B. 120 m²">
+<label>Beschreibung</label><textarea id="desc" required placeholder="Was soll gemacht werden?"></textarea>
+<label>Name</label><input id="name" required>
+<label>Telefon</label><input id="phone" type="tel" required>
+<label>E-Mail</label><input id="email" type="email" required>
+<p class="small">Demo/MVP: Die Anfrage wird derzeit nur lokal in diesem Gerät gespeichert. Für den Livebetrieb verbinden wir das Formular mit einer sicheren Datenbank und E-Mail-/CRM-System.</p>
+<button class="btn" type="submit">Anfrage absenden →</button><div class="ok" id="ok">Anfrage auf diesem Gerät gespeichert. Für den echten Betrieb fehlt jetzt noch die sichere Online-Anbindung.</div>
+</form></section>
+
+<section><h2 class="title">Für Fachbetriebe</h2><p>Erhalte passende Bauanfragen aus deiner Region und spare Zeit bei der Kundensuche.</p><a class="btn" href="#anfrage">Als Partnerbetrieb Interesse zeigen</a></section>
+<footer><b>RIEMER <span class="yellow">BAUCONNECT</span></b><p>Starke Projekte. Starke Verbindungen.</p><p class="small">MVP – vor Veröffentlichung müssen Impressum, Datenschutz, Einwilligungen und die echte Datenverarbeitung eingerichtet werden.</p></footer>
+<nav><a href="#home"><b>⌂</b>Start</a><a href="#leistungen"><b>⌁</b>Leistungen</a><a href="#anfrage"><b>＋</b>Projekt</a></nav>
+<script>
+const f=document.querySelector('#f');
+f.addEventListener('submit',e=>{e.preventDefault();const data={service:service.value,plz:plz.value,area:area.value,desc:desc.value,name:name.value,phone:phone.value,email:email.value,created:new Date().toISOString()};localStorage.setItem('riemer_demo_lead',JSON.stringify(data));document.querySelector('#ok').style.display='block';});
+if('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js'));
+</script>
+</body></html>
