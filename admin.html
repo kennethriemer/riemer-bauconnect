@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#171717">
 
 <title>Riemer BauConnect – Admin</title>
@@ -10,366 +10,506 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:#171717;
+  color:#fff;
+  font-family:Arial,sans-serif;
 }
 
-body {
-  margin: 0;
-  background: #171717;
-  color: #fff;
-  font-family: Arial, sans-serif;
+.wrap{
+  max-width:950px;
+  margin:auto;
+  padding:24px 16px 60px;
 }
 
-.wrap {
-  max-width: 950px;
-  margin: auto;
-  padding: 20px;
+h1{
+  margin:0 0 6px;
+  font-size:30px;
 }
 
-h1 {
-  margin: 0 0 6px;
-  font-size: 28px;
+h2{
+  margin-top:0;
 }
 
-.small {
-  color: #aaa;
-  margin-bottom: 20px;
+.yellow{
+  color:#ffd400;
 }
 
-.card {
-  background: #222;
-  border: 1px solid #444;
-  border-radius: 14px;
-  padding: 18px;
-  margin-bottom: 15px;
+.small{
+  color:#aaa;
+  margin-bottom:22px;
 }
 
-input,
-button,
-select {
-  width: 100%;
-  padding: 14px;
-  border-radius: 10px;
-  border: 1px solid #555;
-  font-size: 16px;
+.card{
+  background:#222;
+  border:1px solid #333;
+  border-radius:18px;
+  padding:22px;
+  margin-bottom:18px;
 }
 
 input,
-select {
-  background: #111;
-  color: #fff;
+select,
+textarea,
+button{
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  font-size:16px;
 }
 
-button {
-  background: #ffd400;
-  color: #111;
-  border: 0;
-  font-weight: bold;
-  cursor: pointer;
+input,
+select,
+textarea{
+  background:#111;
+  color:#fff;
+  border:1px solid #444;
+  margin-bottom:12px;
 }
 
-button:hover {
-  opacity: .9;
+textarea{
+  min-height:100px;
+  resize:vertical;
 }
 
-.login {
-  max-width: 450px;
-  margin: 70px auto;
-  padding: 20px;
+button{
+  border:0;
+  background:#ffd400;
+  color:#111;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-.login input {
-  margin-bottom: 12px;
+button.secondary{
+  background:#333;
+  color:#fff;
 }
 
-.hidden {
-  display: none;
+button.danger{
+  background:#8b2222;
+  color:#fff;
 }
 
-.error {
-  color: #ff7070;
-  margin-top: 12px;
+.hidden{
+  display:none;
 }
 
-.success {
-  color: #66e08a;
-  margin-top: 12px;
+.error{
+  background:#4a2020;
+  color:#ffb0b0;
+  padding:14px;
+  border-radius:12px;
+  margin-top:12px;
 }
 
-.request {
-  cursor: pointer;
-  transition: .15s;
+.success{
+  background:#173d25;
+  color:#9ff0b5;
+  padding:14px;
+  border-radius:12px;
+  margin-top:12px;
 }
 
-.request:hover {
-  border-color: #ffd400;
-  transform: translateY(-1px);
+.actions{
+  display:flex;
+  gap:10px;
+  margin-bottom:18px;
 }
 
-.request-title {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 8px;
+.actions button{
+  flex:1;
 }
 
-.request-info {
-  color: #bbb;
-  line-height: 1.6;
+.request,
+.firm{
+  background:#292929;
+  border:1px solid #444;
+  border-radius:14px;
+  padding:16px;
+  margin:10px 0;
 }
 
-.status {
-  display: inline-block;
-  padding: 7px 12px;
-  border-radius: 20px;
-  margin-top: 10px;
-  font-size: 14px;
-  font-weight: bold;
+.request{
+  cursor:pointer;
 }
 
-.status-neu {
-  background: #d8aa00;
-  color: #111;
+.request:active,
+.firm:active{
+  transform:scale(.99);
 }
 
-.status-kontakt {
-  background: #2478d8;
+.request-top{
+  display:grid;
+  grid-template-columns:1.2fr 1fr 1fr;
+  gap:12px;
 }
 
-.status-angebot {
-  background: #e87818;
+.label{
+  color:#ffd400;
+  font-size:13px;
+  margin-bottom:4px;
 }
 
-.status-auftrag {
-  background: #239447;
+.value{
+  font-size:17px;
+  font-weight:bold;
 }
 
-.status-erledigt {
-  background: #555;
+.muted{
+  color:#aaa;
+  margin-top:4px;
 }
 
-.detail-row {
-  border-bottom: 1px solid #444;
-  padding: 12px 0;
+.detail{
+  background:#292929;
+  border-radius:14px;
+  padding:18px;
+  margin-top:15px;
 }
 
-.detail-label {
-  color: #aaa;
-  font-size: 13px;
-  margin-bottom: 4px;
+.detail-row{
+  padding:13px 0;
+  border-bottom:1px solid #444;
 }
 
-.detail-value {
-  white-space: pre-wrap;
-  word-break: break-word;
+.detail-row:last-child{
+  border-bottom:0;
 }
 
-.back {
-  background: #333;
-  color: #fff;
-  margin-bottom: 15px;
+.detail-label{
+  color:#ffd400;
+  font-size:13px;
+  margin-bottom:5px;
 }
 
-.logout {
-  background: #333;
-  color: #fff;
-  margin-top: 10px;
+.detail-value{
+  font-size:17px;
+  word-break:break-word;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
+.status{
+  display:inline-block;
+  padding:7px 12px;
+  border-radius:20px;
+  margin-top:8px;
+  font-size:14px;
+  font-weight:bold;
 }
 
-.header button {
-  width: auto;
-  padding: 10px 16px;
+.status-neu{
+  background:#d8aa00;
+  color:#111;
 }
 
-.loading {
-  color: #aaa;
-  padding: 20px 0;
+.status-kontakt{
+  background:#2478d8;
+  color:#fff;
 }
 
-.empty {
-  color: #aaa;
-  text-align: center;
-  padding: 30px;
+.status-angebot{
+  background:#e87818;
+  color:#fff;
+}
+
+.status-auftrag{
+  background:#239447;
+  color:#fff;
+}
+
+.status-erledigt{
+  background:#555;
+  color:#fff;
+}
+
+.firm-title{
+  font-size:19px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.firm-info{
+  color:#bbb;
+  line-height:1.6;
+}
+
+.match{
+  border:1px solid #ffd400;
+  border-radius:14px;
+  padding:15px;
+  margin-top:10px;
+  background:#252525;
+}
+
+.match-title{
+  font-size:18px;
+  font-weight:bold;
+}
+
+.nav{
+  display:flex;
+  gap:10px;
+  margin-bottom:18px;
+}
+
+.nav button{
+  flex:1;
+}
+
+.login{
+  max-width:500px;
+  margin:60px auto;
+}
+
+@media(max-width:650px){
+
+  .request-top{
+    grid-template-columns:1fr;
+  }
+
+  .actions{
+    flex-direction:column;
+  }
+
+  .nav{
+    flex-direction:column;
+  }
 }
 </style>
 </head>
 
 <body>
 
+<div class="wrap">
+
+<h1>
+RIEMER <span class="yellow">BAUCONNECT</span>
+</h1>
+
+<div class="small">
+Verwaltungsbereich
+</div>
+
+
 <!-- LOGIN -->
-<div id="loginScreen" class="login">
 
-  <div class="card">
+<section id="loginCard" class="card login">
 
-    <h1>Riemer BauConnect</h1>
-    <div class="small">Adminbereich</div>
+<h2>Admin Login</h2>
 
-    <input
-      id="email"
-      type="email"
-      placeholder="E-Mail"
-      autocomplete="username"
-    >
+<input
+id="email"
+type="email"
+placeholder="E-Mail"
+autocomplete="username"
+>
 
-    <input
-      id="password"
-      type="password"
-      placeholder="Passwort"
-      autocomplete="current-password"
-    >
+<input
+id="password"
+type="password"
+placeholder="Passwort"
+autocomplete="current-password"
+>
 
-    <button onclick="login()">
-      Einloggen
-    </button>
+<button id="loginButton">
+Einloggen
+</button>
 
-    <div id="loginError" class="error"></div>
+<div id="loginError" class="error hidden"></div>
 
-  </div>
+</section>
+
+
+<!-- ADMIN -->
+
+<section id="adminArea" class="hidden">
+
+
+<div class="actions">
+
+<button
+class="secondary"
+id="refreshButton"
+>
+Aktualisieren
+</button>
+
+<button
+class="secondary"
+id="logoutButton"
+>
+Abmelden
+</button>
 
 </div>
 
 
-<!-- ADMIN -->
-<div id="adminScreen" class="wrap hidden">
+<!-- NAVIGATION -->
 
-  <div class="header">
+<div class="nav">
 
-    <div>
-      <h1>Riemer BauConnect</h1>
-      <div class="small">
-        Bauanfragen verwalten
-      </div>
-    </div>
+<button id="requestsTab">
+🏗️ Bauanfragen
+</button>
 
-    <button onclick="logout()">
-      Abmelden
-    </button>
+<button
+class="secondary"
+id="firmsTab"
+>
+🏢 Fachbetriebe
+</button>
 
-  </div>
-
-
-  <!-- LISTE -->
-  <div id="listView">
-
-    <div class="card">
-
-      <h2>Bauanfragen</h2>
-
-      <div id="loading" class="loading">
-        Lade Bauanfragen...
-      </div>
-
-      <div id="requests"></div>
-
-    </div>
-
-  </div>
+</div>
 
 
-  <!-- DETAIL -->
-  <div id="detailView" class="hidden">
+<!-- ==================== BAUANFRAGEN ==================== -->
 
-    <button class="back" onclick="showList()">
-      ← Zurück zu den Bauanfragen
-    </button>
+<div id="requestsArea">
 
-    <div class="card">
+<div id="listView" class="card">
 
-      <h2 id="detailTitle">
-        Bauanfrage
-      </h2>
+<h2>Bauanfragen</h2>
 
-      <div class="detail-row">
-        <div class="detail-label">Leistung</div>
-        <div id="detailService" class="detail-value"></div>
-      </div>
+<div id="loading">
+Lade Bauanfragen …
+</div>
 
-      <div class="detail-row">
-        <div class="detail-label">Datum</div>
-        <div id="detailDate" class="detail-value"></div>
-      </div>
+<div id="requestList"></div>
 
-      <div class="detail-row">
-        <div class="detail-label">PLZ</div>
-        <div id="detailPlz" class="detail-value"></div>
-      </div>
+<div id="listError" class="error hidden"></div>
 
-      <div class="detail-row">
-        <div class="detail-label">Ort / Bereich</div>
-        <div id="detailArea" class="detail-value"></div>
-      </div>
+</div>
 
-      <div class="detail-row">
-        <div class="detail-label">Beschreibung</div>
-        <div id="detailDescription" class="detail-value"></div>
-      </div>
 
-      <div class="detail-row">
-        <div class="detail-label">Name</div>
-        <div id="detailName" class="detail-value"></div>
-      </div>
+<div id="detailView" class="card hidden">
 
-      <div class="detail-row">
-        <div class="detail-label">Telefon</div>
-        <div id="detailPhone" class="detail-value"></div>
-      </div>
+<div class="actions">
 
-      <div class="detail-row">
-        <div class="detail-label">E-Mail</div>
-        <div id="detailEmail" class="detail-value"></div>
-      </div>
+<button
+class="secondary"
+id="backButton"
+>
+← Zurück
+</button>
 
-      <div class="detail-row">
+</div>
 
-        <div class="detail-label">
-          Status ändern
-        </div>
+<h2>Bauanfrage</h2>
 
-        <select id="statusSelect">
+<div id="detailContent"></div>
 
-          <option value="neu">
-            🟡 Neu
-          </option>
+</div>
 
-          <option value="kontakt">
-            🔵 Kontakt aufgenommen
-          </option>
+</div>
 
-          <option value="angebot">
-            🟠 Angebot
-          </option>
 
-          <option value="auftrag">
-            🟢 Auftrag
-          </option>
+<!-- ==================== FACHBETRIEBE ==================== -->
 
-          <option value="erledigt">
-            ⚫ Erledigt
-          </option>
+<div id="firmsArea" class="hidden">
 
-        </select>
 
-        <br><br>
+<div class="card">
 
-        <button onclick="saveStatus()">
-          Status speichern
-        </button>
+<h2>🏢 Fachbetriebe</h2>
 
-        <div id="statusMessage"></div>
+<button id="newFirmButton">
+➕ Fachbetrieb hinzufügen
+</button>
 
-      </div>
+<div id="firmError" class="error hidden"></div>
 
-    </div>
+</div>
 
-  </div>
+
+<!-- FACHBETRIEB FORMULAR -->
+
+<div id="firmForm" class="card hidden">
+
+<h2>Fachbetrieb anlegen</h2>
+
+<input
+id="firmName"
+placeholder="Firmenname"
+>
+
+<input
+id="firmOwner"
+placeholder="Ansprechpartner / Inhaber"
+>
+
+<input
+id="firmEmail"
+type="email"
+placeholder="E-Mail"
+>
+
+<input
+id="firmPhone"
+placeholder="Telefon"
+>
+
+<input
+id="firmPlz"
+placeholder="PLZ"
+inputmode="numeric"
+>
+
+<input
+id="firmCity"
+placeholder="Ort"
+>
+
+<textarea
+id="firmServices"
+placeholder="Leistungen, z. B. Straßenbau, Asphaltarbeiten, Pflasterarbeiten"
+></textarea>
+
+<input
+id="firmRadius"
+type="number"
+placeholder="Radius in km"
+value="30"
+>
+
+<div class="actions">
+
+<button id="saveFirmButton">
+Fachbetrieb speichern
+</button>
+
+<button
+class="secondary"
+id="cancelFirmButton"
+>
+Abbrechen
+</button>
+
+</div>
+
+<div id="firmFormMessage"></div>
+
+</div>
+
+
+<!-- FIRMENLISTE -->
+
+<div class="card">
+
+<h2>Meine Fachbetriebe</h2>
+
+<div id="firmLoading">
+Lade Fachbetriebe …
+</div>
+
+<div id="firmList"></div>
+
+</div>
+
+</div>
+
+</section>
 
 </div>
 
@@ -377,411 +517,1292 @@ button:hover {
 <script>
 
 const SUPABASE_URL =
-  "https://ehzugjmltfcvllftpjpp.supabase.co";
+"https://ehzugjmltfcvllftpjpp.supabase.co";
 
 const SUPABASE_KEY =
-  "sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
+"sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
 
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
-
-
-let currentRequest = null;
+const db =
+supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
 
 
-/* LOGIN */
+/* ELEMENTE */
 
-async function login() {
+const loginCard =
+document.getElementById("loginCard");
 
-  const email =
-    document.getElementById("email").value.trim();
+const adminArea =
+document.getElementById("adminArea");
 
-  const password =
-    document.getElementById("password").value;
+const loginButton =
+document.getElementById("loginButton");
 
-  const error =
-    document.getElementById("loginError");
+const logoutButton =
+document.getElementById("logoutButton");
 
-  error.textContent = "";
+const refreshButton =
+document.getElementById("refreshButton");
 
-  if (!email || !password) {
+const requestsTab =
+document.getElementById("requestsTab");
 
-    error.textContent =
-      "Bitte E-Mail und Passwort eingeben.";
+const firmsTab =
+document.getElementById("firmsTab");
 
-    return;
-  }
+const requestsArea =
+document.getElementById("requestsArea");
 
-  const { error: loginError } =
-    await supabaseClient.auth.signInWithPassword({
-      email,
-      password
-    });
+const firmsArea =
+document.getElementById("firmsArea");
 
-  if (loginError) {
+const listView =
+document.getElementById("listView");
 
-    error.textContent =
-      loginError.message;
+const detailView =
+document.getElementById("detailView");
 
-    return;
-  }
+const requestList =
+document.getElementById("requestList");
 
-  showAdmin();
+const detailContent =
+document.getElementById("detailContent");
 
+const loading =
+document.getElementById("loading");
+
+const loginError =
+document.getElementById("loginError");
+
+const listError =
+document.getElementById("listError");
+
+const firmList =
+document.getElementById("firmList");
+
+const firmLoading =
+document.getElementById("firmLoading");
+
+const firmForm =
+document.getElementById("firmForm");
+
+const firmError =
+document.getElementById("firmError");
+
+const firmFormMessage =
+document.getElementById("firmFormMessage");
+
+
+/* SICHERHEIT */
+
+function escapeHtml(value){
+
+if(
+value === null ||
+value === undefined
+){
+return "";
 }
 
-
-/* LOGOUT */
-
-async function logout() {
-
-  await supabaseClient.auth.signOut();
-
-  document
-    .getElementById("adminScreen")
-    .classList.add("hidden");
-
-  document
-    .getElementById("loginScreen")
-    .classList.remove("hidden");
-
-}
-
-
-/* ADMIN ANZEIGEN */
-
-function showAdmin() {
-
-  document
-    .getElementById("loginScreen")
-    .classList.add("hidden");
-
-  document
-    .getElementById("adminScreen")
-    .classList.remove("hidden");
-
-  loadRequests();
-
-}
-
-
-/* BAUANFRAGEN LADEN */
-
-async function loadRequests() {
-
-  const loading =
-    document.getElementById("loading");
-
-  const container =
-    document.getElementById("requests");
-
-  loading.style.display = "block";
-
-  container.innerHTML = "";
-
-  const { data, error } =
-    await supabaseClient
-      .from("bauanfragen")
-      .select("*")
-      .order("created_at", {
-        ascending: false
-      });
-
-  loading.style.display = "none";
-
-  if (error) {
-
-    container.innerHTML =
-      `<div class="error">
-        Fehler beim Laden: ${escapeHtml(error.message)}
-      </div>`;
-
-    return;
-  }
-
-  if (!data || data.length === 0) {
-
-    container.innerHTML =
-      `<div class="empty">
-        Keine Bauanfragen vorhanden.
-      </div>`;
-
-    return;
-  }
-
-  data.forEach(request => {
-
-    const item =
-      document.createElement("div");
-
-    item.className =
-      "card request";
-
-    const status =
-      request.status || "neu";
-
-    item.innerHTML = `
-
-      <div class="request-title">
-        ${escapeHtml(request.service || "Bauanfrage")}
-      </div>
-
-      <div class="request-info">
-        PLZ: ${escapeHtml(request.plz || "-")}<br>
-        ${escapeHtml(request.name || "-")}<br>
-        ${formatDate(request.created_at)}
-      </div>
-
-      <span class="status ${getStatusClass(status)}">
-        ${getStatusText(status)}
-      </span>
-
-    `;
-
-    item.addEventListener(
-      "click",
-      () => showDetail(request)
-    );
-
-    container.appendChild(item);
-
-  });
-
-}
-
-
-/* DETAIL ANZEIGEN */
-
-function showDetail(request) {
-
-  currentRequest = request;
-
-  document
-    .getElementById("listView")
-    .classList.add("hidden");
-
-  document
-    .getElementById("detailView")
-    .classList.remove("hidden");
-
-  document.getElementById("detailTitle")
-    .textContent =
-      request.service || "Bauanfrage";
-
-  document.getElementById("detailService")
-    .textContent =
-      request.service || "-";
-
-  document.getElementById("detailDate")
-    .textContent =
-      formatDate(request.created_at);
-
-  document.getElementById("detailPlz")
-    .textContent =
-      request.plz || "-";
-
-  document.getElementById("detailArea")
-    .textContent =
-      request.area || "-";
-
-  document.getElementById("detailDescription")
-    .textContent =
-      request.description || "-";
-
-  document.getElementById("detailName")
-    .textContent =
-      request.name || "-";
-
-  document.getElementById("detailPhone")
-    .textContent =
-      request.phone || "-";
-
-  document.getElementById("detailEmail")
-    .textContent =
-      request.email || "-";
-
-  document.getElementById("statusSelect")
-    .value =
-      request.status || "neu";
-
-  document.getElementById("statusMessage")
-    .textContent = "";
-
-}
-
-
-/* ZURÜCK */
-
-function showList() {
-
-  document
-    .getElementById("detailView")
-    .classList.add("hidden");
-
-  document
-    .getElementById("listView")
-    .classList.remove("hidden");
-
-  currentRequest = null;
-
-}
-
-
-/* STATUS SPEICHERN */
-
-async function saveStatus() {
-
-  if (!currentRequest) {
-    return;
-  }
-
-  const status =
-    document.getElementById("statusSelect").value;
-
-  const message =
-    document.getElementById("statusMessage");
-
-  message.className = "";
-  message.textContent =
-    "Speichere...";
-
-  const { error } =
-    await supabaseClient
-      .from("bauanfragen")
-      .update({
-        status: status
-      })
-      .eq("id", currentRequest.id);
-
-  if (error) {
-
-    message.className =
-      "error";
-
-    message.textContent =
-      "Fehler: " + error.message;
-
-    return;
-  }
-
-  currentRequest.status = status;
-
-  message.className =
-    "success";
-
-  message.textContent =
-    "Status erfolgreich gespeichert.";
-
-}
-
-
-/* STATUS-TEXT */
-
-function getStatusText(status) {
-
-  switch (status) {
-
-    case "kontakt":
-      return "🔵 Kontakt aufgenommen";
-
-    case "angebot":
-      return "🟠 Angebot";
-
-    case "auftrag":
-      return "🟢 Auftrag";
-
-    case "erledigt":
-      return "⚫ Erledigt";
-
-    default:
-      return "🟡 Neu";
-
-  }
-
-}
-
-
-/* STATUS-KLASSE */
-
-function getStatusClass(status) {
-
-  switch (status) {
-
-    case "kontakt":
-      return "status-kontakt";
-
-    case "angebot":
-      return "status-angebot";
-
-    case "auftrag":
-      return "status-auftrag";
-
-    case "erledigt":
-      return "status-erledigt";
-
-    default:
-      return "status-neu";
-
-  }
+return String(value)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
 
 }
 
 
 /* DATUM */
 
-function formatDate(value) {
+function formatDate(value){
 
-  if (!value) {
-    return "-";
-  }
+if(!value){
+return "-";
+}
 
-  const date =
-    new Date(value);
+const date =
+new Date(value);
 
-  return date.toLocaleString(
-    "de-DE",
-    {
-      dateStyle: "short",
-      timeStyle: "medium"
-    }
-  );
+return date.toLocaleString(
+"de-DE",
+{
+dateStyle:"short",
+timeStyle:"short"
+}
+);
 
 }
 
 
-/* SICHERHEIT */
+/* STATUS TEXT */
 
-function escapeHtml(value) {
+function statusText(status){
 
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+switch(status){
+
+case "kontakt":
+return "🔵 Kontakt aufgenommen";
+
+case "angebot":
+return "🟠 Angebot";
+
+case "auftrag":
+return "🟢 Auftrag";
+
+case "erledigt":
+return "⚫ Erledigt";
+
+default:
+return "🟡 Neu";
+
+}
 
 }
 
 
-/* SESSION PRÜFEN */
+/* STATUS KLASSE */
 
-async function checkSession() {
+function statusClass(status){
 
-  const {
-    data
-  } = await supabaseClient.auth.getSession();
+switch(status){
 
-  if (data.session) {
+case "kontakt":
+return "status-kontakt";
 
-    showAdmin();
+case "angebot":
+return "status-angebot";
 
-  }
+case "auftrag":
+return "status-auftrag";
+
+case "erledigt":
+return "status-erledigt";
+
+default:
+return "status-neu";
 
 }
 
+}
+
+
+/* SESSION */
+
+async function checkSession(){
+
+const {
+data
+} =
+await db.auth.getSession();
+
+if(data.session){
+
+loginCard.classList.add("hidden");
+
+adminArea.classList.remove("hidden");
+
+loadRequests();
+
+loadFirms();
+
+}else{
+
+loginCard.classList.remove("hidden");
+
+adminArea.classList.add("hidden");
+
+}
+
+}
+
+
+/* LOGIN */
+
+loginButton.addEventListener(
+"click",
+async () => {
+
+loginError.classList.add("hidden");
+
+const email =
+document
+.getElementById("email")
+.value
+.trim();
+
+const password =
+document
+.getElementById("password")
+.value;
+
+if(!email || !password){
+
+loginError.textContent =
+"Bitte E-Mail und Passwort eingeben.";
+
+loginError.classList.remove("hidden");
+
+return;
+
+}
+
+loginButton.disabled = true;
+
+loginButton.textContent =
+"Einloggen …";
+
+const {
+error
+} =
+await db.auth.signInWithPassword({
+
+email,
+password
+
+});
+
+loginButton.disabled = false;
+
+loginButton.textContent =
+"Einloggen";
+
+if(error){
+
+loginError.textContent =
+"Login fehlgeschlagen: " +
+error.message;
+
+loginError.classList.remove("hidden");
+
+return;
+
+}
+
+checkSession();
+
+}
+);
+
+
+/* LOGOUT */
+
+logoutButton.addEventListener(
+"click",
+async () => {
+
+await db.auth.signOut();
+
+detailView.classList.add("hidden");
+
+listView.classList.remove("hidden");
+
+checkSession();
+
+}
+);
+
+
+/* AKTUALISIEREN */
+
+refreshButton.addEventListener(
+"click",
+() => {
+
+loadRequests();
+
+loadFirms();
+
+}
+);
+
+
+/* TABS */
+
+requestsTab.addEventListener(
+"click",
+() => {
+
+requestsArea.classList.remove("hidden");
+
+firmsArea.classList.add("hidden");
+
+requestsTab.classList.remove("secondary");
+
+firmsTab.classList.add("secondary");
+
+}
+);
+
+
+firmsTab.addEventListener(
+"click",
+() => {
+
+requestsArea.classList.add("hidden");
+
+firmsArea.classList.remove("hidden");
+
+requestsTab.classList.add("secondary");
+
+firmsTab.classList.remove("secondary");
+
+loadFirms();
+
+}
+);
+
+
+/* ZURÜCK */
+
+document
+.getElementById("backButton")
+.addEventListener(
+"click",
+() => {
+
+detailView.classList.add("hidden");
+
+listView.classList.remove("hidden");
+
+}
+);
+
+
+/* =========================
+   BAUANFRAGEN LADEN
+========================= */
+
+async function loadRequests(){
+
+loading.style.display =
+"block";
+
+requestList.innerHTML =
+"";
+
+listError.classList.add("hidden");
+
+const {
+data,
+error
+} =
+await db
+.from("bauanfragen")
+.select("*")
+.order(
+"created_at",
+{
+ascending:false
+}
+);
+
+loading.style.display =
+"none";
+
+if(error){
+
+listError.textContent =
+"Fehler beim Laden: " +
+error.message;
+
+listError.classList.remove("hidden");
+
+return;
+
+}
+
+
+if(!data || data.length === 0){
+
+requestList.innerHTML =
+'<p class="muted">Noch keine Bauanfragen vorhanden.</p>';
+
+return;
+
+}
+
+
+data.forEach(
+request => {
+
+const item =
+document.createElement("div");
+
+item.className =
+"request";
+
+
+item.innerHTML = `
+
+<div class="request-top">
+
+<div>
+
+<div class="label">
+Datum
+</div>
+
+<div class="value">
+${escapeHtml(
+formatDate(request.created_at)
+)}
+</div>
+
+</div>
+
+
+<div>
+
+<div class="label">
+Leistung
+</div>
+
+<div class="value">
+${escapeHtml(request.service)}
+</div>
+
+<div class="muted">
+${escapeHtml(
+request.description || ""
+)}
+</div>
+
+</div>
+
+
+<div>
+
+<div class="label">
+PLZ
+</div>
+
+<div class="value">
+${escapeHtml(request.plz)}
+</div>
+
+<span class="status ${
+statusClass(request.status)
+}">
+${escapeHtml(
+statusText(request.status)
+)}
+</span>
+
+</div>
+
+</div>
+
+`;
+
+
+item.addEventListener(
+"click",
+() => {
+
+showDetail(request);
+
+}
+);
+
+
+requestList.appendChild(item);
+
+}
+
+);
+
+}
+
+
+/* =========================
+   ANFRAGE DETAIL
+========================= */
+
+async function showDetail(request){
+
+listView.classList.add("hidden");
+
+detailView.classList.remove("hidden");
+
+
+detailContent.innerHTML = `
+
+<div class="detail">
+
+<div class="detail-row">
+
+<div class="detail-label">
+Leistung
+</div>
+
+<div class="detail-value">
+${escapeHtml(request.service)}
+</div>
+
+</div>
+
+
+<div class="detail-row">
+
+<div class="detail-label">
+Datum
+</div>
+
+<div class="detail-value">
+${escapeHtml(
+formatDate(request.created_at)
+)}
+</div>
+
+</div>
+
+
+<div class="detail-row">
+
+<div class="detail-label">
+PLZ
+</div>
+
+<div class="detail-value">
+${escapeHtml(request.plz)}
+</div>
+
+</div>
+
+
+<div class="detail-row">
+
+<div class="detail-label">
+Bereich
+</div>
+
+<div class="detail-value">
+${escapeHtml(
+request.area || "-"
+)}
+</div>
+
+</div>
+
+
+<div class="detail-row">
+
+<div class="detail-label">
+Beschreibung
+</div>
+
+<div class="detail-value">
+${escapeHtml(
+request.description || "-"
+)}
+</div>
+
+</div>
+
+
+<div class="detail-row">
+
+<div class="detail-label">
+Kunde
+</div>
+
+<div class="detail-value">
+${escapeHtml(request.name)}
+</div>
+
+</div>
+
+
+<div class="detail-row">
+
+<div class="detail-label">
+Telefon
+</div>
+
+<div class="detail-value">
+${escapeHtml(request.phone)}
+</div>
+
+</div>
+
+
+<div class="detail-row">
+
+<div class="detail-label">
+E-Mail
+</div>
+
+<div class="detail-value">
+${escapeHtml(
+request.email || "-"
+)}
+</div>
+
+</div>
+
+
+<div class="detail-row">
+
+<div class="detail-label">
+Status
+</div>
+
+<select id="requestStatus">
+
+<option value="neu">
+🟡 Neu
+</option>
+
+<option value="kontakt">
+🔵 Kontakt aufgenommen
+</option>
+
+<option value="angebot">
+🟠 Angebot
+</option>
+
+<option value="auftrag">
+🟢 Auftrag
+</option>
+
+<option value="erledigt">
+⚫ Erledigt
+</option>
+
+</select>
+
+<button
+id="saveStatusButton"
+>
+Status speichern
+</button>
+
+<div
+id="statusMessage"
+class="hidden"
+></div>
+
+</div>
+
+
+<div class="detail-row">
+
+<div class="detail-label">
+Passende Fachbetriebe
+</div>
+
+<div id="matches">
+Suche passende Fachbetriebe …
+</div>
+
+</div>
+
+
+</div>
+
+`;
+
+
+const select =
+document.getElementById(
+"requestStatus"
+);
+
+select.value =
+request.status || "neu";
+
+
+document
+.getElementById("saveStatusButton")
+.addEventListener(
+"click",
+async () => {
+
+await saveStatus(request);
+
+}
+);
+
+
+loadMatches(request);
+
+}
+
+
+/* =========================
+   STATUS SPEICHERN
+========================= */
+
+async function saveStatus(request){
+
+const select =
+document.getElementById(
+"requestStatus"
+);
+
+const message =
+document.getElementById(
+"statusMessage"
+);
+
+const status =
+select.value;
+
+
+message.className =
+"success";
+
+message.textContent =
+"Speichere …";
+
+
+const {
+error
+} =
+await db
+.from("bauanfragen")
+.update({
+status:status
+})
+.eq("id",request.id);
+
+
+if(error){
+
+message.className =
+"error";
+
+message.textContent =
+"Fehler: " +
+error.message;
+
+return;
+
+}
+
+
+message.className =
+"success";
+
+message.textContent =
+"Status erfolgreich gespeichert.";
+
+}
+
+
+/* =========================
+   FACHBETRIEBE LADEN
+========================= */
+
+async function loadFirms(){
+
+firmLoading.style.display =
+"block";
+
+firmList.innerHTML =
+"";
+
+firmError.classList.add("hidden");
+
+
+const {
+data,
+error
+} =
+await db
+.from("fachbetriebe")
+.select("*")
+.order(
+"created_at",
+{
+ascending:false
+}
+);
+
+
+firmLoading.style.display =
+"none";
+
+
+if(error){
+
+firmError.textContent =
+"Fehler beim Laden: " +
+error.message;
+
+firmError.classList.remove("hidden");
+
+return;
+
+}
+
+
+if(!data || data.length === 0){
+
+firmList.innerHTML =
+'<p class="muted">Noch keine Fachbetriebe vorhanden.</p>';
+
+return;
+
+}
+
+
+data.forEach(
+firm => {
+
+const item =
+document.createElement("div");
+
+item.className =
+"firm";
+
+
+item.innerHTML = `
+
+<div class="firm-title">
+🏢 ${escapeHtml(
+firm.firma || "-"
+)}
+</div>
+
+<div class="firm-info">
+
+Ansprechpartner:
+${escapeHtml(
+firm.inhaber || "-"
+)}
+
+<br>
+
+📍 ${escapeHtml(
+firm.plz || "-"
+)}
+${firm.ort ?
+" – " +
+escapeHtml(firm.ort)
+:
+""}
+
+<br>
+
+📞 ${escapeHtml(
+firm.telefon || "-"
+)}
+
+<br>
+
+📧 ${escapeHtml(
+firm.email || "-"
+)}
+
+<br>
+
+🔧 ${escapeHtml(
+firm.leistungen || "-"
+)}
+
+<br>
+
+📏 Radius:
+${escapeHtml(
+firm.radius_km || 30
+)} km
+
+</div>
+
+`;
+
+firmList.appendChild(item);
+
+}
+
+);
+
+}
+
+
+/* =========================
+   FACHBETRIEB FORMULAR
+========================= */
+
+document
+.getElementById("newFirmButton")
+.addEventListener(
+"click",
+() => {
+
+firmForm.classList.remove("hidden");
+
+firmFormMessage.className =
+"";
+
+firmFormMessage.textContent =
+"";
+
+}
+);
+
+
+/* ABBRECHEN */
+
+document
+.getElementById("cancelFirmButton")
+.addEventListener(
+"click",
+() => {
+
+firmForm.classList.add("hidden");
+
+}
+);
+
+
+/* =========================
+   FACHBETRIEB SPEICHERN
+========================= */
+
+document
+.getElementById("saveFirmButton")
+.addEventListener(
+"click",
+async () => {
+
+firmFormMessage.className =
+"";
+
+firmFormMessage.textContent =
+"Speichere …";
+
+
+const firma =
+document
+.getElementById("firmName")
+.value
+.trim();
+
+const inhaber =
+document
+.getElementById("firmOwner")
+.value
+.trim();
+
+const email =
+document
+.getElementById("firmEmail")
+.value
+.trim();
+
+const telefon =
+document
+.getElementById("firmPhone")
+.value
+.trim();
+
+const plz =
+document
+.getElementById("firmPlz")
+.value
+.trim();
+
+const ort =
+document
+.getElementById("firmCity")
+.value
+.trim();
+
+const leistungen =
+document
+.getElementById("firmServices")
+.value
+.trim();
+
+const radius =
+parseInt(
+document
+.getElementById("firmRadius")
+.value
+) || 30;
+
+
+if(!firma || !plz){
+
+firmFormMessage.className =
+"error";
+
+firmFormMessage.textContent =
+"Bitte mindestens Firmenname und PLZ ausfüllen.";
+
+return;
+
+}
+
+
+const {
+error
+} =
+await db
+.from("fachbetriebe")
+.insert({
+
+firma:firma,
+
+inhaber:inhaber,
+
+email:email,
+
+telefon:telefon,
+
+plz:plz,
+
+ort:ort,
+
+leistungen:leistungen,
+
+radius_km:radius
+
+});
+
+
+if(error){
+
+firmFormMessage.className =
+"error";
+
+firmFormMessage.textContent =
+"Fehler: " +
+error.message;
+
+return;
+
+}
+
+
+firmFormMessage.className =
+"success";
+
+firmFormMessage.textContent =
+"Fachbetrieb erfolgreich gespeichert.";
+
+
+/* FELDER LEEREN */
+
+document
+.getElementById("firmName")
+.value="";
+
+document
+.getElementById("firmOwner")
+.value="";
+
+document
+.getElementById("firmEmail")
+.value="";
+
+document
+.getElementById("firmPhone")
+.value="";
+
+document
+.getElementById("firmPlz")
+.value="";
+
+document
+.getElementById("firmCity")
+.value="";
+
+document
+.getElementById("firmServices")
+.value="";
+
+document
+.getElementById("firmRadius")
+.value="30";
+
+
+loadFirms();
+
+}
+);
+
+
+/* =========================
+   MATCHING
+========================= */
+
+async function loadMatches(request){
+
+const container =
+document.getElementById("matches");
+
+if(!container){
+return;
+}
+
+
+const {
+data,
+error
+} =
+await db
+.from("fachbetriebe")
+.select("*");
+
+
+if(error){
+
+container.innerHTML =
+`<div class="error">
+${escapeHtml(error.message)}
+</div>`;
+
+return;
+
+}
+
+
+const requestPlz =
+String(
+request.plz || ""
+).trim();
+
+
+const service =
+String(
+request.service || ""
+).toLowerCase();
+
+
+const firms =
+(data || [])
+.filter(
+firm => {
+
+const firmPlz =
+String(
+firm.plz || ""
+).trim();
+
+const services =
+String(
+firm.leistungen || ""
+).toLowerCase();
+
+
+const plzMatch =
+firmPlz.substring(0,2) ===
+requestPlz.substring(0,2);
+
+
+const serviceWords =
+service
+.split(/[\s,/]+/)
+.filter(word =>
+word.length > 3
+);
+
+
+const serviceMatch =
+serviceWords.length === 0
+||
+serviceWords.some(
+word =>
+services.includes(word)
+);
+
+
+return plzMatch && serviceMatch;
+
+}
+);
+
+
+if(firms.length === 0){
+
+container.innerHTML =
+`<p class="muted">
+Keine passenden Fachbetriebe gefunden.
+</p>`;
+
+return;
+
+}
+
+
+container.innerHTML =
+"";
+
+
+firms.forEach(
+firm => {
+
+const match =
+document.createElement("div");
+
+match.className =
+"match";
+
+
+match.innerHTML = `
+
+<div class="match-title">
+🏢 ${escapeHtml(
+firm.firma || "-"
+)}
+</div>
+
+<div class="firm-info">
+
+📍 ${escapeHtml(
+firm.plz || "-"
+)}
+${firm.ort ?
+" – " +
+escapeHtml(firm.ort)
+:
+""}
+
+<br>
+
+📞 ${escapeHtml(
+firm.telefon || "-"
+)}
+
+<br>
+
+📧 ${escapeHtml(
+firm.email || "-"
+)}
+
+<br>
+
+🔧 ${escapeHtml(
+firm.leistungen || "-"
+)}
+
+<br>
+
+📏 ${escapeHtml(
+firm.radius_km || 30
+)} km Radius
+
+</div>
+
+`;
+
+container.appendChild(match);
+
+}
+
+);
+
+}
+
+
+/* START */
 
 checkSession();
 
