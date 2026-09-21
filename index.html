@@ -1,84 +1,598 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0d1419"><link rel="manifest" href="manifest.webmanifest">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0d1419">
 <title>Riemer BauConnect</title>
+
 <style>
-:root{--y:#f7bd19;--d:#0d1419;--g:#f4f6f7;--m:#68747d}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Arial;color:#111820;background:#fff}
-header{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #e8ebed;padding:14px 18px;display:flex;justify-content:space-between;align-items:center}.logo{font-weight:950;font-size:19px}.logo b{color:var(--y)}header a{color:#111;text-decoration:none;font-weight:800}
-.hero{padding:55px 20px 42px;background:linear-gradient(135deg,#0b1217,#26343b);color:white}.tag{color:var(--y);font-size:12px;font-weight:900;letter-spacing:1.2px}.hero h1{font-size:43px;line-height:.98;margin:13px 0}.hero h1 span{color:var(--y)}.hero p{font-size:17px;line-height:1.55;color:#dce2e5}.btn{display:block;text-align:center;background:var(--y);color:#111;padding:15px 18px;border-radius:9px;text-decoration:none;font-weight:950;border:0;font-size:16px;width:100%;cursor:pointer}.checks{display:grid;gap:8px;margin-top:18px;font-size:14px;font-weight:750}.checks span:before{content:"✓";color:var(--y);margin-right:7px}
-section{padding:42px 18px}.title{font-size:29px;margin:0 0 20px}.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}.card{padding:18px 10px;border:1px solid #ddd;border-radius:10px;text-align:center;font-weight:850;background:#fff}
-.dark{background:var(--d);color:#fff}.steps{display:grid;gap:20px}.step{display:flex;gap:14px}.num{min-width:38px;height:38px;border-radius:50%;background:var(--y);color:#111;display:grid;place-items:center;font-weight:950}.step p{color:#cbd2d6;margin-top:4px;line-height:1.45}
-.formsec{background:var(--g)}form{background:#fff;padding:18px;border-radius:13px;box-shadow:0 5px 22px #0001}label{display:block;font-weight:850;margin:13px 0 6px}input,select,textarea{width:100%;padding:13px;border:1px solid #ccd3d7;border-radius:8px;font:inherit}textarea{min-height:115px}.small{font-size:12px;color:var(--m);line-height:1.45}.ok{display:none;background:#e9f7ec;padding:13px;border-radius:8px;margin-top:12px;font-weight:800}.error{display:none;background:#fff0f0;color:#8d2020;padding:13px;border-radius:8px;margin-top:12px;font-weight:700}
-.admin{background:#111820;color:#fff}.adminbox{background:#fff;color:#111;padding:18px;border-radius:13px}.lead{border:1px solid #ddd;border-radius:9px;padding:12px;margin:9px 0}.status{display:inline-block;background:#eee;border-radius:20px;padding:4px 8px;font-size:12px;font-weight:800}
-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #ddd;display:grid;grid-template-columns:repeat(3,1fr);z-index:20;padding-bottom:env(safe-area-inset-bottom)}nav a{text-align:center;padding:11px 4px;font-size:12px;text-decoration:none;color:#111;font-weight:800}nav a b{display:block;font-size:18px;margin-bottom:2px}
-footer{background:#0d1419;color:#dce2e5;padding:30px 18px 80px}.yellow{color:var(--y)}
-@media(min-width:700px){body{max-width:900px;margin:auto}.hero{padding:80px 60px}.hero h1{font-size:65px}section{padding:55px 60px}}
+:root{
+ --y:#f7bd19;
+ --d:#0d1419;
+ --g:#f4f6f7;
+ --m:#667078
+}
+
+*{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+ margin:0;
+ font-family:Arial,Helvetica,sans-serif;
+ background:var(--g);
+ color:#111820
+}
+
+header{
+ position:sticky;
+ top:0;
+ z-index:20;
+ background:#fff;
+ border-bottom:1px solid #ddd;
+ height:70px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:0 34px
+}
+
+.logo{
+ font-weight:800;
+ font-size:25px;
+ letter-spacing:-.5px
+}
+
+.logo span{color:#e8ad00}
+
+header a{
+ color:#111;
+ text-decoration:none;
+ font-weight:700;
+ font-size:18px
+}
+
+.hero{
+ padding:52px 20px 45px;
+ background:linear-gradient(135deg,#0d1419,#1e2b31);
+ color:#fff
+}
+
+.wrap{
+ max-width:900px;
+ margin:auto
+}
+
+.kicker{
+ color:var(--y);
+ font-weight:800;
+ letter-spacing:2px;
+ font-size:14px
+}
+
+h1{
+ font-size:58px;
+ line-height:1.02;
+ margin:26px 0 28px;
+ letter-spacing:-2px
+}
+
+h1 span{color:var(--y)}
+
+.hero p{
+ font-size:21px;
+ line-height:1.5;
+ color:#dce2e5;
+ max-width:650px
+}
+
+.cta{
+ display:block;
+ background:var(--y);
+ color:#111;
+ text-decoration:none;
+ text-align:center;
+ font-weight:800;
+ font-size:20px;
+ padding:20px;
+ border-radius:15px;
+ margin-top:30px
+}
+
+.checks{
+ display:grid;
+ gap:12px;
+ margin-top:28px;
+ font-size:18px;
+ font-weight:700
+}
+
+.checks div:before{
+ content:"✓";
+ color:var(--y);
+ font-weight:900;
+ margin-right:12px
+}
+
+section{
+ padding:45px 20px
+}
+
+.title{
+ font-size:36px;
+ margin:0 0 25px
+}
+
+.cards{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:14px
+}
+
+.card{
+ background:#fff;
+ border:1px solid #d5d8da;
+ border-radius:18px;
+ padding:25px;
+ text-align:center;
+ font-size:20px;
+ font-weight:800
+}
+
+.formsec{
+ background:#f4f6f7
+}
+
+form{
+ background:#fff;
+ border-radius:22px;
+ padding:30px;
+ box-shadow:0 5px 25px #00000010
+}
+
+label{
+ display:block;
+ font-weight:800;
+ font-size:18px;
+ margin:18px 0 8px
+}
+
+input,select,textarea{
+ width:100%;
+ padding:16px;
+ border:1px solid #cbd0d3;
+ border-radius:13px;
+ font-size:17px;
+ background:#fff
+}
+
+textarea{
+ min-height:145px;
+ resize:vertical
+}
+
+button{
+ width:100%;
+ padding:18px;
+ border:0;
+ border-radius:14px;
+ background:var(--y);
+ color:#111;
+ font-weight:800;
+ font-size:19px;
+ margin-top:24px
+}
+
+.notice{
+ font-size:14px;
+ color:#6b747a;
+ line-height:1.6;
+ margin-top:18px
+}
+
+#success{
+ display:none;
+ background:#e8f7ed;
+ border:1px solid #9ad2aa;
+ color:#176331;
+ border-radius:14px;
+ padding:18px;
+ margin-top:18px;
+ font-weight:700
+}
+
+.partner{
+ background:#fff
+}
+
+footer{
+ background:var(--d);
+ color:#dce2e5;
+ padding:38px 20px 90px
+}
+
+footer strong{
+ color:#fff;
+ font-size:21px
+}
+
+footer p{
+ line-height:1.6;
+ color:#aeb8bd
+}
+
+nav{
+ position:fixed;
+ bottom:0;
+ left:0;
+ right:0;
+ z-index:30;
+ background:#fff;
+ border-top:1px solid #ddd;
+ display:grid;
+ grid-template-columns:repeat(3,1fr)
+}
+
+nav a{
+ text-decoration:none;
+ color:#111;
+ text-align:center;
+ padding:13px 5px 11px;
+ font-weight:700;
+ font-size:14px
+}
+
+nav b{
+ display:block;
+ font-size:22px;
+ line-height:22px;
+ margin-bottom:3px
+}
+
+@media(min-width:700px){
+ h1{font-size:68px}
+ .hero{padding-top:75px}
+ .cards{grid-template-columns:repeat(3,1fr)}
+ nav{display:none}
+}
 </style>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body>
-<header><div class="logo">RIEMER <b>BAUCONNECT</b></div><a href="#anfrage">Projekt starten</a></header>
-<section class="hero"><div class="tag">REGIONAL · EINFACH · DIREKT</div><h1>Dein Bauprojekt.<br><span>Der passende Betrieb.</span></h1><p>Beschreibe dein Bauprojekt und finde passende Fachbetriebe in deiner Region.</p><a class="btn" href="#anfrage">Kostenlose Anfrage stellen →</a><div class="checks"><span>Kostenlos & unverbindlich</span><span>Regionale Fachbetriebe</span><span>Einfach vom Handy</span></div></section>
-<section id="leistungen"><h2 class="title">Was brauchst du?</h2><div class="cards">
-<div class="card">🛣️<br>Straßenbau</div><div class="card">🏗️<br>Tiefbau</div><div class="card">🚜<br>Erdarbeiten</div><div class="card">🧱<br>Pflaster</div><div class="card">🚗<br>Einfahrt</div><div class="card">🅿️<br>Parkplatz / Hof</div><div class="card">💧<br>Entwässerung</div><div class="card">🔧<br>Reparatur</div></div></section>
-<section class="dark"><h2 class="title">So funktioniert's</h2><div class="steps"><div class="step"><div class="num">1</div><div><b>Projekt beschreiben</b><p>Leistung, Ort, Fläche und Beschreibung angeben.</p></div></div><div class="step"><div class="num">2</div><div><b>Anfrage absenden</b><p>Deine Kontaktdaten eintragen und Anfrage abschicken.</p></div></div><div class="step"><div class="num">3</div><div><b>Passende Fachbetriebe</b><p>Deine Anfrage wird passenden regionalen Betrieben zugeordnet.</p></div></div><div class="step"><div class="num">4</div><div><b>Angebote erhalten</b><p>Du entscheidest selbst, welcher Betrieb für dich passt.</p></div></div></div></section>
-<section class="formsec" id="anfrage"><h2 class="title">Projektanfrage</h2>
-<form id="leadForm">
-<label>Leistung</label><select id="service" required><option value="">Bitte auswählen</option><option>Straßenbau</option><option>Asphaltarbeiten</option><option>Pflasterarbeiten</option><option>Erdarbeiten</option><option>Tiefbau</option><option>Entwässerung</option><option>Einfahrt</option><option>Parkplatz / Hof</option><option>Reparatur</option><option>Sonstiges</option></select>
-<label>PLZ</label><input id="plz" inputmode="numeric" maxlength="5" required placeholder="24955">
-<label>Fläche / Umfang</label><input id="area" placeholder="z. B. 120 m²">
-<label>Beschreibung</label><textarea id="desc" required placeholder="Was soll gemacht werden?"></textarea>
-<label>Name</label><input id="name" required>
-<label>Telefon</label><input id="phone" type="tel" required>
-<label>E-Mail</label><input id="email" type="email" required>
-<p class="small">Deine Anfrage wird verschlüsselt über Supabase an Riemer BauConnect übertragen. Weitere Datenschutz- und Impressumsangaben müssen vor dem öffentlichen Produktivbetrieb ergänzt werden.</p>
-<button class="btn" type="submit">Anfrage absenden →</button><div class="ok" id="ok"></div><div class="error" id="err"></div>
-</form></section>
 
-<section class="admin" id="admin"><h2 class="title">Mein Bereich</h2><div class="adminbox"><b>Admin-Bereich</b><p class="small">Noch nicht online verbunden. Nach Einrichtung der Datenbank werden hier deine echten Anfragen erscheinen.</p><div class="lead"><span class="status">VORBEREITET</span><br>Lead-Verwaltung · Firmen-Zuordnung · Status · Kontakt</div></div></section>
-<section><h2 class="title">Für Fachbetriebe</h2><p>Erhalte passende Bauanfragen aus deiner Region und spare Zeit bei der Kundensuche.</p><a class="btn" href="#anfrage">Als Partnerbetrieb Interesse zeigen</a></section>
-<footer><b>RIEMER <span class="yellow">BAUCONNECT</span></b><p>Starke Projekte. Starke Verbindungen.</p><p class="small">MVP v3 – vor dem Produktivbetrieb müssen Datenschutz, Impressum, Einwilligungen, sichere Datenverarbeitung und ein passendes Geschäftsmodell eingerichtet werden.</p></footer>
-<nav><a href="#"><b>⌂</b>Start</a><a href="#leistungen"><b>⌁</b>Leistungen</a><a href="#anfrage"><b>＋</b>Projekt</a></nav>
+<body>
+
+<header>
+ <div class="logo">
+  RIEMER <span>BAUCONNECT</span>
+ </div>
+ <a href="#projekt">Projekt starten</a>
+</header>
+
+<main>
+
+<section class="hero" id="start">
+ <div class="wrap">
+
+  <div class="kicker">
+   REGIONAL · EINFACH · DIREKT
+  </div>
+
+  <h1>
+   Dein Bauprojekt.<br>
+   <span>Der passende Betrieb.</span>
+  </h1>
+
+  <p>
+   Beschreibe dein Bauprojekt und finde passende Fachbetriebe in deiner Region.
+  </p>
+
+  <a class="cta" href="#projekt">
+   Kostenlose Anfrage stellen →
+  </a>
+
+  <div class="checks">
+   <div>Kostenlos & unverbindlich</div>
+   <div>Regionale Fachbetriebe</div>
+   <div>Einfach vom Handy</div>
+  </div>
+
+ </div>
+</section>
+
+<section>
+ <div class="wrap">
+
+  <h2 class="title">
+   Was brauchst du?
+  </h2>
+
+  <div class="cards">
+
+   <div class="card">🛣️<br>Straßenbau</div>
+   <div class="card">🏗️<br>Tiefbau</div>
+   <div class="card">🚜<br>Erdarbeiten</div>
+   <div class="card">🧱<br>Pflaster</div>
+   <div class="card">🚗<br>Einfahrt</div>
+   <div class="card">🅿️<br>Parkplatz / Hof</div>
+   <div class="card">💧<br>Entwässerung</div>
+   <div class="card">🔧<br>Reparatur</div>
+   <div class="card">➕<br>Sonstiges</div>
+
+  </div>
+ </div>
+</section>
+
+<section class="formsec" id="projekt">
+
+ <div class="wrap">
+
+  <h2 class="title">
+   Projektanfrage
+  </h2>
+
+  <form id="projectForm">
+
+   <label for="service">
+    Leistung *
+   </label>
+
+   <select id="service" required>
+    <option value="">Bitte auswählen</option>
+    <option>Straßenbau</option>
+    <option>Tiefbau</option>
+    <option>Erdarbeiten</option>
+    <option>Pflaster</option>
+    <option>Einfahrt</option>
+    <option>Parkplatz / Hof</option>
+    <option>Entwässerung</option>
+    <option>Reparatur</option>
+    <option>Sonstiges</option>
+   </select>
+
+   <label for="plz">
+    PLZ *
+   </label>
+
+   <input
+    id="plz"
+    inputmode="numeric"
+    maxlength="5"
+    placeholder="z. B. 24955"
+    required
+   >
+
+   <label for="area">
+    Fläche / Umfang
+   </label>
+
+   <input
+    id="area"
+    placeholder="z. B. 120 m²"
+   >
+
+   <label for="description">
+    Beschreibung
+   </label>
+
+   <textarea
+    id="description"
+    placeholder="Was soll gemacht werden?"
+   ></textarea>
+
+   <label for="name">
+    Name *
+   </label>
+
+   <input
+    id="name"
+    autocomplete="name"
+    required
+   >
+
+   <label for="phone">
+    Telefon *
+   </label>
+
+   <input
+    id="phone"
+    type="tel"
+    autocomplete="tel"
+    required
+   >
+
+   <label for="email">
+    E-Mail
+   </label>
+
+   <input
+    id="email"
+    type="email"
+    autocomplete="email"
+   >
+
+   <button type="submit">
+    Anfrage absenden →
+   </button>
+
+   <div class="notice">
+    Deine Anfrage wird über Supabase an Riemer BauConnect übertragen.
+    Vor dem öffentlichen Produktivbetrieb müssen Datenschutzerklärung,
+    Impressum, Einwilligungen und sichere Datenverarbeitung vollständig
+    eingerichtet werden.
+   </div>
+
+   <div id="success">
+    ✅ Deine Bauanfrage wurde erfolgreich übermittelt.
+    Wir kümmern uns um die weitere Zuordnung.
+   </div>
+
+  </form>
+
+ </div>
+</section>
+
+<section class="partner">
+
+ <div class="wrap">
+
+  <h2 class="title">
+   Für Fachbetriebe
+  </h2>
+
+  <p style="font-size:19px;line-height:1.5">
+   Erhalte passende Bauanfragen aus deiner Region und spare Zeit
+   bei der Kundensuche.
+  </p>
+
+  <a
+   class="cta"
+   href="mailto:info@riemer-bauconnect.de"
+  >
+   Als Partnerbetrieb Interesse zeigen
+  </a>
+
+ </div>
+
+</section>
+
+</main>
+
+<footer>
+
+ <div class="wrap">
+
+  <strong>
+   RIEMER
+   <span style="color:#f7bd19">
+    BAUCONNECT
+   </span>
+  </strong>
+
+  <p>
+   Starke Projekte. Starke Verbindungen.
+  </p>
+
+  <p>
+   Vor dem Produktivbetrieb müssen Datenschutz, Impressum,
+   Einwilligungen, sichere Datenverarbeitung und ein passendes
+   Geschäftsmodell eingerichtet werden.
+  </p>
+
+ </div>
+
+</footer>
+
+<nav>
+
+ <a href="#start">
+  <b>⌂</b>
+  Start
+ </a>
+
+ <a href="#projekt">
+  <b>⌁</b>
+  Leistungen
+ </a>
+
+ <a href="#projekt">
+  <b>＋</b>
+  Projekt
+ </a>
+
+</nav>
+
 <script>
-const SUPABASE_URL='https://ehzugjmltfcvllftpjpp.supabase.co';
-const SUPABASE_PUBLISHABLE_KEY='sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm';
-const db=supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
-const form=document.getElementById('leadForm');
-const ok=document.getElementById('ok');
-const err=document.getElementById('err');
-form.addEventListener('submit',async e=>{
+
+const SUPABASE_URL =
+"https://ehzugjmltfcvllftpjpp.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
+
+const db =
+supabase.createClient(
+ SUPABASE_URL,
+ SUPABASE_KEY
+);
+
+document
+.getElementById("projectForm")
+.addEventListener("submit", async (e) => {
+
  e.preventDefault();
- ok.style.display='none'; err.style.display='none';
- const btn=form.querySelector('button[type="submit"]');
- btn.disabled=true; btn.textContent='Wird gesendet…';
- const data={
-  service:document.getElementById('service').value,
-  plz:document.getElementById('plz').value.trim(),
-  area:document.getElementById('area').value.trim(),
-  description:document.getElementById('desc').value.trim(),
-  name:document.getElementById('name').value.trim(),
-  phone:document.getElementById('phone').value.trim(),
-  email:document.getElementById('email').value.trim(),
-  status:'neu',
-  created_at:new Date().toISOString()
+
+ const button =
+ e.target.querySelector("button");
+
+ button.disabled = true;
+ button.textContent = "Wird gesendet …";
+
+ const payload = {
+
+  service:
+  document.getElementById("service").value,
+
+  plz:
+  document.getElementById("plz").value.trim(),
+
+  area:
+  document.getElementById("area").value.trim() || null,
+
+  description:
+  document.getElementById("description").value.trim() || null,
+
+  name:
+  document.getElementById("name").value.trim(),
+
+  phone:
+  document.getElementById("phone").value.trim(),
+
+  email:
+  document.getElementById("email").value.trim() || null,
+
+  status:
+  "neu"
  };
- try {
-  const {error}=await db.from('bauanfragen').insert(data);
-  if(error) throw error;
-  ok.textContent='✓ Anfrage erfolgreich übermittelt. Wir melden uns bei dir.';
-  ok.style.display='block';
-  form.reset();
- } catch (error) {
-  console.error(error);
-  err.textContent='Die Anfrage konnte gerade nicht gesendet werden. Bitte später erneut versuchen.';
-  err.style.display='block';
- } finally {
-  btn.disabled=false; btn.textContent='Anfrage absenden →';
+
+ const {error} =
+ await db
+ .from("bauanfragen")
+ .insert(payload);
+
+ if(error){
+
+  alert(
+   "Die Anfrage konnte gerade nicht gesendet werden. Bitte später erneut versuchen."
+  );
+
+  button.disabled = false;
+  button.textContent =
+  "Anfrage absenden →";
+
+  return;
  }
+
+ document.getElementById("success")
+ .style.display = "block";
+
+ e.target.reset();
+
+ button.disabled = false;
+
+ button.textContent =
+ "Anfrage absenden →";
+
+ document.getElementById("success")
+ .scrollIntoView({
+  behavior:"smooth",
+  block:"center"
+ });
+
 });
+
 </script>
-<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("./sw.js").catch(()=>{});}</script>
-</body></html>
+
+</body>
+</html>
