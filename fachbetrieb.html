@@ -124,6 +124,13 @@
       color: #ffffff;
     }
 
+    button.small-button {
+      width: auto;
+      padding: 9px 13px;
+      margin: 0;
+      font-size: 14px;
+    }
+
     .hidden {
       display: none !important;
     }
@@ -260,6 +267,21 @@
       margin-bottom: 10px;
     }
 
+    .status-editor {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #333333;
+    }
+
+    .status-editor label {
+      margin-top: 0;
+    }
+
+    .save-status {
+      background: #ffd400;
+      color: #111111;
+    }
+
     .no-requests {
       text-align: center;
       padding: 25px 10px;
@@ -298,12 +320,9 @@
   <p>Fachbetrieb-Bereich</p>
 </header>
 
-
 <div class="container">
 
-  <!-- ==========================================
-       START
-  =========================================== -->
+  <!-- START -->
 
   <section id="startView" class="card">
 
@@ -332,9 +351,7 @@
   </section>
 
 
-  <!-- ==========================================
-       LOGIN
-  =========================================== -->
+  <!-- LOGIN -->
 
   <section id="loginView" class="card hidden">
 
@@ -381,9 +398,7 @@
   </section>
 
 
-  <!-- ==========================================
-       REGISTRIERUNG
-  =========================================== -->
+  <!-- REGISTRIERUNG -->
 
   <section id="registerView" class="card hidden">
 
@@ -453,14 +468,12 @@
     <label>Einsatzradius</label>
 
     <select id="radius">
-
       <option value="10">10 km</option>
       <option value="20">20 km</option>
       <option value="30" selected>30 km</option>
       <option value="50">50 km</option>
       <option value="75">75 km</option>
       <option value="100">100 km</option>
-
     </select>
 
     <label>Passwort *</label>
@@ -512,9 +525,7 @@
   </section>
 
 
-  <!-- ==========================================
-       DASHBOARD
-  =========================================== -->
+  <!-- DASHBOARD -->
 
   <section id="dashboardView" class="card hidden">
 
@@ -538,9 +549,7 @@
   </section>
 
 
-  <!-- ==========================================
-       MEINE BAUANFRAGEN
-  =========================================== -->
+  <!-- BAUANFRAGEN -->
 
   <section
     id="requestsView"
@@ -570,9 +579,7 @@
   </section>
 
 
-  <!-- ==========================================
-       PROFIL BEARBEITEN
-  =========================================== -->
+  <!-- PROFIL BEARBEITEN -->
 
   <section
     id="editProfileView"
@@ -645,14 +652,12 @@
     <label>Einsatzradius</label>
 
     <select id="editRadius">
-
       <option value="10">10 km</option>
       <option value="20">20 km</option>
       <option value="30">30 km</option>
       <option value="50">50 km</option>
       <option value="75">75 km</option>
       <option value="100">100 km</option>
-
     </select>
 
     <div class="locked">
@@ -686,7 +691,7 @@
 
   /* ==========================================
      SUPABASE
-  =========================================== */
+  ========================================== */
 
   const SUPABASE_URL =
     "https://ehzugjmltfcvllftpjpp.supabase.co";
@@ -706,19 +711,16 @@
 
   /* ==========================================
      VARIABLEN
-  =========================================== */
+  ========================================== */
 
   let currentUser = null;
-
   let currentFirm = null;
-
-
   let lastRegisteredEmail = "";
 
 
   /* ==========================================
      VIEWS
-  =========================================== */
+  ========================================== */
 
   function hideAllViews() {
 
@@ -799,7 +801,7 @@
 
   /* ==========================================
      NACHRICHTEN
-  =========================================== */
+  ========================================== */
 
   function showMessage(
     elementId,
@@ -822,7 +824,7 @@
 
   /* ==========================================
      REGISTRIERUNG
-  =========================================== */
+  ========================================== */
 
   async function registerFirm() {
 
@@ -902,7 +904,6 @@
       );
 
       return;
-
     }
 
 
@@ -915,7 +916,6 @@
       );
 
       return;
-
     }
 
 
@@ -928,7 +928,6 @@
       );
 
       return;
-
     }
 
 
@@ -990,7 +989,6 @@
       );
 
       return;
-
     }
 
 
@@ -1022,8 +1020,8 @@
 
 
   /* ==========================================
-     BESTÄTIGUNGS-MAIL ERNEUT SENDEN
-  =========================================== */
+     BESTÄTIGUNGS-MAIL
+  ========================================== */
 
   async function resendConfirmation() {
 
@@ -1044,7 +1042,6 @@
       );
 
       return;
-
     }
 
 
@@ -1083,7 +1080,6 @@
       );
 
       return;
-
     }
 
 
@@ -1098,7 +1094,7 @@
 
   /* ==========================================
      LOGIN
-  =========================================== */
+  ========================================== */
 
   async function login() {
 
@@ -1107,7 +1103,6 @@
         .getElementById("loginEmail")
         .value
         .trim();
-
 
     const password =
       document
@@ -1124,7 +1119,6 @@
       );
 
       return;
-
     }
 
 
@@ -1157,7 +1151,6 @@
       );
 
       return;
-
     }
 
 
@@ -1179,7 +1172,7 @@
 
   /* ==========================================
      PROFIL SICHERSTELLEN
-  =========================================== */
+  ========================================== */
 
   async function ensureFirmProfile(user) {
 
@@ -1216,7 +1209,6 @@
       );
 
       return null;
-
     }
 
 
@@ -1226,7 +1218,6 @@
         existing;
 
       return existing;
-
     }
 
 
@@ -1294,7 +1285,6 @@
       );
 
       return null;
-
     }
 
 
@@ -1308,8 +1298,8 @@
 
 
   /* ==========================================
-     DASHBOARD LADEN
-  =========================================== */
+     DASHBOARD
+  ========================================== */
 
   async function loadDashboard(user) {
 
@@ -1340,12 +1330,11 @@
 
       showMessage(
         "generalMessage",
-        "❌ Fachbetriebsdaten konnten nicht geladen werden.",
+        "❌ Fachbetriebsprofil konnte nicht geladen werden.",
         "error"
       );
 
       return;
-
     }
 
 
@@ -1358,7 +1347,6 @@
       );
 
       return;
-
     }
 
 
@@ -1370,9 +1358,7 @@
 
 
     const statusElement =
-      document.getElementById(
-        "firmStatus"
-      );
+      document.getElementById("firmStatus");
 
 
     if (
@@ -1429,7 +1415,7 @@
 
   /* ==========================================
      FIRMENINFOS
-  =========================================== */
+  ========================================== */
 
   function renderFirmInfo(firm) {
 
@@ -1538,7 +1524,7 @@
 
   /* ==========================================
      BAUANFRAGEN LADEN
-  =========================================== */
+  ========================================== */
 
   async function loadAssignedRequests() {
 
@@ -1564,7 +1550,6 @@
       `;
 
       return;
-
     }
 
 
@@ -1576,12 +1561,6 @@
 
     `;
 
-
-    /*
-      Die Datenbank-RLS-Regel sorgt dafür,
-      dass der Fachbetrieb ausschließlich
-      seine zugewiesenen Bauanfragen erhält.
-    */
 
     const {
       data,
@@ -1621,7 +1600,6 @@
       `;
 
       return;
-
     }
 
 
@@ -1645,7 +1623,6 @@
       `;
 
       return;
-
     }
 
 
@@ -1664,7 +1641,7 @@
 
   /* ==========================================
      BAUANFRAGE KARTE
-  =========================================== */
+  ========================================== */
 
   function renderRequestCard(request) {
 
@@ -1694,7 +1671,10 @@
         <div class="request-status">
 
           ${statusIcon(status)}
-          ${escapeHtml(statusText(status))}
+
+          ${escapeHtml(
+            statusText(status)
+          )}
 
         </div>
 
@@ -1707,9 +1687,15 @@
 
           <div class="request-value">
 
-            ${escapeHtml(request.plz || "")}
+            ${escapeHtml(
+              request.plz || ""
+            )}
 
-            ${request.area ? " – " + escapeHtml(request.area) : ""}
+            ${
+              request.area
+                ? " – " + escapeHtml(request.area)
+                : ""
+            }
 
           </div>
 
@@ -1725,7 +1711,8 @@
           <div class="request-value">
 
             ${escapeHtml(
-              request.description || "Keine Beschreibung"
+              request.description ||
+              "Keine Beschreibung"
             )}
 
           </div>
@@ -1800,6 +1787,77 @@
 
         </div>
 
+
+        <!-- STATUS ÄNDERN -->
+
+        <div class="status-editor">
+
+          <label>
+            Status der Bauanfrage
+          </label>
+
+          <select
+            id="status-${request.id}"
+          >
+
+            <option
+              value="neu"
+              ${status === "neu" ? "selected" : ""}
+            >
+              🆕 Neu
+            </option>
+
+            <option
+              value="angesehen"
+              ${status === "angesehen" ? "selected" : ""}
+            >
+              👀 Angesehen
+            </option>
+
+            <option
+              value="in_bearbeitung"
+              ${status === "in_bearbeitung" ? "selected" : ""}
+            >
+              🔧 In Bearbeitung
+            </option>
+
+            <option
+              value="angenommen"
+              ${status === "angenommen" ? "selected" : ""}
+            >
+              ✅ Auftrag angenommen
+            </option>
+
+            <option
+              value="abgelehnt"
+              ${status === "abgelehnt" ? "selected" : ""}
+            >
+              ❌ Abgelehnt
+            </option>
+
+            <option
+              value="erledigt"
+              ${status === "erledigt" ? "selected" : ""}
+            >
+              🏁 Erledigt
+            </option>
+
+          </select>
+
+
+          <button
+            class="save-status"
+            onclick="updateRequestStatus('${request.id}')"
+          >
+            💾 Status speichern
+          </button>
+
+          <div
+            id="status-message-${request.id}"
+          ></div>
+
+        </div>
+
       </div>
 
     `;
@@ -1808,8 +1866,151 @@
 
 
   /* ==========================================
-     STATUS
-  =========================================== */
+     STATUS SPEICHERN
+  ========================================== */
+
+  async function updateRequestStatus(
+    requestId
+  ) {
+
+    if (!currentUser) {
+
+      showMessage(
+        "generalMessage",
+        "❌ Du bist nicht angemeldet.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    const select =
+      document.getElementById(
+        "status-" + requestId
+      );
+
+
+    if (!select) {
+      return;
+    }
+
+
+    const newStatus =
+      select.value;
+
+
+    const allowedStatuses = [
+
+      "neu",
+      "angesehen",
+      "in_bearbeitung",
+      "angenommen",
+      "abgelehnt",
+      "erledigt"
+
+    ];
+
+
+    if (
+      !allowedStatuses.includes(
+        newStatus
+      )
+    ) {
+
+      showStatusMessage(
+        requestId,
+        "❌ Ungültiger Status.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    showStatusMessage(
+      requestId,
+      "⏳ Status wird gespeichert...",
+      "warning"
+    );
+
+
+    const {
+      error
+    } =
+      await db
+        .from("bauanfragen")
+        .update({
+          status: newStatus
+        })
+        .eq(
+          "id",
+          requestId
+        );
+
+
+    if (error) {
+
+      console.error(
+        "Status speichern:",
+        error
+      );
+
+
+      showStatusMessage(
+        requestId,
+        "❌ Status konnte nicht gespeichert werden:<br><br>" +
+        escapeHtml(error.message),
+        "error"
+      );
+
+      return;
+    }
+
+
+    showStatusMessage(
+      requestId,
+      "🟢 Status erfolgreich gespeichert.",
+      "success"
+    );
+
+
+    setTimeout(
+      () => {
+        loadAssignedRequests();
+      },
+      700
+    );
+
+  }
+
+
+  function showStatusMessage(
+    requestId,
+    message,
+    type
+  ) {
+
+    const element =
+      document.getElementById(
+        "status-message-" + requestId
+      );
+
+
+    if (!element) {
+      return;
+    }
+
+
+    element.innerHTML =
+      `<div class="message ${type}">${message}</div>`;
+
+  }
+
+
+  /* ==========================================
+     STATUS ICON
+  ========================================== */
 
   function statusIcon(status) {
 
@@ -1820,17 +2021,20 @@
       case "neu":
         return "🆕";
 
-      case "kontaktiert":
-        return "📞";
+      case "angesehen":
+        return "👀";
 
       case "in_bearbeitung":
         return "🔧";
 
-      case "erledigt":
+      case "angenommen":
         return "✅";
 
-      case "abgeschlossen":
-        return "✅";
+      case "abgelehnt":
+        return "❌";
+
+      case "erledigt":
+        return "🏁";
 
       default:
         return "📌";
@@ -1839,6 +2043,10 @@
 
   }
 
+
+  /* ==========================================
+     STATUS TEXT
+  ========================================== */
 
   function statusText(status) {
 
@@ -1849,17 +2057,20 @@
       case "neu":
         return "Neue Anfrage";
 
-      case "kontaktiert":
-        return "Kunde kontaktiert";
+      case "angesehen":
+        return "Angesehen";
 
       case "in_bearbeitung":
         return "In Bearbeitung";
 
+      case "angenommen":
+        return "Auftrag angenommen";
+
+      case "abgelehnt":
+        return "Abgelehnt";
+
       case "erledigt":
         return "Erledigt";
-
-      case "abgeschlossen":
-        return "Abgeschlossen";
 
       default:
         return status || "Unbekannt";
@@ -1871,7 +2082,7 @@
 
   /* ==========================================
      DATUM
-  =========================================== */
+  ========================================== */
 
   function formatDate(value) {
 
@@ -1911,7 +2122,7 @@
 
   /* ==========================================
      PROFIL BEARBEITEN
-  =========================================== */
+  ========================================== */
 
   function showEditProfile() {
 
@@ -1924,7 +2135,6 @@
       );
 
       return;
-
     }
 
 
@@ -1995,7 +2205,7 @@
 
   /* ==========================================
      PROFIL SPEICHERN
-  =========================================== */
+  ========================================== */
 
   async function saveProfile() {
 
@@ -2008,7 +2218,6 @@
       );
 
       return;
-
     }
 
 
@@ -2021,7 +2230,6 @@
       );
 
       return;
-
     }
 
 
@@ -2091,7 +2299,6 @@
       );
 
       return;
-
     }
 
 
@@ -2104,7 +2311,6 @@
       );
 
       return;
-
     }
 
 
@@ -2117,7 +2323,6 @@
       );
 
       return;
-
     }
 
 
@@ -2130,7 +2335,6 @@
       );
 
       return;
-
     }
 
 
@@ -2143,7 +2347,6 @@
       );
 
       return;
-
     }
 
 
@@ -2153,11 +2356,6 @@
       "warning"
     );
 
-
-    /*
-      Freigeschaltet und owner_user_id
-      werden absichtlich NICHT geändert.
-    */
 
     const updates = {
 
@@ -2209,13 +2407,17 @@
 
       showMessage(
         "editMessage",
+
         "❌ Änderungen konnten nicht gespeichert werden:<br><br>" +
-        escapeHtml(error.message),
+
+        escapeHtml(
+          error.message
+        ),
+
         "error"
       );
 
       return;
-
     }
 
 
@@ -2245,8 +2447,8 @@
 
 
   /* ==========================================
-     BEARBEITEN ABBRECHEN
-  =========================================== */
+     ABBRECHEN
+  ========================================== */
 
   function cancelEditProfile() {
 
@@ -2267,7 +2469,7 @@
 
   /* ==========================================
      LOGOUT
-  =========================================== */
+  ========================================== */
 
   async function logout() {
 
@@ -2284,7 +2486,7 @@
 
   /* ==========================================
      SESSION
-  =========================================== */
+  ========================================== */
 
   async function checkSession() {
 
@@ -2320,7 +2522,7 @@
 
   /* ==========================================
      AUTH STATE
-  =========================================== */
+  ========================================== */
 
   db.auth.onAuthStateChange(
     async (
@@ -2375,7 +2577,7 @@
 
   /* ==========================================
      HTML ESCAPEN
-  =========================================== */
+  ========================================== */
 
   function escapeHtml(value) {
 
@@ -2411,7 +2613,7 @@
 
   /* ==========================================
      START
-  =========================================== */
+  ========================================== */
 
   checkSession();
 
