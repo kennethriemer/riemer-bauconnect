@@ -15,10 +15,7 @@
   content="#171717"
 >
 
-<title>
-Riemer BauConnect – Admin
-</title>
-
+<title>Riemer BauConnect – Admin</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -29,631 +26,363 @@ Riemer BauConnect – Admin
   box-sizing: border-box;
 }
 
-
 body {
-
   margin: 0;
-
   background: #171717;
-
   color: #fff;
-
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
+  font-family: Arial, sans-serif;
 }
-
 
 .wrap {
-
-  max-width: 1000px;
-
+  max-width: 950px;
   margin: auto;
-
   padding: 20px;
-
 }
-
 
 h1 {
-
   margin: 0 0 6px;
-
   font-size: 30px;
-
 }
-
 
 h2 {
-
   margin-top: 0;
-
-  font-size: 25px;
-
 }
-
 
 h3 {
-
   margin-top: 0;
-
 }
-
 
 .small {
-
   color: #aaa;
-
   margin-bottom: 20px;
-
 }
-
 
 .card {
-
   background: #222;
-
   border: 1px solid #444;
-
   border-radius: 14px;
-
   padding: 18px;
-
   margin-bottom: 15px;
-
 }
 
-
 input,
-textarea,
+button,
 select,
-button {
-
+textarea {
   width: 100%;
-
   padding: 14px;
-
   border-radius: 10px;
-
   border: 1px solid #555;
-
   font-size: 16px;
-
 }
-
 
 input,
-textarea,
-select {
-
+select,
+textarea {
   background: #111;
-
   color: #fff;
-
 }
-
 
 textarea {
-
-  min-height: 100px;
-
+  min-height: 110px;
   resize: vertical;
-
 }
-
 
 button {
-
   background: #ffd400;
-
   color: #111;
-
   border: 0;
-
   font-weight: bold;
-
   cursor: pointer;
-
 }
-
 
 button:hover {
-
   opacity: .9;
-
 }
 
-
-button.secondary {
-
-  background: #333;
-
-  color: #fff;
-
+button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
 }
-
-
-button.danger {
-
-  background: #b42318;
-
-  color: #fff;
-
-}
-
-
-button.success {
-
-  background: #087443;
-
-  color: #fff;
-
-}
-
 
 .login {
-
   max-width: 450px;
-
   margin: 70px auto;
-
   padding: 20px;
-
 }
-
 
 .login input {
-
   margin-bottom: 12px;
-
 }
-
 
 .hidden {
-
   display: none !important;
-
 }
-
 
 .error {
-
   color: #ff7070;
-
   margin-top: 12px;
-
-  white-space: pre-wrap;
-
+  line-height: 1.5;
 }
-
 
 .success {
-
   color: #66e08a;
-
   margin-top: 12px;
-
-  white-space: pre-wrap;
-
+  line-height: 1.5;
 }
-
 
 .header {
-
   display: flex;
-
   justify-content: space-between;
-
   align-items: center;
-
   gap: 15px;
-
   margin-bottom: 20px;
-
 }
-
 
 .header button {
-
   width: auto;
-
   padding: 12px 18px;
-
+  background: #333;
+  color: #fff;
 }
-
 
 .tabs {
-
-  display: flex;
-
-  gap: 10px;
-
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
   margin-bottom: 20px;
-
 }
 
-
-.tab {
-
-  width: auto;
-
+.tab-button {
   background: #333;
-
   color: #fff;
-
-  padding: 13px 18px;
-
+  padding: 17px;
+  font-size: 18px;
 }
 
-
-.tab.active {
-
+.tab-button.active {
   background: #ffd400;
-
   color: #111;
-
 }
-
-
-.loading {
-
-  color: #aaa;
-
-  padding: 20px 0;
-
-}
-
-
-.empty {
-
-  color: #aaa;
-
-  text-align: center;
-
-  padding: 30px;
-
-}
-
 
 .request {
-
   cursor: pointer;
-
   transition: .15s;
-
 }
-
 
 .request:hover {
-
   border-color: #ffd400;
-
   transform: translateY(-1px);
-
 }
-
 
 .request-title {
-
   font-size: 20px;
-
   font-weight: bold;
-
   margin-bottom: 8px;
-
 }
-
 
 .request-info {
-
   color: #bbb;
-
   line-height: 1.6;
-
 }
-
 
 .status {
-
   display: inline-block;
-
   padding: 7px 12px;
-
   border-radius: 20px;
-
   margin-top: 10px;
-
   font-size: 14px;
-
   font-weight: bold;
-
 }
-
 
 .status-neu {
-
   background: #d8aa00;
-
   color: #111;
-
 }
-
 
 .status-kontakt {
-
   background: #2478d8;
-
 }
-
 
 .status-angebot {
-
   background: #e87818;
-
 }
-
 
 .status-auftrag {
-
   background: #239447;
-
 }
-
 
 .status-erledigt {
-
   background: #555;
-
 }
-
 
 .detail-row {
-
   border-bottom: 1px solid #444;
-
   padding: 13px 0;
-
 }
-
 
 .detail-label {
-
   color: #aaa;
-
   font-size: 13px;
-
-  margin-bottom: 5px;
-
+  margin-bottom: 6px;
 }
-
 
 .detail-value {
-
   white-space: pre-wrap;
-
   word-break: break-word;
-
 }
-
 
 .back {
-
   background: #333;
-
   color: #fff;
-
   margin-bottom: 15px;
-
 }
 
+.loading {
+  color: #aaa;
+  padding: 20px 0;
+}
 
-.firm {
+.empty {
+  color: #aaa;
+  text-align: center;
+  padding: 30px;
+}
 
+.action-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.edit-button {
+  background: #ffd400;
+  color: #111;
+}
+
+.delete-button {
+  background: #c62828;
+  color: #fff;
+}
+
+.save-button {
+  margin-top: 15px;
+}
+
+.cancel-button {
+  background: #333;
+  color: #fff;
+  margin-top: 10px;
+}
+
+.firm-card {
   background: #222;
-
   border: 1px solid #444;
-
   border-radius: 14px;
-
   padding: 18px;
-
-  margin-bottom: 12px;
-
+  margin-bottom: 15px;
 }
 
-
-.firm-title {
-
-  font-size: 21px;
-
+.firm-name {
+  font-size: 22px;
   font-weight: bold;
-
-  margin-bottom: 8px;
-
+  margin-bottom: 10px;
 }
-
 
 .firm-info {
-
   color: #bbb;
-
   line-height: 1.7;
-
 }
 
-
-.firm-actions {
-
-  display: grid;
-
-  grid-template-columns: 1fr 1fr;
-
-  gap: 10px;
-
-  margin-top: 15px;
-
+.active-badge {
+  display: inline-block;
+  background: #4caf50;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 15px;
+  margin-top: 8px;
+  font-size: 13px;
 }
 
-
-.form-grid {
-
-  display: grid;
-
-  grid-template-columns: 1fr 1fr;
-
-  gap: 14px;
-
+.inactive-badge {
+  display: inline-block;
+  background: #555;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 15px;
+  margin-top: 8px;
+  font-size: 13px;
 }
 
-
-.form-group {
-
-  margin-bottom: 5px;
-
-}
-
-
-.form-group.full {
-
-  grid-column: 1 / -1;
-
-}
-
-
-.form-group label {
-
+.form-label {
   display: block;
-
-  color: #ccc;
-
-  font-weight: bold;
-
-  margin-bottom: 7px;
-
+  color: #aaa;
+  margin: 16px 0 7px;
 }
-
-
-.form-buttons {
-
-  display: grid;
-
-  grid-template-columns: 1fr 1fr;
-
-  gap: 10px;
-
-  margin-top: 15px;
-
-}
-
 
 .checkbox-row {
-
   display: flex;
-
   align-items: center;
-
   gap: 10px;
-
-  margin-top: 10px;
-
+  margin-top: 18px;
+  color: #ddd;
 }
-
 
 .checkbox-row input {
-
-  width: 22px;
-
-  height: 22px;
-
-}
-
-
-.section-title {
-
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
-
-  gap: 10px;
-
-}
-
-
-.section-title button {
-
   width: auto;
-
 }
 
+.assign-box {
+  background: #181818;
+  border: 1px solid #444;
+  border-radius: 12px;
+  padding: 15px;
+  margin-top: 18px;
+}
 
-@media (max-width: 650px) {
+.assign-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.assign-info {
+  color: #aaa;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.assign-message {
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) {
 
   .wrap {
-
     padding: 14px;
-
   }
-
 
   .header {
-
     align-items: flex-start;
-
   }
-
 
   .header button {
-
-    flex-shrink: 0;
-
+    white-space: nowrap;
   }
-
 
   .tabs {
-
-    display: grid;
-
     grid-template-columns: 1fr 1fr;
-
   }
 
-
-  .tab {
-
-    width: 100%;
-
+  .tab-button {
+    font-size: 16px;
+    padding: 15px 8px;
   }
 
-
-  .form-grid {
-
+  .action-row {
     grid-template-columns: 1fr;
-
-  }
-
-
-  .form-group.full {
-
-    grid-column: auto;
-
-  }
-
-
-  .firm-actions {
-
-    grid-template-columns: 1fr;
-
-  }
-
-
-  .form-buttons {
-
-    grid-template-columns: 1fr;
-
   }
 
 }
@@ -666,9 +395,9 @@ button.success {
 <body>
 
 
-<!-- =====================================================
+<!-- =========================================
      LOGIN
-     ===================================================== -->
+     ========================================= -->
 
 <div
   id="loginScreen"
@@ -718,17 +447,15 @@ button.success {
 
 
 
-<!-- =====================================================
+<!-- =========================================
      ADMIN
-     ===================================================== -->
+     ========================================= -->
 
 <div
   id="adminScreen"
   class="wrap hidden"
 >
 
-
-  <!-- HEADER -->
 
   <div class="header">
 
@@ -745,10 +472,7 @@ button.success {
     </div>
 
 
-    <button
-      onclick="logout()"
-      class="secondary"
-    >
+    <button onclick="logout()">
       Abmelden
     </button>
 
@@ -756,15 +480,13 @@ button.success {
 
 
 
-  <!-- ===================================================
-       TABS
-       =================================================== -->
+  <!-- TABS -->
 
   <div class="tabs">
 
     <button
-      id="tabRequests"
-      class="tab active"
+      id="requestsTab"
+      class="tab-button active"
       onclick="showRequestsTab()"
     >
       🏗️ Bauanfragen
@@ -772,8 +494,8 @@ button.success {
 
 
     <button
-      id="tabFirms"
-      class="tab"
+      id="firmsTab"
+      class="tab-button"
       onclick="showFirmsTab()"
     >
       🏢 Fachbetriebe
@@ -783,9 +505,9 @@ button.success {
 
 
 
-  <!-- ===================================================
+  <!-- =========================================
        BAUANFRAGEN
-       =================================================== -->
+       ========================================= -->
 
   <div id="requestsSection">
 
@@ -796,17 +518,25 @@ button.success {
 
       <div class="card">
 
-        <div class="section-title">
+        <div
+          style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:10px;
+          "
+        >
 
           <h2>
             Bauanfragen
           </h2>
 
+
           <button
             onclick="loadRequests()"
-            style="width:auto"
+            style="width:auto;"
           >
-            ↻ Aktualisieren
+            🔄 Aktualisieren
           </button>
 
         </div>
@@ -820,9 +550,7 @@ button.success {
         </div>
 
 
-        <div
-          id="requests"
-        ></div>
+        <div id="requests"></div>
 
       </div>
 
@@ -846,6 +574,7 @@ button.success {
 
 
       <div class="card">
+
 
         <h2 id="detailTitle">
           Bauanfrage
@@ -964,6 +693,52 @@ button.success {
         </div>
 
 
+
+        <!-- =================================
+             FACHBETRIEB ZUWEISEN
+             ================================= -->
+
+        <div class="assign-box">
+
+          <div class="assign-title">
+            🏢 Fachbetrieb zuweisen
+          </div>
+
+
+          <div class="assign-info">
+            Wähle den Fachbetrieb aus,
+            der diese Bauanfrage bearbeiten soll.
+          </div>
+
+
+          <select
+            id="firmSelect"
+          >
+
+            <option value="">
+              -- Kein Fachbetrieb zugewiesen --
+            </option>
+
+          </select>
+
+
+          <button
+            onclick="saveAssignment()"
+            class="save-button"
+          >
+            💾 Fachbetrieb zuweisen
+          </button>
+
+
+          <div
+            id="assignmentMessage"
+            class="assign-message"
+          ></div>
+
+        </div>
+
+
+
         <!-- STATUS -->
 
         <div class="detail-row">
@@ -998,12 +773,9 @@ button.success {
           </select>
 
 
-          <br>
-          <br>
-
-
           <button
             onclick="saveStatus()"
+            class="save-button"
           >
             Status speichern
           </button>
@@ -1024,9 +796,9 @@ button.success {
 
 
 
-  <!-- ===================================================
+  <!-- =========================================
        FACHBETRIEBE
-       =================================================== -->
+       ========================================= -->
 
   <div
     id="firmsSection"
@@ -1042,15 +814,23 @@ button.success {
 
       <div class="card">
 
-        <div class="section-title">
+        <div
+          style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:10px;
+          "
+        >
 
           <h2>
             Fachbetriebe
           </h2>
 
+
           <button
-            onclick="openNewFirm()"
-            style="width:auto"
+            onclick="showFirmForm()"
+            style="width:auto;"
           >
             ➕ Fachbetrieb
           </button>
@@ -1066,9 +846,7 @@ button.success {
         </div>
 
 
-        <div
-          id="firms"
-        ></div>
+        <div id="firms"></div>
 
       </div>
 
@@ -1098,206 +876,135 @@ button.success {
         </h2>
 
 
-        <div class="form-grid">
+        <input
+          type="hidden"
+          id="firmId"
+        >
 
 
-          <!-- FIRMA -->
+        <label class="form-label">
+          Firmenname *
+        </label>
 
-          <div class="form-group">
-
-            <label for="firmFirma">
-              Firmenname *
-            </label>
-
-            <input
-              id="firmFirma"
-              type="text"
-              placeholder="z. B. Muster Tiefbau GmbH"
-            >
-
-          </div>
+        <input
+          id="firmName"
+          type="text"
+          placeholder="z. B. Muster Tiefbau GmbH"
+        >
 
 
-          <!-- INHABER -->
+        <label class="form-label">
+          Inhaber
+        </label>
 
-          <div class="form-group">
-
-            <label for="firmInhaber">
-              Inhaber
-            </label>
-
-            <input
-              id="firmInhaber"
-              type="text"
-              placeholder="Vor- und Nachname"
-            >
-
-          </div>
+        <input
+          id="firmOwner"
+          type="text"
+          placeholder="Vor- und Nachname"
+        >
 
 
-          <!-- EMAIL -->
+        <label class="form-label">
+          E-Mail
+        </label>
 
-          <div class="form-group">
-
-            <label for="firmEmail">
-              E-Mail
-            </label>
-
-            <input
-              id="firmEmail"
-              type="email"
-              placeholder="firma@example.de"
-            >
-
-          </div>
+        <input
+          id="firmEmail"
+          type="email"
+          placeholder="firma@example.de"
+        >
 
 
-          <!-- TELEFON -->
+        <label class="form-label">
+          Telefon
+        </label>
 
-          <div class="form-group">
-
-            <label for="firmTelefon">
-              Telefon
-            </label>
-
-            <input
-              id="firmTelefon"
-              type="tel"
-              placeholder="0461 123456"
-            >
-
-          </div>
+        <input
+          id="firmPhone"
+          type="tel"
+          placeholder="0461 123456"
+        >
 
 
-          <!-- PLZ -->
+        <label class="form-label">
+          PLZ
+        </label>
 
-          <div class="form-group">
-
-            <label for="firmPlz">
-              PLZ
-            </label>
-
-            <input
-              id="firmPlz"
-              type="text"
-              inputmode="numeric"
-              maxlength="5"
-              placeholder="24955"
-            >
-
-          </div>
+        <input
+          id="firmPlz"
+          type="text"
+          inputmode="numeric"
+          maxlength="5"
+          placeholder="24955"
+        >
 
 
-          <!-- ORT -->
+        <label class="form-label">
+          Ort
+        </label>
 
-          <div class="form-group">
-
-            <label for="firmOrt">
-              Ort
-            </label>
-
-            <input
-              id="firmOrt"
-              type="text"
-              placeholder="Harrislee"
-            >
-
-          </div>
+        <input
+          id="firmOrt"
+          type="text"
+          placeholder="Harrislee"
+        >
 
 
-          <!-- LEISTUNGEN -->
+        <label class="form-label">
+          Leistungen
+        </label>
 
-          <div class="form-group full">
-
-            <label for="firmLeistungen">
-              Leistungen
-            </label>
-
-            <textarea
-              id="firmLeistungen"
-              placeholder="Straßenbau, Asphaltarbeiten, Pflasterarbeiten..."
-            ></textarea>
-
-          </div>
+        <textarea
+          id="firmServices"
+          placeholder="Straßenbau, Pflasterarbeiten, Erdarbeiten..."
+        ></textarea>
 
 
-          <!-- RADIUS -->
+        <label class="form-label">
+          Radius in km
+        </label>
 
-          <div class="form-group">
-
-            <label for="firmRadius">
-              Radius in km
-            </label>
-
-            <input
-              id="firmRadius"
-              type="number"
-              min="0"
-              max="500"
-              value="30"
-              placeholder="30"
-            >
-
-          </div>
+        <input
+          id="firmRadius"
+          type="number"
+          min="0"
+          value="30"
+          placeholder="30"
+        >
 
 
-          <!-- AKTIV -->
+        <label class="checkbox-row">
 
-          <div class="form-group">
+          <input
+            id="firmActive"
+            type="checkbox"
+            checked
+          >
 
-            <label>
-              Status
-            </label>
+          Fachbetrieb ist aktiv
 
-            <div class="checkbox-row">
-
-              <input
-                id="firmAktiv"
-                type="checkbox"
-                checked
-              >
-
-              <span>
-                Fachbetrieb ist aktiv
-              </span>
-
-            </div>
-
-          </div>
+        </label>
 
 
-        </div>
+        <button
+          onclick="saveFirm()"
+          class="save-button"
+        >
+          💾 Fachbetrieb speichern
+        </button>
+
+
+        <button
+          onclick="showFirmsList()"
+          class="cancel-button"
+        >
+          Abbrechen
+        </button>
 
 
         <div
-          id="firmFormError"
-          class="error"
+          id="firmMessage"
         ></div>
-
-
-        <div
-          id="firmFormSuccess"
-          class="success"
-        ></div>
-
-
-        <div class="form-buttons">
-
-          <button
-            onclick="saveFirm()"
-          >
-            💾 Speichern
-          </button>
-
-
-          <button
-            class="secondary"
-            onclick="showFirmsList()"
-          >
-            Abbrechen
-          </button>
-
-        </div>
 
       </div>
 
@@ -1313,9 +1020,9 @@ button.success {
 <script>
 
 
-/* =====================================================
+/* =========================================
    SUPABASE
-   ===================================================== */
+   ========================================= */
 
 const SUPABASE_URL =
   "https://ehzugjmltfcvllftpjpp.supabase.co";
@@ -1333,22 +1040,15 @@ const supabaseClient =
 
 
 
-/* =====================================================
-   VARIABLEN
-   ===================================================== */
+let currentRequest = null;
 
-let currentRequest =
-  null;
-
-
-let currentFirm =
-  null;
+let editingFirmId = null;
 
 
 
-/* =====================================================
+/* =========================================
    LOGIN
-   ===================================================== */
+   ========================================= */
 
 async function login() {
 
@@ -1370,8 +1070,7 @@ async function login() {
       .getElementById("loginError");
 
 
-  error.textContent =
-    "";
+  error.textContent = "";
 
 
   if (!email || !password) {
@@ -1384,25 +1083,20 @@ async function login() {
   }
 
 
-  const {
-    error: loginError
-  } =
-    await supabaseClient.auth
-      .signInWithPassword({
+  const result =
+    await supabaseClient.auth.signInWithPassword({
 
-        email:
-          email,
+      email: email,
 
-        password:
-          password
+      password: password
 
-      });
+    });
 
 
-  if (loginError) {
+  if (result.error) {
 
     error.textContent =
-      loginError.message;
+      result.error.message;
 
     return;
 
@@ -1415,13 +1109,15 @@ async function login() {
 
 
 
-/* =====================================================
+/* =========================================
    LOGOUT
-   ===================================================== */
+   ========================================= */
 
 async function logout() {
 
-  await supabaseClient.auth.signOut();
+  await supabaseClient
+    .auth
+    .signOut();
 
 
   document
@@ -1437,9 +1133,9 @@ async function logout() {
 
 
 
-/* =====================================================
-   ADMIN ANZEIGEN
-   ===================================================== */
+/* =========================================
+   ADMIN
+   ========================================= */
 
 function showAdmin() {
 
@@ -1459,9 +1155,9 @@ function showAdmin() {
 
 
 
-/* =====================================================
+/* =========================================
    TABS
-   ===================================================== */
+   ========================================= */
 
 function showRequestsTab() {
 
@@ -1476,22 +1172,18 @@ function showRequestsTab() {
 
 
   document
-    .getElementById("tabRequests")
+    .getElementById("requestsTab")
     .classList.add("active");
 
 
   document
-    .getElementById("tabFirms")
+    .getElementById("firmsTab")
     .classList.remove("active");
-
-
-  showList();
 
 
   loadRequests();
 
 }
-
 
 
 function showFirmsTab() {
@@ -1507,27 +1199,24 @@ function showFirmsTab() {
 
 
   document
-    .getElementById("tabRequests")
+    .getElementById("requestsTab")
     .classList.remove("active");
 
 
   document
-    .getElementById("tabFirms")
+    .getElementById("firmsTab")
     .classList.add("active");
 
 
   showFirmsList();
 
-
-  loadFirms();
-
 }
 
 
 
-/* =====================================================
+/* =========================================
    BAUANFRAGEN LADEN
-   ===================================================== */
+   ========================================= */
 
 async function loadRequests() {
 
@@ -1549,10 +1238,7 @@ async function loadRequests() {
     "";
 
 
-  const {
-    data,
-    error
-  } =
+  const result =
     await supabaseClient
       .from("bauanfragen")
       .select("*")
@@ -1568,36 +1254,33 @@ async function loadRequests() {
     "none";
 
 
-  if (error) {
+  if (result.error) {
 
     container.innerHTML =
-      `
-      <div class="error">
+      `<div class="error">
         Fehler beim Laden:
-        ${escapeHtml(error.message)}
-      </div>
-      `;
+        ${escapeHtml(result.error.message)}
+      </div>`;
 
     return;
 
   }
 
 
-  if (!data || data.length === 0) {
+  if (!result.data ||
+      result.data.length === 0) {
 
     container.innerHTML =
-      `
-      <div class="empty">
+      `<div class="empty">
         Keine Bauanfragen vorhanden.
-      </div>
-      `;
+      </div>`;
 
     return;
 
   }
 
 
-  data.forEach(
+  result.data.forEach(
     request => {
 
       const item =
@@ -1615,8 +1298,19 @@ async function loadRequests() {
         "neu";
 
 
-      item.innerHTML =
-        `
+      let assignedText =
+        "";
+
+
+      if (request.fachbetrieb_id) {
+
+        assignedText =
+          `<br>🏢 Fachbetrieb zugewiesen`;
+
+      }
+
+
+      item.innerHTML = `
 
         <div class="request-title">
 
@@ -1649,19 +1343,20 @@ async function loadRequests() {
             request.created_at
           )}
 
+          ${assignedText}
+
         </div>
 
 
         <span
-          class="status
-          ${getStatusClass(status)}"
+          class="status ${getStatusClass(status)}"
         >
 
           ${getStatusText(status)}
 
         </span>
 
-        `;
+      `;
 
 
       item.addEventListener(
@@ -1681,11 +1376,11 @@ async function loadRequests() {
 
 
 
-/* =====================================================
-   DETAIL ANZEIGEN
-   ===================================================== */
+/* =========================================
+   BAUANFRAGE DETAIL
+   ========================================= */
 
-function showDetail(request) {
+async function showDetail(request) {
 
   currentRequest =
     request;
@@ -1777,36 +1472,242 @@ function showDetail(request) {
     .textContent =
       "";
 
-}
-
-
-
-/* =====================================================
-   ZURÜCK ZU ANFRAGEN
-   ===================================================== */
-
-function showList() {
 
   document
-    .getElementById("detailView")
-    .classList.add("hidden");
+    .getElementById("assignmentMessage")
+    .textContent =
+      "";
 
 
-  document
-    .getElementById("listView")
-    .classList.remove("hidden");
-
-
-  currentRequest =
-    null;
+  await loadFirmOptions(
+    request.fachbetrieb_id
+  );
 
 }
 
 
 
-/* =====================================================
+/* =========================================
+   FACHBETRIEBE FÜR AUSWAHL LADEN
+   ========================================= */
+
+async function loadFirmOptions(
+  selectedId = null
+) {
+
+  const select =
+    document
+      .getElementById(
+        "firmSelect"
+      );
+
+
+  select.innerHTML =
+    `
+      <option value="">
+        -- Kein Fachbetrieb zugewiesen --
+      </option>
+    `;
+
+
+  const result =
+    await supabaseClient
+      .from("fachbetriebe")
+      .select(`
+        id,
+        firma,
+        firmenname,
+        plz,
+        ort,
+        leistungen,
+        aktiv
+      `)
+      .order(
+        "firma",
+        {
+          ascending: true
+        }
+      );
+
+
+  if (result.error) {
+
+    select.innerHTML =
+      `
+        <option value="">
+          Fehler beim Laden der Fachbetriebe
+        </option>
+      `;
+
+    console.error(
+      result.error
+    );
+
+    return;
+
+  }
+
+
+  (result.data || [])
+    .forEach(
+      firm => {
+
+        if (
+          firm.aktiv === false
+        ) {
+          return;
+        }
+
+
+        const option =
+          document.createElement(
+            "option"
+          );
+
+
+        option.value =
+          firm.id;
+
+
+        const name =
+          firm.firma ||
+          firm.firmenname ||
+          "Fachbetrieb";
+
+
+        option.textContent =
+          name +
+          (
+            firm.plz
+              ? " – " +
+                firm.plz +
+                (
+                  firm.ort
+                    ? " " +
+                      firm.ort
+                    : ""
+                )
+              : ""
+          );
+
+
+        if (
+          selectedId &&
+          String(firm.id) ===
+          String(selectedId)
+        ) {
+
+          option.selected =
+            true;
+
+        }
+
+
+        select.appendChild(
+          option
+        );
+
+      }
+    );
+
+}
+
+
+
+/* =========================================
+   FACHBETRIEB ZUWEISEN
+   ========================================= */
+
+async function saveAssignment() {
+
+  if (!currentRequest) {
+
+    return;
+
+  }
+
+
+  const firmId =
+    document
+      .getElementById(
+        "firmSelect"
+      )
+      .value;
+
+
+  const message =
+    document
+      .getElementById(
+        "assignmentMessage"
+      );
+
+
+  message.className =
+    "";
+
+
+  message.textContent =
+    "Speichere...";
+
+
+  const result =
+    await supabaseClient
+      .from("bauanfragen")
+      .update({
+
+        fachbetrieb_id:
+          firmId || null
+
+      })
+      .eq(
+        "id",
+        currentRequest.id
+      );
+
+
+  if (result.error) {
+
+    message.className =
+      "error";
+
+
+    message.textContent =
+      "Fehler: " +
+      result.error.message;
+
+
+    return;
+
+  }
+
+
+  currentRequest.fachbetrieb_id =
+    firmId || null;
+
+
+  message.className =
+    "success";
+
+
+  if (firmId) {
+
+    message.textContent =
+      "✅ Fachbetrieb erfolgreich zugewiesen.";
+
+  } else {
+
+    message.textContent =
+      "✅ Zuordnung entfernt.";
+
+  }
+
+}
+
+
+
+/* =========================================
    STATUS SPEICHERN
-   ===================================================== */
+   ========================================= */
 
 async function saveStatus() {
 
@@ -1840,15 +1741,12 @@ async function saveStatus() {
     "Speichere...";
 
 
-  const {
-    error
-  } =
+  const result =
     await supabaseClient
       .from("bauanfragen")
       .update({
 
-        status:
-          status
+        status: status
 
       })
       .eq(
@@ -1857,7 +1755,7 @@ async function saveStatus() {
       );
 
 
-  if (error) {
+  if (result.error) {
 
     message.className =
       "error";
@@ -1865,7 +1763,7 @@ async function saveStatus() {
 
     message.textContent =
       "Fehler: " +
-      error.message;
+      result.error.message;
 
 
     return;
@@ -1882,18 +1780,38 @@ async function saveStatus() {
 
 
   message.textContent =
-    "Status gespeichert.";
-
-
-  loadRequests();
+    "Status erfolgreich gespeichert.";
 
 }
 
 
 
-/* =====================================================
+/* =========================================
+   ZURÜCK
+   ========================================= */
+
+function showList() {
+
+  document
+    .getElementById("detailView")
+    .classList.add("hidden");
+
+
+  document
+    .getElementById("listView")
+    .classList.remove("hidden");
+
+
+  currentRequest =
+    null;
+
+}
+
+
+
+/* =========================================
    FACHBETRIEBE LADEN
-   ===================================================== */
+   ========================================= */
 
 async function loadFirms() {
 
@@ -1919,10 +1837,7 @@ async function loadFirms() {
     "";
 
 
-  const {
-    data,
-    error
-  } =
+  const result =
     await supabaseClient
       .from("fachbetriebe")
       .select("*")
@@ -1938,40 +1853,36 @@ async function loadFirms() {
     "none";
 
 
-  if (error) {
+  if (result.error) {
 
     container.innerHTML =
-      `
-      <div class="error">
-
-        Fehler beim Laden der Fachbetriebe:
-
+      `<div class="error">
+        Fehler beim Laden:
         ${escapeHtml(
-          error.message
+          result.error.message
         )}
-
-      </div>
-      `;
+      </div>`;
 
     return;
 
   }
 
 
-  if (!data || data.length === 0) {
+  if (!result.data ||
+      result.data.length === 0) {
 
     container.innerHTML =
       `
-      <div class="empty">
+        <div class="empty">
 
-        Noch keine Fachbetriebe vorhanden.
+          Noch keine Fachbetriebe vorhanden.
 
-        <br><br>
+          <br><br>
 
-        Tippe oben auf
-        „➕ Fachbetrieb“.
+          Tippe oben auf
+          „➕ Fachbetrieb“.
 
-      </div>
+        </div>
       `;
 
     return;
@@ -1979,12 +1890,147 @@ async function loadFirms() {
   }
 
 
-  data.forEach(
+  result.data.forEach(
     firm => {
 
-      renderFirm(
-        firm,
-        container
+      const card =
+        document.createElement(
+          "div"
+        );
+
+
+      card.className =
+        "firm-card";
+
+
+      const name =
+        firm.firma ||
+        firm.firmenname ||
+        "Fachbetrieb";
+
+
+      const owner =
+        firm.inhaber ||
+        "-";
+
+
+      const email =
+        firm.email ||
+        "-";
+
+
+      const phone =
+        firm.telefon ||
+        "-";
+
+
+      const plz =
+        firm.plz ||
+        "-";
+
+
+      const ort =
+        firm.ort ||
+        "-";
+
+
+      const services =
+        firm.leistungen ||
+        "-";
+
+
+      const radius =
+        firm.radius_km ??
+        30;
+
+
+      card.innerHTML = `
+
+        <div class="firm-name">
+
+          🏢
+          ${escapeHtml(name)}
+
+        </div>
+
+
+        <div class="firm-info">
+
+          👤
+          ${escapeHtml(owner)}
+
+          <br>
+
+          📞
+          ${escapeHtml(phone)}
+
+          <br>
+
+          ✉️
+          ${escapeHtml(email)}
+
+          <br>
+
+          📍
+          ${escapeHtml(plz)}
+          ${escapeHtml(ort)}
+
+          <br>
+
+          📏
+          Radius:
+          ${escapeHtml(radius)}
+          km
+
+          <br>
+
+          🔧
+          ${escapeHtml(services)}
+
+        </div>
+
+
+        ${
+          firm.aktiv !== false
+
+            ? `
+              <span class="active-badge">
+                🟢 Aktiv
+              </span>
+            `
+
+            : `
+              <span class="inactive-badge">
+                ⚫ Inaktiv
+              </span>
+            `
+        }
+
+
+        <div class="action-row">
+
+          <button
+            class="edit-button"
+            onclick="editFirm('${firm.id}')"
+          >
+            ✏️ Bearbeiten
+          </button>
+
+
+          <button
+            class="delete-button"
+            onclick="deleteFirm('${firm.id}')"
+          >
+            🗑️ Löschen
+          </button>
+
+        </div>
+
+      `;
+
+
+      container.appendChild(
+        card
       );
 
     }
@@ -1994,232 +2040,43 @@ async function loadFirms() {
 
 
 
-/* =====================================================
-   FACHBETRIEB DARSTELLEN
-   ===================================================== */
+/* =========================================
+   FIRMENLISTE ANZEIGEN
+   ========================================= */
 
-function renderFirm(
-  firm,
-  container
-) {
+function showFirmsList() {
 
-  const item =
-    document.createElement(
-      "div"
-    );
+  document
+    .getElementById(
+      "firmFormView"
+    )
+    .classList.add("hidden");
 
 
-  item.className =
-    "firm";
+  document
+    .getElementById(
+      "firmsListView"
+    )
+    .classList.remove("hidden");
 
 
-  const firma =
-    firm.firma ||
-    firm.firmenname ||
-    "Ohne Firmenname";
-
-
-  const active =
-    firm.aktiv !== false;
-
-
-  item.innerHTML =
-    `
-
-    <div class="firm-title">
-
-      🏢
-      ${escapeHtml(
-        firma
-      )}
-
-    </div>
-
-
-    <div class="firm-info">
-
-      ${
-        firm.inhaber
-          ? "👤 " +
-            escapeHtml(
-              firm.inhaber
-            ) +
-            "<br>"
-          : ""
-      }
-
-
-      ${
-        firm.telefon
-          ? "📞 " +
-            escapeHtml(
-              firm.telefon
-            ) +
-            "<br>"
-          : ""
-      }
-
-
-      ${
-        firm.email
-          ? "📧 " +
-            escapeHtml(
-              firm.email
-            ) +
-            "<br>"
-          : ""
-      }
-
-
-      ${
-        firm.plz ||
-        firm.ort
-          ? "📍 " +
-            escapeHtml(
-              [
-                firm.plz,
-                firm.ort
-              ]
-              .filter(Boolean)
-              .join(" ")
-            ) +
-            "<br>"
-          : ""
-      }
-
-
-      ${
-        firm.leistungen
-          ? "🔧 " +
-            escapeHtml(
-              firm.leistungen
-            ) +
-            "<br>"
-          : ""
-      }
-
-
-      📏 Radius:
-      ${escapeHtml(
-        String(
-          firm.radius_km ??
-          30
-        )
-      )}
-      km
-
-      <br>
-
-      ${
-        active
-          ? "🟢 Aktiv"
-          : "🔴 Inaktiv"
-      }
-
-    </div>
-
-
-    <div class="firm-actions">
-
-      <button
-        onclick='openEditFirm(${JSON.stringify(
-          firm
-        ).replace(
-          /'/g,
-          "&#39;"
-        )})'
-      >
-        ✏️ Bearbeiten
-      </button>
-
-
-      <button
-        class="danger"
-        onclick='deleteFirm("${escapeJs(
-          firm.id
-        )}")'
-      >
-        🗑️ Löschen
-      </button>
-
-    </div>
-
-    `;
-
-
-  container.appendChild(
-    item
-  );
-
-}
-
-
-
-/* =====================================================
-   NEUEN FACHBETRIEB ÖFFNEN
-   ===================================================== */
-
-function openNewFirm() {
-
-  currentFirm =
+  editingFirmId =
     null;
 
 
-  document
-    .getElementById(
-      "firmsListView"
-    )
-    .classList.add("hidden");
-
-
-  document
-    .getElementById(
-      "firmFormView"
-    )
-    .classList.remove("hidden");
-
-
-  document
-    .getElementById(
-      "firmFormTitle"
-    )
-    .textContent =
-      "Fachbetrieb hinzufügen";
-
-
-  clearFirmForm();
-
-
-  document
-    .getElementById(
-      "firmRadius"
-    )
-    .value =
-      "30";
-
-
-  document
-    .getElementById(
-      "firmAktiv"
-    )
-    .checked =
-      true;
+  loadFirms();
 
 }
 
 
 
-/* =====================================================
-   FACHBETRIEB BEARBEITEN
-   ===================================================== */
+/* =========================================
+   FIRMENFORMULAR
+   ========================================= */
 
-function openEditFirm(
-  firm
+function showFirmForm(
+  firm = null
 ) {
-
-  currentFirm =
-    firm;
-
 
   document
     .getElementById(
@@ -2233,6 +2090,117 @@ function openEditFirm(
       "firmFormView"
     )
     .classList.remove("hidden");
+
+
+  document
+    .getElementById(
+      "firmMessage"
+    )
+    .textContent =
+      "";
+
+
+  if (!firm) {
+
+    editingFirmId =
+      null;
+
+
+    document
+      .getElementById(
+        "firmFormTitle"
+      )
+      .textContent =
+        "Fachbetrieb hinzufügen";
+
+
+    document
+      .getElementById(
+        "firmId"
+      )
+      .value =
+        "";
+
+
+    document
+      .getElementById(
+        "firmName"
+      )
+      .value =
+        "";
+
+
+    document
+      .getElementById(
+        "firmOwner"
+      )
+      .value =
+        "";
+
+
+    document
+      .getElementById(
+        "firmEmail"
+      )
+      .value =
+        "";
+
+
+    document
+      .getElementById(
+        "firmPhone"
+      )
+      .value =
+        "";
+
+
+    document
+      .getElementById(
+        "firmPlz"
+      )
+      .value =
+        "";
+
+
+    document
+      .getElementById(
+        "firmOrt"
+      )
+      .value =
+        "";
+
+
+    document
+      .getElementById(
+        "firmServices"
+      )
+      .value =
+        "";
+
+
+    document
+      .getElementById(
+        "firmRadius"
+      )
+      .value =
+        "30";
+
+
+    document
+      .getElementById(
+        "firmActive"
+      )
+      .checked =
+        true;
+
+
+    return;
+
+  }
+
+
+  editingFirmId =
+    firm.id;
 
 
   document
@@ -2245,7 +2213,15 @@ function openEditFirm(
 
   document
     .getElementById(
-      "firmFirma"
+      "firmId"
+    )
+    .value =
+      firm.id;
+
+
+  document
+    .getElementById(
+      "firmName"
     )
     .value =
       firm.firma ||
@@ -2255,7 +2231,7 @@ function openEditFirm(
 
   document
     .getElementById(
-      "firmInhaber"
+      "firmOwner"
     )
     .value =
       firm.inhaber ||
@@ -2273,7 +2249,7 @@ function openEditFirm(
 
   document
     .getElementById(
-      "firmTelefon"
+      "firmPhone"
     )
     .value =
       firm.telefon ||
@@ -2300,7 +2276,7 @@ function openEditFirm(
 
   document
     .getElementById(
-      "firmLeistungen"
+      "firmServices"
     )
     .value =
       firm.leistungen ||
@@ -2318,149 +2294,60 @@ function openEditFirm(
 
   document
     .getElementById(
-      "firmAktiv"
+      "firmActive"
     )
     .checked =
       firm.aktiv !== false;
 
-
-  clearFirmMessages();
-
 }
 
 
 
-/* =====================================================
-   FORMULAR LEEREN
-   ===================================================== */
-
-function clearFirmForm() {
-
-  document
-    .getElementById(
-      "firmFirma"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "firmInhaber"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "firmEmail"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "firmTelefon"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "firmPlz"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "firmOrt"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "firmLeistungen"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "firmRadius"
-    )
-    .value =
-      "30";
-
-
-  document
-    .getElementById(
-      "firmAktiv"
-    )
-    .checked =
-      true;
-
-
-  clearFirmMessages();
-
-}
-
-
-
-/* =====================================================
-   NACHRICHTEN LEEREN
-   ===================================================== */
-
-function clearFirmMessages() {
-
-  document
-    .getElementById(
-      "firmFormError"
-    )
-    .textContent =
-      "";
-
-
-  document
-    .getElementById(
-      "firmFormSuccess"
-    )
-    .textContent =
-      "";
-
-}
-
-
-
-/* =====================================================
-   FACHBETRIEB SPEICHERN
-   ===================================================== */
+/* =========================================
+   FIRMEN SPEICHERN
+   ========================================= */
 
 async function saveFirm() {
 
-  clearFirmMessages();
+  const message =
+    document
+      .getElementById(
+        "firmMessage"
+      );
+
+
+  message.className =
+    "";
 
 
   const firma =
     document
       .getElementById(
-        "firmFirma"
+        "firmName"
       )
       .value
       .trim();
 
 
+  if (!firma) {
+
+    message.className =
+      "error";
+
+
+    message.textContent =
+      "Bitte einen Firmennamen eingeben.";
+
+
+    return;
+
+  }
+
+
   const inhaber =
     document
       .getElementById(
-        "firmInhaber"
+        "firmOwner"
       )
       .value
       .trim();
@@ -2478,7 +2365,7 @@ async function saveFirm() {
   const telefon =
     document
       .getElementById(
-        "firmTelefon"
+        "firmPhone"
       )
       .value
       .trim();
@@ -2505,7 +2392,7 @@ async function saveFirm() {
   const leistungen =
     document
       .getElementById(
-        "firmLeistungen"
+        "firmServices"
       )
       .value
       .trim();
@@ -2520,75 +2407,44 @@ async function saveFirm() {
 
 
   const radius =
-    Number(
-      radiusValue || 30
-    );
+    radiusValue === ""
+      ? 30
+      : Number(radiusValue);
 
 
   const aktiv =
     document
       .getElementById(
-        "firmAktiv"
+        "firmActive"
       )
       .checked;
 
 
-  const errorBox =
-    document
-      .getElementById(
-        "firmFormError"
-      );
+  message.textContent =
+    "Speichere...";
 
 
-  const successBox =
-    document
-      .getElementById(
-        "firmFormSuccess"
-      );
+  /*
+    Wir speichern firma UND firmenname.
+    Dadurch bleibt auch die ältere
+    Datenbankstruktur kompatibel.
+  */
 
+  const payload = {
 
-  if (!firma) {
+    firma: firma,
 
-    errorBox.textContent =
-      "Bitte einen Firmennamen eingeben.";
+    firmenname: firma,
 
-    return;
+    inhaber: inhaber || null,
 
-  }
+    email: email || null,
 
+    telefon: telefon || null,
 
-  if (
-    Number.isNaN(radius) ||
-    radius < 0
-  ) {
+    plz: plz || null,
 
-    errorBox.textContent =
-      "Bitte einen gültigen Radius eingeben.";
-
-    return;
-
-  }
-
-
-  const data = {
-
-    firma:
-      firma,
-
-    inhaber:
-      inhaber || null,
-
-    email:
-      email || null,
-
-    telefon:
-      telefon || null,
-
-    plz:
-      plz || null,
-
-    ort:
-      ort || null,
+    ort: ort || null,
 
     leistungen:
       leistungen || null,
@@ -2605,28 +2461,24 @@ async function saveFirm() {
   let result;
 
 
-  if (currentFirm) {
+  if (editingFirmId) {
 
     result =
       await supabaseClient
         .from("fachbetriebe")
-        .update(
-          data
-        )
+        .update(payload)
         .eq(
           "id",
-          currentFirm.id
+          editingFirmId
         );
 
-  }
-
-  else {
+  } else {
 
     result =
       await supabaseClient
         .from("fachbetriebe")
         .insert([
-          data
+          payload
         ]);
 
   }
@@ -2634,14 +2486,12 @@ async function saveFirm() {
 
   if (result.error) {
 
-    console.error(
-      "Fachbetrieb speichern:",
-      result.error
-    );
+    message.className =
+      "error";
 
 
-    errorBox.textContent =
-      "Fehler beim Speichern:\n\n" +
+    message.textContent =
+      "Fehler: " +
       result.error.message;
 
 
@@ -2650,18 +2500,20 @@ async function saveFirm() {
   }
 
 
-  successBox.textContent =
-    currentFirm
-      ? "Fachbetrieb wurde geändert."
-      : "Fachbetrieb wurde angelegt.";
+  message.className =
+    "success";
+
+
+  message.textContent =
+    editingFirmId
+      ? "✅ Fachbetrieb erfolgreich geändert."
+      : "✅ Fachbetrieb erfolgreich angelegt.";
 
 
   setTimeout(
     () => {
 
       showFirmsList();
-
-      loadFirms();
 
     },
     700
@@ -2671,20 +2523,52 @@ async function saveFirm() {
 
 
 
-/* =====================================================
-   FACHBETRIEB LÖSCHEN
-   ===================================================== */
+/* =========================================
+   FIRMEN BEARBEITEN
+   ========================================= */
 
-async function deleteFirm(
-  id
+async function editFirm(
+  firmId
 ) {
 
-  if (!id) {
+  const result =
+    await supabaseClient
+      .from("fachbetriebe")
+      .select("*")
+      .eq(
+        "id",
+        firmId
+      )
+      .single();
+
+
+  if (result.error) {
+
+    alert(
+      "Fehler beim Laden: " +
+      result.error.message
+    );
 
     return;
 
   }
 
+
+  showFirmForm(
+    result.data
+  );
+
+}
+
+
+
+/* =========================================
+   FIRMEN LÖSCHEN
+   ========================================= */
+
+async function deleteFirm(
+  firmId
+) {
 
   const confirmed =
     confirm(
@@ -2699,23 +2583,21 @@ async function deleteFirm(
   }
 
 
-  const {
-    error
-  } =
+  const result =
     await supabaseClient
       .from("fachbetriebe")
       .delete()
       .eq(
         "id",
-        id
+        firmId
       );
 
 
-  if (error) {
+  if (result.error) {
 
     alert(
-      "Fehler beim Löschen:\n\n" +
-      error.message
+      "Fehler beim Löschen: " +
+      result.error.message
     );
 
     return;
@@ -2729,110 +2611,89 @@ async function deleteFirm(
 
 
 
-/* =====================================================
-   FIRMENLISTE ZEIGEN
-   ===================================================== */
-
-function showFirmsList() {
-
-  document
-    .getElementById(
-      "firmFormView"
-    )
-    .classList.add("hidden");
-
-
-  document
-    .getElementById(
-      "firmsListView"
-    )
-    .classList.remove("hidden");
-
-
-  currentFirm =
-    null;
-
-}
-
-
-
-/* =====================================================
-   STATUS-TEXT
-   ===================================================== */
+/* =========================================
+   STATUS TEXT
+   ========================================= */
 
 function getStatusText(
   status
 ) {
 
-  const map = {
+  switch (status) {
 
-    neu:
-      "🟡 Neu",
+    case "kontakt":
 
-    kontakt:
-      "🔵 Kontakt aufgenommen",
-
-    angebot:
-      "🟠 Angebot",
-
-    auftrag:
-      "🟢 Auftrag",
-
-    erledigt:
-      "⚫ Erledigt"
-
-  };
+      return "🔵 Kontakt aufgenommen";
 
 
-  return (
-    map[status] ||
-    "🟡 Neu"
-  );
+    case "angebot":
+
+      return "🟠 Angebot";
+
+
+    case "auftrag":
+
+      return "🟢 Auftrag";
+
+
+    case "erledigt":
+
+      return "⚫ Erledigt";
+
+
+    default:
+
+      return "🟡 Neu";
+
+  }
 
 }
 
 
 
-/* =====================================================
-   STATUS-KLASSE
-   ===================================================== */
+/* =========================================
+   STATUS KLASSE
+   ========================================= */
 
 function getStatusClass(
   status
 ) {
 
-  const map = {
+  switch (status) {
 
-    neu:
-      "status-neu",
+    case "kontakt":
 
-    kontakt:
-      "status-kontakt",
-
-    angebot:
-      "status-angebot",
-
-    auftrag:
-      "status-auftrag",
-
-    erledigt:
-      "status-erledigt"
-
-  };
+      return "status-kontakt";
 
 
-  return (
-    map[status] ||
-    "status-neu"
-  );
+    case "angebot":
+
+      return "status-angebot";
+
+
+    case "auftrag":
+
+      return "status-auftrag";
+
+
+    case "erledigt":
+
+      return "status-erledigt";
+
+
+    default:
+
+      return "status-neu";
+
+  }
 
 }
 
 
 
-/* =====================================================
+/* =========================================
    DATUM
-   ===================================================== */
+   ========================================= */
 
 function formatDate(
   value
@@ -2846,42 +2707,14 @@ function formatDate(
 
 
   const date =
-    new Date(
-      value
-    );
-
-
-  if (
-    Number.isNaN(
-      date.getTime()
-    )
-  ) {
-
-    return value;
-
-  }
+    new Date(value);
 
 
   return date.toLocaleString(
     "de-DE",
     {
-      day:
-        "2-digit",
-
-      month:
-        "2-digit",
-
-      year:
-        "2-digit",
-
-      hour:
-        "2-digit",
-
-      minute:
-        "2-digit",
-
-      second:
-        "2-digit"
+      dateStyle: "short",
+      timeStyle: "medium"
     }
   );
 
@@ -2889,40 +2722,38 @@ function formatDate(
 
 
 
-/* =====================================================
+/* =========================================
    HTML SICHERN
-   ===================================================== */
+   ========================================= */
 
 function escapeHtml(
   value
 ) {
 
-  return String(
-    value ?? ""
-  )
+  return String(value)
 
-    .replace(
-      /&/g,
+    .replaceAll(
+      "&",
       "&amp;"
     )
 
-    .replace(
-      /</g,
+    .replaceAll(
+      "<",
       "&lt;"
     )
 
-    .replace(
-      />/g,
+    .replaceAll(
+      ">",
       "&gt;"
     )
 
-    .replace(
-      /"/g,
+    .replaceAll(
+      '"',
       "&quot;"
     )
 
-    .replace(
-      /'/g,
+    .replaceAll(
+      "'",
       "&#039;"
     );
 
@@ -2930,47 +2761,21 @@ function escapeHtml(
 
 
 
-/* =====================================================
-   JAVASCRIPT STRING SICHERN
-   ===================================================== */
-
-function escapeJs(
-  value
-) {
-
-  return String(
-    value ?? ""
-  )
-    .replace(
-      /\\/g,
-      "\\\\"
-    )
-    .replace(
-      /"/g,
-      '\\"'
-    );
-
-}
-
-
-
-/* =====================================================
-   AUTOMATISCHE SESSION PRÜFEN
-   ===================================================== */
+/* =========================================
+   SESSION PRÜFEN
+   ========================================= */
 
 async function checkSession() {
 
-  const {
-    data
-  } =
+  const result =
     await supabaseClient
       .auth
       .getSession();
 
 
   if (
-    data &&
-    data.session
+    result.data &&
+    result.data.session
   ) {
 
     showAdmin();
@@ -2980,15 +2785,11 @@ async function checkSession() {
 }
 
 
-
-/* =====================================================
-   START
-   ===================================================== */
-
 checkSession();
 
 
 </script>
+
 
 </body>
 
