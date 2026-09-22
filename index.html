@@ -181,38 +181,6 @@
       border-color: var(--yellow);
     }
 
-    .file-help {
-      color: var(--gray);
-      font-size: 14px;
-      line-height: 1.5;
-      margin-top: 8px;
-    }
-
-    .file-preview {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .file-item {
-      background: #f4f6f7;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 10px;
-      font-size: 13px;
-      overflow: hidden;
-    }
-
-    .file-item img {
-      width: 100%;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 8px;
-      display: block;
-      margin-bottom: 7px;
-    }
-
     .privacy-note {
       color: var(--gray);
       line-height: 1.6;
@@ -356,10 +324,6 @@
 
       section {
         padding: 45px 16px;
-      }
-
-      .file-preview {
-        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -572,30 +536,6 @@
             id="description"
             placeholder="Beschreiben Sie kurz Ihr Bauprojekt..."
           ></textarea>
-
-
-          <!-- FOTOS -->
-
-          <label for="photos">
-            📸 Fotos vom Projekt
-          </label>
-
-          <input
-            id="photos"
-            type="file"
-            accept="image/jpeg,image/png,image/webp"
-            multiple
-          >
-
-          <div class="file-help">
-            Optional. Bis zu 5 Fotos, maximal 10 MB pro Foto.
-            Erlaubte Formate: JPG, PNG, WEBP.
-          </div>
-
-          <div
-            id="filePreview"
-            class="file-preview"
-          ></div>
 
 
           <!-- NAME -->
@@ -815,93 +755,6 @@
       "error"
     );
 
-  const photosInput =
-    document.getElementById(
-      "photos"
-    );
-
-  const filePreview =
-    document.getElementById(
-      "filePreview"
-    );
-
-
-  /* ==========================================
-     FOTO-VORSCHAU
-     ========================================== */
-
-  photosInput.addEventListener(
-    "change",
-    function () {
-
-      filePreview.innerHTML = "";
-
-      const files =
-        Array.from(
-          photosInput.files
-        );
-
-
-      if (files.length > 5) {
-
-        alert(
-          "Bitte maximal 5 Fotos auswählen."
-        );
-
-        photosInput.value = "";
-
-        return;
-      }
-
-
-      for (const file of files) {
-
-        const item =
-          document.createElement(
-            "div"
-          );
-
-        item.className =
-          "file-item";
-
-
-        const image =
-          document.createElement(
-            "img"
-          );
-
-        image.src =
-          URL.createObjectURL(
-            file
-          );
-
-
-        const name =
-          document.createElement(
-            "div"
-          );
-
-        name.textContent =
-          file.name;
-
-
-        item.appendChild(
-          image
-        );
-
-        item.appendChild(
-          name
-        );
-
-        filePreview.appendChild(
-          item
-        );
-
-      }
-
-    }
-  );
-
 
   /* ==========================================
      FORMULAR
@@ -921,79 +774,6 @@
         "none";
 
 
-      const files =
-        Array.from(
-          photosInput.files
-        );
-
-
-      /* ========================================
-         FOTO-ANZAHL
-         ======================================== */
-
-      if (files.length > 5) {
-
-        errorBox.textContent =
-          "Es sind maximal 5 Fotos erlaubt.";
-
-        errorBox.style.display =
-          "block";
-
-        return;
-      }
-
-
-      /* ========================================
-         FOTO-VALIDIERUNG
-         ======================================== */
-
-      const allowedTypes = [
-        "image/jpeg",
-        "image/png",
-        "image/webp"
-      ];
-
-
-      for (const file of files) {
-
-        if (
-          file.size >
-          10 * 1024 * 1024
-        ) {
-
-          errorBox.textContent =
-            "Das Foto \"" +
-            file.name +
-            "\" ist größer als 10 MB.";
-
-          errorBox.style.display =
-            "block";
-
-          return;
-        }
-
-
-        if (
-          !allowedTypes.includes(
-            file.type
-          )
-        ) {
-
-          errorBox.textContent =
-            "Das Foto \"" +
-            file.name +
-            "\" hat kein erlaubtes Format.\n\n" +
-            "Erlaubt sind JPG, PNG und WEBP.";
-
-          errorBox.style.display =
-            "block";
-
-          return;
-        }
-
-      }
-
-
       /* ========================================
          BUTTON SPERREN
          ======================================== */
@@ -1008,21 +788,10 @@
       try {
 
         /* ======================================
-           EINDEUTIGE ANFRAGE-ID
-           ====================================== */
-
-        const requestId =
-          crypto.randomUUID();
-
-
-        /* ======================================
            DATEN AUS FORMULAR
            ====================================== */
 
         const payload = {
-
-          id:
-            requestId,
 
           service:
             document
@@ -1087,7 +856,7 @@
 
 
         /* ======================================
-           1. BAUANFRAGE SPEICHERN
+           BAUANFRAGE SPEICHERN
            ====================================== */
 
         const result =
@@ -1100,6 +869,10 @@
             ]);
 
 
+        /* ======================================
+           FEHLER PRÜFEN
+           ====================================== */
+
         if (result.error) {
 
           console.error(
@@ -1110,157 +883,19 @@
           throw new Error(
             result.error.message
           );
-        }
-
-
-        /* ======================================
-           2. FOTOS HOCHLADEN
-           ====================================== */
-
-        let uploadWarning =
-          "";
-
-
-        for (
-          let i = 0;
-          i < files.length;
-          i++
-        ) {
-
-          const file =
-            files[i];
-
-
-          /* ====================================
-             SICHERER DATEINAME
-             ==================================== */
-
-          const safeName =
-            file.name
-              .replace(
-                /[^a-zA-Z0-9._-]/g,
-                "_"
-              );
-
-
-          /* ====================================
-             SPEICHERPFAD
-
-             requestId/
-             timestamp_index_dateiname
-             ==================================== */
-
-          const filePath =
-            requestId +
-            "/" +
-            Date.now() +
-            "_" +
-            i +
-            "_" +
-            safeName;
-
-
-          console.log(
-            "Foto wird hochgeladen:",
-            filePath
-          );
-
-
-          /* ====================================
-             SUPABASE STORAGE UPLOAD
-             ==================================== */
-
-          const uploadResult =
-            await db.storage
-              .from(
-                "Projektfotos"
-              )
-              .upload(
-                filePath,
-                file,
-                {
-                  cacheControl:
-                    "3600",
-
-                  upsert:
-                    false,
-
-                  contentType:
-                    file.type
-                }
-              );
-
-
-          /* ====================================
-             FOTO-FEHLER
-             ==================================== */
-
-          if (
-            uploadResult.error
-          ) {
-
-            console.error(
-              "FOTO-UPLOAD-FEHLER:",
-              uploadResult.error
-            );
-
-
-            const uploadError =
-              uploadResult.error;
-
-
-            uploadWarning =
-              "\n\n⚠️ Die Bauanfrage wurde gespeichert, " +
-              "aber das Foto konnte nicht hochgeladen werden." +
-              "\n\n" +
-              "Fehler: " +
-              (
-                uploadError.message ||
-                "Unbekannter Fehler"
-              ) +
-              "\n" +
-              "Status: " +
-              (
-                uploadError.statusCode ||
-                "unbekannt"
-              ) +
-              "\n" +
-              "Name: " +
-              (
-                uploadError.name ||
-                "unbekannt"
-              );
-
-
-            break;
-          }
-
-
-          console.log(
-            "Foto erfolgreich hochgeladen:",
-            filePath
-          );
 
         }
-
-
-        /* ======================================
-           3. FORMULAR ZURÜCKSETZEN
-           ====================================== */
-
-        form.reset();
-
-        filePreview.innerHTML =
-          "";
 
 
         /* ======================================
            ERFOLG
            ====================================== */
 
+        form.reset();
+
+
         success.textContent =
           "✅ Ihre Bauanfrage wurde erfolgreich übermittelt." +
-          uploadWarning +
           "\n\nWir kümmern uns um die weitere Zuordnung.";
 
 
@@ -1295,7 +930,7 @@
 
 
       /* ========================================
-         ALLGEMEINER FEHLER
+         FEHLER
          ======================================== */
 
       catch (error) {
