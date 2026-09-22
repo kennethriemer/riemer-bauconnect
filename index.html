@@ -246,6 +246,7 @@
       border-radius: 12px;
       font-weight: 700;
       line-height: 1.5;
+      white-space: pre-wrap;
     }
 
     .error {
@@ -380,9 +381,13 @@
   </div>
 </header>
 
+
 <main>
 
+  <!-- HERO -->
+
   <section class="hero" id="start">
+
     <div class="hero-inner">
 
       <h1>
@@ -400,34 +405,71 @@
       </a>
 
     </div>
+
   </section>
 
 
+  <!-- LEISTUNGEN -->
+
   <section id="leistungen">
+
     <div class="container">
 
       <h2>Unsere Leistungen</h2>
 
       <div class="services">
 
-        <div class="service">🚧 Straßenbau</div>
-        <div class="service">🛣️ Asphaltarbeiten</div>
-        <div class="service">🧱 Pflasterarbeiten</div>
-        <div class="service">🚜 Erdarbeiten</div>
-        <div class="service">🏗️ Tiefbau</div>
-        <div class="service">💧 Entwässerung</div>
-        <div class="service">🏠 Einfahrt</div>
-        <div class="service">🅿️ Parkplatz / Hof</div>
-        <div class="service">🔧 Reparatur</div>
-        <div class="service">➕ Sonstiges</div>
+        <div class="service">
+          🚧 Straßenbau
+        </div>
+
+        <div class="service">
+          🛣️ Asphaltarbeiten
+        </div>
+
+        <div class="service">
+          🧱 Pflasterarbeiten
+        </div>
+
+        <div class="service">
+          🚜 Erdarbeiten
+        </div>
+
+        <div class="service">
+          🏗️ Tiefbau
+        </div>
+
+        <div class="service">
+          💧 Entwässerung
+        </div>
+
+        <div class="service">
+          🏠 Einfahrt
+        </div>
+
+        <div class="service">
+          🅿️ Parkplatz / Hof
+        </div>
+
+        <div class="service">
+          🔧 Reparatur
+        </div>
+
+        <div class="service">
+          ➕ Sonstiges
+        </div>
 
       </div>
 
     </div>
+
   </section>
 
 
+  <!-- PROJEKT -->
+
   <section id="projekt">
+
     <div class="container">
 
       <h2>Projekt starten</h2>
@@ -436,24 +478,62 @@
 
         <form id="projectForm">
 
+          <!-- LEISTUNG -->
+
           <label for="service">
             Welche Leistung benötigen Sie?
           </label>
 
           <select id="service" required>
-            <option value="">Bitte auswählen</option>
-            <option value="Straßenbau">Straßenbau</option>
-            <option value="Asphaltarbeiten">Asphaltarbeiten</option>
-            <option value="Pflasterarbeiten">Pflasterarbeiten</option>
-            <option value="Erdarbeiten">Erdarbeiten</option>
-            <option value="Tiefbau">Tiefbau</option>
-            <option value="Entwässerung">Entwässerung</option>
-            <option value="Einfahrt">Einfahrt</option>
-            <option value="Parkplatz / Hof">Parkplatz / Hof</option>
-            <option value="Reparatur">Reparatur</option>
-            <option value="Sonstiges">Sonstiges</option>
+
+            <option value="">
+              Bitte auswählen
+            </option>
+
+            <option value="Straßenbau">
+              Straßenbau
+            </option>
+
+            <option value="Asphaltarbeiten">
+              Asphaltarbeiten
+            </option>
+
+            <option value="Pflasterarbeiten">
+              Pflasterarbeiten
+            </option>
+
+            <option value="Erdarbeiten">
+              Erdarbeiten
+            </option>
+
+            <option value="Tiefbau">
+              Tiefbau
+            </option>
+
+            <option value="Entwässerung">
+              Entwässerung
+            </option>
+
+            <option value="Einfahrt">
+              Einfahrt
+            </option>
+
+            <option value="Parkplatz / Hof">
+              Parkplatz / Hof
+            </option>
+
+            <option value="Reparatur">
+              Reparatur
+            </option>
+
+            <option value="Sonstiges">
+              Sonstiges
+            </option>
+
           </select>
 
+
+          <!-- PLZ -->
 
           <label for="plz">
             PLZ
@@ -469,6 +549,8 @@
           >
 
 
+          <!-- FLÄCHE -->
+
           <label for="area">
             Fläche / Umfang
           </label>
@@ -480,6 +562,8 @@
           >
 
 
+          <!-- BESCHREIBUNG -->
+
           <label for="description">
             Beschreibung des Projekts
           </label>
@@ -489,6 +573,8 @@
             placeholder="Beschreiben Sie kurz Ihr Bauprojekt..."
           ></textarea>
 
+
+          <!-- FOTOS -->
 
           <label for="photos">
             📸 Fotos vom Projekt
@@ -506,8 +592,13 @@
             Erlaubte Formate: JPG, PNG, WEBP.
           </div>
 
-          <div id="filePreview" class="file-preview"></div>
+          <div
+            id="filePreview"
+            class="file-preview"
+          ></div>
 
+
+          <!-- NAME -->
 
           <label for="name">
             Name
@@ -521,6 +612,8 @@
           >
 
 
+          <!-- TELEFON -->
+
           <label for="phone">
             Telefon
           </label>
@@ -533,6 +626,8 @@
           >
 
 
+          <!-- EMAIL -->
+
           <label for="email">
             E-Mail
           </label>
@@ -544,12 +639,21 @@
           >
 
 
+          <!-- DATENSCHUTZ -->
+
           <p class="privacy-note">
-            Ihre Anfrage wird über Supabase an Riemer BauConnect
-            übertragen. Datenschutz, Impressum und Einwilligungen
-            müssen vor dem öffentlichen Produktivbetrieb ergänzt werden.
+
+            Ihre Anfrage wird über Supabase an
+            Riemer BauConnect übertragen.
+
+            Datenschutz, Impressum und Einwilligungen
+            müssen vor dem öffentlichen Produktivbetrieb
+            ergänzt werden.
+
           </p>
 
+
+          <!-- ABSENDEN -->
 
           <button
             type="submit"
@@ -560,30 +664,45 @@
           </button>
 
 
-          <div id="success" class="success">
+          <!-- ERFOLG -->
+
+          <div
+            id="success"
+            class="success"
+          >
             ✅ Ihre Bauanfrage wurde erfolgreich übermittelt.
-            Wir kümmern uns um die weitere Zuordnung.
           </div>
 
 
-          <div id="error" class="error"></div>
+          <!-- FEHLER -->
+
+          <div
+            id="error"
+            class="error"
+          ></div>
 
         </form>
 
       </div>
 
     </div>
+
   </section>
 
 
+  <!-- ADMIN -->
+
   <section>
+
     <div class="container">
 
       <h2>Mein Bereich</h2>
 
       <div class="admin-card">
 
-        <h3>Admin-Bereich</h3>
+        <h3>
+          Admin-Bereich
+        </h3>
 
         <p>
           Eingegangene Bauanfragen verwalten und bearbeiten.
@@ -599,27 +718,38 @@
       </div>
 
     </div>
+
   </section>
 
 </main>
 
 
+<!-- FOOTER -->
+
 <footer>
+
   <div class="container">
 
-    <strong>Riemer BauConnect</strong><br>
+    <strong>
+      Riemer BauConnect
+    </strong>
+
+    <br>
 
     Bauprojekt einstellen. Fachbetrieb finden.
 
     <br><br>
 
     MVP – Vor dem Produktivbetrieb müssen Datenschutz,
-    Impressum, Einwilligungen und sichere Datenverarbeitung
-    vollständig eingerichtet werden.
+    Impressum, Einwilligungen und sichere
+    Datenverarbeitung vollständig eingerichtet werden.
 
   </div>
+
 </footer>
 
+
+<!-- MOBILE NAV -->
 
 <nav class="bottom-nav">
 
@@ -643,108 +773,82 @@
 
 <script>
 
+  /* ==========================================
+     SUPABASE
+     ========================================== */
+
   const SUPABASE_URL =
     "https://ehzugjmltfcvllftpjpp.supabase.co";
 
   const SUPABASE_KEY =
     "sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
 
-  const db = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
 
+  const db =
+    supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+
+  /* ==========================================
+     ELEMENTE
+     ========================================== */
 
   const form =
-    document.getElementById("projectForm");
+    document.getElementById(
+      "projectForm"
+    );
 
   const button =
-    document.getElementById("submitButton");
+    document.getElementById(
+      "submitButton"
+    );
 
   const success =
-    document.getElementById("success");
+    document.getElementById(
+      "success"
+    );
 
   const errorBox =
-    document.getElementById("error");
+    document.getElementById(
+      "error"
+    );
 
   const photosInput =
-    document.getElementById("photos");
+    document.getElementById(
+      "photos"
+    );
 
   const filePreview =
-    document.getElementById("filePreview");
+    document.getElementById(
+      "filePreview"
+    );
 
 
-  photosInput.addEventListener("change", function() {
+  /* ==========================================
+     FOTO-VORSCHAU
+     ========================================== */
 
-    filePreview.innerHTML = "";
+  photosInput.addEventListener(
+    "change",
+    function () {
 
-    const files =
-      Array.from(photosInput.files);
-
-    if (files.length > 5) {
-
-      alert(
-        "Bitte maximal 5 Fotos auswählen."
-      );
-
-      photosInput.value = "";
-      return;
-    }
-
-
-    for (const file of files) {
-
-      const item =
-        document.createElement("div");
-
-      item.className =
-        "file-item";
-
-
-      const image =
-        document.createElement("img");
-
-      image.src =
-        URL.createObjectURL(file);
-
-
-      const name =
-        document.createElement("div");
-
-      name.textContent =
-        file.name;
-
-
-      item.appendChild(image);
-      item.appendChild(name);
-
-      filePreview.appendChild(item);
-    }
-
-  });
-
-
-  form.addEventListener(
-    "submit",
-    async function(e) {
-
-      e.preventDefault();
-
-
-      success.style.display = "none";
-      errorBox.style.display = "none";
-
+      filePreview.innerHTML = "";
 
       const files =
-        Array.from(photosInput.files);
+        Array.from(
+          photosInput.files
+        );
 
 
       if (files.length > 5) {
 
-        errorBox.textContent =
-          "Es sind maximal 5 Fotos erlaubt.";
+        alert(
+          "Bitte maximal 5 Fotos auswählen."
+        );
 
-        errorBox.style.display = "block";
+        photosInput.value = "";
 
         return;
       }
@@ -752,34 +856,137 @@
 
       for (const file of files) {
 
-        if (file.size > 10 * 1024 * 1024) {
+        const item =
+          document.createElement(
+            "div"
+          );
+
+        item.className =
+          "file-item";
+
+
+        const image =
+          document.createElement(
+            "img"
+          );
+
+        image.src =
+          URL.createObjectURL(
+            file
+          );
+
+
+        const name =
+          document.createElement(
+            "div"
+          );
+
+        name.textContent =
+          file.name;
+
+
+        item.appendChild(
+          image
+        );
+
+        item.appendChild(
+          name
+        );
+
+        filePreview.appendChild(
+          item
+        );
+
+      }
+
+    }
+  );
+
+
+  /* ==========================================
+     FORMULAR
+     ========================================== */
+
+  form.addEventListener(
+    "submit",
+    async function (e) {
+
+      e.preventDefault();
+
+
+      success.style.display =
+        "none";
+
+      errorBox.style.display =
+        "none";
+
+
+      const files =
+        Array.from(
+          photosInput.files
+        );
+
+
+      /* ========================================
+         FOTO-ANZAHL
+         ======================================== */
+
+      if (files.length > 5) {
+
+        errorBox.textContent =
+          "Es sind maximal 5 Fotos erlaubt.";
+
+        errorBox.style.display =
+          "block";
+
+        return;
+      }
+
+
+      /* ========================================
+         FOTO-VALIDIERUNG
+         ======================================== */
+
+      const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+      ];
+
+
+      for (const file of files) {
+
+        if (
+          file.size >
+          10 * 1024 * 1024
+        ) {
 
           errorBox.textContent =
             "Das Foto \"" +
             file.name +
             "\" ist größer als 10 MB.";
 
-          errorBox.style.display = "block";
+          errorBox.style.display =
+            "block";
 
           return;
         }
 
 
-        const allowedTypes = [
-          "image/jpeg",
-          "image/png",
-          "image/webp"
-        ];
-
-
-        if (!allowedTypes.includes(file.type)) {
+        if (
+          !allowedTypes.includes(
+            file.type
+          )
+        ) {
 
           errorBox.textContent =
             "Das Foto \"" +
             file.name +
-            "\" hat kein erlaubtes Format.";
+            "\" hat kein erlaubtes Format.\n\n" +
+            "Erlaubt sind JPG, PNG und WEBP.";
 
-          errorBox.style.display = "block";
+          errorBox.style.display =
+            "block";
 
           return;
         }
@@ -787,7 +994,12 @@
       }
 
 
-      button.disabled = true;
+      /* ========================================
+         BUTTON SPERREN
+         ======================================== */
+
+      button.disabled =
+        true;
 
       button.textContent =
         "Wird gesendet ...";
@@ -795,58 +1007,76 @@
 
       try {
 
-        /*
-          Wir erzeugen bereits vor dem Speichern
-          eine eindeutige ID für die Bauanfrage.
-        */
+        /* ======================================
+           EINDEUTIGE ANFRAGE-ID
+           ====================================== */
 
         const requestId =
           crypto.randomUUID();
 
 
+        /* ======================================
+           DATEN AUS FORMULAR
+           ====================================== */
+
         const payload = {
 
-          id: requestId,
+          id:
+            requestId,
 
           service:
             document
-              .getElementById("service")
+              .getElementById(
+                "service"
+              )
               .value
               .trim(),
 
           plz:
             document
-              .getElementById("plz")
+              .getElementById(
+                "plz"
+              )
               .value
               .trim(),
 
           area:
             document
-              .getElementById("area")
+              .getElementById(
+                "area"
+              )
               .value
               .trim(),
 
           description:
             document
-              .getElementById("description")
+              .getElementById(
+                "description"
+              )
               .value
               .trim(),
 
           name:
             document
-              .getElementById("name")
+              .getElementById(
+                "name"
+              )
               .value
               .trim(),
 
           phone:
             document
-              .getElementById("phone")
+              .getElementById(
+                "phone"
+              )
               .value
               .trim(),
 
           email:
             document
-              .getElementById("email")
+              .getElementById(
+                "email"
+              )
               .value
               .trim(),
 
@@ -856,34 +1086,39 @@
         };
 
 
-        /*
-          1. Bauanfrage speichern
-        */
+        /* ======================================
+           1. BAUANFRAGE SPEICHERN
+           ====================================== */
 
         const result =
           await db
-            .from("bauanfragen")
-            .insert([payload]);
+            .from(
+              "bauanfragen"
+            )
+            .insert([
+              payload
+            ]);
 
 
         if (result.error) {
 
           console.error(
+            "BAUANFRAGE-FEHLER:",
             result.error
           );
 
           throw new Error(
             result.error.message
           );
-
         }
 
 
-        /*
-          2. Fotos hochladen
-        */
+        /* ======================================
+           2. FOTOS HOCHLADEN
+           ====================================== */
 
-        let uploadWarning = "";
+        let uploadWarning =
+          "";
 
 
         for (
@@ -896,6 +1131,10 @@
             files[i];
 
 
+          /* ====================================
+             SICHERER DATEINAME
+             ==================================== */
+
           const safeName =
             file.name
               .replace(
@@ -903,6 +1142,13 @@
                 "_"
               );
 
+
+          /* ====================================
+             SPEICHERPFAD
+
+             requestId/
+             timestamp_index_dateiname
+             ==================================== */
 
           const filePath =
             requestId +
@@ -914,45 +1160,103 @@
             safeName;
 
 
+          console.log(
+            "Foto wird hochgeladen:",
+            filePath
+          );
+
+
+          /* ====================================
+             SUPABASE STORAGE UPLOAD
+             ==================================== */
+
           const uploadResult =
             await db.storage
-              .from("Projektfotos")
+              .from(
+                "Projektfotos"
+              )
               .upload(
                 filePath,
                 file,
                 {
-                  cacheControl: "3600",
-                  upsert: false,
-                  contentType: file.type
+                  cacheControl:
+                    "3600",
+
+                  upsert:
+                    false,
+
+                  contentType:
+                    file.type
                 }
               );
 
 
-          if (uploadResult.error) {
+          /* ====================================
+             FOTO-FEHLER
+             ==================================== */
+
+          if (
+            uploadResult.error
+          ) {
 
             console.error(
+              "FOTO-UPLOAD-FEHLER:",
               uploadResult.error
             );
 
+
+            const uploadError =
+              uploadResult.error;
+
+
             uploadWarning =
               "\n\n⚠️ Die Bauanfrage wurde gespeichert, " +
-              "aber mindestens ein Foto konnte nicht hochgeladen werden.";
+              "aber das Foto konnte nicht hochgeladen werden." +
+              "\n\n" +
+              "Fehler: " +
+              (
+                uploadError.message ||
+                "Unbekannter Fehler"
+              ) +
+              "\n" +
+              "Status: " +
+              (
+                uploadError.statusCode ||
+                "unbekannt"
+              ) +
+              "\n" +
+              "Name: " +
+              (
+                uploadError.name ||
+                "unbekannt"
+              );
+
 
             break;
-
           }
+
+
+          console.log(
+            "Foto erfolgreich hochgeladen:",
+            filePath
+          );
 
         }
 
 
-        /*
-          3. Erfolg anzeigen
-        */
+        /* ======================================
+           3. FORMULAR ZURÜCKSETZEN
+           ====================================== */
 
         form.reset();
 
-        filePreview.innerHTML = "";
+        filePreview.innerHTML =
+          "";
 
+
+        /* ======================================
+           ERFOLG
+           ====================================== */
 
         success.textContent =
           "✅ Ihre Bauanfrage wurde erfolgreich übermittelt." +
@@ -964,29 +1268,52 @@
           "block";
 
 
+        /* ======================================
+           BUTTON ZURÜCKSETZEN
+           ====================================== */
+
         button.disabled =
           false;
-
 
         button.textContent =
           "Anfrage absenden →";
 
 
+        /* ======================================
+           ZUM ERFOLG SCROLLEN
+           ====================================== */
+
         success.scrollIntoView({
-          behavior: "smooth",
-          block: "center"
+          behavior:
+            "smooth",
+
+          block:
+            "center"
         });
 
+      }
 
-      } catch (error) {
 
-        console.error(error);
+      /* ========================================
+         ALLGEMEINER FEHLER
+         ======================================== */
+
+      catch (error) {
+
+        console.error(
+          "GESAMTFEHLER:",
+          error
+        );
 
 
         errorBox.textContent =
-          "Die Anfrage konnte nicht gesendet werden.\n\n" +
+          "Die Anfrage konnte nicht gesendet werden." +
+          "\n\n" +
           "Fehler: " +
-          error.message;
+          (
+            error.message ||
+            "Unbekannter Fehler"
+          );
 
 
         errorBox.style.display =
@@ -995,7 +1322,6 @@
 
         button.disabled =
           false;
-
 
         button.textContent =
           "Anfrage absenden →";
