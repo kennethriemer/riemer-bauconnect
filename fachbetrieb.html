@@ -30,7 +30,7 @@
       background: #151515;
       padding: 18px;
       text-align: center;
-      border-bottom: 1px solid #333;
+      border-bottom: 1px solid #333333;
     }
 
     header h1 {
@@ -44,18 +44,19 @@
 
     header p {
       margin-bottom: 0;
+      color: #cccccc;
     }
 
     .container {
       width: 100%;
-      max-width: 650px;
+      max-width: 700px;
       margin: auto;
       padding: 20px;
     }
 
     .card {
       background: #1c1c1c;
-      border: 1px solid #333;
+      border: 1px solid #333333;
       border-radius: 16px;
       padding: 20px;
       margin-bottom: 20px;
@@ -68,6 +69,7 @@
 
     h3 {
       color: #ffd400;
+      margin-top: 0;
     }
 
     p {
@@ -88,7 +90,7 @@
       width: 100%;
       padding: 13px;
       border-radius: 10px;
-      border: 1px solid #444;
+      border: 1px solid #444444;
       background: #111111;
       color: #ffffff;
       font-size: 16px;
@@ -120,10 +122,6 @@
     button.danger {
       background: #9b2226;
       color: #ffffff;
-    }
-
-    button:disabled {
-      opacity: 0.5;
     }
 
     .hidden {
@@ -175,7 +173,7 @@
 
     .info-row {
       padding: 12px 0;
-      border-bottom: 1px solid #333;
+      border-bottom: 1px solid #333333;
     }
 
     .info-row:last-child {
@@ -204,20 +202,82 @@
       color: #999999;
     }
 
-    .edit-title {
-      margin-top: 25px;
-      padding-top: 20px;
-      border-top: 1px solid #333;
-    }
-
     .locked {
       padding: 12px;
       border-radius: 10px;
       background: #252525;
-      border: 1px solid #444;
-      color: #aaa;
+      border: 1px solid #444444;
+      color: #aaaaaa;
       margin-top: 15px;
       font-size: 14px;
+    }
+
+    .request-card {
+      background: #151515;
+      border: 1px solid #3a3a3a;
+      border-radius: 14px;
+      padding: 16px;
+      margin-top: 15px;
+    }
+
+    .request-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #ffd400;
+      margin-bottom: 12px;
+    }
+
+    .request-row {
+      padding: 8px 0;
+      border-bottom: 1px solid #292929;
+    }
+
+    .request-row:last-child {
+      border-bottom: none;
+    }
+
+    .request-label {
+      color: #888888;
+      font-size: 12px;
+      margin-bottom: 3px;
+    }
+
+    .request-value {
+      color: #ffffff;
+      line-height: 1.4;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .request-status {
+      display: inline-block;
+      padding: 7px 10px;
+      border-radius: 20px;
+      background: #493d08;
+      color: #ffe66d;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .no-requests {
+      text-align: center;
+      padding: 25px 10px;
+      color: #999999;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .refresh-button {
+      width: auto;
+      padding: 8px 12px;
+      margin: 0;
+      font-size: 13px;
     }
 
     a {
@@ -250,8 +310,8 @@
     <h2>Für Fachbetriebe</h2>
 
     <p>
-      Erhalten Sie passende Bauanfragen aus Ihrer Region über
-      Riemer BauConnect.
+      Erhalten Sie passende Bauanfragen aus Ihrer Region
+      über Riemer BauConnect.
     </p>
 
     <button onclick="showLogin()">
@@ -333,7 +393,6 @@
       Erstellen Sie kostenlos Ihr Fachbetrieb-Konto.
     </p>
 
-
     <label>Firmenname *</label>
 
     <input
@@ -342,7 +401,6 @@
       placeholder="z. B. Mustermann Tiefbau GmbH"
     >
 
-
     <label>Inhaber / Ansprechpartner *</label>
 
     <input
@@ -350,7 +408,6 @@
       id="inhaber"
       placeholder="Vor- und Nachname"
     >
-
 
     <label>E-Mail *</label>
 
@@ -361,7 +418,6 @@
       autocomplete="email"
     >
 
-
     <label>Telefon *</label>
 
     <input
@@ -369,7 +425,6 @@
       id="telefon"
       placeholder="0461 123456"
     >
-
 
     <label>PLZ *</label>
 
@@ -380,7 +435,6 @@
       inputmode="numeric"
     >
 
-
     <label>Ort *</label>
 
     <input
@@ -389,7 +443,6 @@
       placeholder="Harrislee"
     >
 
-
     <label>Ihre Leistungen *</label>
 
     <textarea
@@ -397,40 +450,18 @@
       placeholder="z. B. Straßenbau, Asphaltarbeiten, Tiefbau, Pflasterarbeiten"
     ></textarea>
 
-
     <label>Einsatzradius</label>
 
     <select id="radius">
 
-      <option value="10">
-        10 km
-      </option>
-
-      <option value="20">
-        20 km
-      </option>
-
-      <option
-        value="30"
-        selected
-      >
-        30 km
-      </option>
-
-      <option value="50">
-        50 km
-      </option>
-
-      <option value="75">
-        75 km
-      </option>
-
-      <option value="100">
-        100 km
-      </option>
+      <option value="10">10 km</option>
+      <option value="20">20 km</option>
+      <option value="30" selected>30 km</option>
+      <option value="50">50 km</option>
+      <option value="75">75 km</option>
+      <option value="100">100 km</option>
 
     </select>
-
 
     <label>Passwort *</label>
 
@@ -441,7 +472,6 @@
       autocomplete="new-password"
     >
 
-
     <label>Passwort wiederholen *</label>
 
     <input
@@ -451,11 +481,9 @@
       autocomplete="new-password"
     >
 
-
     <button onclick="registerFirm()">
       🏢 Fachbetrieb registrieren
     </button>
-
 
     <button
       id="resendButton"
@@ -465,7 +493,6 @@
       📧 Bestätigungs-Mail erneut senden
     </button>
 
-
     <button
       class="secondary"
       onclick="showLogin()"
@@ -473,14 +500,12 @@
       Bereits registriert? Anmelden
     </button>
 
-
     <button
       class="secondary"
       onclick="showStart()"
     >
       Zurück
     </button>
-
 
     <div id="registerMessage"></div>
 
@@ -499,13 +524,9 @@
 
     <div id="firmInfo"></div>
 
-
-    <button
-      onclick="showEditProfile()"
-    >
+    <button onclick="showEditProfile()">
       ✏️ Profil bearbeiten
     </button>
-
 
     <button
       class="danger"
@@ -513,6 +534,38 @@
     >
       Abmelden
     </button>
+
+  </section>
+
+
+  <!-- ==========================================
+       MEINE BAUANFRAGEN
+  =========================================== -->
+
+  <section
+    id="requestsView"
+    class="card hidden"
+  >
+
+    <div class="section-title">
+
+      <h2>🏗️ Meine Bauanfragen</h2>
+
+      <button
+        class="secondary refresh-button"
+        onclick="loadAssignedRequests()"
+      >
+        🔄 Aktualisieren
+      </button>
+
+    </div>
+
+    <p class="small">
+      Hier erscheinen nur Bauanfragen, die deinem
+      Fachbetrieb zugewiesen wurden.
+    </p>
+
+    <div id="requestsList"></div>
 
   </section>
 
@@ -529,10 +582,9 @@
     <h2>✏️ Profil bearbeiten</h2>
 
     <p>
-      Hier kannst du die Daten deines eigenen Fachbetriebs
-      bearbeiten.
+      Hier kannst du die Daten deines eigenen
+      Fachbetriebs bearbeiten.
     </p>
-
 
     <label>Firmenname</label>
 
@@ -542,7 +594,6 @@
       placeholder="Firmenname"
     >
 
-
     <label>Inhaber / Ansprechpartner</label>
 
     <input
@@ -550,7 +601,6 @@
       id="editInhaber"
       placeholder="Vor- und Nachname"
     >
-
 
     <label>Kontakt-E-Mail</label>
 
@@ -560,7 +610,6 @@
       placeholder="E-Mail"
     >
 
-
     <label>Telefon</label>
 
     <input
@@ -568,7 +617,6 @@
       id="editTelefon"
       placeholder="Telefonnummer"
     >
-
 
     <label>PLZ</label>
 
@@ -579,7 +627,6 @@
       inputmode="numeric"
     >
 
-
     <label>Ort</label>
 
     <input
@@ -588,7 +635,6 @@
       placeholder="Ort"
     >
 
-
     <label>Leistungen</label>
 
     <textarea
@@ -596,51 +642,28 @@
       placeholder="z. B. Straßenbau, Asphaltarbeiten, Tiefbau"
     ></textarea>
 
-
     <label>Einsatzradius</label>
 
     <select id="editRadius">
 
-      <option value="10">
-        10 km
-      </option>
-
-      <option value="20">
-        20 km
-      </option>
-
-      <option value="30">
-        30 km
-      </option>
-
-      <option value="50">
-        50 km
-      </option>
-
-      <option value="75">
-        75 km
-      </option>
-
-      <option value="100">
-        100 km
-      </option>
+      <option value="10">10 km</option>
+      <option value="20">20 km</option>
+      <option value="30">30 km</option>
+      <option value="50">50 km</option>
+      <option value="75">75 km</option>
+      <option value="100">100 km</option>
 
     </select>
 
-
     <div class="locked">
-      🔒 Freischaltung<br>
+      🔒 <strong>Freischaltung</strong><br>
       Der Freischaltungsstatus kann nur durch
       Riemer BauConnect geändert werden.
     </div>
 
-
-    <button
-      onclick="saveProfile()"
-    >
+    <button onclick="saveProfile()">
       💾 Änderungen speichern
     </button>
-
 
     <button
       class="secondary"
@@ -649,15 +672,10 @@
       Abbrechen
     </button>
 
-
     <div id="editMessage"></div>
 
   </section>
 
-
-  <!-- ==========================================
-       ALLGEMEINE NACHRICHT
-  =========================================== -->
 
   <section id="generalMessage"></section>
 
@@ -666,7 +684,6 @@
 
 <script>
 
-
   /* ==========================================
      SUPABASE
   =========================================== */
@@ -674,14 +691,11 @@
   const SUPABASE_URL =
     "https://ehzugjmltfcvllftpjpp.supabase.co";
 
-
   const SUPABASE_KEY =
     "sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
 
-
   const REDIRECT_URL =
     "https://kennethriemer.github.io/riemer-bauconnect/fachbetrieb.html";
-
 
   const db =
     window.supabase.createClient(
@@ -691,12 +705,13 @@
 
 
   /* ==========================================
-     AKTUELLER BENUTZER
+     VARIABLEN
   =========================================== */
 
   let currentUser = null;
 
   let currentFirm = null;
+
 
   let lastRegisteredEmail = "";
 
@@ -721,6 +736,10 @@
 
     document
       .getElementById("dashboardView")
+      .classList.add("hidden");
+
+    document
+      .getElementById("requestsView")
       .classList.add("hidden");
 
     document
@@ -771,6 +790,10 @@
       .getElementById("dashboardView")
       .classList.remove("hidden");
 
+    document
+      .getElementById("requestsView")
+      .classList.remove("hidden");
+
   }
 
 
@@ -787,11 +810,9 @@
     const element =
       document.getElementById(elementId);
 
-
     if (!element) {
       return;
     }
-
 
     element.innerHTML =
       `<div class="message ${type}">${message}</div>`;
@@ -811,13 +832,11 @@
         .value
         .trim();
 
-
     const inhaber =
       document
         .getElementById("inhaber")
         .value
         .trim();
-
 
     const email =
       document
@@ -825,13 +844,11 @@
         .value
         .trim();
 
-
     const telefon =
       document
         .getElementById("telefon")
         .value
         .trim();
-
 
     const plz =
       document
@@ -839,13 +856,11 @@
         .value
         .trim();
 
-
     const ort =
       document
         .getElementById("ort")
         .value
         .trim();
-
 
     const leistungen =
       document
@@ -853,18 +868,15 @@
         .value
         .trim();
 
-
     const radius =
       document
         .getElementById("radius")
         .value;
 
-
     const password =
       document
         .getElementById("registerPassword")
         .value;
-
 
     const password2 =
       document
@@ -997,8 +1009,8 @@
         an <strong>${escapeHtml(email)}</strong>
         geschickt.<br><br>
 
-        Öffne die Mail und tippe auf
-        <strong>„Confirm email address“</strong>.<br><br>
+        Öffne die Mail und bestätige deine
+        E-Mail-Adresse.<br><br>
 
         Danach kannst du dich hier anmelden.
       `,
@@ -1166,7 +1178,7 @@
 
 
   /* ==========================================
-     FIRMENPROFIL ERSTELLEN / LADEN
+     PROFIL SICHERSTELLEN
   =========================================== */
 
   async function ensureFirmProfile(user) {
@@ -1409,11 +1421,14 @@
       firm
     );
 
+
+    await loadAssignedRequests();
+
   }
 
 
   /* ==========================================
-     FIRMENDATEN ANZEIGEN
+     FIRMENINFOS
   =========================================== */
 
   function renderFirmInfo(firm) {
@@ -1482,6 +1497,7 @@
 
           <div class="info-value">
             ${escapeHtml(firm.plz || "")}
+            ${firm.ort ? " " : ""}
             ${escapeHtml(firm.ort || "")}
           </div>
 
@@ -1521,7 +1537,380 @@
 
 
   /* ==========================================
-     PROFIL BEARBEITEN ÖFFNEN
+     BAUANFRAGEN LADEN
+  =========================================== */
+
+  async function loadAssignedRequests() {
+
+    const list =
+      document.getElementById(
+        "requestsList"
+      );
+
+
+    if (!list) {
+      return;
+    }
+
+
+    if (!currentUser) {
+
+      list.innerHTML = `
+
+        <div class="no-requests">
+          🔐 Bitte zuerst anmelden.
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    list.innerHTML = `
+
+      <div class="no-requests">
+        ⏳ Bauanfragen werden geladen...
+      </div>
+
+    `;
+
+
+    /*
+      Die Datenbank-RLS-Regel sorgt dafür,
+      dass der Fachbetrieb ausschließlich
+      seine zugewiesenen Bauanfragen erhält.
+    */
+
+    const {
+      data,
+      error
+    } =
+      await db
+        .from("bauanfragen")
+        .select("*")
+        .order(
+          "created_at",
+          {
+            ascending: false
+          }
+        );
+
+
+    if (error) {
+
+      console.error(
+        "Bauanfragen:",
+        error
+      );
+
+
+      list.innerHTML = `
+
+        <div class="message error">
+
+          ❌ Bauanfragen konnten nicht geladen werden.
+
+          <br><br>
+
+          ${escapeHtml(error.message)}
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    if (!data || data.length === 0) {
+
+      list.innerHTML = `
+
+        <div class="no-requests">
+
+          📭 Noch keine Bauanfragen vorhanden.
+
+          <br><br>
+
+          <span class="small">
+            Sobald dir eine Bauanfrage zugewiesen
+            wurde, erscheint sie hier.
+          </span>
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    list.innerHTML =
+      data
+        .map(
+          request =>
+            renderRequestCard(
+              request
+            )
+        )
+        .join("");
+
+  }
+
+
+  /* ==========================================
+     BAUANFRAGE KARTE
+  =========================================== */
+
+  function renderRequestCard(request) {
+
+    const status =
+      request.status || "neu";
+
+
+    const createdAt =
+      formatDate(
+        request.created_at
+      );
+
+
+    return `
+
+      <div class="request-card">
+
+        <div class="request-title">
+
+          🏗️ ${escapeHtml(
+            request.service || "Bauanfrage"
+          )}
+
+        </div>
+
+
+        <div class="request-status">
+
+          ${statusIcon(status)}
+          ${escapeHtml(statusText(status))}
+
+        </div>
+
+
+        <div class="request-row">
+
+          <div class="request-label">
+            📍 Standort
+          </div>
+
+          <div class="request-value">
+
+            ${escapeHtml(request.plz || "")}
+
+            ${request.area ? " – " + escapeHtml(request.area) : ""}
+
+          </div>
+
+        </div>
+
+
+        <div class="request-row">
+
+          <div class="request-label">
+            📝 Projektbeschreibung
+          </div>
+
+          <div class="request-value">
+
+            ${escapeHtml(
+              request.description || "Keine Beschreibung"
+            )}
+
+          </div>
+
+        </div>
+
+
+        <div class="request-row">
+
+          <div class="request-label">
+            👤 Kunde
+          </div>
+
+          <div class="request-value">
+
+            ${escapeHtml(
+              request.name || "-"
+            )}
+
+          </div>
+
+        </div>
+
+
+        <div class="request-row">
+
+          <div class="request-label">
+            📞 Telefon
+          </div>
+
+          <div class="request-value">
+
+            ${escapeHtml(
+              request.phone || "-"
+            )}
+
+          </div>
+
+        </div>
+
+
+        <div class="request-row">
+
+          <div class="request-label">
+            ✉️ E-Mail
+          </div>
+
+          <div class="request-value">
+
+            ${escapeHtml(
+              request.email || "-"
+            )}
+
+          </div>
+
+        </div>
+
+
+        <div class="request-row">
+
+          <div class="request-label">
+            📅 Eingang
+          </div>
+
+          <div class="request-value">
+
+            ${escapeHtml(
+              createdAt
+            )}
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+
+  /* ==========================================
+     STATUS
+  =========================================== */
+
+  function statusIcon(status) {
+
+    switch (
+      String(status).toLowerCase()
+    ) {
+
+      case "neu":
+        return "🆕";
+
+      case "kontaktiert":
+        return "📞";
+
+      case "in_bearbeitung":
+        return "🔧";
+
+      case "erledigt":
+        return "✅";
+
+      case "abgeschlossen":
+        return "✅";
+
+      default:
+        return "📌";
+
+    }
+
+  }
+
+
+  function statusText(status) {
+
+    switch (
+      String(status).toLowerCase()
+    ) {
+
+      case "neu":
+        return "Neue Anfrage";
+
+      case "kontaktiert":
+        return "Kunde kontaktiert";
+
+      case "in_bearbeitung":
+        return "In Bearbeitung";
+
+      case "erledigt":
+        return "Erledigt";
+
+      case "abgeschlossen":
+        return "Abgeschlossen";
+
+      default:
+        return status || "Unbekannt";
+
+    }
+
+  }
+
+
+  /* ==========================================
+     DATUM
+  =========================================== */
+
+  function formatDate(value) {
+
+    if (!value) {
+      return "-";
+    }
+
+
+    const date =
+      new Date(value);
+
+
+    if (
+      Number.isNaN(
+        date.getTime()
+      )
+    ) {
+
+      return String(value);
+
+    }
+
+
+    return date.toLocaleString(
+      "de-DE",
+      {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      }
+    );
+
+  }
+
+
+  /* ==========================================
+     PROFIL BEARBEITEN
   =========================================== */
 
   function showEditProfile() {
@@ -1766,14 +2155,8 @@
 
 
     /*
-      WICHTIG:
-
-      Hier werden absichtlich NICHT gesendet:
-
-      - owner_user_id
-      - freigeschaltet
-
-      Diese Werte bleiben geschützt.
+      Freigeschaltet und owner_user_id
+      werden absichtlich NICHT geändert.
     */
 
     const updates = {
@@ -1847,19 +2230,22 @@
     );
 
 
-    setTimeout(() => {
+    setTimeout(
+      async () => {
 
-      loadDashboard(
-        currentUser
-      );
+        await loadDashboard(
+          currentUser
+        );
 
-    }, 800);
+      },
+      800
+    );
 
   }
 
 
   /* ==========================================
-     PROFIL BEARBEITEN ABBRECHEN
+     BEARBEITEN ABBRECHEN
   =========================================== */
 
   function cancelEditProfile() {
@@ -1897,7 +2283,7 @@
 
 
   /* ==========================================
-     SESSION PRÜFEN
+     SESSION
   =========================================== */
 
   async function checkSession() {
@@ -1988,7 +2374,7 @@
 
 
   /* ==========================================
-     HTML SICHER AUSGEBEN
+     HTML ESCAPEN
   =========================================== */
 
   function escapeHtml(value) {
@@ -2028,7 +2414,6 @@
   =========================================== */
 
   checkSession();
-
 
 </script>
 
