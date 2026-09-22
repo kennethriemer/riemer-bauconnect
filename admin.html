@@ -1,718 +1,702 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#111111">
-  <title>Riemer BauConnect – Admin</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#171717">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<title>Riemer BauConnect – Admin</title>
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: #fff;
-    }
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    header {
-      background: #181818;
-      padding: 18px;
-      border-bottom: 2px solid #f5c400;
-    }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    header h1 {
-      margin: 0;
-      font-size: 22px;
-    }
+body {
+  margin: 0;
+  background: #171717;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
 
-    header p {
-      margin: 5px 0 0;
-      color: #aaa;
-      font-size: 14px;
-    }
+.wrap {
+  max-width: 950px;
+  margin: auto;
+  padding: 20px;
+}
 
-    main {
-      max-width: 1100px;
-      margin: auto;
-      padding: 18px;
-    }
+h1 {
+  margin: 0 0 6px;
+  font-size: 28px;
+}
 
-    .card {
-      background: #1c1c1c;
-      border-radius: 14px;
-      padding: 18px;
-      margin-bottom: 18px;
-      border: 1px solid #333;
-    }
+h2 {
+  margin-top: 0;
+}
 
-    h2 {
-      margin-top: 0;
-      font-size: 20px;
-    }
+.small {
+  color: #aaa;
+  margin-bottom: 20px;
+}
 
-    h3 {
-      margin-top: 0;
-    }
+.card {
+  background: #222;
+  border: 1px solid #444;
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 15px;
+}
 
-    input,
-    textarea,
-    select {
-      width: 100%;
-      padding: 13px;
-      margin-top: 6px;
-      margin-bottom: 14px;
-      background: #101010;
-      border: 1px solid #444;
-      border-radius: 9px;
-      color: #fff;
-      font-size: 15px;
-    }
+input,
+button,
+select {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #555;
+  font-size: 16px;
+}
 
-    textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
+input,
+select {
+  background: #111;
+  color: #fff;
+}
 
-    label {
-      font-size: 13px;
-      color: #bbb;
-    }
+button {
+  background: #ffd400;
+  color: #111;
+  border: 0;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    button {
-      border: none;
-      border-radius: 9px;
-      padding: 12px 16px;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+button:hover {
+  opacity: .9;
+}
 
-    .yellow {
-      background: #f5c400;
-      color: #111;
-    }
+.login {
+  max-width: 450px;
+  margin: 70px auto;
+  padding: 20px;
+}
 
-    .dark {
-      background: #333;
-      color: #fff;
-    }
+.login input {
+  margin-bottom: 12px;
+}
 
-    .red {
-      background: #c62828;
-      color: #fff;
-    }
+.hidden {
+  display: none;
+}
 
-    .green {
-      background: #2e7d32;
-      color: #fff;
-    }
+.error {
+  color: #ff7070;
+  margin-top: 12px;
+}
 
-    .tabs {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
+.success {
+  color: #66e08a;
+  margin-top: 12px;
+}
 
-    .tabs button {
-      flex: 1;
-    }
+.request {
+  cursor: pointer;
+  transition: .15s;
+}
 
-    .tab-active {
-      background: #f5c400;
-      color: #111;
-    }
+.request:hover {
+  border-color: #ffd400;
+  transform: translateY(-1px);
+}
 
-    .hidden {
-      display: none !important;
-    }
+.request-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
 
-    .request,
-    .firm {
-      background: #151515;
-      border: 1px solid #333;
-      border-radius: 12px;
-      padding: 15px;
-      margin-bottom: 12px;
-    }
+.request-info {
+  color: #bbb;
+  line-height: 1.6;
+}
 
-    .request:hover,
-    .firm:hover {
-      border-color: #f5c400;
-    }
+.status {
+  display: inline-block;
+  padding: 7px 12px;
+  border-radius: 20px;
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
 
-    .request-title,
-    .firm-title {
-      font-size: 17px;
-      font-weight: bold;
-      margin-bottom: 7px;
-    }
+.status-neu {
+  background: #d8aa00;
+  color: #111;
+}
 
-    .small {
-      font-size: 13px;
-      color: #aaa;
-      line-height: 1.5;
-    }
+.status-kontakt {
+  background: #2478d8;
+}
 
-    .badge {
-      display: inline-block;
-      padding: 5px 9px;
-      border-radius: 20px;
-      background: #333;
-      font-size: 12px;
-      margin-top: 7px;
-    }
+.status-angebot {
+  background: #e87818;
+}
 
-    .actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 12px;
-    }
+.status-auftrag {
+  background: #239447;
+}
 
-    .actions button {
-      flex: 1;
-      min-width: 100px;
-    }
+.status-erledigt {
+  background: #555;
+}
 
-    .detail {
-      line-height: 1.6;
-    }
+.detail-row {
+  border-bottom: 1px solid #444;
+  padding: 12px 0;
+}
 
-    .detail strong {
-      color: #f5c400;
-    }
+.detail-label {
+  color: #aaa;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
 
-    .status-row {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
+.detail-value {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
 
-    .status-row select {
-      margin: 0;
-      flex: 1;
-    }
+.back {
+  background: #333;
+  color: #fff;
+  margin-bottom: 15px;
+}
 
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      align-items: center;
-      margin-bottom: 18px;
-      flex-wrap: wrap;
-    }
+.logout {
+  background: #333;
+  color: #fff;
+  margin-top: 10px;
+}
 
-    .message {
-      padding: 12px;
-      border-radius: 9px;
-      margin-bottom: 15px;
-      background: #222;
-      border: 1px solid #444;
-    }
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
 
-    .success {
-      border-color: #2e7d32;
-    }
+.header button {
+  width: auto;
+  padding: 10px 16px;
+}
 
-    .error {
-      border-color: #c62828;
-    }
+.loading {
+  color: #aaa;
+  padding: 20px 0;
+}
 
-    @media (max-width: 600px) {
-      main {
-        padding: 12px;
-      }
+.empty {
+  color: #aaa;
+  text-align: center;
+  padding: 30px;
+}
 
-      .status-row {
-        flex-direction: column;
-        align-items: stretch;
-      }
+/* FOTOS */
 
-      .actions {
-        flex-direction: column;
-      }
+.photo-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
 
-      .actions button {
-        width: 100%;
-      }
-    }
-  </style>
+.photo-card {
+  background: #111;
+  border: 1px solid #444;
+  border-radius: 12px;
+  padding: 8px;
+}
+
+.photo-card img {
+  display: block;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.photo-card a {
+  display: block;
+  margin-top: 8px;
+  background: #ffd400;
+  color: #111;
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.photo-loading {
+  color: #aaa;
+  padding: 12px 0;
+}
+
+.photo-empty {
+  color: #aaa;
+  padding: 12px 0;
+}
+
+@media (max-width: 600px) {
+
+  .wrap {
+    padding: 14px;
+  }
+
+  .photo-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .photo-card img {
+    height: 220px;
+  }
+
+}
+</style>
 </head>
 
 <body>
 
-<header>
-  <h1>🏗️ Riemer BauConnect</h1>
-  <p>Adminbereich</p>
-</header>
+<!-- LOGIN -->
 
-<main>
+<div id="loginScreen" class="login">
 
-  <!-- LOGIN -->
-  <section id="loginCard" class="card">
-    <h2>🔐 Admin Login</h2>
+  <div class="card">
 
-    <label>E-Mail</label>
-    <input id="loginEmail" type="email" placeholder="E-Mail">
+    <h1>Riemer BauConnect</h1>
 
-    <label>Passwort</label>
-    <input id="loginPassword" type="password" placeholder="Passwort">
+    <div class="small">
+      Adminbereich
+    </div>
 
-    <button id="loginButton" class="yellow">
+    <input
+      id="email"
+      type="email"
+      placeholder="E-Mail"
+      autocomplete="username"
+    >
+
+    <input
+      id="password"
+      type="password"
+      placeholder="Passwort"
+      autocomplete="current-password"
+    >
+
+    <button onclick="login()">
       Einloggen
     </button>
 
-    <div id="loginMessage"></div>
-  </section>
+    <div id="loginError" class="error"></div>
+
+  </div>
+
+</div>
 
 
-  <!-- ADMIN -->
-  <section id="adminArea" class="hidden">
+<!-- ADMIN -->
 
-    <div class="topbar">
-      <div>
-        <h2 style="margin:0;">Admin Dashboard</h2>
+<div id="adminScreen" class="wrap hidden">
+
+  <div class="header">
+
+    <div>
+
+      <h1>Riemer BauConnect</h1>
+
+      <div class="small">
+        Bauanfragen verwalten
       </div>
 
-      <button id="logoutButton" class="dark">
-        Abmelden
-      </button>
     </div>
 
+    <button onclick="logout()">
+      Abmelden
+    </button>
 
-    <!-- TABS -->
-    <div class="tabs">
-      <button id="requestsTab" class="tab-active">
-        🏗️ Bauanfragen
-      </button>
+  </div>
 
-      <button id="firmsTab" class="dark">
-        🏢 Fachbetriebe
-      </button>
+
+  <!-- LISTE -->
+
+  <div id="listView">
+
+    <div class="card">
+
+      <h2>Bauanfragen</h2>
+
+      <div id="loading" class="loading">
+        Lade Bauanfragen...
+      </div>
+
+      <div id="requests"></div>
+
     </div>
 
+  </div>
 
-    <!-- ========================= -->
-    <!-- BAUANFRAGEN -->
-    <!-- ========================= -->
 
-    <section id="requestsArea">
+  <!-- DETAIL -->
 
-      <div class="card">
-        <h2>Neue Bauanfragen</h2>
-        <div id="requestsList">
-          Lade Bauanfragen...
-        </div>
-      </div>
+  <div id="detailView" class="hidden">
 
-      <div id="requestDetail" class="card hidden">
-        <h2>📄 Anfrage</h2>
+    <button
+      class="back"
+      onclick="showList()"
+    >
+      ← Zurück zu den Bauanfragen
+    </button>
 
-        <div id="requestInfo" class="detail"></div>
 
-        <br>
+    <div class="card">
 
-        <div class="status-row">
-          <select id="statusSelect">
-            <option value="neu">Neu</option>
-            <option value="kontakt">Kontakt aufgenommen</option>
-            <option value="angebot">Angebot</option>
-            <option value="auftrag">Auftrag</option>
-            <option value="erledigt">Erledigt</option>
-          </select>
+      <h2 id="detailTitle">
+        Bauanfrage
+      </h2>
 
-          <button id="saveStatusButton" class="yellow">
-            Status speichern
-          </button>
+
+      <div class="detail-row">
+
+        <div class="detail-label">
+          Leistung
         </div>
 
-        <br>
-
-        <h3>🏢 Passende Fachbetriebe</h3>
-
-        <div id="matchesList">
-          Noch keine Suche.
-        </div>
-      </div>
-
-    </section>
-
-
-    <!-- ========================= -->
-    <!-- FACHBETRIEBE -->
-    <!-- ========================= -->
-
-    <section id="firmsArea" class="hidden">
-
-      <div class="card">
-
-        <div class="topbar">
-          <h2 style="margin:0;">🏢 Fachbetriebe</h2>
-
-          <button id="newFirmButton" class="yellow">
-            + Fachbetrieb
-          </button>
-        </div>
-
-        <div id="firmList">
-          Lade Fachbetriebe...
-        </div>
+        <div
+          id="detailService"
+          class="detail-value"
+        ></div>
 
       </div>
 
 
-      <!-- FACHBETRIEB FORMULAR -->
+      <div class="detail-row">
 
-      <div id="firmForm" class="card hidden">
+        <div class="detail-label">
+          Datum
+        </div>
 
-        <h2 id="firmFormTitle">
-          Fachbetrieb hinzufügen
-        </h2>
+        <div
+          id="detailDate"
+          class="detail-value"
+        ></div>
 
-        <input id="firmId" type="hidden">
+      </div>
 
-        <label>Firmenname *</label>
-        <input id="firmFirma" type="text" placeholder="z. B. Riemer Straßenbau GmbH">
 
-        <label>Ansprechpartner</label>
-        <input id="firmInhaber" type="text" placeholder="z. B. Max Mustermann">
+      <div class="detail-row">
 
-        <label>E-Mail</label>
-        <input id="firmEmail" type="email" placeholder="firma@example.de">
+        <div class="detail-label">
+          PLZ
+        </div>
 
-        <label>Telefon</label>
-        <input id="firmTelefon" type="text" placeholder="0170 1234567">
+        <div
+          id="detailPlz"
+          class="detail-value"
+        ></div>
 
-        <label>PLZ *</label>
-        <input id="firmPlz" type="text" placeholder="24955">
+      </div>
 
-        <label>Ort</label>
-        <input id="firmOrt" type="text" placeholder="Harrislee">
 
-        <label>Leistungen</label>
-        <textarea
-          id="firmLeistungen"
-          placeholder="Straßenbau, Asphaltarbeiten, Pflasterarbeiten"
-        ></textarea>
+      <div class="detail-row">
 
-        <label>Radius in km</label>
-        <input
-          id="firmRadius"
-          type="number"
-          value="30"
-          min="1"
-          max="500"
+        <div class="detail-label">
+          Ort / Bereich
+        </div>
+
+        <div
+          id="detailArea"
+          class="detail-value"
+        ></div>
+
+      </div>
+
+
+      <div class="detail-row">
+
+        <div class="detail-label">
+          Beschreibung
+        </div>
+
+        <div
+          id="detailDescription"
+          class="detail-value"
+        ></div>
+
+      </div>
+
+
+      <div class="detail-row">
+
+        <div class="detail-label">
+          Name
+        </div>
+
+        <div
+          id="detailName"
+          class="detail-value"
+        ></div>
+
+      </div>
+
+
+      <div class="detail-row">
+
+        <div class="detail-label">
+          Telefon
+        </div>
+
+        <div
+          id="detailPhone"
+          class="detail-value"
+        ></div>
+
+      </div>
+
+
+      <div class="detail-row">
+
+        <div class="detail-label">
+          E-Mail
+        </div>
+
+        <div
+          id="detailEmail"
+          class="detail-value"
+        ></div>
+
+      </div>
+
+
+      <!-- FOTOS -->
+
+      <div class="detail-row">
+
+        <div class="detail-label">
+          📸 Projektfotos
+        </div>
+
+        <div
+          id="photoStatus"
+          class="photo-loading"
         >
-
-        <div class="actions">
-
-          <button id="saveFirmButton" class="yellow">
-            Fachbetrieb speichern
-          </button>
-
-          <button id="cancelFirmButton" class="dark">
-            Abbrechen
-          </button>
-
+          Fotos werden geladen...
         </div>
 
-        <div id="firmMessage"></div>
+        <div
+          id="photoGallery"
+          class="photo-gallery"
+        ></div>
 
       </div>
 
-    </section>
 
-  </section>
+      <!-- STATUS -->
 
-</main>
+      <div class="detail-row">
 
-
-<script type="module">
-
-  /* =========================================
-     SUPABASE
-  ========================================= */
-
-  import {
-    createClient
-  } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+        <div class="detail-label">
+          Status ändern
+        </div>
 
 
-  const SUPABASE_URL =
-    "https://ehzugjmltfcvllftpjpp.supabase.co";
+        <select id="statusSelect">
 
-  const SUPABASE_KEY =
-    "sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
+          <option value="neu">
+            🟡 Neu
+          </option>
+
+          <option value="kontakt">
+            🔵 Kontakt aufgenommen
+          </option>
+
+          <option value="angebot">
+            🟠 Angebot
+          </option>
+
+          <option value="auftrag">
+            🟢 Auftrag
+          </option>
+
+          <option value="erledigt">
+            ⚫ Erledigt
+          </option>
+
+        </select>
 
 
-  const db = createClient(
+        <br><br>
+
+
+        <button onclick="saveStatus()">
+          Status speichern
+        </button>
+
+
+        <div id="statusMessage"></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+const SUPABASE_URL =
+  "https://ehzugjmltfcvllftpjpp.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
+
+
+const supabaseClient =
+  window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
   );
 
 
-  /* =========================================
-     ELEMENTE
-  ========================================= */
-
-  const loginCard =
-    document.getElementById("loginCard");
-
-  const adminArea =
-    document.getElementById("adminArea");
-
-  const loginButton =
-    document.getElementById("loginButton");
-
-  const logoutButton =
-    document.getElementById("logoutButton");
-
-  const loginEmail =
-    document.getElementById("loginEmail");
-
-  const loginPassword =
-    document.getElementById("loginPassword");
-
-  const loginMessage =
-    document.getElementById("loginMessage");
-
-  const requestsTab =
-    document.getElementById("requestsTab");
-
-  const firmsTab =
-    document.getElementById("firmsTab");
-
-  const requestsArea =
-    document.getElementById("requestsArea");
-
-  const firmsArea =
-    document.getElementById("firmsArea");
-
-  const requestsList =
-    document.getElementById("requestsList");
-
-  const requestDetail =
-    document.getElementById("requestDetail");
-
-  const requestInfo =
-    document.getElementById("requestInfo");
-
-  const statusSelect =
-    document.getElementById("statusSelect");
-
-  const saveStatusButton =
-    document.getElementById("saveStatusButton");
-
-  const matchesList =
-    document.getElementById("matchesList");
-
-  const newFirmButton =
-    document.getElementById("newFirmButton");
-
-  const firmForm =
-    document.getElementById("firmForm");
-
-  const firmFormTitle =
-    document.getElementById("firmFormTitle");
-
-  const firmId =
-    document.getElementById("firmId");
-
-  const firmFirma =
-    document.getElementById("firmFirma");
-
-  const firmInhaber =
-    document.getElementById("firmInhaber");
-
-  const firmEmail =
-    document.getElementById("firmEmail");
-
-  const firmTelefon =
-    document.getElementById("firmTelefon");
-
-  const firmPlz =
-    document.getElementById("firmPlz");
-
-  const firmOrt =
-    document.getElementById("firmOrt");
-
-  const firmLeistungen =
-    document.getElementById("firmLeistungen");
-
-  const firmRadius =
-    document.getElementById("firmRadius");
-
-  const saveFirmButton =
-    document.getElementById("saveFirmButton");
-
-  const cancelFirmButton =
-    document.getElementById("cancelFirmButton");
-
-  const firmMessage =
-    document.getElementById("firmMessage");
+let currentRequest = null;
 
 
+/* LOGIN */
 
-  /* =========================================
-     VARIABLEN
-  ========================================= */
+async function login() {
 
-  let currentRequest = null;
-
-
-
-  /* =========================================
-     LOGIN
-  ========================================= */
-
-  loginButton.addEventListener("click", async () => {
-
-    loginMessage.innerHTML = "";
-
-    const email =
-      loginEmail.value.trim();
-
-    const password =
-      loginPassword.value;
-
-    if (!email || !password) {
-
-      loginMessage.innerHTML =
-        `<div class="message error">
-          Bitte E-Mail und Passwort eingeben.
-        </div>`;
-
-      return;
-    }
+  const email =
+    document
+      .getElementById("email")
+      .value
+      .trim();
 
 
-    loginButton.disabled = true;
-    loginButton.textContent = "Einloggen...";
+  const password =
+    document
+      .getElementById("password")
+      .value;
 
 
-    const { data, error } =
-      await db.auth.signInWithPassword({
+  const error =
+    document
+      .getElementById("loginError");
+
+
+  error.textContent = "";
+
+
+  if (!email || !password) {
+
+    error.textContent =
+      "Bitte E-Mail und Passwort eingeben.";
+
+    return;
+  }
+
+
+  const {
+    error: loginError
+  } =
+    await supabaseClient.auth
+      .signInWithPassword({
         email,
         password
       });
 
 
-    loginButton.disabled = false;
-    loginButton.textContent = "Einloggen";
+  if (loginError) {
 
+    error.textContent =
+      loginError.message;
 
-    if (error) {
-
-      loginMessage.innerHTML =
-        `<div class="message error">
-          Login fehlgeschlagen: ${escapeHtml(error.message)}
-        </div>`;
-
-      return;
-    }
-
-
-    loginCard.classList.add("hidden");
-    adminArea.classList.remove("hidden");
-
-    loadRequests();
-    loadFirms();
-
-  });
-
-
-
-  /* =========================================
-     LOGOUT
-  ========================================= */
-
-  logoutButton.addEventListener("click", async () => {
-
-    await db.auth.signOut();
-
-    adminArea.classList.add("hidden");
-    loginCard.classList.remove("hidden");
-
-    requestDetail.classList.add("hidden");
-
-  });
-
-
-
-  /* =========================================
-     SESSION PRÜFEN
-  ========================================= */
-
-  const {
-    data: sessionData
-  } = await db.auth.getSession();
-
-
-  if (sessionData.session) {
-
-    loginCard.classList.add("hidden");
-    adminArea.classList.remove("hidden");
-
-    loadRequests();
-    loadFirms();
-
+    return;
   }
 
 
+  showAdmin();
 
-  /* =========================================
-     TABS
-  ========================================= */
-
-  requestsTab.addEventListener("click", () => {
-
-    requestsArea.classList.remove("hidden");
-    firmsArea.classList.add("hidden");
-
-    requestsTab.classList.add("tab-active");
-    requestsTab.classList.remove("dark");
-
-    firmsTab.classList.remove("tab-active");
-    firmsTab.classList.add("dark");
-
-  });
+}
 
 
-  firmsTab.addEventListener("click", () => {
+/* LOGOUT */
 
-    requestsArea.classList.add("hidden");
-    firmsArea.classList.remove("hidden");
+async function logout() {
 
-    firmsTab.classList.add("tab-active");
-    firmsTab.classList.remove("dark");
-
-    requestsTab.classList.remove("tab-active");
-    requestsTab.classList.add("dark");
-
-    loadFirms();
-
-  });
+  await supabaseClient.auth.signOut();
 
 
-
-  /* =========================================
-     BAUANFRAGEN LADEN
-  ========================================= */
-
-  async function loadRequests() {
-
-    requestsList.innerHTML =
-      "Lade Bauanfragen...";
+  document
+    .getElementById("adminScreen")
+    .classList.add("hidden");
 
 
-    const {
-      data,
-      error
-    } = await db
+  document
+    .getElementById("loginScreen")
+    .classList.remove("hidden");
+
+}
+
+
+/* ADMIN ANZEIGEN */
+
+function showAdmin() {
+
+  document
+    .getElementById("loginScreen")
+    .classList.add("hidden");
+
+
+  document
+    .getElementById("adminScreen")
+    .classList.remove("hidden");
+
+
+  loadRequests();
+
+}
+
+
+/* BAUANFRAGEN LADEN */
+
+async function loadRequests() {
+
+  const loading =
+    document
+      .getElementById("loading");
+
+
+  const container =
+    document
+      .getElementById("requests");
+
+
+  loading.style.display =
+    "block";
+
+
+  container.innerHTML = "";
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
       .from("bauanfragen")
       .select("*")
       .order("created_at", {
@@ -720,910 +704,628 @@
       });
 
 
-    if (error) {
-
-      requestsList.innerHTML =
-        `<div class="message error">
-          Fehler: ${escapeHtml(error.message)}
-        </div>`;
-
-      return;
-    }
+  loading.style.display =
+    "none";
 
 
-    if (!data || data.length === 0) {
+  if (error) {
 
-      requestsList.innerHTML =
-        `<div class="message">
-          Keine Bauanfragen vorhanden.
-        </div>`;
+    container.innerHTML =
+      `<div class="error">
+        Fehler beim Laden:
+        ${escapeHtml(error.message)}
+      </div>`;
 
-      return;
-    }
-
-
-    requestsList.innerHTML = "";
-
-
-    data.forEach(request => {
-
-      const div =
-        document.createElement("div");
-
-      div.className = "request";
-
-      div.innerHTML = `
-
-        <div class="request-title">
-          ${escapeHtml(request.service || "Bauanfrage")}
-        </div>
-
-        <div class="small">
-          📍 ${escapeHtml(request.plz || "")}
-          ${request.area ? " – " + escapeHtml(request.area) : ""}
-        </div>
-
-        <div class="small">
-          👤 ${escapeHtml(request.name || "")}
-        </div>
-
-        <div class="small">
-          📞 ${escapeHtml(request.phone || "")}
-        </div>
-
-        <div>
-          <span class="badge">
-            ${escapeHtml(request.status || "neu")}
-          </span>
-        </div>
-
-      `;
-
-
-      div.addEventListener("click", () => {
-
-        openRequest(request);
-
-      });
-
-
-      requestsList.appendChild(div);
-
-    });
-
+    return;
   }
 
 
+  if (!data || data.length === 0) {
 
-  /* =========================================
-     ANFRAGE ÖFFNEN
-  ========================================= */
+    container.innerHTML =
+      `<div class="empty">
+        Keine Bauanfragen vorhanden.
+      </div>`;
 
-  function openRequest(request) {
-
-    currentRequest = request;
-
-    requestDetail.classList.remove("hidden");
+    return;
+  }
 
 
-    requestInfo.innerHTML = `
+  data.forEach(request => {
 
-      <div>
-        <strong>Leistung:</strong><br>
-        ${escapeHtml(request.service || "")}
+    const item =
+      document.createElement("div");
+
+
+    item.className =
+      "card request";
+
+
+    const status =
+      request.status || "neu";
+
+
+    item.innerHTML = `
+
+      <div class="request-title">
+        ${escapeHtml(
+          request.service || "Bauanfrage"
+        )}
       </div>
 
-      <div>
-        <strong>PLZ:</strong><br>
-        ${escapeHtml(request.plz || "")}
+
+      <div class="request-info">
+
+        PLZ:
+        ${escapeHtml(
+          request.plz || "-"
+        )}
+
+        <br>
+
+        ${escapeHtml(
+          request.name || "-"
+        )}
+
+        <br>
+
+        ${formatDate(
+          request.created_at
+        )}
+
       </div>
 
-      <div>
-        <strong>Ort:</strong><br>
-        ${escapeHtml(request.area || "")}
-      </div>
 
-      <div>
-        <strong>Beschreibung:</strong><br>
-        ${escapeHtml(request.description || "")}
-      </div>
-
-      <div>
-        <strong>Name:</strong><br>
-        ${escapeHtml(request.name || "")}
-      </div>
-
-      <div>
-        <strong>Telefon:</strong><br>
-        ${escapeHtml(request.phone || "")}
-      </div>
-
-      <div>
-        <strong>E-Mail:</strong><br>
-        ${escapeHtml(request.email || "")}
-      </div>
-
-      <div>
-        <strong>Erstellt:</strong><br>
-        ${formatDate(request.created_at)}
-      </div>
+      <span
+        class="status ${getStatusClass(status)}"
+      >
+        ${getStatusText(status)}
+      </span>
 
     `;
 
 
-    statusSelect.value =
-      request.status || "neu";
-
-
-    loadMatches(request);
-
-    window.scrollTo({
-      top: document.body.scrollHeight,
-      behavior: "smooth"
-    });
-
-  }
-
-
-
-  /* =========================================
-     STATUS SPEICHERN
-  ========================================= */
-
-  saveStatusButton.addEventListener("click", async () => {
-
-    if (!currentRequest) return;
-
-
-    saveStatusButton.disabled = true;
-    saveStatusButton.textContent =
-      "Speichere...";
-
-
-    const newStatus =
-      statusSelect.value;
-
-
-    const {
-      error
-    } = await db
-      .from("bauanfragen")
-      .update({
-        status: newStatus
-      })
-      .eq("id", currentRequest.id);
-
-
-    saveStatusButton.disabled = false;
-    saveStatusButton.textContent =
-      "Status speichern";
-
-
-    if (error) {
-
-      alert(
-        "Fehler beim Speichern: " +
-        error.message
-      );
-
-      return;
-    }
-
-
-    currentRequest.status =
-      newStatus;
-
-
-    alert("Status gespeichert.");
-
-    loadRequests();
-
-  });
-
-
-
-  /* =========================================
-     FACHBETRIEBE LADEN
-  ========================================= */
-
-  async function loadFirms() {
-
-    const firmList =
-      document.getElementById("firmList");
-
-
-    firmList.innerHTML =
-      "Lade Fachbetriebe...";
-
-
-    const {
-      data,
-      error
-    } = await db
-      .from("fachbetriebe")
-      .select("*")
-      .order("created_at", {
-        ascending: false
-      });
-
-
-    if (error) {
-
-      firmList.innerHTML =
-        `<div class="message error">
-          Fehler: ${escapeHtml(error.message)}
-        </div>`;
-
-      return;
-    }
-
-
-    if (!data || data.length === 0) {
-
-      firmList.innerHTML =
-        `<div class="message">
-          Noch keine Fachbetriebe vorhanden.
-        </div>`;
-
-      return;
-    }
-
-
-    firmList.innerHTML = "";
-
-
-    data.forEach(firm => {
-
-      const div =
-        document.createElement("div");
-
-      div.className = "firm";
-
-
-      div.innerHTML = `
-
-        <div class="firm-title">
-          🏢 ${escapeHtml(firm.firma || "")}
-        </div>
-
-        <div class="small">
-          👤 ${escapeHtml(firm.inhaber || "-")}
-        </div>
-
-        <div class="small">
-          📍 ${escapeHtml(firm.plz || "")}
-          ${firm.ort ? " – " + escapeHtml(firm.ort) : ""}
-        </div>
-
-        <div class="small">
-          📞 ${escapeHtml(firm.telefon || "-")}
-        </div>
-
-        <div class="small">
-          ✉️ ${escapeHtml(firm.email || "-")}
-        </div>
-
-        <div class="small">
-          🛠️ ${escapeHtml(firm.leistungen || "-")}
-        </div>
-
-        <div class="small">
-          📏 Radius: ${escapeHtml(String(firm.radius_km || 0))} km
-        </div>
-
-        <div class="actions">
-
-          <button
-            class="yellow edit-firm-button"
-            data-id="${firm.id}">
-            ✏️ Bearbeiten
-          </button>
-
-          <button
-            class="red delete-firm-button"
-            data-id="${firm.id}">
-            🗑️ Löschen
-          </button>
-
-        </div>
-
-      `;
-
-
-      firmList.appendChild(div);
-
-    });
-
-
-    /* Bearbeiten */
-
-    document
-      .querySelectorAll(".edit-firm-button")
-      .forEach(button => {
-
-        button.addEventListener("click", () => {
-
-          const id =
-            button.dataset.id;
-
-          const firm =
-            data.find(item =>
-              item.id === id
-            );
-
-          if (firm) {
-
-            editFirm(firm);
-
-          }
-
-        });
-
-      });
-
-
-    /* Löschen */
-
-    document
-      .querySelectorAll(".delete-firm-button")
-      .forEach(button => {
-
-        button.addEventListener("click", () => {
-
-          const id =
-            button.dataset.id;
-
-          deleteFirm(id);
-
-        });
-
-      });
-
-  }
-
-
-
-  /* =========================================
-     NEUEN FACHBETRIEB ANLEGEN
-  ========================================= */
-
-  newFirmButton.addEventListener("click", () => {
-
-    resetFirmForm();
-
-    firmFormTitle.textContent =
-      "Fachbetrieb hinzufügen";
-
-    saveFirmButton.textContent =
-      "Fachbetrieb speichern";
-
-    firmForm.classList.remove("hidden");
-
-    firmFirma.focus();
-
-  });
-
-
-
-  /* =========================================
-     FACHBETRIEB BEARBEITEN
-  ========================================= */
-
-  function editFirm(firm) {
-
-    firmId.value =
-      firm.id || "";
-
-    firmFirma.value =
-      firm.firma || "";
-
-    firmInhaber.value =
-      firm.inhaber || "";
-
-    firmEmail.value =
-      firm.email || "";
-
-    firmTelefon.value =
-      firm.telefon || "";
-
-    firmPlz.value =
-      firm.plz || "";
-
-    firmOrt.value =
-      firm.ort || "";
-
-    firmLeistungen.value =
-      firm.leistungen || "";
-
-    firmRadius.value =
-      firm.radius_km || 30;
-
-
-    firmFormTitle.textContent =
-      "Fachbetrieb bearbeiten";
-
-    saveFirmButton.textContent =
-      "Änderungen speichern";
-
-    firmMessage.innerHTML = "";
-
-    firmForm.classList.remove("hidden");
-
-    firmForm.scrollIntoView({
-      behavior: "smooth"
-    });
-
-  }
-
-
-
-  /* =========================================
-     FACHBETRIEB SPEICHERN / AKTUALISIEREN
-  ========================================= */
-
-  saveFirmButton.addEventListener("click", async () => {
-
-    firmMessage.innerHTML = "";
-
-
-    const id =
-      firmId.value.trim();
-
-    const firma =
-      firmFirma.value.trim();
-
-    const inhaber =
-      firmInhaber.value.trim();
-
-    const email =
-      firmEmail.value.trim();
-
-    const telefon =
-      firmTelefon.value.trim();
-
-    const plz =
-      firmPlz.value.trim();
-
-    const ort =
-      firmOrt.value.trim();
-
-    const leistungen =
-      firmLeistungen.value.trim();
-
-    const radius =
-      Number(firmRadius.value) || 30;
-
-
-    if (!firma) {
-
-      firmMessage.innerHTML =
-        `<div class="message error">
-          Bitte einen Firmennamen eingeben.
-        </div>`;
-
-      return;
-    }
-
-
-    if (!plz) {
-
-      firmMessage.innerHTML =
-        `<div class="message error">
-          Bitte eine PLZ eingeben.
-        </div>`;
-
-      return;
-    }
-
-
-    saveFirmButton.disabled = true;
-    saveFirmButton.textContent =
-      "Speichere...";
-
-
-    let result;
-
-
-    /* =====================================
-       BEARBEITEN
-    ===================================== */
-
-    if (id) {
-
-      result =
-        await db
-          .from("fachbetriebe")
-          .update({
-            firma,
-            inhaber,
-            email,
-            telefon,
-            plz,
-            ort,
-            leistungen,
-            radius_km: radius
-          })
-          .eq("id", id);
-
-    }
-
-
-    /* =====================================
-       NEU ANLEGEN
-    ===================================== */
-
-    else {
-
-      result =
-        await db
-          .from("fachbetriebe")
-          .insert({
-            firma,
-            inhaber,
-            email,
-            telefon,
-            plz,
-            ort,
-            leistungen,
-            radius_km: radius
-          });
-
-    }
-
-
-    saveFirmButton.disabled = false;
-
-
-    if (result.error) {
-
-      firmMessage.innerHTML =
-        `<div class="message error">
-          Fehler: ${escapeHtml(result.error.message)}
-        </div>`;
-
-      saveFirmButton.textContent =
-        id
-          ? "Änderungen speichern"
-          : "Fachbetrieb speichern";
-
-      return;
-    }
-
-
-    firmMessage.innerHTML =
-      `<div class="message success">
-        ✅ Fachbetrieb erfolgreich gespeichert.
-      </div>`;
-
-
-    saveFirmButton.textContent =
-      "Gespeichert";
-
-
-    setTimeout(() => {
-
-      resetFirmForm();
-
-      firmForm.classList.add("hidden");
-
-      loadFirms();
-
-    }, 700);
-
-  });
-
-
-
-  /* =========================================
-     FACHBETRIEB LÖSCHEN
-  ========================================= */
-
-  async function deleteFirm(id) {
-
-    const confirmed =
-      confirm(
-        "Möchtest du diesen Fachbetrieb wirklich löschen?"
-      );
-
-
-    if (!confirmed) return;
-
-
-    const {
-      error
-    } = await db
-      .from("fachbetriebe")
-      .delete()
-      .eq("id", id);
-
-
-    if (error) {
-
-      alert(
-        "Fehler beim Löschen: " +
-        error.message
-      );
-
-      return;
-    }
-
-
-    alert(
-      "Fachbetrieb wurde gelöscht."
+    item.addEventListener(
+      "click",
+      () => showDetail(request)
     );
 
 
-    loadFirms();
-
-  }
-
-
-
-  /* =========================================
-     FORMULAR ABBRECHEN
-  ========================================= */
-
-  cancelFirmButton.addEventListener("click", () => {
-
-    resetFirmForm();
-
-    firmForm.classList.add("hidden");
+    container.appendChild(item);
 
   });
 
+}
 
 
-  /* =========================================
-     FORMULAR ZURÜCKSETZEN
-  ========================================= */
+/* DETAIL ANZEIGEN */
 
-  function resetFirmForm() {
+function showDetail(request) {
 
-    firmId.value = "";
+  currentRequest =
+    request;
 
-    firmFirma.value = "";
 
-    firmInhaber.value = "";
+  document
+    .getElementById("listView")
+    .classList.add("hidden");
 
-    firmEmail.value = "";
 
-    firmTelefon.value = "";
+  document
+    .getElementById("detailView")
+    .classList.remove("hidden");
 
-    firmPlz.value = "";
 
-    firmOrt.value = "";
+  document
+    .getElementById("detailTitle")
+    .textContent =
+      request.service ||
+      "Bauanfrage";
 
-    firmLeistungen.value = "";
 
-    firmRadius.value = "30";
+  document
+    .getElementById("detailService")
+    .textContent =
+      request.service ||
+      "-";
 
-    firmFormTitle.textContent =
-      "Fachbetrieb hinzufügen";
 
-    saveFirmButton.textContent =
-      "Fachbetrieb speichern";
+  document
+    .getElementById("detailDate")
+    .textContent =
+      formatDate(
+        request.created_at
+      );
 
-    firmMessage.innerHTML = "";
 
+  document
+    .getElementById("detailPlz")
+    .textContent =
+      request.plz ||
+      "-";
+
+
+  document
+    .getElementById("detailArea")
+    .textContent =
+      request.area ||
+      "-";
+
+
+  document
+    .getElementById("detailDescription")
+    .textContent =
+      request.description ||
+      "-";
+
+
+  document
+    .getElementById("detailName")
+    .textContent =
+      request.name ||
+      "-";
+
+
+  document
+    .getElementById("detailPhone")
+    .textContent =
+      request.phone ||
+      "-";
+
+
+  document
+    .getElementById("detailEmail")
+    .textContent =
+      request.email ||
+      "-";
+
+
+  document
+    .getElementById("statusSelect")
+    .value =
+      request.status ||
+      "neu";
+
+
+  document
+    .getElementById("statusMessage")
+    .textContent =
+      "";
+
+
+  loadPhotos(request.id);
+
+}
+
+
+/* FOTOS LADEN */
+
+async function loadPhotos(requestId) {
+
+  const gallery =
+    document
+      .getElementById("photoGallery");
+
+
+  const status =
+    document
+      .getElementById("photoStatus");
+
+
+  gallery.innerHTML = "";
+
+
+  status.textContent =
+    "Fotos werden geladen...";
+
+
+  if (!requestId) {
+
+    status.textContent =
+      "Keine Anfrage-ID vorhanden.";
+
+    return;
   }
 
 
+  const {
+    data,
+    error
+  } =
+    await supabaseClient.storage
+      .from("Projektfotos")
+      .list(
+        requestId,
+        {
+          limit: 100,
+          sortBy: {
+            column: "created_at",
+            order: "asc"
+          }
+        }
+      );
 
-  /* =========================================
-     PASSENDE FACHBETRIEBE
-  ========================================= */
 
-  async function loadMatches(request) {
+  if (error) {
 
-    matchesList.innerHTML =
-      "Suche passende Fachbetriebe...";
+    console.error(
+      "Foto-Fehler:",
+      error
+    );
+
+
+    status.textContent =
+      "Fotos konnten nicht geladen werden: " +
+      error.message;
+
+    return;
+  }
+
+
+  if (!data || data.length === 0) {
+
+    status.textContent =
+      "Keine Fotos zu dieser Bauanfrage.";
+
+    return;
+  }
+
+
+  let photoCount = 0;
+
+
+  for (const file of data) {
+
+    /*
+      Supabase kann in einem Ordner
+      auch Unterordner anzeigen.
+      Wir zeigen hier nur echte Dateien.
+    */
+
+    if (!file.name) {
+      continue;
+    }
+
+
+    const filePath =
+      requestId +
+      "/" +
+      file.name;
 
 
     const {
-      data,
-      error
-    } = await db
-      .from("fachbetriebe")
-      .select("*")
-      .eq("aktiv", true);
+      data: signedData,
+      error: signedError
+    } =
+      await supabaseClient.storage
+        .from("Projektfotos")
+        .createSignedUrl(
+          filePath,
+          3600
+        );
 
 
-    /*
-      Falls die Spalte "aktiv" in deiner
-      Tabelle nicht vorhanden ist, wird
-      unten automatisch noch einmal ohne
-      den Filter gesucht.
-    */
+    if (signedError) {
 
-    let firms = data;
+      console.error(
+        "Signed-URL-Fehler:",
+        signedError
+      );
 
-
-    if (error) {
-
-      const fallback =
-        await db
-          .from("fachbetriebe")
-          .select("*");
-
-
-      if (fallback.error) {
-
-        matchesList.innerHTML =
-          `<div class="message error">
-            Fehler bei der Suche:
-            ${escapeHtml(fallback.error.message)}
-          </div>`;
-
-        return;
-      }
-
-
-      firms = fallback.data;
-
+      continue;
     }
 
 
-    if (!firms || firms.length === 0) {
+    if (!signedData ||
+        !signedData.signedUrl) {
 
-      matchesList.innerHTML =
-        `<div class="message">
-          Keine Fachbetriebe vorhanden.
-        </div>`;
-
-      return;
+      continue;
     }
 
 
-    const requestPlz =
-      String(request.plz || "")
-        .trim();
+    const photo =
+      document.createElement("div");
 
 
-    const requestService =
-      String(request.service || "")
-        .toLowerCase();
+    photo.className =
+      "photo-card";
 
 
-    const requestPrefix =
-      requestPlz.substring(0, 2);
+    const image =
+      document.createElement("img");
 
 
-    const matches =
-      firms.filter(firm => {
-
-        const firmPlz =
-          String(firm.plz || "")
-            .trim();
-
-        const firmPrefix =
-          firmPlz.substring(0, 2);
+    image.src =
+      signedData.signedUrl;
 
 
-        const sameRegion =
-          requestPrefix &&
-          firmPrefix &&
-          requestPrefix === firmPrefix;
+    image.alt =
+      "Projektfoto";
 
 
-        const services =
-          String(firm.leistungen || "")
-            .toLowerCase();
+    image.loading =
+      "lazy";
 
 
-        const serviceWords =
-          requestService
-            .split(/\s+/)
-            .filter(word =>
-              word.length > 3
-            );
+    const link =
+      document.createElement("a");
 
 
-        const serviceMatch =
-          serviceWords.length === 0
-            ? true
-            : serviceWords.some(word =>
-                services.includes(word)
-              );
+    link.href =
+      signedData.signedUrl;
 
 
-        return sameRegion && serviceMatch;
-
-      });
-
-
-    if (matches.length === 0) {
-
-      matchesList.innerHTML =
-        `<div class="message">
-          Keine passenden Fachbetriebe gefunden.
-        </div>`;
-
-      return;
-    }
+    link.target =
+      "_blank";
 
 
-    matchesList.innerHTML = "";
+    link.rel =
+      "noopener";
 
 
-    matches.forEach(firm => {
-
-      const div =
-        document.createElement("div");
-
-      div.className = "firm";
+    link.textContent =
+      "Foto öffnen";
 
 
-      div.innerHTML = `
-
-        <div class="firm-title">
-          🏢 ${escapeHtml(firm.firma || "")}
-        </div>
-
-        <div class="small">
-          📍 ${escapeHtml(firm.plz || "")}
-          ${firm.ort ? " – " + escapeHtml(firm.ort) : ""}
-        </div>
-
-        <div class="small">
-          👤 ${escapeHtml(firm.inhaber || "-")}
-        </div>
-
-        <div class="small">
-          📞 ${escapeHtml(firm.telefon || "-")}
-        </div>
-
-        <div class="small">
-          ✉️ ${escapeHtml(firm.email || "-")}
-        </div>
-
-        <div class="small">
-          🛠️ ${escapeHtml(firm.leistungen || "-")}
-        </div>
-
-      `;
+    photo.appendChild(
+      image
+    );
 
 
-      matchesList.appendChild(div);
+    photo.appendChild(
+      link
+    );
 
-    });
+
+    gallery.appendChild(
+      photo
+    );
+
+
+    photoCount++;
 
   }
 
 
+  if (photoCount === 0) {
 
-  /* =========================================
-     HILFSFUNKTIONEN
-  ========================================= */
+    status.textContent =
+      "Keine Fotos konnten angezeigt werden.";
 
-  function escapeHtml(value) {
-
-    return String(value ?? "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-
+    return;
   }
 
 
-  function formatDate(date) {
+  status.textContent =
+    photoCount === 1
+      ? "1 Foto"
+      : photoCount + " Fotos";
 
-    if (!date) return "-";
+}
 
 
-    try {
+/* ZURÜCK */
 
-      return new Date(date)
-        .toLocaleString("de-DE");
+function showList() {
 
-    } catch {
+  document
+    .getElementById("detailView")
+    .classList.add("hidden");
 
-      return date;
 
+  document
+    .getElementById("listView")
+    .classList.remove("hidden");
+
+
+  currentRequest =
+    null;
+
+}
+
+
+/* STATUS SPEICHERN */
+
+async function saveStatus() {
+
+  if (!currentRequest) {
+    return;
+  }
+
+
+  const status =
+    document
+      .getElementById("statusSelect")
+      .value;
+
+
+  const message =
+    document
+      .getElementById("statusMessage");
+
+
+  message.className = "";
+
+
+  message.textContent =
+    "Speichere...";
+
+
+  const {
+    error
+  } =
+    await supabaseClient
+      .from("bauanfragen")
+      .update({
+        status: status
+      })
+      .eq(
+        "id",
+        currentRequest.id
+      );
+
+
+  if (error) {
+
+    message.className =
+      "error";
+
+
+    message.textContent =
+      "Fehler: " +
+      error.message;
+
+
+    return;
+  }
+
+
+  currentRequest.status =
+    status;
+
+
+  message.className =
+    "success";
+
+
+  message.textContent =
+    "Status erfolgreich gespeichert.";
+
+}
+
+
+/* STATUS-TEXT */
+
+function getStatusText(status) {
+
+  switch (status) {
+
+    case "kontakt":
+      return "🔵 Kontakt aufgenommen";
+
+    case "angebot":
+      return "🟠 Angebot";
+
+    case "auftrag":
+      return "🟢 Auftrag";
+
+    case "erledigt":
+      return "⚫ Erledigt";
+
+    default:
+      return "🟡 Neu";
+
+  }
+
+}
+
+
+/* STATUS-KLASSE */
+
+function getStatusClass(status) {
+
+  switch (status) {
+
+    case "kontakt":
+      return "status-kontakt";
+
+    case "angebot":
+      return "status-angebot";
+
+    case "auftrag":
+      return "status-auftrag";
+
+    case "erledigt":
+      return "status-erledigt";
+
+    default:
+      return "status-neu";
+
+  }
+
+}
+
+
+/* DATUM */
+
+function formatDate(value) {
+
+  if (!value) {
+    return "-";
+  }
+
+
+  const date =
+    new Date(value);
+
+
+  return date.toLocaleString(
+    "de-DE",
+    {
+      dateStyle: "short",
+      timeStyle: "medium"
     }
+  );
+
+}
+
+
+/* SICHERHEIT */
+
+function escapeHtml(value) {
+
+  return String(value)
+
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
+
+}
+
+
+/* SESSION PRÜFEN */
+
+async function checkSession() {
+
+  const {
+    data
+  } =
+    await supabaseClient
+      .auth
+      .getSession();
+
+
+  if (data.session) {
+
+    showAdmin();
 
   }
+
+}
+
+
+checkSession();
 
 </script>
 
