@@ -1,1084 +1,1220 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#111111">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Fachbetrieb – Riemer BauConnect</title>
+  <title>Riemer BauConnect – Fachbetriebe</title>
 
-<style>
-* {
-  box-sizing: border-box;
-}
+  <meta name="theme-color" content="#111111">
+  <meta name="description" content="Fachbetrieb bei Riemer BauConnect registrieren und Bauanfragen erhalten.">
 
-body {
-  margin: 0;
-  background: #111;
-  color: #fff;
-  font-family: Arial, sans-serif;
-}
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-header {
-  background: #151515;
-  padding: 22px 18px;
-  text-align: center;
-  border-bottom: 1px solid #333;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-.logo {
-  font-size: 25px;
-  font-weight: 800;
-}
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #111111;
+      color: #ffffff;
+    }
 
-.logo span {
-  color: #ffd000;
-}
+    header {
+      background: #151515;
+      padding: 18px;
+      text-align: center;
+      border-bottom: 1px solid #333;
+    }
 
-.subtitle {
-  color: #aaa;
-  margin-top: 6px;
-  font-size: 14px;
-}
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
 
-.container {
-  width: 100%;
-  max-width: 600px;
-  margin: auto;
-  padding: 20px 16px 50px;
-}
+    header span {
+      color: #ffd400;
+    }
 
-.card {
-  background: #191919;
-  border: 1px solid #333;
-  border-radius: 18px;
-  padding: 20px;
-  margin-bottom: 18px;
-}
+    .container {
+      width: 100%;
+      max-width: 650px;
+      margin: auto;
+      padding: 20px;
+    }
 
-h1 {
-  margin-top: 0;
-  font-size: 25px;
-}
+    .card {
+      background: #1c1c1c;
+      border: 1px solid #333;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
 
-h2 {
-  font-size: 21px;
-  margin-top: 0;
-}
+    h2 {
+      margin-top: 0;
+      color: #ffd400;
+    }
 
-p {
-  color: #aaa;
-  line-height: 1.5;
-}
+    h3 {
+      color: #ffd400;
+    }
 
-label {
-  display: block;
-  margin: 15px 0 7px;
-  color: #bbb;
-  font-size: 14px;
-}
+    p {
+      color: #cccccc;
+      line-height: 1.5;
+    }
 
-input,
-select,
-textarea {
-  width: 100%;
-  padding: 14px;
-  border-radius: 12px;
-  border: 1px solid #444;
-  background: #0d0d0d;
-  color: white;
-  font-size: 16px;
-  outline: none;
-}
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
 
-input:focus,
-select:focus,
-textarea:focus {
-  border-color: #ffd000;
-}
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 13px;
+      border-radius: 10px;
+      border: 1px solid #444;
+      background: #111111;
+      color: #ffffff;
+      font-size: 16px;
+    }
 
-textarea {
-  min-height: 100px;
-  resize: vertical;
-}
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
 
-button {
-  width: 100%;
-  border: 0;
-  border-radius: 12px;
-  padding: 15px;
-  margin-top: 18px;
-  background: #ffd000;
-  color: #111;
-  font-size: 17px;
-  font-weight: 700;
-  cursor: pointer;
-}
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 10px;
+      background: #ffd400;
+      color: #111111;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-button:active {
-  transform: scale(.99);
-}
+    button.secondary {
+      background: #333333;
+      color: #ffffff;
+    }
 
-.secondary {
-  background: #292929;
-  color: white;
-  border: 1px solid #444;
-}
+    button.danger {
+      background: #9b2226;
+      color: #ffffff;
+    }
 
-.link-btn {
-  background: transparent;
-  color: #ffd000;
-  border: 0;
-  padding: 10px;
-}
+    button:disabled {
+      opacity: 0.5;
+    }
 
-.hidden {
-  display: none !important;
-}
+    .hidden {
+      display: none !important;
+    }
 
-.message {
-  padding: 14px;
-  border-radius: 12px;
-  margin-top: 15px;
-  display: none;
-  line-height: 1.5;
-}
+    .message {
+      padding: 14px;
+      border-radius: 10px;
+      margin-top: 15px;
+      line-height: 1.4;
+    }
 
-.success {
-  display: block;
-  background: #12351f;
-  border: 1px solid #2c8a4c;
-  color: #65e68b;
-}
+    .success {
+      background: #123d20;
+      border: 1px solid #2e8b57;
+      color: #9cffb8;
+    }
 
-.error {
-  display: block;
-  background: #381717;
-  border: 1px solid #9b3838;
-  color: #ff8d8d;
-}
+    .error {
+      background: #451919;
+      border: 1px solid #a33;
+      color: #ffaaaa;
+    }
 
-.warning {
-  display: block;
-  background: #382f10;
-  border: 1px solid #a58a1b;
-  color: #ffe66d;
-}
+    .warning {
+      background: #493d08;
+      border: 1px solid #a89400;
+      color: #ffe66d;
+    }
 
-.status-box {
-  padding: 18px;
-  border-radius: 14px;
-  background: #202020;
-  border: 1px solid #444;
-  margin-top: 15px;
-}
+    .status {
+      padding: 15px;
+      border-radius: 12px;
+      margin: 15px 0;
+      text-align: center;
+      font-weight: bold;
+    }
 
-.status-title {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 8px;
-}
+    .status.waiting {
+      background: #493d08;
+      color: #ffe66d;
+    }
 
-.badge {
-  display: inline-block;
-  padding: 7px 12px;
-  border-radius: 20px;
-  background: #443900;
-  color: #ffd000;
-  font-size: 13px;
-  font-weight: bold;
-}
+    .status.active {
+      background: #123d20;
+      color: #9cffb8;
+    }
 
-.top-actions {
-  display: flex;
-  gap: 10px;
-}
+    .info-row {
+      padding: 10px 0;
+      border-bottom: 1px solid #333;
+    }
 
-.top-actions button {
-  margin-top: 0;
-}
+    .info-row:last-child {
+      border-bottom: none;
+    }
 
-.info {
-  color: #888;
-  font-size: 13px;
-  margin-top: 8px;
-}
-</style>
+    .info-label {
+      color: #999999;
+      font-size: 13px;
+    }
+
+    .info-value {
+      margin-top: 4px;
+      font-size: 16px;
+    }
+
+    .logo {
+      font-size: 34px;
+      margin-bottom: 8px;
+    }
+
+    .small {
+      font-size: 13px;
+      color: #999999;
+    }
+
+    a {
+      color: #ffd400;
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
-  <div class="logo">
-    Riemer <span>BauConnect</span>
-  </div>
-  <div class="subtitle">
-    Fachbetrieb-Bereich
-  </div>
+  <div class="logo">🏗️</div>
+  <h1>Riemer <span>BauConnect</span></h1>
+  <p>Fachbetrieb-Bereich</p>
 </header>
 
 <div class="container">
 
   <!-- START -->
-  <div id="startView">
+  <section id="startView" class="card">
+    <h2>Für Fachbetriebe</h2>
 
-    <div class="card">
-      <h1>🏢 Fachbetrieb</h1>
+    <p>
+      Erhalten Sie passende Bauanfragen aus Ihrer Region über
+      Riemer BauConnect.
+    </p>
 
-      <p>
-        Als Fachbetrieb kannst du dich bei Riemer BauConnect registrieren
-        und später passende Bauanfragen erhalten.
-      </p>
+    <button onclick="showLogin()">
+      🔐 Fachbetrieb anmelden
+    </button>
 
-      <button onclick="showLogin()">
-        🔐 Fachbetrieb Login
-      </button>
+    <button class="secondary" onclick="showRegister()">
+      🏢 Als Fachbetrieb registrieren
+    </button>
 
-      <button class="secondary" onclick="showRegister()">
-        📝 Als Fachbetrieb registrieren
-      </button>
-    </div>
-
-  </div>
+    <p class="small">
+      Nach der Registrierung wird Ihr Unternehmen zunächst geprüft.
+    </p>
+  </section>
 
 
   <!-- LOGIN -->
-  <div id="loginView" class="hidden">
+  <section id="loginView" class="card hidden">
 
-    <div class="card">
+    <h2>🔐 Anmeldung</h2>
 
-      <h2>🔐 Fachbetrieb Login</h2>
+    <label>E-Mail</label>
+    <input
+      type="email"
+      id="loginEmail"
+      placeholder="Ihre E-Mail-Adresse"
+      autocomplete="email"
+    >
 
-      <label>E-Mail</label>
-      <input
-        id="loginEmail"
-        type="email"
-        placeholder="firma@beispiel.de"
-        autocomplete="email"
-      >
+    <label>Passwort</label>
+    <input
+      type="password"
+      id="loginPassword"
+      placeholder="Ihr Passwort"
+      autocomplete="current-password"
+    >
 
-      <label>Passwort</label>
-      <input
-        id="loginPassword"
-        type="password"
-        placeholder="Passwort"
-        autocomplete="current-password"
-      >
+    <button onclick="login()">
+      Anmelden
+    </button>
 
-      <button onclick="login()">
-        Einloggen
-      </button>
+    <button class="secondary" onclick="showRegister()">
+      Noch kein Konto? Registrieren
+    </button>
 
-      <button class="link-btn" onclick="showRegister()">
-        Noch kein Konto? Jetzt registrieren
-      </button>
+    <button class="secondary" onclick="showStart()">
+      Zurück
+    </button>
 
-      <button class="secondary" onclick="showStart()">
-        Zurück
-      </button>
+    <div id="loginMessage"></div>
 
-      <div id="loginMessage" class="message"></div>
-
-    </div>
-
-  </div>
+  </section>
 
 
   <!-- REGISTRIERUNG -->
-  <div id="registerView" class="hidden">
+  <section id="registerView" class="card hidden">
 
-    <div class="card">
+    <h2>🏢 Fachbetrieb registrieren</h2>
 
-      <h2>📝 Fachbetrieb registrieren</h2>
+    <p>
+      Erstellen Sie kostenlos Ihr Fachbetrieb-Konto.
+    </p>
 
-      <p>
-        Erstelle deinen Fachbetrieb-Account. Nach der Registrierung
-        wird dein Profil geprüft und anschließend freigeschaltet.
-      </p>
+    <label>Firmenname *</label>
+    <input
+      type="text"
+      id="firma"
+      placeholder="z. B. Mustermann Tiefbau GmbH"
+    >
 
-      <label>Firmenname *</label>
-      <input
-        id="regFirma"
-        type="text"
-        placeholder="Muster Tiefbau GmbH"
-      >
+    <label>Inhaber / Ansprechpartner *</label>
+    <input
+      type="text"
+      id="inhaber"
+      placeholder="Vor- und Nachname"
+    >
 
-      <label>Inhaber / Ansprechpartner *</label>
-      <input
-        id="regInhaber"
-        type="text"
-        placeholder="Max Mustermann"
-      >
+    <label>E-Mail *</label>
+    <input
+      type="email"
+      id="registerEmail"
+      placeholder="firma@example.de"
+      autocomplete="email"
+    >
 
-      <label>E-Mail *</label>
-      <input
-        id="regEmail"
-        type="email"
-        placeholder="firma@beispiel.de"
-        autocomplete="email"
-      >
+    <label>Telefon *</label>
+    <input
+      type="tel"
+      id="telefon"
+      placeholder="0461 123456"
+    >
 
-      <label>Telefon *</label>
-      <input
-        id="regTelefon"
-        type="tel"
-        placeholder="0461 123456"
-      >
+    <label>PLZ *</label>
+    <input
+      type="text"
+      id="plz"
+      placeholder="24955"
+      inputmode="numeric"
+    >
 
-      <label>PLZ *</label>
-      <input
-        id="regPlz"
-        type="text"
-        inputmode="numeric"
-        placeholder="24955"
-        maxlength="5"
-      >
+    <label>Ort *</label>
+    <input
+      type="text"
+      id="ort"
+      placeholder="Harrislee"
+    >
 
-      <label>Ort *</label>
-      <input
-        id="regOrt"
-        type="text"
-        placeholder="Harrislee"
-      >
+    <label>Ihre Leistungen *</label>
+    <textarea
+      id="leistungen"
+      placeholder="z. B. Straßenbau, Asphaltarbeiten, Tiefbau, Pflasterarbeiten"
+    ></textarea>
 
-      <label>Leistungen *</label>
-      <textarea
-        id="regLeistungen"
-        placeholder="z.B. Straßenbau, Asphaltarbeiten, Pflasterarbeiten, Erdarbeiten"
-      ></textarea>
+    <label>Einsatzradius</label>
+    <select id="radius">
+      <option value="10">10 km</option>
+      <option value="20">20 km</option>
+      <option value="30" selected>30 km</option>
+      <option value="50">50 km</option>
+      <option value="75">75 km</option>
+      <option value="100">100 km</option>
+    </select>
 
-      <label>Einsatzradius in km *</label>
-      <input
-        id="regRadius"
-        type="number"
-        min="1"
-        max="300"
-        value="30"
-      >
+    <label>Firmenbeschreibung</label>
+    <textarea
+      id="beschreibung"
+      placeholder="Kurze Beschreibung Ihres Betriebs"
+    ></textarea>
 
-      <label>Firmenbeschreibung</label>
-      <textarea
-        id="regBeschreibung"
-        placeholder="Kurze Beschreibung des Unternehmens..."
-      ></textarea>
+    <label>Passwort *</label>
+    <input
+      type="password"
+      id="registerPassword"
+      placeholder="Mindestens 6 Zeichen"
+      autocomplete="new-password"
+    >
 
-      <label>Passwort *</label>
-      <input
-        id="regPassword"
-        type="password"
-        placeholder="Mindestens 6 Zeichen"
-        autocomplete="new-password"
-      >
+    <label>Passwort wiederholen *</label>
+    <input
+      type="password"
+      id="registerPassword2"
+      placeholder="Passwort wiederholen"
+      autocomplete="new-password"
+    >
 
-      <label>Passwort wiederholen *</label>
-      <input
-        id="regPassword2"
-        type="password"
-        placeholder="Passwort wiederholen"
-        autocomplete="new-password"
-      >
+    <button onclick="registerFirm()">
+      🏢 Fachbetrieb registrieren
+    </button>
 
-      <button onclick="registerFirm()">
-        🏢 Fachbetrieb registrieren
-      </button>
+    <button
+      id="resendButton"
+      class="secondary hidden"
+      onclick="resendConfirmation()"
+    >
+      📧 Bestätigungs-Mail erneut senden
+    </button>
 
-      <button class="secondary" onclick="showStart()">
-        Zurück
-      </button>
+    <button class="secondary" onclick="showLogin()">
+      Bereits registriert? Anmelden
+    </button>
 
-      <div id="registerMessage" class="message"></div>
+    <button class="secondary" onclick="showStart()">
+      Zurück
+    </button>
 
-    </div>
+    <div id="registerMessage"></div>
 
-  </div>
+  </section>
 
 
-  <!-- PROFIL / STATUS -->
-  <div id="dashboardView" class="hidden">
+  <!-- DASHBOARD -->
+  <section id="dashboardView" class="card hidden">
 
-    <div class="card">
+    <h2>🏗️ Mein Fachbetrieb</h2>
 
-      <h2>🏢 Mein Fachbetrieb</h2>
+    <div id="firmStatus"></div>
 
-      <div id="firmInfo"></div>
+    <div id="firmInfo"></div>
 
-      <div class="status-box">
-        <div class="status-title">
-          Status
-        </div>
+    <button class="danger" onclick="logout()">
+      Abmelden
+    </button>
 
-        <div id="firmStatus"></div>
-      </div>
+  </section>
 
-      <div id="dashboardMessage" class="message"></div>
 
-      <button class="secondary" onclick="logout()">
-        🚪 Ausloggen
-      </button>
-
-    </div>
-
-  </div>
+  <!-- FEHLER / INFO -->
+  <section id="generalMessage"></section>
 
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
 
-const SUPABASE_URL =
-  "https://ehzugjmltfcvllftpjpp.supabase.co";
+  /* ==========================================
+     SUPABASE
+  ========================================== */
 
-const SUPABASE_KEY =
-  "sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
+  const SUPABASE_URL =
+    "https://ehzugjmltfcvllftpjpp.supabase.co";
 
-const db = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+  const SUPABASE_KEY =
+    "sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
 
+  const REDIRECT_URL =
+    "https://kennethriemer.github.io/riemer-bauconnect/fachbetrieb.html";
 
-/* -----------------------------
-   ANZEIGEN
------------------------------ */
-
-function hideAllViews() {
-  document.getElementById("startView").classList.add("hidden");
-  document.getElementById("loginView").classList.add("hidden");
-  document.getElementById("registerView").classList.add("hidden");
-  document.getElementById("dashboardView").classList.add("hidden");
-}
-
-function showStart() {
-  hideAllViews();
-  document.getElementById("startView").classList.remove("hidden");
-}
-
-function showLogin() {
-  hideAllViews();
-  document.getElementById("loginView").classList.remove("hidden");
-}
-
-function showRegister() {
-  hideAllViews();
-  document.getElementById("registerView").classList.remove("hidden");
-}
-
-function showDashboard() {
-  hideAllViews();
-  document.getElementById("dashboardView").classList.remove("hidden");
-}
-
-
-/* -----------------------------
-   NACHRICHTEN
------------------------------ */
-
-function showMessage(id, text, type) {
-
-  const box = document.getElementById(id);
-
-  box.className = "message " + type;
-  box.textContent = text;
-}
-
-
-/* -----------------------------
-   REGISTRIERUNG
------------------------------ */
-
-async function registerFirm() {
-
-  const firma =
-    document.getElementById("regFirma").value.trim();
-
-  const inhaber =
-    document.getElementById("regInhaber").value.trim();
-
-  const email =
-    document.getElementById("regEmail").value.trim();
-
-  const telefon =
-    document.getElementById("regTelefon").value.trim();
-
-  const plz =
-    document.getElementById("regPlz").value.trim();
-
-  const ort =
-    document.getElementById("regOrt").value.trim();
-
-  const leistungen =
-    document.getElementById("regLeistungen").value.trim();
-
-  const radius =
-    Number(document.getElementById("regRadius").value);
-
-  const beschreibung =
-    document.getElementById("regBeschreibung").value.trim();
-
-  const password =
-    document.getElementById("regPassword").value;
-
-  const password2 =
-    document.getElementById("regPassword2").value;
-
-
-  if (
-    !firma ||
-    !inhaber ||
-    !email ||
-    !telefon ||
-    !plz ||
-    !ort ||
-    !leistungen ||
-    !password
-  ) {
-
-    showMessage(
-      "registerMessage",
-      "Bitte fülle alle Pflichtfelder (*) aus.",
-      "error"
-    );
-
-    return;
-  }
-
-
-  if (!/^\d{5}$/.test(plz)) {
-
-    showMessage(
-      "registerMessage",
-      "Bitte eine gültige 5-stellige PLZ eingeben.",
-      "error"
-    );
-
-    return;
-  }
-
-
-  if (password.length < 6) {
-
-    showMessage(
-      "registerMessage",
-      "Das Passwort muss mindestens 6 Zeichen haben.",
-      "error"
-    );
-
-    return;
-  }
-
-
-  if (password !== password2) {
-
-    showMessage(
-      "registerMessage",
-      "Die beiden Passwörter stimmen nicht überein.",
-      "error"
-    );
-
-    return;
-  }
-
-
-  showMessage(
-    "registerMessage",
-    "Registrierung wird erstellt...",
-    "warning"
+  const db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
   );
 
 
-  try {
+  /* ==========================================
+     VIEWS
+  ========================================== */
 
-    /*
-      Die Firmendaten werden zunächst bei
-      Supabase Auth als Benutzer-Metadaten
-      gespeichert.
+  function hideAllViews() {
 
-      Nach dem Login wird daraus automatisch
-      das Fachbetriebs-Profil erstellt.
-    */
+    document.getElementById("startView")
+      .classList.add("hidden");
 
-    const { data, error } =
-      await db.auth.signUp({
+    document.getElementById("loginView")
+      .classList.add("hidden");
 
-        email: email,
+    document.getElementById("registerView")
+      .classList.add("hidden");
 
-        password: password,
-
-        options: {
-
-          data: {
-
-            firma: firma,
-            inhaber: inhaber,
-            telefon: telefon,
-            plz: plz,
-            ort: ort,
-            leistungen: leistungen,
-            radius_km: radius,
-            beschreibung: beschreibung
-
-          }
-
-        }
-
-      });
+    document.getElementById("dashboardView")
+      .classList.add("hidden");
+  }
 
 
-    if (error) {
-      throw error;
+  function showStart() {
+
+    hideAllViews();
+
+    document.getElementById("startView")
+      .classList.remove("hidden");
+  }
+
+
+  function showLogin() {
+
+    hideAllViews();
+
+    document.getElementById("loginView")
+      .classList.remove("hidden");
+  }
+
+
+  function showRegister() {
+
+    hideAllViews();
+
+    document.getElementById("registerView")
+      .classList.remove("hidden");
+  }
+
+
+  function showDashboard() {
+
+    hideAllViews();
+
+    document.getElementById("dashboardView")
+      .classList.remove("hidden");
+  }
+
+
+  /* ==========================================
+     MESSAGES
+  ========================================== */
+
+  function showMessage(elementId, message, type) {
+
+    const element =
+      document.getElementById(elementId);
+
+    element.innerHTML =
+      `<div class="message ${type}">${message}</div>`;
+  }
+
+
+  /* ==========================================
+     REGISTRIERUNG
+  ========================================== */
+
+  let lastRegisteredEmail = "";
+
+
+  async function registerFirm() {
+
+    const firma =
+      document.getElementById("firma").value.trim();
+
+    const inhaber =
+      document.getElementById("inhaber").value.trim();
+
+    const email =
+      document.getElementById("registerEmail").value.trim();
+
+    const telefon =
+      document.getElementById("telefon").value.trim();
+
+    const plz =
+      document.getElementById("plz").value.trim();
+
+    const ort =
+      document.getElementById("ort").value.trim();
+
+    const leistungen =
+      document.getElementById("leistungen").value.trim();
+
+    const radius =
+      document.getElementById("radius").value;
+
+    const beschreibung =
+      document.getElementById("beschreibung").value.trim();
+
+    const password =
+      document.getElementById("registerPassword").value;
+
+    const password2 =
+      document.getElementById("registerPassword2").value;
+
+
+    if (
+      !firma ||
+      !inhaber ||
+      !email ||
+      !telefon ||
+      !plz ||
+      !ort ||
+      !leistungen ||
+      !password
+    ) {
+
+      showMessage(
+        "registerMessage",
+        "❌ Bitte fülle alle Pflichtfelder aus.",
+        "error"
+      );
+
+      return;
     }
 
 
-    /*
-      Falls Supabase sofort eine Session
-      erstellt, versuchen wir das Profil
-      direkt anzulegen.
-    */
+    if (password.length < 6) {
 
-    if (data.session) {
-
-      await ensureFirmProfile(
-        data.user
+      showMessage(
+        "registerMessage",
+        "❌ Das Passwort muss mindestens 6 Zeichen haben.",
+        "error"
       );
 
-      showDashboard();
+      return;
+    }
 
-      await loadDashboard();
+
+    if (password !== password2) {
+
+      showMessage(
+        "registerMessage",
+        "❌ Die Passwörter stimmen nicht überein.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    lastRegisteredEmail = email;
+
+
+    showMessage(
+      "registerMessage",
+      "⏳ Registrierung wird durchgeführt...",
+      "warning"
+    );
+
+
+    const {
+      data,
+      error
+    } = await db.auth.signUp({
+
+      email: email,
+
+      password: password,
+
+      options: {
+
+        emailRedirectTo: REDIRECT_URL,
+
+        data: {
+
+          firma: firma,
+
+          inhaber: inhaber,
+
+          telefon: telefon,
+
+          plz: plz,
+
+          ort: ort,
+
+          leistungen: leistungen,
+
+          radius_km: Number(radius),
+
+          beschreibung: beschreibung
+        }
+      }
+    });
+
+
+    if (error) {
+
+      showMessage(
+        "registerMessage",
+        "❌ " + error.message,
+        "error"
+      );
 
       return;
     }
 
 
     /*
-      Wenn E-Mail-Bestätigung aktiviert ist,
-      gibt es zunächst keine Session.
+      Das Firmenprofil wird NICHT hier angelegt,
+      weil bei aktivierter E-Mail-Bestätigung
+      zunächst keine Session vorhanden sein kann.
+
+      Das Profil wird nach Bestätigung / Login
+      automatisch angelegt.
     */
+
+
+    document
+      .getElementById("resendButton")
+      .classList.remove("hidden");
+
 
     showMessage(
       "registerMessage",
-      "Registrierung erfolgreich! Bitte bestätige jetzt deine E-Mail-Adresse. Danach kannst du dich hier einloggen.",
+
+      `
+        🟢 <strong>Registrierung erfolgreich!</strong><br><br>
+
+        Wir haben dir eine Bestätigungs-Mail
+        an <strong>${escapeHtml(email)}</strong> geschickt.<br><br>
+
+        Öffne die Mail und tippe auf
+        <strong>„Confirm email address“</strong>.<br><br>
+
+        Danach kannst du dich hier anmelden.
+      `,
+
       "success"
     );
 
   }
 
-  catch (error) {
 
-    console.error(error);
+  /* ==========================================
+     BESTÄTIGUNGS-MAIL ERNEUT SENDEN
+  ========================================== */
+
+  async function resendConfirmation() {
+
+    const email =
+      lastRegisteredEmail ||
+      document.getElementById("registerEmail").value.trim();
+
+
+    if (!email) {
+
+      showMessage(
+        "registerMessage",
+        "❌ Bitte zuerst deine E-Mail-Adresse eingeben.",
+        "error"
+      );
+
+      return;
+    }
+
 
     showMessage(
       "registerMessage",
-      "Fehler bei der Registrierung: " +
-      (error.message || "Unbekannter Fehler"),
-      "error"
+      "⏳ Bestätigungs-Mail wird erneut gesendet...",
+      "warning"
     );
 
-  }
 
-}
+    const {
+      error
+    } = await db.auth.resend({
 
+      type: "signup",
 
-/* -----------------------------
-   LOGIN
------------------------------ */
+      email: email,
 
-async function login() {
+      options: {
 
-  const email =
-    document.getElementById("loginEmail").value.trim();
+        emailRedirectTo: REDIRECT_URL
 
-  const password =
-    document.getElementById("loginPassword").value;
+      }
 
-
-  if (!email || !password) {
-
-    showMessage(
-      "loginMessage",
-      "Bitte E-Mail und Passwort eingeben.",
-      "error"
-    );
-
-    return;
-  }
-
-
-  showMessage(
-    "loginMessage",
-    "Login wird durchgeführt...",
-    "warning"
-  );
-
-
-  try {
-
-    const { data, error } =
-      await db.auth.signInWithPassword({
-
-        email: email,
-        password: password
-
-      });
+    });
 
 
     if (error) {
-      throw error;
+
+      showMessage(
+        "registerMessage",
+        "❌ " + error.message,
+        "error"
+      );
+
+      return;
+    }
+
+
+    showMessage(
+      "registerMessage",
+
+      "📧 Eine neue Bestätigungs-Mail wurde gesendet.",
+
+      "success"
+    );
+
+  }
+
+
+  /* ==========================================
+     LOGIN
+  ========================================== */
+
+  async function login() {
+
+    const email =
+      document.getElementById("loginEmail").value.trim();
+
+    const password =
+      document.getElementById("loginPassword").value;
+
+
+    if (!email || !password) {
+
+      showMessage(
+        "loginMessage",
+        "❌ Bitte E-Mail und Passwort eingeben.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    showMessage(
+      "loginMessage",
+      "⏳ Anmeldung läuft...",
+      "warning"
+    );
+
+
+    const {
+      data,
+      error
+    } = await db.auth.signInWithPassword({
+
+      email: email,
+
+      password: password
+
+    });
+
+
+    if (error) {
+
+      showMessage(
+        "loginMessage",
+        "❌ " + error.message,
+        "error"
+      );
+
+      return;
+    }
+
+
+    await ensureFirmProfile(data.user);
+
+    await loadDashboard(data.user);
+
+  }
+
+
+  /* ==========================================
+     FIRMENPROFIL ERSTELLEN / LADEN
+  ========================================== */
+
+  async function ensureFirmProfile(user) {
+
+    if (!user) {
+      return null;
     }
 
 
     /*
-      Nach dem Login wird geprüft,
-      ob bereits ein Firmenprofil existiert.
-      Falls nicht, wird es aus den
-      Registrierungsdaten erstellt.
+      Prüfen, ob bereits ein Profil existiert.
     */
 
-    await ensureFirmProfile(
-      data.user
-    );
-
-
-    showDashboard();
-
-    await loadDashboard();
-
-  }
-
-  catch (error) {
-
-    console.error(error);
-
-    showMessage(
-      "loginMessage",
-      "Login fehlgeschlagen: " +
-      (error.message || "Unbekannter Fehler"),
-      "error"
-    );
-
-  }
-
-}
-
-
-/* -----------------------------
-   PROFIL ANLEGEN
------------------------------ */
-
-async function ensureFirmProfile(user) {
-
-  if (!user) {
-    return null;
-  }
-
-
-  /*
-    Prüfen, ob bereits ein Profil
-    für diesen Benutzer existiert.
-  */
-
-  const { data: existing, error: checkError } =
-    await db
+    const {
+      data: existing,
+      error: selectError
+    } = await db
       .from("fachbetriebe")
       .select("*")
       .eq("owner_user_id", user.id)
       .maybeSingle();
 
 
-  if (checkError) {
-    throw checkError;
-  }
+    if (selectError) {
+
+      console.error(
+        "Profil-Abfrage:",
+        selectError
+      );
+
+      return null;
+    }
 
 
-  if (existing) {
-    return existing;
-  }
+    if (existing) {
+
+      return existing;
+    }
 
 
-  const meta = user.user_metadata || {};
+    /*
+      Falls noch kein Profil existiert:
+      Daten aus user_metadata verwenden.
+    */
+
+    const meta =
+      user.user_metadata || {};
 
 
-  if (!meta.firma) {
+    const newFirm = {
 
-    throw new Error(
-      "Keine Firmendaten für diesen Benutzer gefunden."
-    );
+      firma:
+        meta.firma || "",
 
-  }
+      inhaber:
+        meta.inhaber || "",
 
+      email:
+        user.email || "",
 
-  /*
-    Neues Firmenprofil.
-    freigeschaltet bleibt automatisch false.
-  */
+      telefon:
+        meta.telefon || "",
 
-  const newFirm = {
+      plz:
+        meta.plz || "",
 
-    firma: meta.firma,
+      ort:
+        meta.ort || "",
 
-    inhaber: meta.inhaber || "",
+      leistungen:
+        meta.leistungen || "",
 
-    email: user.email || "",
+      radius_km:
+        Number(meta.radius_km) || 30,
 
-    telefon: meta.telefon || "",
+      owner_user_id:
+        user.id,
 
-    plz: meta.plz || "",
-
-    ort: meta.ort || "",
-
-    leistungen: meta.leistungen || "",
-
-    radius_km: Number(meta.radius_km) || 30,
-
-    owner_user_id: user.id,
-
-    freigeschaltet: false
-
-  };
+      freigeschaltet:
+        false
+    };
 
 
-  const { data, error } =
-    await db
+    const {
+      data,
+      error
+    } = await db
       .from("fachbetriebe")
       .insert([newFirm])
       .select()
       .single();
 
 
-  if (error) {
-    throw error;
-  }
+    if (error) {
 
+      console.error(
+        "Profil-Erstellung:",
+        error
+      );
 
-  return data;
-}
-
-
-/* -----------------------------
-   DASHBOARD
------------------------------ */
-
-async function loadDashboard() {
-
-  const {
-    data: {
-      user
+      return null;
     }
-  } = await db.auth.getUser();
 
 
-  if (!user) {
-    showStart();
-    return;
+    return data;
   }
 
 
-  const {
-    data: firm,
-    error
-  } = await db
-    .from("fachbetriebe")
-    .select("*")
-    .eq("owner_user_id", user.id)
-    .maybeSingle();
+  /* ==========================================
+     DASHBOARD
+  ========================================== */
 
+  async function loadDashboard(user) {
 
-  if (error) {
-
-    showMessage(
-      "dashboardMessage",
-      error.message,
-      "error"
-    );
-
-    return;
-  }
-
-
-  if (!firm) {
-
-    showMessage(
-      "dashboardMessage",
-      "Für diesen Account wurde noch kein Fachbetriebsprofil gefunden.",
-      "error"
-    );
-
-    return;
-  }
-
-
-  document.getElementById("firmInfo").innerHTML = `
-
-    <p>
-      <strong>Firma:</strong><br>
-      ${escapeHtml(firm.firma || "-")}
-    </p>
-
-    <p>
-      <strong>Ansprechpartner:</strong><br>
-      ${escapeHtml(firm.inhaber || "-")}
-    </p>
-
-    <p>
-      <strong>E-Mail:</strong><br>
-      ${escapeHtml(firm.email || "-")}
-    </p>
-
-    <p>
-      <strong>Telefon:</strong><br>
-      ${escapeHtml(firm.telefon || "-")}
-    </p>
-
-    <p>
-      <strong>Standort:</strong><br>
-      ${escapeHtml(firm.plz || "-")}
-      ${escapeHtml(firm.ort || "")}
-    </p>
-
-    <p>
-      <strong>Leistungen:</strong><br>
-      ${escapeHtml(firm.leistungen || "-")}
-    </p>
-
-    <p>
-      <strong>Einsatzradius:</strong><br>
-      ${firm.radius_km || 30} km
-    </p>
-
-  `;
-
-
-  if (firm.freigeschaltet) {
-
-    document.getElementById("firmStatus").innerHTML = `
-      <span class="badge">
-        ✅ Freigeschaltet
-      </span>
-
-      <p>
-        Dein Fachbetrieb ist freigeschaltet.
-        Die zugewiesenen Bauanfragen können
-        hier später angezeigt werden.
-      </p>
-    `;
-
-  }
-
-  else {
-
-    document.getElementById("firmStatus").innerHTML = `
-      <span class="badge">
-        ⏳ Prüfung läuft
-      </span>
-
-      <p>
-        Dein Fachbetriebsprofil wurde registriert
-        und wartet auf die Freischaltung durch
-        Riemer BauConnect.
-      </p>
-    `;
-
-  }
-
-}
-
-
-/* -----------------------------
-   LOGOUT
------------------------------ */
-
-async function logout() {
-
-  await db.auth.signOut();
-
-  showStart();
-
-}
-
-
-/* -----------------------------
-   HTML SICHER MACHEN
------------------------------ */
-
-function escapeHtml(value) {
-
-  return String(value || "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-
-}
-
-
-/* -----------------------------
-   AUTOMATISCHEN LOGIN PRÜFEN
------------------------------ */
-
-async function checkSession() {
-
-  const {
-    data: {
-      session
+    if (!user) {
+      return;
     }
-  } = await db.auth.getSession();
 
 
-  if (!session) {
-    showStart();
-    return;
-  }
+    const {
+      data: firm,
+      error
+    } = await db
+      .from("fachbetriebe")
+      .select("*")
+      .eq("owner_user_id", user.id)
+      .maybeSingle();
 
 
-  try {
+    if (error) {
 
-    await ensureFirmProfile(
-      session.user
-    );
+      showMessage(
+        "generalMessage",
+        "❌ Fachbetriebsdaten konnten nicht geladen werden.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    if (!firm) {
+
+      showMessage(
+        "generalMessage",
+        "⚠️ Dein Fachbetriebsprofil konnte noch nicht erstellt werden.",
+        "warning"
+      );
+
+      return;
+    }
+
 
     showDashboard();
 
-    await loadDashboard();
+
+    const statusElement =
+      document.getElementById("firmStatus");
+
+
+    if (firm.freigeschaltet === true) {
+
+      statusElement.innerHTML = `
+
+        <div class="status active">
+
+          🟢 Fachbetrieb freigeschaltet
+
+          <br>
+
+          <span class="small">
+            Dein Betrieb kann Bauanfragen erhalten.
+          </span>
+
+        </div>
+
+      `;
+
+    } else {
+
+      statusElement.innerHTML = `
+
+        <div class="status waiting">
+
+          🟡 Prüfung läuft
+
+          <br>
+
+          <span class="small">
+            Dein Fachbetrieb wurde registriert
+            und wartet auf die Freischaltung.
+          </span>
+
+        </div>
+
+      `;
+
+    }
+
+
+    document.getElementById("firmInfo").innerHTML = `
+
+      <div class="info-row">
+
+        <div class="info-label">
+          Firma
+        </div>
+
+        <div class="info-value">
+          ${escapeHtml(firm.firma || "-")}
+        </div>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <div class="info-label">
+          Ansprechpartner
+        </div>
+
+        <div class="info-value">
+          ${escapeHtml(firm.inhaber || "-")}
+        </div>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <div class="info-label">
+          E-Mail
+        </div>
+
+        <div class="info-value">
+          ${escapeHtml(firm.email || "-")}
+        </div>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <div class="info-label">
+          Telefon
+        </div>
+
+        <div class="info-value">
+          ${escapeHtml(firm.telefon || "-")}
+        </div>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <div class="info-label">
+          Standort
+        </div>
+
+        <div class="info-value">
+          ${escapeHtml(firm.plz || "")}
+          ${escapeHtml(firm.ort || "")}
+        </div>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <div class="info-label">
+          Leistungen
+        </div>
+
+        <div class="info-value">
+          ${escapeHtml(firm.leistungen || "-")}
+        </div>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <div class="info-label">
+          Einsatzradius
+        </div>
+
+        <div class="info-value">
+          ${escapeHtml(String(firm.radius_km || 30))} km
+        </div>
+
+      </div>
+
+    `;
 
   }
 
-  catch (error) {
 
-    console.error(error);
+  /* ==========================================
+     LOGOUT
+  ========================================== */
 
-    showLogin();
+  async function logout() {
+
+    await db.auth.signOut();
+
+    showStart();
 
   }
 
-}
+
+  /* ==========================================
+     SESSION PRÜFEN
+  ========================================== */
+
+  async function checkSession() {
+
+    const {
+      data
+    } = await db.auth.getSession();
 
 
-/* -----------------------------
-   AUTH ÄNDERUNGEN
------------------------------ */
+    if (data && data.session && data.session.user) {
 
-db.auth.onAuthStateChange(
-  async (event, session) => {
+      const user =
+        data.session.user;
 
-    if (
-      event === "SIGNED_OUT"
-    ) {
 
-      showStart();
+      await ensureFirmProfile(user);
+
+      await loadDashboard(user);
 
     }
 
   }
-);
 
 
-/* -----------------------------
-   START
------------------------------ */
+  /* ==========================================
+     AUTH STATE
+  ========================================== */
 
-checkSession();
+  db.auth.onAuthStateChange(
+    async (event, session) => {
+
+      if (
+        event === "SIGNED_IN" &&
+        session &&
+        session.user
+      ) {
+
+        /*
+          Nach E-Mail-Bestätigung
+          oder normalem Login.
+        */
+
+        setTimeout(async () => {
+
+          await ensureFirmProfile(
+            session.user
+          );
+
+          await loadDashboard(
+            session.user
+          );
+
+        }, 100);
+
+      }
+
+    }
+  );
+
+
+  /* ==========================================
+     HTML SICHER AUSGEBEN
+  ========================================== */
+
+  function escapeHtml(value) {
+
+    return String(value)
+
+      .replaceAll("&", "&amp;")
+
+      .replaceAll("<", "&lt;")
+
+      .replaceAll(">", "&gt;")
+
+      .replaceAll('"', "&quot;")
+
+      .replaceAll("'", "&#039;");
+  }
+
+
+  /* ==========================================
+     START
+  ========================================== */
+
+  checkSession();
 
 </script>
 
