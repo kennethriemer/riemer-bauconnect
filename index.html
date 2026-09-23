@@ -1,27 +1,15 @@
 <!doctype html>
 <html lang="de">
-
 <head>
-
   <meta charset="utf-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1"
-  >
-
-  <meta
-    name="theme-color"
-    content="#0d1419"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0d1419">
 
   <title>Riemer BauConnect</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
   <style>
-
     :root {
       --yellow: #f7bd19;
       --dark: #0d1419;
@@ -32,16 +20,13 @@
       --green: #087443;
     }
 
-
     * {
       box-sizing: border-box;
     }
 
-
     html {
       scroll-behavior: smooth;
     }
-
 
     body {
       margin: 0;
@@ -50,12 +35,10 @@
       color: var(--dark);
     }
 
-
     a {
       color: inherit;
       text-decoration: none;
     }
-
 
     header {
       position: sticky;
@@ -65,224 +48,131 @@
       border-bottom: 1px solid #ddd;
     }
 
-
     .header-inner {
       max-width: 1100px;
       margin: auto;
-      padding: 17px 20px;
+      padding: 18px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 15px;
+      gap: 20px;
     }
 
-
     .logo {
-      font-size: 23px;
+      font-size: 24px;
       font-weight: 800;
       letter-spacing: -1px;
     }
-
 
     .logo span {
       color: var(--yellow);
     }
 
-
     .header-button {
+      font-size: 18px;
       font-weight: 700;
-      font-size: 16px;
     }
-
 
     .hero {
       background: var(--dark);
       color: white;
-      padding: 65px 20px;
+      padding: 70px 24px;
     }
-
 
     .hero-inner {
       max-width: 1100px;
       margin: auto;
     }
 
-
     .hero h1 {
-      font-size: clamp(40px, 8vw, 70px);
+      font-size: clamp(40px, 8vw, 72px);
       line-height: 1;
       margin: 0 0 20px;
     }
-
 
     .hero h1 span {
       color: var(--yellow);
     }
 
-
     .hero p {
       max-width: 700px;
-      font-size: 20px;
+      font-size: 21px;
       line-height: 1.6;
       color: #dce2e5;
-      margin: 0 0 30px;
+      margin-bottom: 30px;
     }
-
 
     .button {
       display: inline-block;
       background: var(--yellow);
       color: #111;
+      border: 0;
       border-radius: 12px;
-      padding: 16px 23px;
+      padding: 17px 25px;
       font-size: 18px;
       font-weight: 800;
+      cursor: pointer;
     }
-
 
     section {
-      padding: 50px 18px;
+      padding: 55px 20px;
     }
 
-
     .container {
-      max-width: 950px;
+      max-width: 900px;
       margin: auto;
     }
 
-
     h2 {
-      font-size: 32px;
-      margin: 0 0 22px;
+      font-size: 34px;
+      margin-top: 0;
     }
-
 
     .services {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 13px;
-    }
-
-
-    .service {
-      background: white;
-      border: 1px solid #ddd;
-      border-radius: 14px;
-      padding: 19px;
-      font-size: 17px;
-      font-weight: 700;
-    }
-
-
-    /* ==============================
-       FACHBETRIEBE
-       ============================== */
-
-
-    .firms-section {
-      background: #11191e;
-      color: white;
-    }
-
-
-    .firms-section h2 {
-      color: white;
-    }
-
-
-    .firms-intro {
-      color: #d7dde0;
-      font-size: 18px;
-      line-height: 1.6;
-      margin-bottom: 25px;
-    }
-
-
-    .firm-cards {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 14px;
     }
 
-
-    .firm-card {
-      background: #20292f;
-      border: 1px solid #3b454b;
-      border-radius: 15px;
+    .service {
+      background: white;
+      border-radius: 14px;
       padding: 20px;
+      font-size: 18px;
+      font-weight: 700;
+      border: 1px solid #ddd;
     }
-
-
-    .firm-icon {
-      font-size: 34px;
-      margin-bottom: 10px;
-    }
-
-
-    .firm-card h3 {
-      margin: 0 0 8px;
-      font-size: 20px;
-    }
-
-
-    .firm-card p {
-      margin: 0;
-      color: #c9d0d4;
-      line-height: 1.5;
-    }
-
-
-    .firm-button {
-      margin-top: 25px;
-      display: inline-block;
-      background: var(--yellow);
-      color: #111;
-      padding: 16px 22px;
-      border-radius: 12px;
-      font-weight: 800;
-      font-size: 17px;
-    }
-
-
-    /* ==============================
-       FORMULAR
-       ============================== */
-
 
     .form-card {
       background: white;
       border-radius: 20px;
-      padding: 25px;
+      padding: 28px;
       box-shadow: 0 8px 30px rgba(0,0,0,.08);
     }
 
-
     label {
       display: block;
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 700;
-      margin: 19px 0 8px;
+      margin: 20px 0 8px;
     }
-
 
     input,
     select,
     textarea {
       width: 100%;
-      padding: 16px;
+      padding: 17px;
       border: 1px solid #cdd2d5;
       border-radius: 12px;
-      font-size: 16px;
+      font-size: 17px;
       font-family: inherit;
       background: white;
     }
 
-
     textarea {
-      min-height: 125px;
+      min-height: 130px;
       resize: vertical;
     }
-
 
     input:focus,
     select:focus,
@@ -291,38 +181,40 @@
       border-color: var(--yellow);
     }
 
-
     .privacy-note {
       color: var(--gray);
       line-height: 1.6;
-      font-size: 14px;
       margin: 20px 0;
     }
 
+    .privacy-note a {
+      color: #111;
+      text-decoration: underline;
+      font-weight: 700;
+    }
 
     .submit-button {
       width: 100%;
-      margin-top: 8px;
+      margin-top: 10px;
       background: var(--yellow);
       color: #111;
       border: 0;
       border-radius: 12px;
-      padding: 18px;
-      font-size: 18px;
+      padding: 19px;
+      font-size: 19px;
       font-weight: 800;
       cursor: pointer;
     }
 
-
     .submit-button:disabled {
       opacity: .6;
+      cursor: wait;
     }
-
 
     .success {
       display: none;
-      margin-top: 18px;
-      padding: 17px;
+      margin-top: 20px;
+      padding: 18px;
       background: #e9f8ef;
       color: var(--green);
       border-radius: 12px;
@@ -331,11 +223,10 @@
       white-space: pre-wrap;
     }
 
-
     .error {
       display: none;
-      margin-top: 18px;
-      padding: 17px;
+      margin-top: 20px;
+      padding: 18px;
       background: #fdecec;
       color: var(--red);
       border-radius: 12px;
@@ -344,23 +235,16 @@
       white-space: pre-wrap;
     }
 
-
-    /* ==============================
-       ADMIN
-       ============================== */
-
-
     .admin-card {
       background: white;
       border-radius: 18px;
-      padding: 23px;
+      padding: 25px;
       border: 1px solid #ddd;
     }
 
-
     .admin-link {
       display: inline-block;
-      margin-top: 8px;
+      margin-top: 10px;
       padding: 14px 20px;
       background: var(--dark);
       color: white;
@@ -368,25 +252,29 @@
       font-weight: 700;
     }
 
-
-    /* ==============================
-       FOOTER
-       ============================== */
-
-
     footer {
       background: var(--dark);
       color: #ccd2d6;
       padding: 35px 20px 100px;
       line-height: 1.6;
+    }
+
+    footer .container {
       font-size: 14px;
     }
 
+    .footer-links {
+      margin-top: 18px;
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
 
-    /* ==============================
-       MOBILE NAV
-       ============================== */
-
+    .footer-links a {
+      color: var(--yellow);
+      font-weight: 700;
+      text-decoration: underline;
+    }
 
     .bottom-nav {
       position: fixed;
@@ -398,626 +286,381 @@
       justify-content: space-around;
       background: white;
       border-top: 1px solid #ddd;
-      padding: 8px 5px;
+      padding: 10px 5px;
     }
-
 
     .bottom-nav a {
       text-align: center;
       font-weight: 700;
-      font-size: 13px;
-      padding: 7px 10px;
+      font-size: 14px;
+      padding: 8px 15px;
     }
-
 
     .bottom-nav .icon {
       display: block;
-      font-size: 23px;
-      margin-bottom: 2px;
+      font-size: 24px;
+      margin-bottom: 3px;
     }
 
-
     @media (min-width: 700px) {
-
       .services {
         grid-template-columns: repeat(3, 1fr);
       }
-
-
-      .firm-cards {
-        grid-template-columns: repeat(4, 1fr);
-      }
-
 
       .bottom-nav {
         display: none;
       }
 
-
       footer {
         padding-bottom: 35px;
       }
-
     }
 
-
     @media (max-width: 600px) {
-
       .header-inner {
-        padding: 15px;
+        padding: 16px;
       }
-
 
       .logo {
         font-size: 20px;
       }
 
-
-      .hero {
-        padding: 55px 18px;
+      .header-button {
+        font-size: 16px;
       }
 
+      .hero {
+        padding: 55px 20px;
+      }
 
       .services {
         grid-template-columns: 1fr;
       }
 
-
-      .firm-cards {
-        grid-template-columns: 1fr;
-      }
-
-
       .form-card {
         padding: 20px;
       }
 
-
       section {
-        padding: 45px 15px;
+        padding: 45px 16px;
       }
-
     }
-
   </style>
-
 </head>
-
 
 <body>
 
-
-<!-- ==========================================
-     HEADER
-     ========================================== -->
-
 <header>
-
   <div class="header-inner">
 
-    <a
-      href="#start"
-      class="logo"
-    >
+    <a href="#start" class="logo">
       RIEMER <span>BAUCONNECT</span>
     </a>
 
-
-    <a
-      href="#projekt"
-      class="header-button"
-    >
+    <a href="#projekt" class="header-button">
       Projekt starten
     </a>
 
   </div>
-
 </header>
-
-
 
 <main>
 
+  <!-- HERO -->
 
-<!-- ==========================================
-     START
-     ========================================== -->
+  <section class="hero" id="start">
 
-<section
-  class="hero"
-  id="start"
->
+    <div class="hero-inner">
 
-  <div class="hero-inner">
-
-    <h1>
-      Bauprojekt einstellen.<br>
-      <span>Fachbetrieb finden.</span>
-    </h1>
-
-
-    <p>
-      Riemer BauConnect bringt Bauherren
-      und passende Fachbetriebe für
-      Bau- und Straßenbauprojekte zusammen.
-    </p>
-
-
-    <a
-      href="#projekt"
-      class="button"
-    >
-      Projekt starten →
-    </a>
-
-  </div>
-
-</section>
-
-
-
-<!-- ==========================================
-     LEISTUNGEN
-     ========================================== -->
-
-<section id="leistungen">
-
-  <div class="container">
-
-    <h2>
-      Unsere Leistungen
-    </h2>
-
-
-    <div class="services">
-
-      <div class="service">
-        🚧 Straßenbau
-      </div>
-
-      <div class="service">
-        🛣️ Asphaltarbeiten
-      </div>
-
-      <div class="service">
-        🧱 Pflasterarbeiten
-      </div>
-
-      <div class="service">
-        🚜 Erdarbeiten
-      </div>
-
-      <div class="service">
-        🏗️ Tiefbau
-      </div>
-
-      <div class="service">
-        💧 Entwässerung
-      </div>
-
-      <div class="service">
-        🏠 Einfahrt
-      </div>
-
-      <div class="service">
-        🅿️ Parkplatz / Hof
-      </div>
-
-      <div class="service">
-        🔧 Reparatur
-      </div>
-
-      <div class="service">
-        ➕ Sonstiges
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-
-<!-- ==========================================
-     FACHBETRIEBE
-     ========================================== -->
-
-<section
-  class="firms-section"
-  id="fachbetriebe"
->
-
-  <div class="container">
-
-    <h2>
-      🏢 Fachbetriebe
-    </h2>
-
-
-    <p class="firms-intro">
-
-      Du suchst einen zuverlässigen
-      Fachbetrieb für dein Bauprojekt?
-
-      <br><br>
-
-      Riemer BauConnect bringt dein
-      Projekt mit passenden regionalen
-      Fachbetrieben zusammen.
-
-    </p>
-
-
-    <div class="firm-cards">
-
-
-      <div class="firm-card">
-
-        <div class="firm-icon">
-          🚧
-        </div>
-
-        <h3>
-          Straßenbau
-        </h3>
-
-        <p>
-          Fachbetriebe für Straßenbau
-          und Verkehrsflächen.
-        </p>
-
-      </div>
-
-
-      <div class="firm-card">
-
-        <div class="firm-icon">
-          🧱
-        </div>
-
-        <h3>
-          Pflasterarbeiten
-        </h3>
-
-        <p>
-          Passende Betriebe für Wege,
-          Höfe und Flächen.
-        </p>
-
-      </div>
-
-
-      <div class="firm-card">
-
-        <div class="firm-icon">
-          🚜
-        </div>
-
-        <h3>
-          Erdarbeiten
-        </h3>
-
-        <p>
-          Fachbetriebe für Erdarbeiten
-          und Tiefbau.
-        </p>
-
-      </div>
-
-
-      <div class="firm-card">
-
-        <div class="firm-icon">
-          🏗️
-        </div>
-
-        <h3>
-          Tiefbau
-        </h3>
-
-        <p>
-          Unternehmen für anspruchsvolle
-          Tiefbauprojekte.
-        </p>
-
-      </div>
-
-
-    </div>
-
-
-    <a
-      href="#projekt"
-      class="firm-button"
-    >
-      Fachbetrieb finden →
-    </a>
-
-  </div>
-
-</section>
-
-
-
-<!-- ==========================================
-     PROJEKT
-     ========================================== -->
-
-<section id="projekt">
-
-  <div class="container">
-
-    <h2>
-      Projekt starten
-    </h2>
-
-
-    <div class="form-card">
-
-      <form id="projectForm">
-
-
-        <!-- LEISTUNG -->
-
-        <label for="service">
-          Welche Leistung benötigen Sie?
-        </label>
-
-
-        <select
-          id="service"
-          required
-        >
-
-          <option value="">
-            Bitte auswählen
-          </option>
-
-          <option value="Straßenbau">
-            Straßenbau
-          </option>
-
-          <option value="Asphaltarbeiten">
-            Asphaltarbeiten
-          </option>
-
-          <option value="Pflasterarbeiten">
-            Pflasterarbeiten
-          </option>
-
-          <option value="Erdarbeiten">
-            Erdarbeiten
-          </option>
-
-          <option value="Tiefbau">
-            Tiefbau
-          </option>
-
-          <option value="Entwässerung">
-            Entwässerung
-          </option>
-
-          <option value="Einfahrt">
-            Einfahrt
-          </option>
-
-          <option value="Parkplatz / Hof">
-            Parkplatz / Hof
-          </option>
-
-          <option value="Reparatur">
-            Reparatur
-          </option>
-
-          <option value="Sonstiges">
-            Sonstiges
-          </option>
-
-        </select>
-
-
-
-        <!-- PLZ -->
-
-        <label for="plz">
-          PLZ
-        </label>
-
-
-        <input
-          id="plz"
-          type="text"
-          inputmode="numeric"
-          maxlength="5"
-          placeholder="z. B. 24955"
-          required
-        >
-
-
-
-        <!-- FLÄCHE -->
-
-        <label for="area">
-          Fläche / Umfang
-        </label>
-
-
-        <input
-          id="area"
-          type="text"
-          placeholder="z. B. 80 m²"
-        >
-
-
-
-        <!-- BESCHREIBUNG -->
-
-        <label for="description">
-          Beschreibung des Projekts
-        </label>
-
-
-        <textarea
-          id="description"
-          placeholder="Beschreiben Sie kurz Ihr Bauprojekt..."
-        ></textarea>
-
-
-
-        <!-- NAME -->
-
-        <label for="name">
-          Name
-        </label>
-
-
-        <input
-          id="name"
-          type="text"
-          placeholder="Ihr Name"
-          required
-        >
-
-
-
-        <!-- TELEFON -->
-
-        <label for="phone">
-          Telefon
-        </label>
-
-
-        <input
-          id="phone"
-          type="tel"
-          placeholder="Ihre Telefonnummer"
-          required
-        >
-
-
-
-        <!-- EMAIL -->
-
-        <label for="email">
-          E-Mail
-        </label>
-
-
-        <input
-          id="email"
-          type="email"
-          placeholder="ihre@email.de"
-        >
-
-
-
-        <!-- DATENSCHUTZ -->
-
-        <p class="privacy-note">
-
-          Ihre Anfrage wird über Supabase an
-          Riemer BauConnect übertragen.
-
-          <br><br>
-
-          Datenschutz, Impressum und
-          Einwilligungen müssen vor dem
-          öffentlichen Produktivbetrieb
-          vollständig eingerichtet werden.
-
-        </p>
-
-
-
-        <!-- ABSENDEN -->
-
-        <button
-          type="submit"
-          class="submit-button"
-          id="submitButton"
-        >
-          Anfrage absenden →
-        </button>
-
-
-
-        <!-- ERFOLG -->
-
-        <div
-          id="success"
-          class="success"
-        >
-        </div>
-
-
-
-        <!-- FEHLER -->
-
-        <div
-          id="error"
-          class="error"
-        >
-        </div>
-
-
-      </form>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-
-<!-- ==========================================
-     ADMIN
-     ========================================== -->
-
-<section>
-
-  <div class="container">
-
-    <h2>
-      Mein Bereich
-    </h2>
-
-
-    <div class="admin-card">
-
-      <h3>
-        Admin-Bereich
-      </h3>
-
+      <h1>
+        Bauprojekt einstellen.<br>
+        <span>Fachbetrieb finden.</span>
+      </h1>
 
       <p>
-        Eingegangene Bauanfragen verwalten
-        und bearbeiten.
+        Riemer BauConnect bringt Bauherren und passende Fachbetriebe
+        für Bau- und Straßenbauprojekte zusammen.
       </p>
 
-
-      <a
-        href="admin.html"
-        class="admin-link"
-      >
-        Admin öffnen →
+      <a href="#projekt" class="button">
+        Projekt starten →
       </a>
 
     </div>
 
-  </div>
+  </section>
 
-</section>
 
+  <!-- LEISTUNGEN -->
+
+  <section id="leistungen">
+
+    <div class="container">
+
+      <h2>Unsere Leistungen</h2>
+
+      <div class="services">
+
+        <div class="service">
+          🚧 Straßenbau
+        </div>
+
+        <div class="service">
+          🛣️ Asphaltarbeiten
+        </div>
+
+        <div class="service">
+          🧱 Pflasterarbeiten
+        </div>
+
+        <div class="service">
+          🚜 Erdarbeiten
+        </div>
+
+        <div class="service">
+          🏗️ Tiefbau
+        </div>
+
+        <div class="service">
+          💧 Entwässerung
+        </div>
+
+        <div class="service">
+          🏠 Einfahrt
+        </div>
+
+        <div class="service">
+          🅿️ Parkplatz / Hof
+        </div>
+
+        <div class="service">
+          🔧 Reparatur
+        </div>
+
+        <div class="service">
+          ➕ Sonstiges
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- PROJEKT -->
+
+  <section id="projekt">
+
+    <div class="container">
+
+      <h2>Projekt starten</h2>
+
+      <div class="form-card">
+
+        <form id="projectForm">
+
+          <label for="service">
+            Welche Leistung benötigen Sie?
+          </label>
+
+          <select id="service" required>
+
+            <option value="">
+              Bitte auswählen
+            </option>
+
+            <option value="Straßenbau">
+              Straßenbau
+            </option>
+
+            <option value="Asphaltarbeiten">
+              Asphaltarbeiten
+            </option>
+
+            <option value="Pflasterarbeiten">
+              Pflasterarbeiten
+            </option>
+
+            <option value="Erdarbeiten">
+              Erdarbeiten
+            </option>
+
+            <option value="Tiefbau">
+              Tiefbau
+            </option>
+
+            <option value="Entwässerung">
+              Entwässerung
+            </option>
+
+            <option value="Einfahrt">
+              Einfahrt
+            </option>
+
+            <option value="Parkplatz / Hof">
+              Parkplatz / Hof
+            </option>
+
+            <option value="Reparatur">
+              Reparatur
+            </option>
+
+            <option value="Sonstiges">
+              Sonstiges
+            </option>
+
+          </select>
+
+
+          <label for="plz">
+            PLZ
+          </label>
+
+          <input
+            id="plz"
+            type="text"
+            inputmode="numeric"
+            maxlength="5"
+            placeholder="z. B. 24955"
+            required
+          >
+
+
+          <label for="area">
+            Fläche / Umfang
+          </label>
+
+          <input
+            id="area"
+            type="text"
+            placeholder="z. B. 80 m²"
+          >
+
+
+          <label for="description">
+            Beschreibung des Projekts
+          </label>
+
+          <textarea
+            id="description"
+            placeholder="Beschreiben Sie kurz Ihr Bauprojekt..."
+          ></textarea>
+
+
+          <label for="name">
+            Name
+          </label>
+
+          <input
+            id="name"
+            type="text"
+            placeholder="Ihr Name"
+            required
+          >
+
+
+          <label for="phone">
+            Telefon
+          </label>
+
+          <input
+            id="phone"
+            type="tel"
+            placeholder="Ihre Telefonnummer"
+            required
+          >
+
+
+          <label for="email">
+            E-Mail
+          </label>
+
+          <input
+            id="email"
+            type="email"
+            placeholder="ihre@email.de"
+          >
+
+
+          <p class="privacy-note">
+            Ihre Anfrage wird über Supabase an
+            Riemer BauConnect übertragen.
+            <br><br>
+
+            Bitte beachten Sie unser
+            <a href="impressum.html">
+              Impressum
+            </a>.
+          </p>
+
+
+          <button
+            type="submit"
+            class="submit-button"
+            id="submitButton"
+          >
+            Anfrage absenden →
+          </button>
+
+
+          <div
+            id="success"
+            class="success"
+          >
+            ✅ Ihre Bauanfrage wurde erfolgreich übermittelt.
+          </div>
+
+
+          <div
+            id="error"
+            class="error"
+          ></div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ADMIN -->
+
+  <section>
+
+    <div class="container">
+
+      <h2>Mein Bereich</h2>
+
+      <div class="admin-card">
+
+        <h3>
+          Admin-Bereich
+        </h3>
+
+        <p>
+          Eingegangene Bauanfragen verwalten und bearbeiten.
+        </p>
+
+        <a
+          href="admin.html"
+          class="admin-link"
+        >
+          Admin öffnen →
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
 
 </main>
 
 
-
-<!-- ==========================================
-     FOOTER
-     ========================================== -->
+<!-- FOOTER -->
 
 <footer>
 
@@ -1029,326 +672,237 @@
 
     <br>
 
-    Bauprojekt einstellen.
-    Fachbetrieb finden.
+    Bauprojekt einstellen. Fachbetrieb finden.
 
-    <br><br>
+    <div class="footer-links">
 
-    MVP – Vor dem Produktivbetrieb müssen
-    Datenschutz, Impressum, Einwilligungen
-    und sichere Datenverarbeitung vollständig
-    eingerichtet werden.
+      <a href="impressum.html">
+        Impressum
+      </a>
+
+    </div>
 
   </div>
 
 </footer>
 
 
-
-<!-- ==========================================
-     MOBILE NAV
-     ========================================== -->
+<!-- MOBILE NAV -->
 
 <nav class="bottom-nav">
 
   <a href="#start">
-
-    <span class="icon">
-      🏠
-    </span>
-
+    <span class="icon">⌂</span>
     Start
-
   </a>
-
 
   <a href="#leistungen">
-
-    <span class="icon">
-      ⚒️
-    </span>
-
+    <span class="icon">⚒</span>
     Leistungen
-
   </a>
-
-
-  <a href="#fachbetriebe">
-
-    <span class="icon">
-      🏢
-    </span>
-
-    Firmen
-
-  </a>
-
 
   <a href="#projekt">
-
-    <span class="icon">
-      ＋
-    </span>
-
+    <span class="icon">＋</span>
     Projekt
-
   </a>
 
 </nav>
 
 
-
 <script>
 
+  /* ==========================================
+     SUPABASE
+     ========================================== */
+
+  const SUPABASE_URL =
+    "https://ehzugjmltfcvllftpjpp.supabase.co";
+
+  const SUPABASE_KEY =
+    "sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
+
+  const db =
+    supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
 
-/* ==========================================
-   SUPABASE
-   ========================================== */
 
+  /* ==========================================
+     ELEMENTE
+     ========================================== */
 
-const SUPABASE_URL =
-  "https://ehzugjmltfcvllftpjpp.supabase.co";
+  const form =
+    document.getElementById(
+      "projectForm"
+    );
 
+  const button =
+    document.getElementById(
+      "submitButton"
+    );
 
-const SUPABASE_KEY =
-  "sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
+  const success =
+    document.getElementById(
+      "success"
+    );
 
+  const errorBox =
+    document.getElementById(
+      "error"
+    );
 
-const db =
-  supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
 
+  /* ==========================================
+     FORMULAR
+     ========================================== */
 
+  form.addEventListener(
+    "submit",
+    async function (e) {
 
-/* ==========================================
-   ELEMENTE
-   ========================================== */
+      e.preventDefault();
 
+      success.style.display = "none";
+      errorBox.style.display = "none";
 
-const form =
-  document.getElementById(
-    "projectForm"
-  );
+      button.disabled = true;
+      button.textContent = "Wird gesendet ...";
 
 
-const button =
-  document.getElementById(
-    "submitButton"
-  );
+      try {
 
+        const payload = {
 
-const success =
-  document.getElementById(
-    "success"
-  );
+          service:
+            document
+              .getElementById("service")
+              .value
+              .trim(),
 
+          plz:
+            document
+              .getElementById("plz")
+              .value
+              .trim(),
 
-const errorBox =
-  document.getElementById(
-    "error"
-  );
+          area:
+            document
+              .getElementById("area")
+              .value
+              .trim(),
 
+          description:
+            document
+              .getElementById("description")
+              .value
+              .trim(),
 
+          name:
+            document
+              .getElementById("name")
+              .value
+              .trim(),
 
-/* ==========================================
-   FORMULAR
-   ========================================== */
+          phone:
+            document
+              .getElementById("phone")
+              .value
+              .trim(),
 
+          email:
+            document
+              .getElementById("email")
+              .value
+              .trim(),
 
-form.addEventListener(
-  "submit",
-  async function(e) {
+          status:
+            "neu"
 
-    e.preventDefault();
+        };
 
 
-    success.style.display =
-      "none";
+        const result =
+          await db
+            .from("bauanfragen")
+            .insert([
+              payload
+            ]);
 
 
-    errorBox.style.display =
-      "none";
+        if (result.error) {
 
+          console.error(
+            "BAUANFRAGE-FEHLER:",
+            result.error
+          );
 
-    button.disabled =
-      true;
+          throw new Error(
+            result.error.message
+          );
 
+        }
 
-    button.textContent =
-      "Wird gesendet ...";
 
+        form.reset();
 
-    try {
 
+        success.textContent =
+          "✅ Ihre Bauanfrage wurde erfolgreich übermittelt." +
+          "\n\nWir kümmern uns um die weitere Zuordnung.";
 
-      /* ==============================
-         DATEN
-         ============================== */
+        success.style.display =
+          "block";
 
 
-      const payload = {
+        button.disabled =
+          false;
 
-        service:
-          document
-            .getElementById("service")
-            .value
-            .trim(),
+        button.textContent =
+          "Anfrage absenden →";
 
 
-        plz:
-          document
-            .getElementById("plz")
-            .value
-            .trim(),
-
-
-        area:
-          document
-            .getElementById("area")
-            .value
-            .trim(),
-
-
-        description:
-          document
-            .getElementById("description")
-            .value
-            .trim(),
-
-
-        name:
-          document
-            .getElementById("name")
-            .value
-            .trim(),
-
-
-        phone:
-          document
-            .getElementById("phone")
-            .value
-            .trim(),
-
-
-        email:
-          document
-            .getElementById("email")
-            .value
-            .trim(),
-
-
-        status:
-          "neu"
-
-      };
-
-
-
-      /* ==============================
-         SUPABASE
-         ============================== */
-
-
-      const result =
-        await db
-          .from("bauanfragen")
-          .insert([
-            payload
-          ]);
-
-
-
-      if (result.error) {
-
-        console.error(
-          result.error
-        );
-
-
-        throw new Error(
-          result.error.message
-        );
+        success.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
 
       }
 
 
+      catch (error) {
 
-      /* ==============================
-         ERFOLG
-         ============================== */
-
-
-      form.reset();
-
-
-      success.textContent =
-        "✅ Ihre Bauanfrage wurde erfolgreich übermittelt." +
-        "\n\n" +
-        "Wir kümmern uns um die weitere Zuordnung.";
-
-
-      success.style.display =
-        "block";
-
-
-      button.disabled =
-        false;
-
-
-      button.textContent =
-        "Anfrage absenden →";
-
-
-      success.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-      });
-
-
-    }
-
-
-    catch(error) {
-
-
-      console.error(
-        "GESAMTFEHLER:",
-        error
-      );
-
-
-      errorBox.textContent =
-        "Die Anfrage konnte nicht gesendet werden." +
-        "\n\n" +
-        "Fehler: " +
-        (
-          error.message ||
-          "Unbekannter Fehler"
+        console.error(
+          "GESAMTFEHLER:",
+          error
         );
 
 
-      errorBox.style.display =
-        "block";
+        errorBox.textContent =
+          "Die Anfrage konnte nicht gesendet werden." +
+          "\n\n" +
+          "Fehler: " +
+          (
+            error.message ||
+            "Unbekannter Fehler"
+          );
+
+        errorBox.style.display =
+          "block";
 
 
-      button.disabled =
-        false;
+        button.disabled =
+          false;
 
+        button.textContent =
+          "Anfrage absenden →";
 
-      button.textContent =
-        "Anfrage absenden →";
+      }
 
     }
-
-  }
-);
-
+  );
 
 </script>
 
-
 </body>
-
 </html>
