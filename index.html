@@ -13,13 +13,9 @@
     :root {
       --yellow: #f7bd19;
       --dark: #0d1419;
-      --dark2: #151d22;
-      --card: #ffffff;
-      --gray: #667078;
       --light: #f4f6f7;
       --white: #ffffff;
-      --red: #c62828;
-      --green: #238636;
+      --gray: #667078;
       --border: #e1e5e8;
     }
 
@@ -41,7 +37,7 @@
 
     header {
       background: var(--dark);
-      color: var(--white);
+      color: white;
       padding: 18px 16px;
       position: sticky;
       top: 0;
@@ -61,7 +57,6 @@
     .logo {
       font-size: 21px;
       font-weight: 900;
-      letter-spacing: 0.5px;
     }
 
     .logo span {
@@ -84,11 +79,7 @@
     }
 
     .hero {
-      background:
-        linear-gradient(
-          rgba(13,20,25,0.94),
-          rgba(13,20,25,0.94)
-        );
+      background: var(--dark);
       color: white;
       padding: 55px 20px 50px;
       text-align: center;
@@ -150,7 +141,7 @@
     }
 
     .service {
-      background: var(--white);
+      background: white;
       border: 1px solid var(--border);
       border-radius: 17px;
       padding: 18px 12px;
@@ -166,7 +157,7 @@
     }
 
     .form-card {
-      background: var(--white);
+      background: white;
       border-radius: 22px;
       padding: 22px;
       box-shadow: 0 5px 20px rgba(0,0,0,0.08);
@@ -189,7 +180,7 @@
       padding: 14px;
       font-size: 16px;
       font-family: inherit;
-      background: #fff;
+      background: white;
       color: #111;
     }
 
@@ -203,6 +194,34 @@
     textarea:focus {
       outline: 2px solid rgba(247,189,25,0.55);
       border-color: var(--yellow);
+    }
+
+    .consent {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 20px;
+      font-weight: normal;
+      line-height: 1.5;
+    }
+
+    .consent input {
+      width: 20px;
+      min-width: 20px;
+      height: 20px;
+      margin: 2px 0 0;
+      accent-color: var(--yellow);
+    }
+
+    .consent label {
+      margin: 0;
+      font-weight: normal;
+      cursor: pointer;
+    }
+
+    .consent a {
+      color: #555f66;
+      font-weight: 700;
     }
 
     .submit-button {
@@ -375,7 +394,6 @@
 
 <main>
 
-  <!-- HERO -->
   <section class="hero" id="start">
 
     <h1>
@@ -395,7 +413,6 @@
   </section>
 
 
-  <!-- LEISTUNGEN -->
   <section id="leistungen">
 
     <div class="section-title">
@@ -462,7 +479,6 @@
   </section>
 
 
-  <!-- PROJEKT -->
   <section id="projekt">
 
     <div class="section-title">
@@ -490,45 +506,16 @@
             Bitte auswählen
           </option>
 
-          <option value="Straßenbau">
-            Straßenbau
-          </option>
-
-          <option value="Asphaltarbeiten">
-            Asphaltarbeiten
-          </option>
-
-          <option value="Pflasterarbeiten">
-            Pflasterarbeiten
-          </option>
-
-          <option value="Erdarbeiten">
-            Erdarbeiten
-          </option>
-
-          <option value="Tiefbau">
-            Tiefbau
-          </option>
-
-          <option value="Entwässerung">
-            Entwässerung
-          </option>
-
-          <option value="Einfahrt">
-            Einfahrt
-          </option>
-
-          <option value="Parkplatz/Hof">
-            Parkplatz / Hof
-          </option>
-
-          <option value="Reparatur">
-            Reparatur
-          </option>
-
-          <option value="Sonstiges">
-            Sonstiges
-          </option>
+          <option value="Straßenbau">Straßenbau</option>
+          <option value="Asphaltarbeiten">Asphaltarbeiten</option>
+          <option value="Pflasterarbeiten">Pflasterarbeiten</option>
+          <option value="Erdarbeiten">Erdarbeiten</option>
+          <option value="Tiefbau">Tiefbau</option>
+          <option value="Entwässerung">Entwässerung</option>
+          <option value="Einfahrt">Einfahrt</option>
+          <option value="Parkplatz/Hof">Parkplatz / Hof</option>
+          <option value="Reparatur">Reparatur</option>
+          <option value="Sonstiges">Sonstiges</option>
 
         </select>
 
@@ -608,6 +595,34 @@
         >
 
 
+        <!-- EINWILLIGUNG -->
+
+        <div class="consent">
+
+          <input
+            id="privacyConsent"
+            type="checkbox"
+            required
+          >
+
+          <label for="privacyConsent">
+
+            Ich habe die
+            <a
+              href="datenschutz.html"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Datenschutzerklärung
+            </a>
+            gelesen und stimme der Verarbeitung meiner Angaben
+            zur Bearbeitung meiner Bauanfrage zu.
+
+          </label>
+
+        </div>
+
+
         <button
           class="submit-button"
           type="submit"
@@ -619,20 +634,23 @@
 
         <div class="privacy-note">
 
-          Mit dem Absenden werden deine Angaben zur Bearbeitung
-          der Bauanfrage und zur möglichen Vermittlung an passende
-          Fachbetriebe verarbeitet.
+          Deine Angaben werden zur Bearbeitung deiner Bauanfrage
+          und zur möglichen Vermittlung an passende Fachbetriebe
+          verarbeitet.
 
           <br><br>
 
-          Weitere Informationen findest du in unserer
+          Weitere Informationen:
+
           <a href="datenschutz.html">
             Datenschutzerklärung
           </a>
-          und im
+
+          ·
+
           <a href="impressum.html">
             Impressum
-          </a>.
+          </a>
 
         </div>
 
@@ -649,7 +667,6 @@
   </section>
 
 
-  <!-- ADMIN -->
   <section>
 
     <div class="admin-card">
@@ -674,7 +691,6 @@
 </main>
 
 
-<!-- FOOTER -->
 <footer>
 
   <div class="footer-brand">
@@ -706,7 +722,6 @@
 </footer>
 
 
-<!-- MOBILE NAVIGATION -->
 <nav class="bottom-nav">
 
   <a
@@ -730,7 +745,6 @@
 </nav>
 
 
-<!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
@@ -757,6 +771,9 @@
   const message =
     document.getElementById("message");
 
+  const privacyConsent =
+    document.getElementById("privacyConsent");
+
 
   form.addEventListener(
     "submit",
@@ -767,8 +784,25 @@
       message.className = "message";
       message.textContent = "";
 
+
+      if (!privacyConsent.checked) {
+
+        message.className =
+          "message error";
+
+        message.textContent =
+          "Bitte bestätige zuerst die Datenschutzerklärung.";
+
+        privacyConsent.focus();
+
+        return;
+      }
+
+
       submitButton.disabled = true;
-      submitButton.textContent = "Wird gesendet...";
+
+      submitButton.textContent =
+        "Wird gesendet...";
 
 
       const service =
@@ -863,10 +897,9 @@
   );
 
 
-  // Navigation beim Scrollen hervorheben
-
   const navLinks =
     document.querySelectorAll(".bottom-nav a");
+
 
   function updateNavigation() {
 
