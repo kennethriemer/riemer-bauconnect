@@ -1,22 +1,39 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <meta
+    name="theme-color"
+    content="#0d1419"
+  >
+
+  <meta
+    name="description"
+    content="Riemer BauConnect – Bauprojekt einstellen. Fachbetrieb finden."
+  >
 
   <title>Riemer BauConnect</title>
 
-  <meta name="theme-color" content="#0d1419">
-  <meta name="description" content="Bauprojekt einstellen. Fachbetrieb finden. Riemer BauConnect verbindet Bauherren mit passenden Fachbetrieben.">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+
     :root {
       --yellow: #f7bd19;
       --dark: #0d1419;
+      --gray: #667078;
       --light: #f4f6f7;
       --white: #ffffff;
-      --gray: #667078;
-      --border: #e1e5e8;
+      --red: #b42318;
+      --green: #087443;
     }
 
     * {
@@ -32,22 +49,26 @@
       font-family: Arial, Helvetica, sans-serif;
       background: var(--light);
       color: var(--dark);
-      padding-bottom: 80px;
+      padding-bottom: 75px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
     header {
-      background: var(--dark);
-      color: white;
-      padding: 18px 16px;
       position: sticky;
       top: 0;
-      z-index: 100;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.18);
+      z-index: 20;
+      background: white;
+      border-bottom: 1px solid #ddd;
     }
 
     .header-inner {
       max-width: 1100px;
       margin: auto;
+      padding: 17px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -55,8 +76,9 @@
     }
 
     .logo {
-      font-size: 21px;
-      font-weight: 900;
+      font-size: 23px;
+      font-weight: 800;
+      letter-spacing: -1px;
     }
 
     .logo span {
@@ -64,32 +86,25 @@
     }
 
     .header-button {
-      background: var(--yellow);
-      color: #111;
-      text-decoration: none;
-      padding: 10px 14px;
-      border-radius: 12px;
-      font-weight: 800;
-      font-size: 14px;
-    }
-
-    main {
-      max-width: 1100px;
-      margin: auto;
+      font-weight: 700;
+      font-size: 16px;
     }
 
     .hero {
       background: var(--dark);
       color: white;
-      padding: 55px 20px 50px;
-      text-align: center;
+      padding: 65px 20px;
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      margin: auto;
     }
 
     .hero h1 {
-      margin: 0 auto 15px;
-      max-width: 800px;
-      font-size: clamp(32px, 8vw, 58px);
-      line-height: 1.05;
+      font-size: clamp(40px, 8vw, 70px);
+      line-height: 1;
+      margin: 0 0 20px;
     }
 
     .hero h1 span {
@@ -97,304 +112,405 @@
     }
 
     .hero p {
-      max-width: 650px;
-      margin: auto;
-      color: #d7dde0;
-      font-size: 18px;
+      max-width: 700px;
+      font-size: 20px;
       line-height: 1.6;
+      color: #dce2e5;
+      margin: 0 0 30px;
     }
 
-    .hero-button {
+    .button {
       display: inline-block;
-      margin-top: 25px;
-      padding: 15px 22px;
-      border-radius: 14px;
       background: var(--yellow);
       color: #111;
-      text-decoration: none;
-      font-weight: 900;
+      border-radius: 12px;
+      padding: 16px 23px;
+      font-size: 18px;
+      font-weight: 800;
     }
 
     section {
-      padding: 35px 16px;
+      padding: 50px 18px;
     }
 
-    .section-title {
-      text-align: center;
-      margin-bottom: 25px;
+    .container {
+      max-width: 950px;
+      margin: auto;
     }
 
-    .section-title h2 {
-      margin: 0 0 8px;
-      font-size: 30px;
-    }
-
-    .section-title p {
-      margin: 0;
-      color: var(--gray);
+    h2 {
+      font-size: 32px;
+      margin: 0 0 22px;
     }
 
     .services {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+      gap: 13px;
     }
 
     .service {
       background: white;
-      border: 1px solid var(--border);
-      border-radius: 17px;
-      padding: 18px 12px;
-      text-align: center;
-      font-weight: 800;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.04);
+      border: 1px solid #ddd;
+      border-radius: 14px;
+      padding: 19px;
+      font-size: 17px;
+      font-weight: 700;
     }
 
-    .service-icon {
-      display: block;
-      font-size: 28px;
-      margin-bottom: 8px;
+    /* FACHBETRIEBE */
+
+    .firms-section {
+      background: #11191e;
+      color: white;
     }
+
+    .firms-section h2 {
+      color: white;
+    }
+
+    .firms-intro {
+      color: #d7dde0;
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .firm-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .firm-card {
+      background: #20292f;
+      border: 1px solid #3b454b;
+      border-radius: 15px;
+      padding: 20px;
+    }
+
+    .firm-icon {
+      font-size: 34px;
+      margin-bottom: 10px;
+    }
+
+    .firm-card h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+    }
+
+    .firm-card p {
+      margin: 0;
+      color: #c9d0d4;
+      line-height: 1.5;
+    }
+
+    .firm-button {
+      margin-top: 25px;
+      display: inline-block;
+      background: var(--yellow);
+      color: #111;
+      padding: 16px 22px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 17px;
+    }
+
+    /* FORMULAR */
 
     .form-card {
       background: white;
-      border-radius: 22px;
-      padding: 22px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-      max-width: 760px;
-      margin: auto;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.08);
     }
 
     label {
       display: block;
-      margin: 17px 0 7px;
-      font-weight: 800;
+      font-size: 17px;
+      font-weight: 700;
+      margin: 19px 0 8px;
     }
 
     input,
     select,
     textarea {
       width: 100%;
-      border: 1px solid #ccd2d6;
+      padding: 16px;
+      border: 1px solid #cdd2d5;
       border-radius: 12px;
-      padding: 14px;
       font-size: 16px;
       font-family: inherit;
       background: white;
-      color: #111;
     }
 
     textarea {
-      min-height: 130px;
+      min-height: 125px;
       resize: vertical;
     }
 
     input:focus,
     select:focus,
     textarea:focus {
-      outline: 2px solid rgba(247,189,25,0.55);
+      outline: 3px solid rgba(247,189,25,.25);
       border-color: var(--yellow);
     }
 
-    .consent {
+    /* DATENSCHUTZ CHECKBOX */
+
+    .consent-box {
       display: flex;
       align-items: flex-start;
-      gap: 10px;
-      margin-top: 20px;
-      font-weight: normal;
-      line-height: 1.5;
+      gap: 12px;
+      margin-top: 22px;
+      padding: 15px;
+      background: #f7f8f9;
+      border: 1px solid #d9dddf;
+      border-radius: 12px;
     }
 
-    .consent input {
-      width: 20px;
-      min-width: 20px;
-      height: 20px;
+    .consent-box input {
+      width: 21px;
+      min-width: 21px;
+      height: 21px;
       margin: 2px 0 0;
+      padding: 0;
       accent-color: var(--yellow);
     }
 
-    .consent label {
+    .consent-box label {
       margin: 0;
-      font-weight: normal;
+      font-size: 14px;
+      line-height: 1.55;
+      font-weight: 500;
       cursor: pointer;
     }
 
-    .consent a {
-      color: #555f66;
+    .consent-box a {
+      color: #4e5960;
+      text-decoration: underline;
+      font-weight: 700;
+    }
+
+    .privacy-note {
+      color: var(--gray);
+      line-height: 1.6;
+      font-size: 14px;
+      margin: 18px 0;
+    }
+
+    .privacy-note a {
+      color: #4e5960;
+      text-decoration: underline;
       font-weight: 700;
     }
 
     .submit-button {
       width: 100%;
-      border: 0;
-      margin-top: 22px;
-      padding: 16px;
-      border-radius: 14px;
+      margin-top: 8px;
       background: var(--yellow);
       color: #111;
-      font-size: 17px;
-      font-weight: 900;
+      border: 0;
+      border-radius: 12px;
+      padding: 18px;
+      font-size: 18px;
+      font-weight: 800;
       cursor: pointer;
     }
 
     .submit-button:disabled {
-      opacity: 0.6;
+      opacity: .6;
       cursor: wait;
     }
 
-    .privacy-note {
-      margin-top: 15px;
-      color: var(--gray);
-      font-size: 13px;
-      line-height: 1.55;
-    }
-
-    .privacy-note a {
-      color: #59636a;
-      font-weight: 700;
-    }
-
-    .message {
+    .success {
       display: none;
       margin-top: 18px;
-      padding: 15px;
+      padding: 17px;
+      background: #e9f8ef;
+      color: var(--green);
       border-radius: 12px;
+      font-weight: 700;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
+    .error {
+      display: none;
+      margin-top: 18px;
+      padding: 17px;
+      background: #fdecec;
+      color: var(--red);
+      border-radius: 12px;
+      font-weight: 700;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
+    /* ADMIN */
+
+    .admin-card {
+      background: white;
+      border-radius: 18px;
+      padding: 23px;
+      border: 1px solid #ddd;
+    }
+
+    .admin-link {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 14px 20px;
+      background: var(--dark);
+      color: white;
+      border-radius: 10px;
       font-weight: 700;
     }
 
-    .message.success {
-      display: block;
-      background: #e8f5e9;
-      color: #1b5e20;
-    }
-
-    .message.error {
-      display: block;
-      background: #ffebee;
-      color: #b71c1c;
-    }
-
-    .admin-card {
-      max-width: 760px;
-      margin: auto;
-      background: var(--dark);
-      color: white;
-      border-radius: 22px;
-      padding: 24px;
-      text-align: center;
-    }
-
-    .admin-card h2 {
-      margin-top: 0;
-    }
-
-    .admin-card p {
-      color: #cfd6da;
-      line-height: 1.6;
-    }
-
-    .admin-button {
-      display: inline-block;
-      background: var(--yellow);
-      color: #111;
-      text-decoration: none;
-      padding: 13px 18px;
-      border-radius: 12px;
-      font-weight: 900;
-      margin-top: 8px;
-    }
+    /* FOOTER */
 
     footer {
       background: var(--dark);
-      color: #c8cdd0;
-      padding: 30px 18px 90px;
-      text-align: center;
+      color: #ccd2d6;
+      padding: 35px 20px 100px;
+      line-height: 1.6;
       font-size: 14px;
-      line-height: 1.7;
-    }
-
-    .footer-brand {
-      color: white;
-      font-weight: 900;
-      margin-bottom: 8px;
     }
 
     .footer-links {
-      margin-top: 12px;
+      margin-top: 15px;
     }
 
     .footer-links a {
       color: var(--yellow);
-      text-decoration: none;
-      margin: 0 7px;
+      text-decoration: underline;
       font-weight: 700;
+      margin-right: 15px;
     }
+
+    /* MOBILE NAV */
 
     .bottom-nav {
       position: fixed;
       left: 0;
       right: 0;
       bottom: 0;
-      height: 68px;
-      background: #11181d;
-      border-top: 1px solid #283137;
+      z-index: 50;
       display: flex;
       justify-content: space-around;
-      align-items: center;
-      z-index: 200;
+      background: white;
+      border-top: 1px solid #ddd;
+      padding: 8px 5px;
     }
 
     .bottom-nav a {
-      color: #cfd6da;
-      text-decoration: none;
-      font-size: 12px;
-      font-weight: 800;
       text-align: center;
-      padding: 8px 14px;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 7px 10px;
     }
 
-    .bottom-nav a span {
+    .bottom-nav .icon {
       display: block;
-      font-size: 22px;
+      font-size: 23px;
       margin-bottom: 2px;
     }
 
-    .bottom-nav a.active {
-      color: var(--yellow);
-    }
-
     @media (min-width: 700px) {
+
       .services {
         grid-template-columns: repeat(3, 1fr);
       }
 
-      .form-card {
-        padding: 32px;
+      .firm-cards {
+        grid-template-columns: repeat(4, 1fr);
       }
+
+      .bottom-nav {
+        display: none;
+      }
+
+      footer {
+        padding-bottom: 35px;
+      }
+
     }
+
+    @media (max-width: 600px) {
+
+      .header-inner {
+        padding: 15px;
+      }
+
+      .logo {
+        font-size: 20px;
+      }
+
+      .hero {
+        padding: 55px 18px;
+      }
+
+      .services {
+        grid-template-columns: 1fr;
+      }
+
+      .firm-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .form-card {
+        padding: 20px;
+      }
+
+      section {
+        padding: 45px 15px;
+      }
+
+    }
+
   </style>
+
 </head>
+
 
 <body>
 
+
+<!-- HEADER -->
+
 <header>
+
   <div class="header-inner">
 
-    <div class="logo">
+    <a
+      href="#start"
+      class="logo"
+    >
       RIEMER <span>BAUCONNECT</span>
-    </div>
+    </a>
 
-    <a class="header-button" href="#projekt">
+    <a
+      href="#projekt"
+      class="header-button"
+    >
       Projekt starten
     </a>
 
   </div>
+
 </header>
 
 
 <main>
 
-  <section class="hero" id="start">
+
+<!-- START -->
+
+<section
+  class="hero"
+  id="start"
+>
+
+  <div class="hero-inner">
 
     <h1>
       Bauprojekt einstellen.<br>
@@ -402,123 +518,274 @@
     </h1>
 
     <p>
-      Beschreibe dein Bauprojekt und finde passende Fachbetriebe
-      für deine Region.
+      Riemer BauConnect bringt Bauherren
+      und passende Fachbetriebe für
+      Bau- und Straßenbauprojekte zusammen.
     </p>
 
-    <a class="hero-button" href="#projekt">
-      Bauprojekt einstellen
+    <a
+      href="#projekt"
+      class="button"
+    >
+      Projekt starten →
     </a>
 
-  </section>
+  </div>
+
+</section>
 
 
-  <section id="leistungen">
+<!-- LEISTUNGEN -->
 
-    <div class="section-title">
-      <h2>Unsere Leistungen</h2>
-      <p>
-        Wähle den passenden Bereich für dein Bauprojekt.
-      </p>
-    </div>
+<section id="leistungen">
+
+  <div class="container">
+
+    <h2>
+      Unsere Leistungen
+    </h2>
 
     <div class="services">
 
       <div class="service">
-        <span class="service-icon">🛣️</span>
-        Straßenbau
+        🚧 Straßenbau
       </div>
 
       <div class="service">
-        <span class="service-icon">🏗️</span>
-        Asphaltarbeiten
+        🛣️ Asphaltarbeiten
       </div>
 
       <div class="service">
-        <span class="service-icon">🧱</span>
-        Pflasterarbeiten
+        🧱 Pflasterarbeiten
       </div>
 
       <div class="service">
-        <span class="service-icon">🚜</span>
-        Erdarbeiten
+        🚜 Erdarbeiten
       </div>
 
       <div class="service">
-        <span class="service-icon">🏗️</span>
-        Tiefbau
+        🏗️ Tiefbau
       </div>
 
       <div class="service">
-        <span class="service-icon">💧</span>
-        Entwässerung
+        💧 Entwässerung
       </div>
 
       <div class="service">
-        <span class="service-icon">🚗</span>
-        Einfahrt
+        🏠 Einfahrt
       </div>
 
       <div class="service">
-        <span class="service-icon">🅿️</span>
-        Parkplatz / Hof
+        🅿️ Parkplatz / Hof
       </div>
 
       <div class="service">
-        <span class="service-icon">🔧</span>
-        Reparatur
+        🔧 Reparatur
       </div>
 
       <div class="service">
-        <span class="service-icon">📋</span>
-        Sonstiges
+        ➕ Sonstiges
       </div>
 
     </div>
 
-  </section>
+  </div>
+
+</section>
 
 
-  <section id="projekt">
+<!-- FACHBETRIEBE -->
 
-    <div class="section-title">
+<section
+  class="firms-section"
+  id="fachbetriebe"
+>
 
-      <h2>Bauprojekt einstellen</h2>
+  <div class="container">
 
-      <p>
-        Fülle das Formular aus. Wir kümmern uns um den nächsten Schritt.
-      </p>
+    <h2>
+      🏢 Fachbetriebe
+    </h2>
+
+    <p class="firms-intro">
+
+      Du suchst einen zuverlässigen
+      Fachbetrieb für dein Bauprojekt?
+
+      <br><br>
+
+      Riemer BauConnect bringt dein
+      Projekt mit passenden regionalen
+      Fachbetrieben zusammen.
+
+    </p>
+
+
+    <div class="firm-cards">
+
+
+      <div class="firm-card">
+
+        <div class="firm-icon">
+          🚧
+        </div>
+
+        <h3>
+          Straßenbau
+        </h3>
+
+        <p>
+          Fachbetriebe für Straßenbau
+          und Verkehrsflächen.
+        </p>
+
+      </div>
+
+
+      <div class="firm-card">
+
+        <div class="firm-icon">
+          🧱
+        </div>
+
+        <h3>
+          Pflasterarbeiten
+        </h3>
+
+        <p>
+          Passende Betriebe für Wege,
+          Höfe und Flächen.
+        </p>
+
+      </div>
+
+
+      <div class="firm-card">
+
+        <div class="firm-icon">
+          🚜
+        </div>
+
+        <h3>
+          Erdarbeiten
+        </h3>
+
+        <p>
+          Fachbetriebe für Erdarbeiten
+          und Tiefbau.
+        </p>
+
+      </div>
+
+
+      <div class="firm-card">
+
+        <div class="firm-icon">
+          🏗️
+        </div>
+
+        <h3>
+          Tiefbau
+        </h3>
+
+        <p>
+          Unternehmen für anspruchsvolle
+          Tiefbauprojekte.
+        </p>
+
+      </div>
+
 
     </div>
+
+
+    <a
+      href="#projekt"
+      class="firm-button"
+    >
+      Fachbetrieb finden →
+    </a>
+
+  </div>
+
+</section>
+
+
+<!-- PROJEKT -->
+
+<section id="projekt">
+
+  <div class="container">
+
+    <h2>
+      Projekt starten
+    </h2>
 
 
     <div class="form-card">
 
       <form id="projectForm">
 
+
+        <!-- LEISTUNG -->
+
         <label for="service">
-          Welche Leistung benötigst du?
+          Welche Leistung benötigen Sie?
         </label>
 
-        <select id="service" required>
+        <select
+          id="service"
+          required
+        >
 
           <option value="">
             Bitte auswählen
           </option>
 
-          <option value="Straßenbau">Straßenbau</option>
-          <option value="Asphaltarbeiten">Asphaltarbeiten</option>
-          <option value="Pflasterarbeiten">Pflasterarbeiten</option>
-          <option value="Erdarbeiten">Erdarbeiten</option>
-          <option value="Tiefbau">Tiefbau</option>
-          <option value="Entwässerung">Entwässerung</option>
-          <option value="Einfahrt">Einfahrt</option>
-          <option value="Parkplatz/Hof">Parkplatz / Hof</option>
-          <option value="Reparatur">Reparatur</option>
-          <option value="Sonstiges">Sonstiges</option>
+          <option value="Straßenbau">
+            Straßenbau
+          </option>
+
+          <option value="Asphaltarbeiten">
+            Asphaltarbeiten
+          </option>
+
+          <option value="Pflasterarbeiten">
+            Pflasterarbeiten
+          </option>
+
+          <option value="Erdarbeiten">
+            Erdarbeiten
+          </option>
+
+          <option value="Tiefbau">
+            Tiefbau
+          </option>
+
+          <option value="Entwässerung">
+            Entwässerung
+          </option>
+
+          <option value="Einfahrt">
+            Einfahrt
+          </option>
+
+          <option value="Parkplatz / Hof">
+            Parkplatz / Hof
+          </option>
+
+          <option value="Reparatur">
+            Reparatur
+          </option>
+
+          <option value="Sonstiges">
+            Sonstiges
+          </option>
 
         </select>
 
+
+        <!-- PLZ -->
 
         <label for="plz">
           PLZ
@@ -534,70 +801,75 @@
         >
 
 
+        <!-- FLÄCHE -->
+
         <label for="area">
-          Ort / Gebiet
+          Fläche / Umfang
         </label>
 
         <input
           id="area"
           type="text"
-          placeholder="z. B. Harrislee"
-          required
+          placeholder="z. B. 80 m²"
         >
 
 
+        <!-- BESCHREIBUNG -->
+
         <label for="description">
-          Was soll gemacht werden?
+          Beschreibung des Projekts
         </label>
 
         <textarea
           id="description"
-          placeholder="Beschreibe dein Bauprojekt möglichst genau..."
-          required
+          placeholder="Beschreiben Sie kurz Ihr Bauprojekt..."
         ></textarea>
 
 
+        <!-- NAME -->
+
         <label for="name">
-          Dein Name
+          Name
         </label>
 
         <input
           id="name"
           type="text"
-          autocomplete="name"
-          placeholder="Vor- und Nachname"
+          placeholder="Ihr Name"
           required
         >
 
 
+        <!-- TELEFON -->
+
         <label for="phone">
-          Telefonnummer
+          Telefon
         </label>
 
         <input
           id="phone"
           type="tel"
-          autocomplete="tel"
-          placeholder="z. B. 0176 12345678"
+          placeholder="Ihre Telefonnummer"
           required
         >
 
 
+        <!-- EMAIL -->
+
         <label for="email">
-          E-Mail-Adresse
+          E-Mail
         </label>
 
         <input
           id="email"
           type="email"
-          autocomplete="email"
-          placeholder="name@beispiel.de"
+          placeholder="ihre@email.de"
         >
 
 
-        <!-- EINWILLIGUNG -->
+        <!-- DATENSCHUTZ-EINWILLIGUNG -->
 
-        <div class="consent">
+        <div class="consent-box">
 
           <input
             id="privacyConsent"
@@ -623,343 +895,459 @@
         </div>
 
 
-        <button
-          class="submit-button"
-          type="submit"
-          id="submitButton"
-        >
-          Bauprojekt absenden
-        </button>
+        <!-- DATENSCHUTZ-HINWEIS -->
 
+        <p class="privacy-note">
 
-        <div class="privacy-note">
-
-          Deine Angaben werden zur Bearbeitung deiner Bauanfrage
-          und zur möglichen Vermittlung an passende Fachbetriebe
+          Ihre Angaben werden zur Bearbeitung
+          Ihrer Bauanfrage und zur möglichen
+          Vermittlung an passende Fachbetriebe
           verarbeitet.
 
           <br><br>
 
-          Weitere Informationen:
+          Weitere Informationen finden Sie in unserer
 
           <a href="datenschutz.html">
             Datenschutzerklärung
           </a>
 
-          ·
+          und im
 
           <a href="impressum.html">
             Impressum
-          </a>
+          </a>.
 
-        </div>
+        </p>
 
+
+        <!-- ABSENDEN -->
+
+        <button
+          type="submit"
+          class="submit-button"
+          id="submitButton"
+        >
+          Anfrage absenden →
+        </button>
+
+
+        <!-- ERFOLG -->
 
         <div
-          id="message"
-          class="message"
+          id="success"
+          class="success"
         ></div>
+
+
+        <!-- FEHLER -->
+
+        <div
+          id="error"
+          class="error"
+        ></div>
+
 
       </form>
 
     </div>
 
-  </section>
+  </div>
+
+</section>
 
 
-  <section>
+<!-- ADMIN -->
+
+<section>
+
+  <div class="container">
+
+    <h2>
+      Mein Bereich
+    </h2>
+
 
     <div class="admin-card">
 
-      <h2>Riemer BauConnect</h2>
+      <h3>
+        Admin-Bereich
+      </h3>
 
       <p>
-        Interne Verwaltung der eingehenden Bauanfragen.
+        Eingegangene Bauanfragen verwalten
+        und bearbeiten.
       </p>
 
       <a
-        class="admin-button"
         href="admin.html"
+        class="admin-link"
       >
-        Admin öffnen
+        Admin öffnen →
       </a>
 
     </div>
 
-  </section>
+  </div>
+
+</section>
+
 
 </main>
 
 
+<!-- FOOTER -->
+
 <footer>
 
-  <div class="footer-brand">
-    RIEMER BAUCONNECT
-  </div>
+  <div class="container">
 
-  <div>
-    Bauprojekt einstellen. Fachbetrieb finden.
-  </div>
+    <strong>
+      Riemer BauConnect
+    </strong>
 
-  <div class="footer-links">
+    <br>
 
-    <a href="impressum.html">
-      Impressum
-    </a>
+    Bauprojekt einstellen.
+    Fachbetrieb finden.
 
-    <a href="datenschutz.html">
-      Datenschutz
-    </a>
+    <div class="footer-links">
 
-  </div>
+      <a href="impressum.html">
+        Impressum
+      </a>
 
-  <div style="margin-top:15px; color:#8e989e;">
-    MVP – Vor dem Produktivbetrieb müssen Datenschutz,
-    Einwilligungen und sichere Datenverarbeitung vollständig
-    eingerichtet werden.
+      <a href="datenschutz.html">
+        Datenschutz
+      </a>
+
+    </div>
+
+    <br>
+
+    <span>
+      MVP – Vor dem Produktivbetrieb müssen
+      Datenschutz, Einwilligungen und sichere
+      Datenverarbeitung vollständig eingerichtet
+      werden.
+    </span>
+
   </div>
 
 </footer>
 
 
+<!-- MOBILE NAV -->
+
 <nav class="bottom-nav">
 
-  <a
-    href="#start"
-    class="active"
-  >
-    <span>🏠</span>
+  <a href="#start">
+
+    <span class="icon">
+      🏠
+    </span>
+
     Start
+
   </a>
+
 
   <a href="#leistungen">
-    <span>🏗️</span>
+
+    <span class="icon">
+      ⚒️
+    </span>
+
     Leistungen
+
   </a>
 
+
+  <a href="#fachbetriebe">
+
+    <span class="icon">
+      🏢
+    </span>
+
+    Firmen
+
+  </a>
+
+
   <a href="#projekt">
-    <span>📋</span>
+
+    <span class="icon">
+      ＋
+    </span>
+
     Projekt
+
   </a>
 
 </nav>
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
 
-  const SUPABASE_URL =
-    "https://ehzugjmltfcvllftpjpp.supabase.co";
 
-  const SUPABASE_KEY =
-    "sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
-
-  const db =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
+/* ==========================================
+   SUPABASE
+   ========================================== */
 
 
-  const form =
-    document.getElementById("projectForm");
-
-  const submitButton =
-    document.getElementById("submitButton");
-
-  const message =
-    document.getElementById("message");
-
-  const privacyConsent =
-    document.getElementById("privacyConsent");
+const SUPABASE_URL =
+  "https://ehzugjmltfcvllftpjpp.supabase.co";
 
 
-  form.addEventListener(
-    "submit",
-    async function(event) {
-
-      event.preventDefault();
-
-      message.className = "message";
-      message.textContent = "";
+const SUPABASE_KEY =
+  "sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
 
 
-      if (!privacyConsent.checked) {
-
-        message.className =
-          "message error";
-
-        message.textContent =
-          "Bitte bestätige zuerst die Datenschutzerklärung.";
-
-        privacyConsent.focus();
-
-        return;
-      }
+const db =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
 
-      submitButton.disabled = true;
+/* ==========================================
+   ELEMENTE
+   ========================================== */
 
-      submitButton.textContent =
-        "Wird gesendet...";
+
+const form =
+  document.getElementById(
+    "projectForm"
+  );
 
 
-      const service =
-        document.getElementById("service").value.trim();
+const button =
+  document.getElementById(
+    "submitButton"
+  );
 
-      const plz =
-        document.getElementById("plz").value.trim();
 
-      const area =
-        document.getElementById("area").value.trim();
+const success =
+  document.getElementById(
+    "success"
+  );
 
-      const description =
-        document.getElementById("description").value.trim();
 
-      const name =
-        document.getElementById("name").value.trim();
+const errorBox =
+  document.getElementById(
+    "error"
+  );
 
-      const phone =
-        document.getElementById("phone").value.trim();
 
-      const email =
-        document.getElementById("email").value.trim();
+const privacyConsent =
+  document.getElementById(
+    "privacyConsent"
+  );
 
+
+/* ==========================================
+   FORMULAR
+   ========================================== */
+
+
+form.addEventListener(
+  "submit",
+  async function(e) {
+
+    e.preventDefault();
+
+
+    success.style.display =
+      "none";
+
+    errorBox.style.display =
+      "none";
+
+
+    /* ======================================
+       DATENSCHUTZ-CHECK
+       ====================================== */
+
+    if (!privacyConsent.checked) {
+
+      errorBox.textContent =
+        "Bitte bestätigen Sie zuerst die Datenschutzerklärung.";
+
+      errorBox.style.display =
+        "block";
+
+      privacyConsent.focus();
+
+      return;
+
+    }
+
+
+    /* ======================================
+       BUTTON
+       ====================================== */
+
+    button.disabled =
+      true;
+
+    button.textContent =
+      "Wird gesendet ...";
+
+
+    try {
+
+
+      /* ====================================
+         DATEN
+         ==================================== */
 
       const payload = {
 
-        service: service,
+        service:
+          document
+            .getElementById("service")
+            .value
+            .trim(),
 
-        plz: plz,
+        plz:
+          document
+            .getElementById("plz")
+            .value
+            .trim(),
 
-        area: area,
+        area:
+          document
+            .getElementById("area")
+            .value
+            .trim(),
 
-        description: description,
+        description:
+          document
+            .getElementById("description")
+            .value
+            .trim(),
 
-        name: name,
+        name:
+          document
+            .getElementById("name")
+            .value
+            .trim(),
 
-        phone: phone,
+        phone:
+          document
+            .getElementById("phone")
+            .value
+            .trim(),
 
-        email: email,
+        email:
+          document
+            .getElementById("email")
+            .value
+            .trim(),
 
-        status: "neu"
+        status:
+          "neu"
 
       };
 
 
-      try {
+      /* ====================================
+         SUPABASE
+         ==================================== */
 
-        const { error } =
-          await db
-            .from("bauanfragen")
-            .insert([payload]);
-
-
-        if (error) {
-          throw error;
-        }
-
-
-        message.className =
-          "message success";
-
-        message.textContent =
-          "Deine Bauanfrage wurde erfolgreich übermittelt. Vielen Dank!";
+      const result =
+        await db
+          .from("bauanfragen")
+          .insert([
+            payload
+          ]);
 
 
-        form.reset();
+      if (result.error) {
 
-      }
+        console.error(
+          result.error
+        );
 
-      catch (error) {
-
-        console.error(error);
-
-        message.className =
-          "message error";
-
-        message.textContent =
-          "Die Anfrage konnte leider nicht gesendet werden. Bitte versuche es später erneut.";
+        throw new Error(
+          result.error.message
+        );
 
       }
 
-      finally {
 
-        submitButton.disabled = false;
+      /* ====================================
+         ERFOLG
+         ==================================== */
 
-        submitButton.textContent =
-          "Bauprojekt absenden";
-
-      }
-
-    }
-  );
+      form.reset();
 
 
-  const navLinks =
-    document.querySelectorAll(".bottom-nav a");
+      success.textContent =
+        "✅ Ihre Bauanfrage wurde erfolgreich übermittelt.\n\n" +
+        "Wir kümmern uns um die weitere Zuordnung.";
 
 
-  function updateNavigation() {
-
-    const scrollPosition =
-      window.scrollY + 200;
-
-    const start =
-      document.getElementById("start");
-
-    const leistungen =
-      document.getElementById("leistungen");
-
-    const projekt =
-      document.getElementById("projekt");
+      success.style.display =
+        "block";
 
 
-    navLinks.forEach(link => {
-      link.classList.remove("active");
-    });
+      button.disabled =
+        false;
 
 
-    if (
-      projekt.offsetTop <= scrollPosition
-    ) {
+      button.textContent =
+        "Anfrage absenden →";
 
-      document
-        .querySelector('.bottom-nav a[href="#projekt"]')
-        .classList.add("active");
+
+      success.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+
 
     }
 
-    else if (
-      leistungen.offsetTop <= scrollPosition
-    ) {
 
-      document
-        .querySelector('.bottom-nav a[href="#leistungen"]')
-        .classList.add("active");
+    catch(error) {
 
-    }
 
-    else {
+      console.error(
+        "GESAMTFEHLER:",
+        error
+      );
 
-      document
-        .querySelector('.bottom-nav a[href="#start"]')
-        .classList.add("active");
+
+      errorBox.textContent =
+        "Die Anfrage konnte nicht gesendet werden.\n\n" +
+        "Fehler: " +
+        (
+          error.message ||
+          "Unbekannter Fehler"
+        );
+
+
+      errorBox.style.display =
+        "block";
+
+
+      button.disabled =
+        false;
+
+
+      button.textContent =
+        "Anfrage absenden →";
 
     }
 
   }
 
+);
 
-  window.addEventListener(
-    "scroll",
-    updateNavigation
-  );
-
-  updateNavigation();
 
 </script>
 
+
 </body>
+
 </html>
