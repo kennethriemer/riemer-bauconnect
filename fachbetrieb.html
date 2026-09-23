@@ -10,394 +10,428 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{
-  box-sizing:border-box;
+* {
+  box-sizing: border-box;
 }
 
-html{
-  scroll-behavior:smooth;
+html {
+  scroll-behavior: smooth;
 }
 
-body{
-  margin:0;
-  background:#111;
-  color:#fff;
-  font-family:Arial,Helvetica,sans-serif;
-}
-
-.wrap{
-  width:100%;
-  max-width:900px;
-  margin:auto;
-  padding:20px;
-}
-
-header{
-  background:#181818;
-  border-bottom:1px solid #333;
-  position:sticky;
-  top:0;
-  z-index:50;
-}
-
-.header-inner{
-  max-width:900px;
-  margin:auto;
-  padding:16px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-}
-
-.logo{
-  font-size:22px;
-  font-weight:900;
-  letter-spacing:-.5px;
-}
-
-.logo span{
-  color:#ffd000;
-}
-
-.header-badge{
-  color:#aaa;
-  font-size:13px;
-}
-
-h1{
-  font-size:34px;
-  margin:0 0 8px;
-}
-
-h2{
-  font-size:26px;
-  margin:0 0 18px;
-}
-
-h3{
-  font-size:21px;
-  margin:0 0 12px;
-}
-
-p{
-  line-height:1.55;
-}
-
-.card{
-  background:#1c1c1c;
-  border:1px solid #333;
-  border-radius:20px;
-  padding:22px;
-  margin-bottom:20px;
-}
-
-.hero{
-  padding:30px 0 10px;
-}
-
-.subtitle{
-  color:#aaa;
-  font-size:16px;
-}
-
-.hidden{
-  display:none !important;
-}
-
-label{
-  display:block;
-  font-weight:700;
-  margin:16px 0 7px;
-}
-
-input,
-select,
-textarea{
-  width:100%;
-  background:#101010;
-  color:#fff;
-  border:1px solid #444;
-  border-radius:12px;
-  padding:15px;
-  font-size:16px;
-  outline:none;
-}
-
-input:focus,
-select:focus,
-textarea:focus{
-  border-color:#ffd000;
-}
-
-textarea{
-  min-height:120px;
-  resize:vertical;
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #111;
+  color: #fff;
 }
 
 button,
-.button{
-  width:100%;
-  border:0;
-  border-radius:13px;
-  padding:16px;
-  margin-top:15px;
-  background:#ffd000;
-  color:#111;
-  font-size:17px;
-  font-weight:900;
-  cursor:pointer;
-  text-align:center;
-  text-decoration:none;
-  display:block;
+input,
+textarea,
+select {
+  font: inherit;
 }
 
-button:hover,
-.button:hover{
-  opacity:.92;
+button {
+  cursor: pointer;
 }
 
-button.secondary,
-.button.secondary{
-  background:#303030;
-  color:#fff;
+.hidden {
+  display: none !important;
 }
 
-button.danger{
-  background:#7a2424;
-  color:#fff;
+.container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-button:disabled{
-  opacity:.5;
-  cursor:not-allowed;
+/* HEADER */
+
+header {
+  background: #171717;
+  border-bottom: 1px solid #333;
+  padding: 18px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
 }
 
-.message{
-  padding:14px;
-  border-radius:12px;
-  margin-top:15px;
-  line-height:1.45;
+.header-inner {
+  max-width: 900px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
 }
 
-.success{
-  background:#173d25;
-  border:1px solid #28683b;
-  color:#d8ffe2;
+.logo {
+  font-size: 22px;
+  font-weight: 900;
 }
 
-.error{
-  background:#481d1d;
-  border:1px solid #813333;
-  color:#ffdcdc;
+.logo span {
+  color: #ffd000;
 }
 
-.info{
-  background:#182d40;
-  border:1px solid #285071;
-  color:#dcefff;
+.header-user {
+  color: #aaa;
+  font-size: 13px;
 }
 
-.warning{
-  background:#493c16;
-  border:1px solid #7e671f;
-  color:#fff1b5;
+/* LOGIN */
+
+.login-page {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.tabs{
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-  margin-bottom:20px;
+.card {
+  background: #1c1c1c;
+  border: 1px solid #333;
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 20px;
 }
 
-.tab{
-  width:auto;
-  margin:0;
-  padding:12px 16px;
-  background:#292929;
-  color:#ccc;
-  white-space:nowrap;
+.login-card {
+  width: 100%;
+  max-width: 500px;
 }
 
-.tab.active{
-  background:#ffd000;
-  color:#111;
+h1 {
+  font-size: 32px;
+  margin: 0 0 10px;
 }
 
-.status-badge{
-  display:inline-block;
-  padding:7px 10px;
-  border-radius:9px;
-  background:#303030;
-  color:#fff;
-  font-size:13px;
-  font-weight:700;
+h2 {
+  margin-top: 0;
+  font-size: 24px;
 }
 
-.status-neu{
-  background:#3b3b3b;
+h3 {
+  margin-top: 0;
 }
 
-.status-angesehen{
-  background:#28435a;
+.subtitle {
+  color: #aaa;
+  line-height: 1.5;
 }
 
-.status-in_bearbeitung{
-  background:#594819;
+label {
+  display: block;
+  margin: 16px 0 7px;
+  font-weight: 700;
 }
 
-.status-angenommen{
-  background:#1d5b31;
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #444;
+  background: #101010;
+  color: #fff;
+  outline: none;
 }
 
-.status-abgelehnt{
-  background:#692525;
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #ffd000;
 }
 
-.status-erledigt{
-  background:#31533b;
+textarea {
+  min-height: 120px;
+  resize: vertical;
 }
 
-.request{
-  background:#181818;
-  border:1px solid #363636;
-  border-radius:17px;
-  padding:18px;
-  margin-top:14px;
+button {
+  border: 0;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-weight: 800;
 }
 
-.request-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:12px;
+.btn-yellow {
+  background: #ffd000;
+  color: #111;
 }
 
-.request-service{
-  color:#ffd000;
-  font-size:20px;
-  font-weight:900;
+.btn-dark {
+  background: #333;
+  color: #fff;
 }
 
-.request-date{
-  color:#888;
-  font-size:12px;
-  text-align:right;
+.btn-red {
+  background: #8d2525;
+  color: #fff;
 }
 
-.request-info{
-  margin-top:12px;
-  color:#ddd;
-  line-height:1.55;
+.btn-green {
+  background: #24834a;
+  color: #fff;
 }
 
-.request-description{
-  background:#101010;
-  border-radius:10px;
-  padding:12px;
-  margin-top:12px;
-  color:#ccc;
-  white-space:pre-wrap;
+.full {
+  width: 100%;
+  margin-top: 18px;
 }
 
-.request-actions{
-  margin-top:15px;
+.message {
+  margin-top: 15px;
+  padding: 14px;
+  border-radius: 12px;
+  display: none;
+  line-height: 1.4;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
+.message.success {
+  display: block;
+  background: #174d2d;
+  border: 1px solid #287946;
 }
 
-.stat{
-  background:#151515;
-  border:1px solid #333;
-  border-radius:15px;
-  padding:16px;
+.message.error {
+  display: block;
+  background: #5a2020;
+  border: 1px solid #8d3535;
 }
 
-.stat-number{
-  font-size:27px;
-  font-weight:900;
-  color:#ffd000;
+/* TABS */
+
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 20px;
 }
 
-.stat-label{
-  color:#999;
-  font-size:13px;
-  margin-top:4px;
+.tab {
+  background: #242424;
+  color: #bbb;
+  border: 1px solid #333;
+  padding: 13px 5px;
+  border-radius: 12px;
 }
 
-.price-box{
-  border:2px solid #ffd000;
-  background:#171717;
-  border-radius:18px;
-  padding:22px;
-  margin-top:15px;
+.tab.active {
+  background: #ffd000;
+  color: #111;
 }
 
-.price{
-  font-size:36px;
-  font-weight:900;
+/* DASHBOARD */
+
+.hero-card {
+  background: linear-gradient(135deg, #222, #151515);
 }
 
-.price small{
-  font-size:16px;
-  color:#aaa;
+.status-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
 }
 
-.feature{
-  margin-top:9px;
-  color:#ddd;
+.status {
+  display: inline-block;
+  padding: 7px 11px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 800;
 }
 
-.feature::before{
-  content:"✓";
-  color:#ffd000;
-  font-weight:900;
-  margin-right:8px;
+.status-ok {
+  background: #194f2d;
+  color: #7dffae;
 }
 
-footer{
-  color:#777;
-  text-align:center;
-  padding:30px 20px 100px;
-  font-size:13px;
-  line-height:1.5;
+.status-wait {
+  background: #604c12;
+  color: #ffe37b;
 }
 
-.mobile-space{
-  height:20px;
+.status-off {
+  background: #542020;
+  color: #ff9d9d;
 }
 
-@media(max-width:650px){
+/* STATS */
 
-  .wrap{
-    padding:16px;
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.stat {
+  background: #242424;
+  border-radius: 15px;
+  padding: 18px 10px;
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 28px;
+  font-weight: 900;
+  color: #ffd000;
+}
+
+.stat-label {
+  color: #aaa;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* REQUESTS */
+
+.request {
+  background: #222;
+  border: 1px solid #3a3a3a;
+  border-radius: 16px;
+  padding: 18px;
+  margin-top: 14px;
+}
+
+.request-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.request-service {
+  color: #ffd000;
+  font-size: 19px;
+  font-weight: 900;
+}
+
+.request-date {
+  color: #888;
+  font-size: 12px;
+  text-align: right;
+}
+
+.request-row {
+  color: #ccc;
+  margin-top: 8px;
+  line-height: 1.4;
+}
+
+.request-description {
+  color: #ddd;
+  background: #171717;
+  padding: 12px;
+  border-radius: 10px;
+  margin-top: 12px;
+  line-height: 1.5;
+}
+
+.status-select {
+  margin-top: 14px;
+}
+
+.status-save {
+  margin-top: 10px;
+  width: 100%;
+}
+
+/* Abo */
+
+.abo-card {
+  border: 2px solid #ffd000;
+  background: linear-gradient(145deg, #27220b, #191919);
+}
+
+.price {
+  font-size: 34px;
+  font-weight: 900;
+  color: #ffd000;
+}
+
+.price small {
+  font-size: 16px;
+  color: #aaa;
+  font-weight: normal;
+}
+
+.abo-list {
+  padding-left: 20px;
+  color: #ddd;
+  line-height: 1.8;
+}
+
+.abo-info {
+  background: #181818;
+  border-radius: 12px;
+  padding: 14px;
+  margin-top: 15px;
+  line-height: 1.6;
+}
+
+.abo-info strong {
+  color: #ffd000;
+}
+
+/* PROFILE */
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* FOOTER */
+
+footer {
+  text-align: center;
+  color: #777;
+  padding: 30px 20px 80px;
+  font-size: 13px;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+  .container {
+    padding: 14px;
   }
 
-  h1{
-    font-size:29px;
+  .header-inner {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
-  .grid{
-    grid-template-columns:1fr;
+  .profile-grid {
+    grid-template-columns: 1fr;
   }
 
-  .request-top{
-    flex-direction:column;
+  .stats {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 
-  .request-date{
-    text-align:left;
+  .stat {
+    padding: 14px 5px;
   }
 
-  .header-inner{
-    padding:14px 16px;
+  .stat-number {
+    font-size: 23px;
   }
 
+  .request-title {
+    flex-direction: column;
+  }
+
+  .request-date {
+    text-align: left;
+  }
 }
 </style>
 </head>
@@ -406,317 +440,296 @@ footer{
 
 <header>
   <div class="header-inner">
-
-    <div>
-      <div class="logo">
-        RIEMER <span>BAUCONNECT</span>
-      </div>
-
-      <div class="header-badge">
-        Fachbetrieb
-      </div>
+    <div class="logo">
+      RIEMER <span>BAUCONNECT</span>
     </div>
 
-    <button
-      id="headerLogoutBtn"
-      class="secondary hidden"
-      style="width:auto;margin:0;padding:10px 13px;"
-      onclick="logout()">
-      Abmelden
-    </button>
-
+    <div id="headerUser" class="header-user"></div>
   </div>
 </header>
 
 
-<main class="wrap">
+<!-- LOGIN -->
 
-  <!-- LOGIN / REGISTRIERUNG -->
+<div id="loginPage" class="login-page">
 
-  <section id="authSection">
+  <div class="login-card card">
 
-    <div class="hero">
+    <h1>🏗️ Fachbetrieb</h1>
 
-      <h1>
-        Fachbetrieb werden
-      </h1>
+    <p class="subtitle">
+      Melde dich an, um deine Bauanfragen und dein Fachbetriebs-Konto zu verwalten.
+    </p>
 
-      <div class="subtitle">
-        Erhalte passende Bauanfragen aus deiner Region.
+    <label for="loginEmail">
+      E-Mail
+    </label>
+
+    <input
+      id="loginEmail"
+      type="email"
+      autocomplete="email"
+      placeholder="E-Mail-Adresse"
+    >
+
+    <label for="loginPassword">
+      Passwort
+    </label>
+
+    <input
+      id="loginPassword"
+      type="password"
+      autocomplete="current-password"
+      placeholder="Passwort"
+    >
+
+    <button
+      id="loginButton"
+      class="btn-yellow full"
+      onclick="login()"
+    >
+      Anmelden
+    </button>
+
+    <button
+      class="btn-dark full"
+      onclick="showRegister()"
+    >
+      Noch kein Fachbetrieb? Registrieren
+    </button>
+
+    <div id="loginMessage" class="message"></div>
+
+  </div>
+
+</div>
+
+
+<!-- REGISTRIERUNG -->
+
+<div id="registerPage" class="login-page hidden">
+
+  <div class="login-card card">
+
+    <h1>🏗️ Fachbetrieb registrieren</h1>
+
+    <p class="subtitle">
+      Erstelle dein Fachbetriebs-Konto. Nach der Registrierung muss dein Betrieb zunächst freigeschaltet werden.
+    </p>
+
+    <label>
+      Firma *
+    </label>
+
+    <input
+      id="regFirma"
+      type="text"
+      placeholder="z. B. Muster Bau GmbH"
+    >
+
+    <label>
+      Ansprechpartner *
+    </label>
+
+    <input
+      id="regInhaber"
+      type="text"
+      placeholder="Vor- und Nachname"
+    >
+
+    <label>
+      E-Mail *
+    </label>
+
+    <input
+      id="regEmail"
+      type="email"
+      placeholder="E-Mail-Adresse"
+    >
+
+    <label>
+      Telefon *
+    </label>
+
+    <input
+      id="regTelefon"
+      type="tel"
+      placeholder="Telefonnummer"
+    >
+
+    <div class="profile-grid">
+
+      <div>
+        <label>
+          PLZ *
+        </label>
+
+        <input
+          id="regPlz"
+          inputmode="numeric"
+          maxlength="5"
+          placeholder="24955"
+        >
+      </div>
+
+      <div>
+        <label>
+          Ort *
+        </label>
+
+        <input
+          id="regOrt"
+          type="text"
+          placeholder="Harrislee"
+        >
       </div>
 
     </div>
 
+    <label>
+      Leistungen *
+    </label>
+
+    <textarea
+      id="regLeistungen"
+      placeholder="z. B. Straßenbau, Asphaltarbeiten, Tiefbau"
+    ></textarea>
+
+    <label>
+      Passwort *
+    </label>
+
+    <input
+      id="regPassword"
+      type="password"
+      placeholder="Mindestens 6 Zeichen"
+    >
+
+    <button
+      class="btn-yellow full"
+      onclick="registerFirm()"
+    >
+      Fachbetrieb registrieren
+    </button>
+
+    <button
+      class="btn-dark full"
+      onclick="showLogin()"
+    >
+      ← Zurück zum Login
+    </button>
+
+    <div id="registerMessage" class="message"></div>
+
+  </div>
+
+</div>
+
+
+<!-- DASHBOARD -->
+
+<div id="dashboardPage" class="hidden">
+
+  <main class="container">
 
     <div class="tabs">
 
       <button
-        id="loginTab"
+        id="tabStart"
         class="tab active"
-        onclick="showAuthMode('login')">
-        Anmelden
+        onclick="showTab('start')"
+      >
+        🏠 Start
       </button>
 
       <button
-        id="registerTab"
+        id="tabRequests"
         class="tab"
-        onclick="showAuthMode('register')">
-        Registrieren
-      </button>
-
-    </div>
-
-
-    <!-- LOGIN -->
-
-    <div id="loginCard" class="card">
-
-      <h2>Fachbetrieb anmelden</h2>
-
-      <label for="loginEmail">
-        E-Mail
-      </label>
-
-      <input
-        id="loginEmail"
-        type="email"
-        autocomplete="email"
-        placeholder="E-Mail-Adresse">
-
-
-      <label for="loginPassword">
-        Passwort
-      </label>
-
-      <input
-        id="loginPassword"
-        type="password"
-        autocomplete="current-password"
-        placeholder="Passwort">
-
-
-      <button onclick="login()">
-        Anmelden
-      </button>
-
-      <div id="loginMessage"></div>
-
-    </div>
-
-
-    <!-- REGISTRIERUNG -->
-
-    <div id="registerCard" class="card hidden">
-
-      <h2>Fachbetrieb registrieren</h2>
-
-      <p class="subtitle">
-        Erstelle kostenlos dein Fachbetriebs-Konto.
-      </p>
-
-
-      <label for="registerFirma">
-        Firmenname *
-      </label>
-
-      <input
-        id="registerFirma"
-        placeholder="z. B. Hajs Bau">
-
-
-      <label for="registerInhaber">
-        Ansprechpartner / Inhaber *
-      </label>
-
-      <input
-        id="registerInhaber"
-        placeholder="Vor- und Nachname">
-
-
-      <label for="registerEmail">
-        E-Mail *
-      </label>
-
-      <input
-        id="registerEmail"
-        type="email"
-        autocomplete="email"
-        placeholder="firma@example.de">
-
-
-      <label for="registerTelefon">
-        Telefon *
-      </label>
-
-      <input
-        id="registerTelefon"
-        type="tel"
-        placeholder="Telefonnummer">
-
-
-      <div class="grid">
-
-        <div>
-
-          <label for="registerPlz">
-            PLZ *
-          </label>
-
-          <input
-            id="registerPlz"
-            inputmode="numeric"
-            maxlength="5"
-            placeholder="24955">
-
-        </div>
-
-
-        <div>
-
-          <label for="registerOrt">
-            Ort *
-          </label>
-
-          <input
-            id="registerOrt"
-            placeholder="Harrislee">
-
-        </div>
-
-      </div>
-
-
-      <label for="registerLeistungen">
-        Leistungen
-      </label>
-
-      <textarea
-        id="registerLeistungen"
-        placeholder="z. B. Straßenbau, Asphaltarbeiten, Pflasterarbeiten"></textarea>
-
-
-      <label for="registerRadius">
-        Einsatzradius in km
-      </label>
-
-      <input
-        id="registerRadius"
-        type="number"
-        value="30"
-        min="1"
-        max="500">
-
-
-      <label for="registerPassword">
-        Passwort *
-      </label>
-
-      <input
-        id="registerPassword"
-        type="password"
-        autocomplete="new-password"
-        placeholder="Mindestens 6 Zeichen">
-
-
-      <button onclick="registerFirm()">
-        Fachbetrieb registrieren
-      </button>
-
-      <div id="registerMessage"></div>
-
-    </div>
-
-  </section>
-
-
-  <!-- APP -->
-
-  <section id="appSection" class="hidden">
-
-    <div class="hero">
-
-      <h1>
-        Mein Fachbetrieb
-      </h1>
-
-      <div
-        id="welcomeText"
-        class="subtitle">
-      </div>
-
-    </div>
-
-
-    <div class="tabs">
-
-      <button
-        id="dashboardTab"
-        class="tab active"
-        onclick="showAppTab('dashboard')">
-        Start
+        onclick="showTab('requests')"
+      >
+        🏗️ Anfragen
       </button>
 
       <button
-        id="requestsTab"
+        id="tabAbo"
         class="tab"
-        onclick="showAppTab('requests')">
-        Bauanfragen
-      </button>
-
-      <button
-        id="profileTab"
-        class="tab"
-        onclick="showAppTab('profile')">
-        Profil
-      </button>
-
-      <button
-        id="aboTab"
-        class="tab"
-        onclick="showAppTab('abo')">
-        Abo
+        onclick="showTab('abo')"
+      >
+        💳 Abo
       </button>
 
     </div>
 
 
-    <!-- DASHBOARD -->
+    <!-- START -->
 
-    <div id="dashboardView">
+    <section id="sectionStart">
 
-      <div
-        id="approvalMessage"
-        class="card">
-      </div>
+      <div class="card hero-card">
 
+        <div class="status-box">
 
-      <div class="grid">
+          <div>
+            <h1 id="welcomeTitle">
+              Willkommen
+            </h1>
 
-        <div class="stat">
+            <p
+              id="welcomeCompany"
+              class="subtitle"
+            >
+              Fachbetrieb
+            </p>
+          </div>
 
           <div
-            id="requestCount"
-            class="stat-number">
-            0
-          </div>
-
-          <div class="stat-label">
-            Bauanfragen
+            id="approvalStatus"
+            class="status status-wait"
+          >
+            Prüfung
           </div>
 
         </div>
 
+        <div class="stats">
 
-        <div class="stat">
+          <div class="stat">
+            <div
+              id="statTotal"
+              class="stat-number"
+            >
+              0
+            </div>
 
-          <div
-            id="openRequestCount"
-            class="stat-number">
-            0
+            <div class="stat-label">
+              Bauanfragen
+            </div>
           </div>
 
-          <div class="stat-label">
-            Offene Anfragen
+          <div class="stat">
+            <div
+              id="statOpen"
+              class="stat-number"
+            >
+              0
+            </div>
+
+            <div class="stat-label">
+              Offen
+            </div>
+          </div>
+
+          <div class="stat">
+            <div
+              id="statAbo"
+              class="stat-number"
+            >
+              –
+            </div>
+
+            <div class="stat-label">
+              Abo
+            </div>
           </div>
 
         </div>
@@ -726,277 +739,307 @@ footer{
 
       <div class="card">
 
-        <h2>
-          🚀 Dein Abo
-        </h2>
-
-        <p>
-          Teste Riemer BauConnect jetzt
-          <strong>30 Tage kostenlos</strong>.
-          Danach kostet das Fachbetriebs-Abo
-          <strong>19,99 € pro Monat</strong>.
-        </p>
-
-        <div class="price-box">
-
-          <div class="price">
-            0 €
-            <small>für 30 Tage</small>
-          </div>
-
-          <div class="feature">
-            30 Tage kostenlos testen
-          </div>
-
-          <div class="feature">
-            Danach 19,99 € pro Monat
-          </div>
-
-          <div class="feature">
-            Monatlich kündbar
-          </div>
-
-
-          <a
-            class="button"
-            href="https://buy.stripe.com/test_7sYaEX0vG3D63Ty9ZO57W02"
-            target="_blank"
-            rel="noopener">
-            🚀 30 Tage kostenlos testen
-          </a>
-
-        </div>
-
-        <div class="message info">
-          Sandbox-Testmodus: Dieser Checkout führt noch keine echte Zahlung durch.
-        </div>
-
-      </div>
-
-
-      <div class="card">
-
-        <h2>
-          🏗️ Meine Bauanfragen
-        </h2>
+        <h2>🏗️ Deine Bauanfragen</h2>
 
         <p class="subtitle">
-          Hier findest du die Bauprojekte, die dir vom Riemer BauConnect-Team zugewiesen wurden.
+          Hier erscheinen Bauprojekte, die dir vom Riemer BauConnect-Team zugewiesen wurden.
         </p>
 
-        <button onclick="showAppTab('requests')">
+        <button
+          class="btn-yellow full"
+          onclick="showTab('requests')"
+        >
           Bauanfragen öffnen →
         </button>
 
       </div>
 
-    </div>
 
+      <div class="card abo-card">
 
-    <!-- BAUANFRAGEN -->
+        <h2>
+          🚀 Fachbetriebs-Abo
+        </h2>
 
-    <div id="requestsView" class="hidden">
+        <div class="price">
+          30 Tage kostenlos
+        </div>
+
+        <p class="subtitle">
+          Danach 19,99 € pro Monat.
+        </p>
+
+        <ul class="abo-list">
+          <li>30 Tage kostenlos testen</li>
+          <li>Qualifizierte Bauanfragen erhalten</li>
+          <li>Monatlich kündbar</li>
+          <li>Keine langfristige Vertragsbindung</li>
+        </ul>
+
+        <button
+          class="btn-yellow full"
+          onclick="startStripeCheckout()"
+        >
+          🚀 30 Tage kostenlos testen
+        </button>
+
+      </div>
+
 
       <div class="card">
 
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
+        <h2>👤 Profil</h2>
+
+        <button
+          class="btn-dark full"
+          onclick="showTab('profile')"
+        >
+          Fachbetriebsdaten bearbeiten
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- REQUESTS -->
+
+    <section
+      id="sectionRequests"
+      class="hidden"
+    >
+
+      <div class="card">
+
+        <div class="status-box">
 
           <div>
+            <h2>🏗️ Meine Bauanfragen</h2>
 
-            <h2 style="margin-bottom:4px;">
-              🏗️ Meine Bauanfragen
-            </h2>
-
-            <div class="subtitle">
-              Zugewiesene Kundenanfragen
-            </div>
-
+            <p class="subtitle">
+              Dir zugewiesene Kundenprojekte
+            </p>
           </div>
 
           <button
+            class="btn-dark"
             onclick="loadRequests()"
-            style="width:auto;margin:0;padding:11px 14px;">
+          >
             ↻
           </button>
 
         </div>
 
-
-        <div id="requestsMessage"></div>
+        <div
+          id="requestMessage"
+          class="message"
+        ></div>
 
         <div id="requestList"></div>
 
       </div>
 
-    </div>
+    </section>
 
 
-    <!-- PROFIL -->
+    <!-- ABO -->
 
-    <div id="profileView" class="hidden">
+    <section
+      id="sectionAbo"
+      class="hidden"
+    >
+
+      <div class="card abo-card">
+
+        <h2>💳 Dein Abo</h2>
+
+        <div
+          id="aboStatus"
+          class="status status-off"
+        >
+          Inaktiv
+        </div>
+
+        <div class="abo-info">
+
+          <div>
+            <strong>Status:</strong>
+            <span id="aboStatusText">
+              Inaktiv
+            </span>
+          </div>
+
+          <div>
+            <strong>Testphase bis:</strong>
+            <span id="aboTrialEnd">
+              –
+            </span>
+          </div>
+
+          <div>
+            <strong>Aktuelle Periode bis:</strong>
+            <span id="aboPeriodEnd">
+              –
+            </span>
+          </div>
+
+          <div>
+            <strong>Kündigung:</strong>
+            <span id="aboCancel">
+              Nicht gekündigt
+            </span>
+          </div>
+
+        </div>
+
+        <button
+          id="aboButton"
+          class="btn-yellow full"
+          onclick="startStripeCheckout()"
+        >
+          🚀 30 Tage kostenlos testen
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- PROFILE -->
+
+    <section
+      id="sectionProfile"
+      class="hidden"
+    >
 
       <div class="card">
 
-        <h2>
-          🏢 Firmenprofil
-        </h2>
+        <h2>👤 Fachbetriebsprofil</h2>
 
-
-        <label for="profileFirma">
-          Firmenname
+        <label>
+          Firma
         </label>
 
-        <input id="profileFirma">
+        <input
+          id="profileFirma"
+          type="text"
+        >
 
-
-        <label for="profileInhaber">
-          Ansprechpartner / Inhaber
+        <label>
+          Ansprechpartner
         </label>
 
-        <input id="profileInhaber">
+        <input
+          id="profileInhaber"
+          type="text"
+        >
 
-
-        <label for="profileEmail">
+        <label>
           E-Mail
         </label>
 
-        <input id="profileEmail" type="email">
+        <input
+          id="profileEmail"
+          type="email"
+        >
 
-
-        <label for="profileTelefon">
+        <label>
           Telefon
         </label>
 
-        <input id="profileTelefon" type="tel">
+        <input
+          id="profileTelefon"
+          type="tel"
+        >
 
-
-        <div class="grid">
+        <div class="profile-grid">
 
           <div>
 
-            <label for="profilePlz">
+            <label>
               PLZ
             </label>
 
-            <input id="profilePlz">
+            <input
+              id="profilePlz"
+              type="text"
+              maxlength="5"
+            >
 
           </div>
 
-
           <div>
 
-            <label for="profileOrt">
+            <label>
               Ort
             </label>
 
-            <input id="profileOrt">
+            <input
+              id="profileOrt"
+              type="text"
+            >
 
           </div>
 
         </div>
 
-
-        <label for="profileLeistungen">
+        <label>
           Leistungen
         </label>
 
-        <textarea id="profileLeistungen"></textarea>
+        <textarea
+          id="profileLeistungen"
+        ></textarea>
 
-
-        <label for="profileRadius">
-          Einsatzradius in km
+        <label>
+          Radius in km
         </label>
 
         <input
           id="profileRadius"
           type="number"
           min="1"
-          max="500">
+          max="500"
+        >
 
-
-        <button onclick="saveProfile()">
+        <button
+          class="btn-yellow full"
+          onclick="saveProfile()"
+        >
           Profil speichern
         </button>
 
-        <div id="profileMessage"></div>
+        <div
+          id="profileMessage"
+          class="message"
+        ></div>
 
       </div>
 
-    </div>
+    </section>
 
 
-    <!-- ABO -->
+    <div class="card">
 
-    <div id="aboView" class="hidden">
-
-      <div class="card">
-
-        <h2>
-          💳 Fachbetriebs-Abo
-        </h2>
-
-        <div class="price-box">
-
-          <div class="price">
-            0 €
-            <small>30 Tage</small>
-          </div>
-
-          <div class="feature">
-            30 Tage kostenlos
-          </div>
-
-          <div class="feature">
-            Danach 19,99 € monatlich
-          </div>
-
-          <div class="feature">
-            Automatische monatliche Abrechnung
-          </div>
-
-          <div class="feature">
-            Kündigung jederzeit möglich
-          </div>
-
-
-          <a
-            class="button"
-            href="https://buy.stripe.com/test_7sYaEX0vG3D63Ty9ZO57W02"
-            target="_blank"
-            rel="noopener">
-            🚀 Abo starten
-          </a>
-
-        </div>
-
-
-        <div class="message warning">
-
-          <strong>Aktuell Sandbox</strong><br>
-
-          Du befindest dich momentan im Stripe-Testmodus.
-          Die 19,99 € sind noch keine echte Abbuchung.
-
-        </div>
-
-      </div>
+      <button
+        class="btn-red full"
+        onclick="logout()"
+      >
+        Abmelden
+      </button>
 
     </div>
 
-  </section>
+  </main>
 
-</main>
+</div>
 
 
 <footer>
-
   Riemer BauConnect<br>
-  Bauprojekt einstellen. Fachbetrieb finden.<br><br>
-
-  Vor dem Produktivbetrieb müssen Datenschutz,
-  Impressum, Einwilligungen und die rechtliche
-  Ausgestaltung vollständig eingerichtet werden.
-
+  <span>
+    Bauprojekt einstellen. Fachbetrieb finden.
+  </span>
 </footer>
 
 
@@ -1020,477 +1063,372 @@ const db =
 
 
 /* =========================================================
-   STRIPE SANDBOX
-========================================================= */
-
-const STRIPE_CHECKOUT_URL =
-  "https://buy.stripe.com/test_7sYaEX0vG3D63Ty9ZO57W02";
-
-
-/* =========================================================
-   GLOBAL
+   VARIABLEN
 ========================================================= */
 
 let currentUser = null;
 let currentFirm = null;
+let currentRequests = [];
 
 
 /* =========================================================
    HILFSFUNKTIONEN
 ========================================================= */
 
-function escapeHtml(value){
+function escapeHtml(value) {
 
-  if(value === null || value === undefined){
+  if (value === null || value === undefined) {
     return "";
   }
 
   return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 
-function formatDate(value){
+function showMessage(
+  elementId,
+  text,
+  type
+) {
 
-  if(!value){
+  const element =
+    document.getElementById(elementId);
+
+  if (!element) {
+    return;
+  }
+
+  element.className =
+    "message " + type;
+
+  element.textContent =
+    text;
+}
+
+
+function clearMessage(elementId) {
+
+  const element =
+    document.getElementById(elementId);
+
+  if (!element) {
+    return;
+  }
+
+  element.className = "message";
+  element.textContent = "";
+}
+
+
+function formatDate(value) {
+
+  if (!value) {
     return "–";
   }
 
-  try{
+  const date =
+    new Date(value);
 
-    return new Date(value).toLocaleString(
-      "de-DE",
-      {
-        day:"2-digit",
-        month:"2-digit",
-        year:"numeric",
-        hour:"2-digit",
-        minute:"2-digit"
-      }
-    );
-
-  }catch(e){
-
-    return value;
-
+  if (Number.isNaN(date.getTime())) {
+    return "–";
   }
 
+  return date.toLocaleDateString(
+    "de-DE",
+    {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric"
+    }
+  );
 }
 
 
-function statusText(status){
+function formatDateTime(value) {
 
-  const map = {
+  if (!value) {
+    return "–";
+  }
 
-    neu:"Neu",
+  const date =
+    new Date(value);
 
-    angesehen:"Angesehen",
+  if (Number.isNaN(date.getTime())) {
+    return "–";
+  }
 
-    in_bearbeitung:"In Bearbeitung",
-
-    angenommen:"Angenommen",
-
-    abgelehnt:"Abgelehnt",
-
-    erledigt:"Erledigt"
-
-  };
-
-  return map[status] || status || "Neu";
-
+  return date.toLocaleString(
+    "de-DE",
+    {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    }
+  );
 }
 
 
 /* =========================================================
-   AUTH MODUS
+   LOGIN / REGISTRIERUNG
 ========================================================= */
 
-function showAuthMode(mode){
+function showRegister() {
 
-  const loginCard =
-    document.getElementById("loginCard");
+  document
+    .getElementById("loginPage")
+    .classList.add("hidden");
 
-  const registerCard =
-    document.getElementById("registerCard");
+  document
+    .getElementById("registerPage")
+    .classList.remove("hidden");
 
-  const loginTab =
-    document.getElementById("loginTab");
-
-  const registerTab =
-    document.getElementById("registerTab");
-
-
-  if(mode === "register"){
-
-    loginCard.classList.add("hidden");
-
-    registerCard.classList.remove("hidden");
-
-    loginTab.classList.remove("active");
-
-    registerTab.classList.add("active");
-
-  }else{
-
-    registerCard.classList.add("hidden");
-
-    loginCard.classList.remove("hidden");
-
-    registerTab.classList.remove("active");
-
-    loginTab.classList.add("active");
-
-  }
-
+  clearMessage("loginMessage");
 }
 
 
-/* =========================================================
-   REGISTRIERUNG
-========================================================= */
+function showLogin() {
 
-async function registerFirm(){
+  document
+    .getElementById("registerPage")
+    .classList.add("hidden");
 
-  const message =
-    document.getElementById("registerMessage");
+  document
+    .getElementById("loginPage")
+    .classList.remove("hidden");
 
-  message.innerHTML = "";
+  clearMessage("registerMessage");
+}
 
 
-  const firma =
-    document.getElementById("registerFirma")
-    .value.trim();
-
-  const inhaber =
-    document.getElementById("registerInhaber")
-    .value.trim();
+async function login() {
 
   const email =
-    document.getElementById("registerEmail")
-    .value.trim();
-
-  const telefon =
-    document.getElementById("registerTelefon")
-    .value.trim();
-
-  const plz =
-    document.getElementById("registerPlz")
-    .value.trim();
-
-  const ort =
-    document.getElementById("registerOrt")
-    .value.trim();
-
-  const leistungen =
-    document.getElementById("registerLeistungen")
-    .value.trim();
-
-  const radius =
-    parseInt(
-      document.getElementById("registerRadius").value,
-      10
-    ) || 30;
+    document
+      .getElementById("loginEmail")
+      .value
+      .trim();
 
   const password =
-    document.getElementById("registerPassword")
-    .value;
+    document
+      .getElementById("loginPassword")
+      .value;
+
+  clearMessage("loginMessage");
+
+  if (!email || !password) {
+
+    showMessage(
+      "loginMessage",
+      "Bitte E-Mail und Passwort eingeben.",
+      "error"
+    );
+
+    return;
+  }
+
+  const button =
+    document.getElementById(
+      "loginButton"
+    );
+
+  button.disabled = true;
+  button.textContent =
+    "Anmeldung läuft …";
+
+  const {
+    data,
+    error
+  } =
+    await db.auth.signInWithPassword({
+      email,
+      password
+    });
+
+  button.disabled = false;
+  button.textContent =
+    "Anmelden";
+
+  if (error) {
+
+    showMessage(
+      "loginMessage",
+      error.message,
+      "error"
+    );
+
+    return;
+  }
+
+  currentUser =
+    data.user;
+
+  await loadFirm();
+
+}
 
 
-  if(
+async function registerFirm() {
+
+  const firma =
+    document
+      .getElementById("regFirma")
+      .value
+      .trim();
+
+  const inhaber =
+    document
+      .getElementById("regInhaber")
+      .value
+      .trim();
+
+  const email =
+    document
+      .getElementById("regEmail")
+      .value
+      .trim();
+
+  const telefon =
+    document
+      .getElementById("regTelefon")
+      .value
+      .trim();
+
+  const plz =
+    document
+      .getElementById("regPlz")
+      .value
+      .trim();
+
+  const ort =
+    document
+      .getElementById("regOrt")
+      .value
+      .trim();
+
+  const leistungen =
+    document
+      .getElementById("regLeistungen")
+      .value
+      .trim();
+
+  const password =
+    document
+      .getElementById("regPassword")
+      .value;
+
+  clearMessage("registerMessage");
+
+  if (
     !firma ||
     !inhaber ||
     !email ||
     !telefon ||
     !plz ||
     !ort ||
+    !leistungen ||
     !password
-  ){
+  ) {
 
-    message.innerHTML =
-      '<div class="message error">Bitte alle Pflichtfelder ausfüllen.</div>';
-
-    return;
-  }
-
-
-  if(password.length < 6){
-
-    message.innerHTML =
-      '<div class="message error">Das Passwort muss mindestens 6 Zeichen haben.</div>';
+    showMessage(
+      "registerMessage",
+      "Bitte alle Pflichtfelder ausfüllen.",
+      "error"
+    );
 
     return;
   }
 
+  if (password.length < 6) {
 
-  const button =
-    document.querySelector("#registerCard button");
-
-  button.disabled = true;
-
-  button.textContent =
-    "Konto wird erstellt …";
-
-
-  try{
-
-    const {
-      data,
-      error
-    } =
-      await db.auth.signUp({
-
-        email:email,
-
-        password:password
-
-      });
-
-
-    if(error){
-      throw error;
-    }
-
-
-    if(!data.user){
-
-      throw new Error(
-        "Das Benutzerkonto konnte nicht erstellt werden."
-      );
-
-    }
-
-
-    /*
-      Fachbetrieb wird direkt mit dem
-      angemeldeten Benutzer verbunden.
-    */
-
-    const {
-      error:firmError
-    } =
-      await db
-        .from("fachbetriebe")
-        .insert({
-
-          firma:firma,
-
-          inhaber:inhaber,
-
-          email:email,
-
-          telefon:telefon,
-
-          plz:plz,
-
-          ort:ort,
-
-          leistungen:leistungen || null,
-
-          radius_km:radius,
-
-          owner_user_id:data.user.id,
-
-          freigeschaltet:false,
-
-          aktiv:true
-
-        });
-
-
-    if(firmError){
-      throw firmError;
-    }
-
-
-    message.innerHTML =
-      '<div class="message success">' +
-      '<strong>Registrierung erfolgreich.</strong><br><br>' +
-      'Dein Fachbetrieb wurde angelegt und wartet auf die Freischaltung.' +
-      '</div>';
-
-
-    if(!data.session){
-
-      message.innerHTML +=
-        '<div class="message info">' +
-        'Falls eine Bestätigungs-E-Mail verschickt wurde, ' +
-        'bestätige zuerst deine E-Mail-Adresse und melde dich danach an.' +
-        '</div>';
-
-    }
-
-
-    if(data.session){
-
-      await loadUser();
-
-    }
-
-
-  }catch(error){
-
-    console.error(error);
-
-    message.innerHTML =
-      '<div class="message error">' +
-      escapeHtml(
-        error.message ||
-        "Registrierung fehlgeschlagen."
-      ) +
-      '</div>';
-
-  }finally{
-
-    button.disabled = false;
-
-    button.textContent =
-      "Fachbetrieb registrieren";
-
-  }
-
-}
-
-
-/* =========================================================
-   LOGIN
-========================================================= */
-
-async function login(){
-
-  const message =
-    document.getElementById("loginMessage");
-
-  message.innerHTML = "";
-
-
-  const email =
-    document.getElementById("loginEmail")
-    .value.trim();
-
-  const password =
-    document.getElementById("loginPassword")
-    .value;
-
-
-  if(!email || !password){
-
-    message.innerHTML =
-      '<div class="message error">Bitte E-Mail und Passwort eingeben.</div>';
+    showMessage(
+      "registerMessage",
+      "Das Passwort muss mindestens 6 Zeichen haben.",
+      "error"
+    );
 
     return;
-
   }
-
-
-  const button =
-    document.querySelector("#loginCard button");
-
-  button.disabled = true;
-
-  button.textContent =
-    "Anmeldung …";
-
-
-  try{
-
-    const {
-      error
-    } =
-      await db.auth.signInWithPassword({
-
-        email:email,
-
-        password:password
-
-      });
-
-
-    if(error){
-      throw error;
-    }
-
-
-    await loadUser();
-
-
-  }catch(error){
-
-    console.error(error);
-
-    message.innerHTML =
-      '<div class="message error">' +
-      escapeHtml(error.message) +
-      '</div>';
-
-  }finally{
-
-    button.disabled = false;
-
-    button.textContent =
-      "Anmelden";
-
-  }
-
-}
-
-
-/* =========================================================
-   LOGOUT
-========================================================= */
-
-async function logout(){
-
-  await db.auth.signOut();
-
-  currentUser = null;
-
-  currentFirm = null;
-
-  document
-    .getElementById("authSection")
-    .classList.remove("hidden");
-
-  document
-    .getElementById("appSection")
-    .classList.add("hidden");
-
-  document
-    .getElementById("headerLogoutBtn")
-    .classList.add("hidden");
-
-}
-
-
-/* =========================================================
-   USER LADEN
-========================================================= */
-
-async function loadUser(){
 
   const {
     data,
     error
   } =
-    await db.auth.getUser();
+    await db.auth.signUp({
+      email,
+      password
+    });
 
+  if (error) {
 
-  if(error || !data.user){
+    showMessage(
+      "registerMessage",
+      error.message,
+      "error"
+    );
 
     return;
-
   }
 
+  if (!data.user) {
 
-  currentUser =
-    data.user;
+    showMessage(
+      "registerMessage",
+      "Registrierung konnte nicht abgeschlossen werden.",
+      "error"
+    );
 
+    return;
+  }
 
-  await loadFirm();
+  const {
+    error: firmError
+  } =
+    await db
+      .from("fachbetriebe")
+      .insert({
+        firma: firma,
+        inhaber: inhaber,
+        email: email,
+        telefon: telefon,
+        plz: plz,
+        ort: ort,
+        leistungen: leistungen,
+        radius_km: 30,
+        owner_user_id: data.user.id,
+        freigeschaltet: false,
+        abo_status: "inaktiv"
+      });
 
+  if (firmError) {
+
+    showMessage(
+      "registerMessage",
+      "Benutzer wurde erstellt, aber der Fachbetrieb konnte nicht angelegt werden: " +
+      firmError.message,
+      "error"
+    );
+
+    return;
+  }
+
+  showMessage(
+    "registerMessage",
+    "Registrierung erfolgreich. Dein Fachbetrieb muss zunächst freigeschaltet werden.",
+    "success"
+  );
+
+  setTimeout(() => {
+
+    showLogin();
+
+  }, 2000);
 }
 
 
@@ -1498,7 +1436,11 @@ async function loadUser(){
    FACHBETRIEB LADEN
 ========================================================= */
 
-async function loadFirm(){
+async function loadFirm() {
+
+  if (!currentUser) {
+    return;
+  }
 
   const {
     data,
@@ -1507,283 +1449,696 @@ async function loadFirm(){
     await db
       .from("fachbetriebe")
       .select("*")
-      .eq("owner_user_id",currentUser.id)
+      .eq("owner_user_id", currentUser.id)
       .maybeSingle();
 
+  if (error) {
 
-  if(error){
+    showLogin();
 
-    console.error(error);
-
-    alert(
-      "Das Fachbetriebsprofil konnte nicht geladen werden."
+    showMessage(
+      "loginMessage",
+      "Fachbetrieb konnte nicht geladen werden: " +
+      error.message,
+      "error"
     );
 
     return;
-
   }
 
+  if (!data) {
 
-  if(!data){
+    showLogin();
 
-    alert(
-      "Für dieses Konto wurde noch kein Fachbetriebsprofil gefunden."
+    showMessage(
+      "loginMessage",
+      "Für diesen Benutzer wurde kein Fachbetrieb gefunden.",
+      "error"
     );
 
     return;
-
   }
 
+  currentFirm = data;
 
-  currentFirm =
-    data;
-
-
-  showApp();
-
-}
-
-
-/* =========================================================
-   APP ANZEIGEN
-========================================================= */
-
-function showApp(){
-
-  document
-    .getElementById("authSection")
-    .classList.add("hidden");
-
-  document
-    .getElementById("appSection")
-    .classList.remove("hidden");
-
-  document
-    .getElementById("headerLogoutBtn")
-    .classList.remove("hidden");
-
-
-  document
-    .getElementById("welcomeText")
-    .textContent =
-      "Willkommen, " +
-      (
-        currentFirm.firma ||
-        "Fachbetrieb"
-      );
-
+  showDashboard();
 
   fillProfile();
 
-  updateApprovalMessage();
+  updateDashboard();
 
-  loadRequests();
-
-}
-
-
-/* =========================================================
-   FREISCHALTUNG
-========================================================= */
-
-function updateApprovalMessage(){
-
-  const box =
-    document.getElementById("approvalMessage");
-
-
-  if(!currentFirm){
-
-    box.innerHTML = "";
-
-    return;
-
-  }
-
-
-  if(currentFirm.freigeschaltet){
-
-    box.innerHTML =
-      '<div class="message success">' +
-      '<strong>✅ Fachbetrieb freigeschaltet</strong><br>' +
-      'Dein Profil ist für Riemer BauConnect freigeschaltet.' +
-      '</div>';
-
-  }else{
-
-    box.innerHTML =
-      '<div class="message warning">' +
-      '<strong>⏳ Freischaltung ausstehend</strong><br>' +
-      'Dein Fachbetrieb wurde registriert und wartet noch auf die Freischaltung durch Riemer BauConnect.' +
-      '</div>';
-
-  }
+  await loadRequests();
 
 }
 
 
 /* =========================================================
-   APP TABS
+   DASHBOARD
 ========================================================= */
 
-function showAppTab(tab){
-
-  const dashboard =
-    document.getElementById("dashboardView");
-
-  const requests =
-    document.getElementById("requestsView");
-
-  const profile =
-    document.getElementById("profileView");
-
-  const abo =
-    document.getElementById("aboView");
-
-
-  dashboard.classList.add("hidden");
-
-  requests.classList.add("hidden");
-
-  profile.classList.add("hidden");
-
-  abo.classList.add("hidden");
-
+function showDashboard() {
 
   document
-    .querySelectorAll(".tab")
-    .forEach(tabButton=>{
-      tabButton.classList.remove("active");
-    });
+    .getElementById("loginPage")
+    .classList.add("hidden");
+
+  document
+    .getElementById("registerPage")
+    .classList.add("hidden");
+
+  document
+    .getElementById("dashboardPage")
+    .classList.remove("hidden");
+
+  document
+    .getElementById("headerUser")
+    .textContent =
+    currentFirm?.firma || "";
+}
 
 
-  if(tab === "requests"){
+function updateDashboard() {
 
-    requests.classList.remove("hidden");
+  if (!currentFirm) {
+    return;
+  }
+
+  document
+    .getElementById("welcomeTitle")
+    .textContent =
+    "Willkommen";
+
+  document
+    .getElementById("welcomeCompany")
+    .textContent =
+    currentFirm.firma || "Fachbetrieb";
+
+
+  const approval =
+    document.getElementById(
+      "approvalStatus"
+    );
+
+  if (currentFirm.freigeschaltet) {
+
+    approval.textContent =
+      "Freigeschaltet";
+
+    approval.className =
+      "status status-ok";
+
+  } else {
+
+    approval.textContent =
+      "Wartet auf Freischaltung";
+
+    approval.className =
+      "status status-wait";
+  }
+
+
+  updateAboDisplay();
+
+  updateStats();
+
+}
+
+
+/* =========================================================
+   TABS
+========================================================= */
+
+function hideAllSections() {
+
+  document
+    .getElementById("sectionStart")
+    .classList.add("hidden");
+
+  document
+    .getElementById("sectionRequests")
+    .classList.add("hidden");
+
+  document
+    .getElementById("sectionAbo")
+    .classList.add("hidden");
+
+  document
+    .getElementById("sectionProfile")
+    .classList.add("hidden");
+
+  document
+    .getElementById("tabStart")
+    .classList.remove("active");
+
+  document
+    .getElementById("tabRequests")
+    .classList.remove("active");
+
+  document
+    .getElementById("tabAbo")
+    .classList.remove("active");
+}
+
+
+function showTab(tab) {
+
+  hideAllSections();
+
+  if (tab === "start") {
 
     document
-      .getElementById("requestsTab")
+      .getElementById("sectionStart")
+      .classList.remove("hidden");
+
+    document
+      .getElementById("tabStart")
+      .classList.add("active");
+
+  }
+
+  if (tab === "requests") {
+
+    document
+      .getElementById("sectionRequests")
+      .classList.remove("hidden");
+
+    document
+      .getElementById("tabRequests")
       .classList.add("active");
 
     loadRequests();
 
-  }else if(tab === "profile"){
+  }
 
-    profile.classList.remove("hidden");
+  if (tab === "abo") {
 
     document
-      .getElementById("profileTab")
+      .getElementById("sectionAbo")
+      .classList.remove("hidden");
+
+    document
+      .getElementById("tabAbo")
       .classList.add("active");
+
+    updateAboDisplay();
+
+  }
+
+  if (tab === "profile") {
+
+    document
+      .getElementById("sectionProfile")
+      .classList.remove("hidden");
 
     fillProfile();
 
-  }else if(tab === "abo"){
-
-    abo.classList.remove("hidden");
-
-    document
-      .getElementById("aboTab")
-      .classList.add("active");
-
-  }else{
-
-    dashboard.classList.remove("hidden");
-
-    document
-      .getElementById("dashboardTab")
-      .classList.add("active");
-
   }
 
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 }
 
 
 /* =========================================================
-   PROFIL AUSFÜLLEN
+   STATISTIKEN
 ========================================================= */
 
-function fillProfile(){
+function updateStats() {
 
-  if(!currentFirm){
+  const total =
+    currentRequests.length;
+
+  const open =
+    currentRequests.filter(
+      request =>
+        request.status !== "erledigt" &&
+        request.status !== "abgelehnt"
+    ).length;
+
+  document
+    .getElementById("statTotal")
+    .textContent =
+    total;
+
+  document
+    .getElementById("statOpen")
+    .textContent =
+    open;
+
+  let abo =
+    currentFirm?.abo_status ||
+    "inaktiv";
+
+  if (abo === "testphase") {
+    abo = "Test";
+  }
+
+  if (abo === "aktiv") {
+    abo = "Aktiv";
+  }
+
+  if (abo === "gekündigt") {
+    abo = "Ende";
+  }
+
+  if (abo === "zahlung_offen") {
+    abo = "Offen";
+  }
+
+  if (abo === "inaktiv") {
+    abo = "–";
+  }
+
+  document
+    .getElementById("statAbo")
+    .textContent =
+    abo;
+}
+
+
+/* =========================================================
+   BAUANFRAGEN
+========================================================= */
+
+async function loadRequests() {
+
+  if (!currentFirm) {
     return;
   }
 
+  const list =
+    document.getElementById(
+      "requestList"
+    );
 
-  document.getElementById("profileFirma").value =
-    currentFirm.firma || "";
+  list.innerHTML =
+    "<p class='subtitle'>Bauanfragen werden geladen …</p>";
 
-  document.getElementById("profileInhaber").value =
-    currentFirm.inhaber || "";
+  clearMessage("requestMessage");
 
-  document.getElementById("profileEmail").value =
-    currentFirm.email || "";
+  const {
+    data,
+    error
+  } =
+    await db
+      .from("bauanfragen")
+      .select("*")
+      .eq("fachbetrieb_id", currentFirm.id)
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      );
 
-  document.getElementById("profileTelefon").value =
-    currentFirm.telefon || "";
+  if (error) {
 
-  document.getElementById("profilePlz").value =
-    currentFirm.plz || "";
+    list.innerHTML = "";
 
-  document.getElementById("profileOrt").value =
-    currentFirm.ort || "";
+    showMessage(
+      "requestMessage",
+      "Bauanfragen konnten nicht geladen werden: " +
+      error.message,
+      "error"
+    );
 
-  document.getElementById("profileLeistungen").value =
-    currentFirm.leistungen || "";
+    return;
+  }
 
-  document.getElementById("profileRadius").value =
-    currentFirm.radius_km || 30;
+  currentRequests =
+    data || [];
+
+  updateStats();
+
+  renderRequests();
 
 }
 
 
+function renderRequests() {
+
+  const list =
+    document.getElementById(
+      "requestList"
+    );
+
+  if (!currentRequests.length) {
+
+    list.innerHTML =
+      `
+      <div class="card">
+        <h3>Noch keine Bauanfragen</h3>
+        <p class="subtitle">
+          Sobald dir ein Projekt zugewiesen wurde,
+          erscheint es hier.
+        </p>
+      </div>
+      `;
+
+    return;
+  }
+
+  list.innerHTML = "";
+
+  currentRequests.forEach(
+    request => {
+
+      const item =
+        document.createElement("div");
+
+      item.className =
+        "request";
+
+      item.innerHTML = `
+        <div class="request-title">
+
+          <div class="request-service">
+            ${escapeHtml(
+              request.service ||
+              "Bauanfrage"
+            )}
+          </div>
+
+          <div class="request-date">
+            ${escapeHtml(
+              formatDateTime(
+                request.created_at
+              )
+            )}
+          </div>
+
+        </div>
+
+        <div class="request-row">
+          📍 <strong>PLZ:</strong>
+          ${escapeHtml(
+            request.plz || "–"
+          )}
+          ${
+            request.area
+              ? " · " +
+                escapeHtml(
+                  request.area
+                )
+              : ""
+          }
+        </div>
+
+        <div class="request-row">
+          👤 <strong>Name:</strong>
+          ${escapeHtml(
+            request.name || "–"
+          )}
+        </div>
+
+        <div class="request-row">
+          📞 <strong>Telefon:</strong>
+          ${escapeHtml(
+            request.phone || "–"
+          )}
+        </div>
+
+        <div class="request-row">
+          ✉️ <strong>E-Mail:</strong>
+          ${escapeHtml(
+            request.email || "–"
+          )}
+        </div>
+
+        <div class="request-description">
+          <strong>Beschreibung:</strong><br>
+          ${escapeHtml(
+            request.description ||
+            "Keine Beschreibung angegeben."
+          )}
+        </div>
+
+        <select
+          id="status-${request.id}"
+          class="status-select"
+        >
+
+          <option
+            value="neu"
+            ${
+              request.status === "neu"
+                ? "selected"
+                : ""
+            }
+          >
+            Neu
+          </option>
+
+          <option
+            value="angesehen"
+            ${
+              request.status === "angesehen"
+                ? "selected"
+                : ""
+            }
+          >
+            Angesehen
+          </option>
+
+          <option
+            value="in_bearbeitung"
+            ${
+              request.status === "in_bearbeitung"
+                ? "selected"
+                : ""
+            }
+          >
+            In Bearbeitung
+          </option>
+
+          <option
+            value="angenommen"
+            ${
+              request.status === "angenommen"
+                ? "selected"
+                : ""
+            }
+          >
+            Angenommen
+          </option>
+
+          <option
+            value="abgelehnt"
+            ${
+              request.status === "abgelehnt"
+                ? "selected"
+                : ""
+            }
+          >
+            Abgelehnt
+          </option>
+
+          <option
+            value="erledigt"
+            ${
+              request.status === "erledigt"
+                ? "selected"
+                : ""
+            }
+          >
+            Erledigt
+          </option>
+
+        </select>
+
+        <button
+          class="btn-yellow status-save"
+          onclick="saveRequestStatus('${request.id}')"
+        >
+          Status speichern
+        </button>
+      `;
+
+      list.appendChild(item);
+
+    }
+  );
+}
+
+
+async function saveRequestStatus(
+  requestId
+) {
+
+  const select =
+    document.getElementById(
+      "status-" + requestId
+    );
+
+  if (!select) {
+    return;
+  }
+
+  const newStatus =
+    select.value;
+
+  const {
+    error
+  } =
+    await db
+      .from("bauanfragen")
+      .update({
+        status: newStatus
+      })
+      .eq("id", requestId)
+      .eq(
+        "fachbetrieb_id",
+        currentFirm.id
+      );
+
+  if (error) {
+
+    showMessage(
+      "requestMessage",
+      "Status konnte nicht gespeichert werden: " +
+      error.message,
+      "error"
+    );
+
+    return;
+  }
+
+  showMessage(
+    "requestMessage",
+    "Status erfolgreich gespeichert.",
+    "success"
+  );
+
+  await loadRequests();
+}
+
+
 /* =========================================================
-   PROFIL SPEICHERN
+   PROFIL
 ========================================================= */
 
-async function saveProfile(){
+function fillProfile() {
 
-  const message =
-    document.getElementById("profileMessage");
+  if (!currentFirm) {
+    return;
+  }
 
-  message.innerHTML = "";
+  document
+    .getElementById("profileFirma")
+    .value =
+    currentFirm.firma || "";
+
+  document
+    .getElementById("profileInhaber")
+    .value =
+    currentFirm.inhaber || "";
+
+  document
+    .getElementById("profileEmail")
+    .value =
+    currentFirm.email || "";
+
+  document
+    .getElementById("profileTelefon")
+    .value =
+    currentFirm.telefon || "";
+
+  document
+    .getElementById("profilePlz")
+    .value =
+    currentFirm.plz || "";
+
+  document
+    .getElementById("profileOrt")
+    .value =
+    currentFirm.ort || "";
+
+  document
+    .getElementById("profileLeistungen")
+    .value =
+    currentFirm.leistungen || "";
+
+  document
+    .getElementById("profileRadius")
+    .value =
+    currentFirm.radius_km || 30;
+}
 
 
-  const updates = {
+async function saveProfile() {
+
+  if (!currentFirm) {
+    return;
+  }
+
+  const updateData = {
 
     firma:
-      document.getElementById("profileFirma")
-      .value.trim(),
+      document
+        .getElementById(
+          "profileFirma"
+        )
+        .value
+        .trim(),
 
     inhaber:
-      document.getElementById("profileInhaber")
-      .value.trim(),
+      document
+        .getElementById(
+          "profileInhaber"
+        )
+        .value
+        .trim(),
 
     email:
-      document.getElementById("profileEmail")
-      .value.trim(),
+      document
+        .getElementById(
+          "profileEmail"
+        )
+        .value
+        .trim(),
 
     telefon:
-      document.getElementById("profileTelefon")
-      .value.trim(),
+      document
+        .getElementById(
+          "profileTelefon"
+        )
+        .value
+        .trim(),
 
     plz:
-      document.getElementById("profilePlz")
-      .value.trim(),
+      document
+        .getElementById(
+          "profilePlz"
+        )
+        .value
+        .trim(),
 
     ort:
-      document.getElementById("profileOrt")
-      .value.trim(),
+      document
+        .getElementById(
+          "profileOrt"
+        )
+        .value
+        .trim(),
 
     leistungen:
-      document.getElementById("profileLeistungen")
-      .value.trim() || null,
+      document
+        .getElementById(
+          "profileLeistungen"
+        )
+        .value
+        .trim(),
 
     radius_km:
-      parseInt(
-        document.getElementById("profileRadius").value,
-        10
+      Number(
+        document
+          .getElementById(
+            "profileRadius"
+          )
+          .value
       ) || 30
-
   };
 
 
@@ -1793,445 +2148,371 @@ async function saveProfile(){
   } =
     await db
       .from("fachbetriebe")
-      .update(updates)
-      .eq("id",currentFirm.id)
+      .update(updateData)
+      .eq("id", currentFirm.id)
       .select()
       .single();
 
+  if (error) {
 
-  if(error){
-
-    console.error(error);
-
-    message.innerHTML =
-      '<div class="message error">' +
-      escapeHtml(error.message) +
-      '</div>';
+    showMessage(
+      "profileMessage",
+      "Profil konnte nicht gespeichert werden: " +
+      error.message,
+      "error"
+    );
 
     return;
-
   }
-
 
   currentFirm =
     data;
 
+  document
+    .getElementById("headerUser")
+    .textContent =
+    currentFirm.firma || "";
 
-  message.innerHTML =
-    '<div class="message success">' +
-    'Profil erfolgreich gespeichert.' +
-    '</div>';
+  updateDashboard();
 
-
-  updateApprovalMessage();
-
+  showMessage(
+    "profileMessage",
+    "Profil erfolgreich gespeichert.",
+    "success"
+  );
 }
 
 
 /* =========================================================
-   BAUANFRAGEN LADEN
+   ABO
 ========================================================= */
 
-async function loadRequests(){
+function updateAboDisplay() {
 
-  if(!currentFirm){
+  if (!currentFirm) {
     return;
   }
 
+  const status =
+    currentFirm.abo_status ||
+    "inaktiv";
 
-  const message =
-    document.getElementById("requestsMessage");
+  const statusElement =
+    document.getElementById(
+      "aboStatus"
+    );
 
-  const list =
-    document.getElementById("requestList");
+  const statusText =
+    document.getElementById(
+      "aboStatusText"
+    );
 
+  const trialEnd =
+    document.getElementById(
+      "aboTrialEnd"
+    );
 
-  message.innerHTML =
-    '<div class="message info">Bauanfragen werden geladen …</div>';
+  const periodEnd =
+    document.getElementById(
+      "aboPeriodEnd"
+    );
 
-  list.innerHTML = "";
+  const cancel =
+    document.getElementById(
+      "aboCancel"
+    );
 
-
-  const {
-    data,
-    error
-  } =
-    await db
-      .from("bauanfragen")
-      .select("*")
-      .eq("fachbetrieb_id",currentFirm.id)
-      .order("created_at",{ascending:false});
-
-
-  if(error){
-
-    console.error(error);
-
-    message.innerHTML =
-      '<div class="message error">' +
-      'Bauanfragen konnten nicht geladen werden:<br>' +
-      escapeHtml(error.message) +
-      '</div>';
-
-    return;
-
-  }
-
-
-  message.innerHTML = "";
-
-
-  const requests =
-    data || [];
-
-
-  document
-    .getElementById("requestCount")
-    .textContent =
-      requests.length;
-
-
-  const openRequests =
-    requests.filter(
-      item =>
-        item.status !== "erledigt" &&
-        item.status !== "abgelehnt"
+  const button =
+    document.getElementById(
+      "aboButton"
     );
 
 
-  document
-    .getElementById("openRequestCount")
-    .textContent =
-      openRequests.length;
+  let readable =
+    "Inaktiv";
+
+  let css =
+    "status status-off";
 
 
-  if(requests.length === 0){
+  if (status === "testphase") {
 
-    list.innerHTML =
-      '<div class="message info">' +
-      'Aktuell wurden dir noch keine Bauanfragen zugewiesen.' +
-      '</div>';
+    readable =
+      "30-Tage-Testphase";
 
-    return;
+    css =
+      "status status-wait";
 
+  } else if (status === "aktiv") {
+
+    readable =
+      "Aktiv";
+
+    css =
+      "status status-ok";
+
+  } else if (status === "gekündigt") {
+
+    readable =
+      "Gekündigt";
+
+    css =
+      "status status-off";
+
+  } else if (
+    status === "zahlung_offen"
+  ) {
+
+    readable =
+      "Zahlung offen";
+
+    css =
+      "status status-wait";
   }
 
 
-  requests.forEach(request=>{
+  statusElement.textContent =
+    readable;
 
-    list.appendChild(
-      createRequestCard(request)
+  statusElement.className =
+    css;
+
+  statusText.textContent =
+    readable;
+
+  trialEnd.textContent =
+    formatDate(
+      currentFirm.abo_trial_end
     );
 
-  });
+  periodEnd.textContent =
+    formatDate(
+      currentFirm.abo_current_period_end
+    );
 
+  cancel.textContent =
+    currentFirm.abo_cancel_at_period_end
+      ? "Zum Periodenende gekündigt"
+      : "Nicht gekündigt";
+
+
+  if (
+    status === "testphase" ||
+    status === "aktiv"
+  ) {
+
+    button.textContent =
+      "Abo bereits aktiv";
+
+    button.disabled =
+      true;
+
+    button.style.opacity =
+      "0.6";
+
+  } else {
+
+    button.textContent =
+      "🚀 30 Tage kostenlos testen";
+
+    button.disabled =
+      false;
+
+    button.style.opacity =
+      "1";
+  }
 }
 
 
 /* =========================================================
-   ANFRAGE-KARTE
+   NEUER STRIPE CHECKOUT
 ========================================================= */
 
-function createRequestCard(request){
+async function startStripeCheckout() {
 
-  const item =
-    document.createElement("div");
+  if (!currentUser) {
 
-  item.className =
-    "request";
+    alert(
+      "Bitte zuerst anmelden."
+    );
 
+    return;
+  }
 
-  const safeStatus =
-    request.status || "neu";
+  if (!currentFirm) {
 
+    alert(
+      "Fachbetrieb konnte nicht geladen werden."
+    );
 
-  item.innerHTML = `
+    return;
+  }
 
-    <div class="request-top">
+  if (
+    currentFirm.abo_status ===
+      "testphase" ||
+    currentFirm.abo_status ===
+      "aktiv"
+  ) {
 
-      <div>
+    alert(
+      "Für diesen Fachbetrieb ist bereits ein Abo vorhanden."
+    );
 
-        <div class="request-service">
-          ${escapeHtml(
-            request.service ||
-            "Bauanfrage"
-          )}
-        </div>
-
-        <div style="margin-top:8px;">
-
-          <span class="status-badge status-${escapeHtml(safeStatus)}">
-            ${escapeHtml(
-              statusText(safeStatus)
-            )}
-          </span>
-
-        </div>
-
-      </div>
+    return;
+  }
 
 
-      <div class="request-date">
+  const buttons =
+    document.querySelectorAll(
+      "button"
+    );
 
-        ${escapeHtml(
-          formatDate(
-            request.created_at
-          )
-        )}
+  buttons.forEach(
+    button => {
 
-      </div>
+      if (
+        button.textContent.includes(
+          "kostenlos testen"
+        )
+      ) {
 
-    </div>
+        button.disabled =
+          true;
 
-
-    <div class="request-info">
-
-      📍 <strong>PLZ:</strong>
-      ${escapeHtml(
-        request.plz || "–"
-      )}
-
-      <br>
-
-      📐 <strong>Fläche / Umfang:</strong>
-      ${escapeHtml(
-        request.area || "–"
-      )}
-
-      <br>
-
-      👤 <strong>Name:</strong>
-      ${escapeHtml(
-        request.name || "–"
-      )}
-
-      <br>
-
-      📞 <strong>Telefon:</strong>
-      ${escapeHtml(
-        request.phone || "–"
-      )}
-
-      <br>
-
-      ✉️ <strong>E-Mail:</strong>
-      ${escapeHtml(
-        request.email || "–"
-      )}
-
-    </div>
+        button.textContent =
+          "Stripe wird geöffnet …";
+      }
+    }
+  );
 
 
-    ${
-      request.description
-      ?
-      `
-      <div class="request-description">
+  try {
 
-        <strong>Beschreibung:</strong><br><br>
+    const {
+      data,
+      error
+    } =
+      await db.functions.invoke(
+        "stripe-checkout"
+      );
 
-        ${escapeHtml(
-          request.description
-        )}
 
-      </div>
-      `
-      :
-      ""
+    if (error) {
+
+      console.error(
+        "Stripe Checkout Error:",
+        error
+      );
+
+      throw new Error(
+        error.message ||
+        "Stripe Checkout konnte nicht gestartet werden."
+      );
     }
 
 
-    <div class="request-actions">
+    if (
+      !data ||
+      !data.url
+    ) {
 
-      <label>
-        Status
-      </label>
-
-      <select
-        id="status-${escapeHtml(request.id)}">
-
-        <option
-          value="neu"
-          ${safeStatus==="neu" ? "selected" : ""}>
-          Neu
-        </option>
-
-        <option
-          value="angesehen"
-          ${safeStatus==="angesehen" ? "selected" : ""}>
-          Angesehen
-        </option>
-
-        <option
-          value="in_bearbeitung"
-          ${safeStatus==="in_bearbeitung" ? "selected" : ""}>
-          In Bearbeitung
-        </option>
-
-        <option
-          value="angenommen"
-          ${safeStatus==="angenommen" ? "selected" : ""}>
-          Angenommen
-        </option>
-
-        <option
-          value="abgelehnt"
-          ${safeStatus==="abgelehnt" ? "selected" : ""}>
-          Abgelehnt
-        </option>
-
-        <option
-          value="erledigt"
-          ${safeStatus==="erledigt" ? "selected" : ""}>
-          Erledigt
-        </option>
-
-      </select>
+      throw new Error(
+        "Stripe hat keine Checkout-URL zurückgegeben."
+      );
+    }
 
 
-      <button
-        onclick="updateRequestStatus('${escapeHtml(request.id)}')">
-
-        Status speichern
-
-      </button>
-
-      <div
-        id="status-message-${escapeHtml(request.id)}">
-      </div>
-
-    </div>
-
-  `;
+    window.location.href =
+      data.url;
 
 
-  return item;
-
-}
-
-
-/* =========================================================
-   STATUS ÄNDERN
-========================================================= */
-
-async function updateRequestStatus(id){
-
-  const select =
-    document.getElementById(
-      "status-" + id
-    );
-
-
-  const message =
-    document.getElementById(
-      "status-message-" + id
-    );
-
-
-  if(!select){
-    return;
-  }
-
-
-  const newStatus =
-    select.value;
-
-
-  message.innerHTML =
-    '<div class="message info">Wird gespeichert …</div>';
-
-
-  const {
-    error
-  } =
-    await db
-      .from("bauanfragen")
-      .update({
-        status:newStatus
-      })
-      .eq("id",id)
-      .eq("fachbetrieb_id",currentFirm.id);
-
-
-  if(error){
+  } catch (error) {
 
     console.error(error);
 
-    message.innerHTML =
-      '<div class="message error">' +
-      escapeHtml(error.message) +
-      '</div>';
+    alert(
+      "Stripe konnte nicht geöffnet werden:\n\n" +
+      error.message
+    );
 
-    return;
+    buttons.forEach(
+      button => {
 
+        if (
+          button.textContent.includes(
+            "Stripe"
+          )
+        ) {
+
+          button.disabled =
+            false;
+
+          button.textContent =
+            "🚀 30 Tage kostenlos testen";
+        }
+
+      }
+    );
   }
-
-
-  message.innerHTML =
-    '<div class="message success">' +
-    'Status erfolgreich gespeichert.' +
-    '</div>';
-
-
-  setTimeout(()=>{
-
-    message.innerHTML = "";
-
-  },3000);
-
-
-  loadRequests();
-
 }
 
 
 /* =========================================================
-   SESSION BEIM START PRÜFEN
+   LOGOUT
 ========================================================= */
 
-async function init(){
+async function logout() {
+
+  await db.auth.signOut();
+
+  currentUser = null;
+  currentFirm = null;
+  currentRequests = [];
+
+  document
+    .getElementById("dashboardPage")
+    .classList.add("hidden");
+
+  showLogin();
+}
+
+
+/* =========================================================
+   AUTH STATUS
+========================================================= */
+
+async function checkSession() {
 
   const {
     data
   } =
     await db.auth.getSession();
 
+  if (
+    data &&
+    data.session &&
+    data.session.user
+  ) {
 
-  if(data && data.session){
+    currentUser =
+      data.session.user;
 
-    await loadUser();
+    await loadFirm();
+
+  } else {
+
+    showLogin();
 
   }
-
 }
-
-
-/* =========================================================
-   AUTH STATE
-========================================================= */
-
-db.auth.onAuthStateChange(
-  async(event,session)=>{
-
-    if(
-      session &&
-      !currentFirm
-    ){
-
-      currentUser =
-        session.user;
-
-    }
-
-  }
-);
 
 
 /* =========================================================
    START
 ========================================================= */
 
-init();
+checkSession();
 
 </script>
 
