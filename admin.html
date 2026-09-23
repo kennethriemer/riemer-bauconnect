@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#171717">
 
 <title>Riemer BauConnect – Admin</title>
@@ -192,20 +192,29 @@ button:disabled {
   color: #111;
 }
 
-.status-kontakt {
+.status-angesehen {
   background: #2478d8;
+  color: #fff;
 }
 
-.status-angebot {
+.status-bearbeitung {
   background: #e87818;
+  color: #fff;
 }
 
-.status-auftrag {
+.status-angenommen {
   background: #239447;
+  color: #fff;
+}
+
+.status-abgelehnt {
+  background: #a52a2a;
+  color: #fff;
 }
 
 .status-erledigt {
   background: #555;
+  color: #fff;
 }
 
 .detail-row {
@@ -338,7 +347,8 @@ button:disabled {
   width: auto;
 }
 
-.assign-box {
+.assign-box,
+.approval-box {
   background: #181818;
   border: 1px solid #444;
   border-radius: 12px;
@@ -346,13 +356,15 @@ button:disabled {
   margin-top: 18px;
 }
 
-.assign-title {
+.assign-title,
+.approval-title {
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
-.assign-info {
+.assign-info,
+.approval-text {
   color: #aaa;
   font-size: 14px;
   margin-bottom: 12px;
@@ -362,27 +374,46 @@ button:disabled {
   margin-top: 10px;
 }
 
-.approval-box {
-  background: #181818;
-  border: 1px solid #444;
-  border-radius: 12px;
-  padding: 15px;
-  margin-top: 18px;
+/* FILTER */
+
+.status-filter-wrap {
+  margin-top: 15px;
 }
 
-.approval-title {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 8px;
+.status-filter {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 5px;
 }
 
-.approval-text {
+.status-filter button {
+  width: auto;
+  min-width: max-content;
+  padding: 10px 13px;
+  background: #333;
+  color: #fff;
+  border: 1px solid #555;
+  border-radius: 999px;
+}
+
+.status-filter button.active {
+  background: #ffd400;
+  color: #111;
+  border-color: #ffd400;
+}
+
+.request.hidden-by-filter {
+  display: none !important;
+}
+
+.filter-info {
   color: #aaa;
+  margin: 10px 0 15px;
   font-size: 14px;
-  margin-bottom: 12px;
 }
 
-@media (max-width: 600px) {
+@media (max-width:600px) {
 
   .wrap {
     padding: 14px;
@@ -408,6 +439,7 @@ button:disabled {
   .action-row {
     grid-template-columns: 1fr;
   }
+
 }
 
 </style>
@@ -500,7 +532,9 @@ button:disabled {
   </div>
 
 
-  <!-- BAUANFRAGEN -->
+  <!-- =========================
+       BAUANFRAGEN
+  ========================= -->
 
   <div id="requestsSection">
 
@@ -528,9 +562,79 @@ button:disabled {
 
         </div>
 
-        <div id="loading" class="loading">
+
+        <!-- FILTER -->
+
+        <div class="status-filter-wrap">
+
+          <div
+            id="statusFilter"
+            class="status-filter"
+          >
+
+            <button
+              class="active"
+              onclick="setRequestFilter('alle',this)"
+            >
+              Alle
+            </button>
+
+            <button
+              onclick="setRequestFilter('neu',this)"
+            >
+              🆕 Neu
+            </button>
+
+            <button
+              onclick="setRequestFilter('angesehen',this)"
+            >
+              👀 Angesehen
+            </button>
+
+            <button
+              onclick="setRequestFilter('in_bearbeitung',this)"
+            >
+              🔧 Bearbeitung
+            </button>
+
+            <button
+              onclick="setRequestFilter('angenommen',this)"
+            >
+              🤝 Angenommen
+            </button>
+
+            <button
+              onclick="setRequestFilter('abgelehnt',this)"
+            >
+              ❌ Abgelehnt
+            </button>
+
+            <button
+              onclick="setRequestFilter('erledigt',this)"
+            >
+              ✅ Erledigt
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div
+          id="requestFilterInfo"
+          class="filter-info"
+        >
+          Alle Bauanfragen
+        </div>
+
+
+        <div
+          id="loading"
+          class="loading"
+        >
           Lade Bauanfragen...
         </div>
+
 
         <div id="requests"></div>
 
@@ -541,7 +645,10 @@ button:disabled {
 
     <!-- DETAIL -->
 
-    <div id="detailView" class="hidden">
+    <div
+      id="detailView"
+      class="hidden"
+    >
 
       <button
         class="back"
@@ -550,70 +657,127 @@ button:disabled {
         ← Zurück zu den Bauanfragen
       </button>
 
+
       <div class="card">
 
         <h2 id="detailTitle">
           Bauanfrage
         </h2>
 
+
         <div class="detail-row">
+
           <div class="detail-label">
             Leistung
           </div>
-          <div id="detailService" class="detail-value"></div>
+
+          <div
+            id="detailService"
+            class="detail-value"
+          ></div>
+
         </div>
 
+
         <div class="detail-row">
+
           <div class="detail-label">
             Datum
           </div>
-          <div id="detailDate" class="detail-value"></div>
+
+          <div
+            id="detailDate"
+            class="detail-value"
+          ></div>
+
         </div>
 
+
         <div class="detail-row">
+
           <div class="detail-label">
             PLZ
           </div>
-          <div id="detailPlz" class="detail-value"></div>
+
+          <div
+            id="detailPlz"
+            class="detail-value"
+          ></div>
+
         </div>
 
+
         <div class="detail-row">
+
           <div class="detail-label">
             Ort / Bereich
           </div>
-          <div id="detailArea" class="detail-value"></div>
+
+          <div
+            id="detailArea"
+            class="detail-value"
+          ></div>
+
         </div>
 
+
         <div class="detail-row">
+
           <div class="detail-label">
             Beschreibung
           </div>
-          <div id="detailDescription" class="detail-value"></div>
+
+          <div
+            id="detailDescription"
+            class="detail-value"
+          ></div>
+
         </div>
 
+
         <div class="detail-row">
+
           <div class="detail-label">
             Name
           </div>
-          <div id="detailName" class="detail-value"></div>
+
+          <div
+            id="detailName"
+            class="detail-value"
+          ></div>
+
         </div>
 
+
         <div class="detail-row">
+
           <div class="detail-label">
             Telefon
           </div>
-          <div id="detailPhone" class="detail-value"></div>
+
+          <div
+            id="detailPhone"
+            class="detail-value"
+          ></div>
+
         </div>
 
+
         <div class="detail-row">
+
           <div class="detail-label">
             E-Mail
           </div>
-          <div id="detailEmail" class="detail-value"></div>
+
+          <div
+            id="detailEmail"
+            class="detail-value"
+          ></div>
+
         </div>
 
 
-        <!-- FACHBETRIEB ZUWEISEN -->
+        <!-- ZUWEISUNG -->
 
         <div class="assign-box">
 
@@ -622,8 +786,10 @@ button:disabled {
           </div>
 
           <div class="assign-info">
-            Es werden nur aktive und freigeschaltete Fachbetriebe angezeigt.
+            Es werden nur aktive und freigeschaltete
+            Fachbetriebe angezeigt.
           </div>
+
 
           <select id="firmSelect">
 
@@ -633,12 +799,14 @@ button:disabled {
 
           </select>
 
+
           <button
             onclick="saveAssignment()"
             class="save-button"
           >
             💾 Fachbetrieb zuweisen
           </button>
+
 
           <div
             id="assignmentMessage"
@@ -656,36 +824,43 @@ button:disabled {
             Status ändern
           </div>
 
+
           <select id="statusSelect">
 
             <option value="neu">
-              🟡 Neu
+              🆕 Neu
             </option>
 
-            <option value="kontakt">
-              🔵 Kontakt aufgenommen
+            <option value="angesehen">
+              👀 Angesehen
             </option>
 
-            <option value="angebot">
-              🟠 Angebot
+            <option value="in_bearbeitung">
+              🔧 In Bearbeitung
             </option>
 
-            <option value="auftrag">
-              🟢 Auftrag
+            <option value="angenommen">
+              🤝 Angenommen
+            </option>
+
+            <option value="abgelehnt">
+              ❌ Abgelehnt
             </option>
 
             <option value="erledigt">
-              ⚫ Erledigt
+              ✅ Erledigt
             </option>
 
           </select>
+
 
           <button
             onclick="saveStatus()"
             class="save-button"
           >
-            Status speichern
+            💾 Status speichern
           </button>
+
 
           <div id="statusMessage"></div>
 
@@ -698,14 +873,14 @@ button:disabled {
   </div>
 
 
-  <!-- FACHBETRIEBE -->
+  <!-- =========================
+       FACHBETRIEBE
+  ========================= -->
 
   <div
     id="firmsSection"
     class="hidden"
   >
-
-    <!-- LISTE -->
 
     <div id="firmsListView">
 
@@ -731,9 +906,14 @@ button:disabled {
 
         </div>
 
-        <div id="firmsLoading" class="loading">
+
+        <div
+          id="firmsLoading"
+          class="loading"
+        >
           Lade Fachbetriebe...
         </div>
+
 
         <div id="firms"></div>
 
@@ -742,7 +922,7 @@ button:disabled {
     </div>
 
 
-    <!-- FORMULAR -->
+    <!-- FIRMENFORMULAR -->
 
     <div
       id="firmFormView"
@@ -756,16 +936,19 @@ button:disabled {
         ← Zurück zu den Fachbetrieben
       </button>
 
+
       <div class="card">
 
         <h2 id="firmFormTitle">
           Fachbetrieb hinzufügen
         </h2>
 
+
         <input
           type="hidden"
           id="firmId"
         >
+
 
         <label class="form-label">
           Firmenname *
@@ -777,6 +960,7 @@ button:disabled {
           placeholder="z. B. Muster Tiefbau GmbH"
         >
 
+
         <label class="form-label">
           Inhaber
         </label>
@@ -786,6 +970,7 @@ button:disabled {
           type="text"
           placeholder="Vor- und Nachname"
         >
+
 
         <label class="form-label">
           E-Mail
@@ -797,6 +982,7 @@ button:disabled {
           placeholder="firma@example.de"
         >
 
+
         <label class="form-label">
           Telefon
         </label>
@@ -806,6 +992,7 @@ button:disabled {
           type="tel"
           placeholder="0461 123456"
         >
+
 
         <label class="form-label">
           PLZ
@@ -819,6 +1006,7 @@ button:disabled {
           placeholder="24955"
         >
 
+
         <label class="form-label">
           Ort
         </label>
@@ -829,6 +1017,7 @@ button:disabled {
           placeholder="Harrislee"
         >
 
+
         <label class="form-label">
           Leistungen
         </label>
@@ -837,6 +1026,7 @@ button:disabled {
           id="firmServices"
           placeholder="Straßenbau, Pflasterarbeiten, Erdarbeiten..."
         ></textarea>
+
 
         <label class="form-label">
           Radius in km
@@ -850,8 +1040,6 @@ button:disabled {
         >
 
 
-        <!-- AKTIV -->
-
         <label class="checkbox-row">
 
           <input
@@ -864,8 +1052,6 @@ button:disabled {
 
         </label>
 
-
-        <!-- FREIGESCHALTET -->
 
         <label class="checkbox-row">
 
@@ -901,12 +1087,14 @@ button:disabled {
           💾 Fachbetrieb speichern
         </button>
 
+
         <button
           onclick="showFirmsList()"
           class="cancel-button"
         >
           Abbrechen
         </button>
+
 
         <div id="firmMessage"></div>
 
@@ -940,6 +1128,7 @@ const supabaseClient =
 
 let currentRequest = null;
 let editingFirmId = null;
+let currentRequestFilter = "alle";
 
 
 /* =========================================
@@ -949,15 +1138,22 @@ let editingFirmId = null;
 async function login() {
 
   const email =
-    document.getElementById("email").value.trim();
+    document
+      .getElementById("email")
+      .value
+      .trim();
 
   const password =
-    document.getElementById("password").value;
+    document
+      .getElementById("password")
+      .value;
 
   const error =
-    document.getElementById("loginError");
+    document
+      .getElementById("loginError");
 
   error.textContent = "";
+
 
   if (!email || !password) {
 
@@ -965,15 +1161,21 @@ async function login() {
       "Bitte E-Mail und Passwort eingeben.";
 
     return;
+
   }
+
 
   const result =
     await supabaseClient.auth.signInWithPassword({
 
-      email: email,
-      password: password
+      email:
+        email,
+
+      password:
+        password
 
     });
+
 
   if (result.error) {
 
@@ -981,7 +1183,9 @@ async function login() {
       result.error.message;
 
     return;
+
   }
+
 
   showAdmin();
 
@@ -996,9 +1200,11 @@ async function logout() {
 
   await supabaseClient.auth.signOut();
 
+
   document
     .getElementById("adminScreen")
     .classList.add("hidden");
+
 
   document
     .getElementById("loginScreen")
@@ -1017,9 +1223,11 @@ function showAdmin() {
     .getElementById("loginScreen")
     .classList.add("hidden");
 
+
   document
     .getElementById("adminScreen")
     .classList.remove("hidden");
+
 
   showRequestsTab();
 
@@ -1036,17 +1244,23 @@ function showRequestsTab() {
     .getElementById("requestsSection")
     .classList.remove("hidden");
 
+
   document
     .getElementById("firmsSection")
     .classList.add("hidden");
+
 
   document
     .getElementById("requestsTab")
     .classList.add("active");
 
+
   document
     .getElementById("firmsTab")
     .classList.remove("active");
+
+
+  showList();
 
   loadRequests();
 
@@ -1059,17 +1273,21 @@ function showFirmsTab() {
     .getElementById("requestsSection")
     .classList.add("hidden");
 
+
   document
     .getElementById("firmsSection")
     .classList.remove("hidden");
+
 
   document
     .getElementById("requestsTab")
     .classList.remove("active");
 
+
   document
     .getElementById("firmsTab")
     .classList.add("active");
+
 
   showFirmsList();
 
@@ -1083,14 +1301,20 @@ function showFirmsTab() {
 async function loadRequests() {
 
   const loading =
-    document.getElementById("loading");
+    document
+      .getElementById("loading");
 
   const container =
-    document.getElementById("requests");
+    document
+      .getElementById("requests");
 
-  loading.style.display = "block";
 
-  container.innerHTML = "";
+  loading.style.display =
+    "block";
+
+  container.innerHTML =
+    "";
+
 
   const result =
     await supabaseClient
@@ -1103,7 +1327,10 @@ async function loadRequests() {
         }
       );
 
-  loading.style.display = "none";
+
+  loading.style.display =
+    "none";
+
 
   if (result.error) {
 
@@ -1114,7 +1341,9 @@ async function loadRequests() {
       </div>`;
 
     return;
+
   }
+
 
   if (
     !result.data ||
@@ -1127,75 +1356,243 @@ async function loadRequests() {
       </div>`;
 
     return;
+
   }
 
-  result.data.forEach(request => {
 
-    const item =
-      document.createElement("div");
+  result.data.forEach(
+    request => {
 
-    item.className =
-      "card request";
+      const item =
+        document.createElement(
+          "div"
+        );
 
-    const status =
-      request.status || "neu";
 
-    const assignedText =
-      request.fachbetrieb_id
-        ? "<br>🏢 Fachbetrieb zugewiesen"
-        : "";
+      item.className =
+        "card request";
 
-    item.innerHTML = `
 
-      <div class="request-title">
+      const status =
+        request.status ||
+        "neu";
 
-        ${escapeHtml(
-          request.service ||
-          "Bauanfrage"
-        )}
 
-      </div>
+      item.dataset.status =
+        status;
 
-      <div class="request-info">
 
-        PLZ:
-        ${escapeHtml(
-          request.plz || "-"
-        )}
+      if (
+        currentRequestFilter !== "alle" &&
+        status !== currentRequestFilter
+      ) {
 
-        <br>
+        item.classList.add(
+          "hidden-by-filter"
+        );
 
-        ${escapeHtml(
-          request.name || "-"
-        )}
+      }
 
-        <br>
 
-        ${formatDate(
-          request.created_at
-        )}
+      const assignedText =
+        request.fachbetrieb_id
+          ? "<br>🏢 Fachbetrieb zugewiesen"
+          : "";
 
-        ${assignedText}
 
-      </div>
+      item.innerHTML = `
 
-      <span class="status ${getStatusClass(status)}">
+        <div class="request-title">
 
-        ${getStatusText(status)}
+          ${escapeHtml(
+            request.service ||
+            "Bauanfrage"
+          )}
 
-      </span>
+        </div>
 
-    `;
 
-    item.onclick = () => {
+        <div class="request-info">
 
-      openRequest(request);
+          PLZ:
+          ${escapeHtml(
+            request.plz ||
+            "-"
+          )}
 
-    };
+          <br>
 
-    container.appendChild(item);
+          ${escapeHtml(
+            request.name ||
+            "-"
+          )}
 
-  });
+          <br>
+
+          ${formatDate(
+            request.created_at
+          )}
+
+          ${assignedText}
+
+        </div>
+
+
+        <span
+          class="status ${getStatusClass(status)}"
+        >
+
+          ${getStatusText(status)}
+
+        </span>
+
+      `;
+
+
+      item.onclick =
+        () => {
+
+          openRequest(
+            request
+          );
+
+        };
+
+
+      container.appendChild(
+        item
+      );
+
+    }
+  );
+
+
+  updateFilterInfo();
+
+}
+
+
+/* =========================================
+   STATUS FILTER
+========================================= */
+
+function setRequestFilter(
+  filter,
+  button
+) {
+
+  currentRequestFilter =
+    filter;
+
+
+  document
+    .querySelectorAll(
+      "#statusFilter button"
+    )
+    .forEach(
+      item => {
+
+        item.classList.remove(
+          "active"
+        );
+
+      }
+    );
+
+
+  if (button) {
+
+    button.classList.add(
+      "active"
+    );
+
+  }
+
+
+  document
+    .querySelectorAll(
+      "#requests .request"
+    )
+    .forEach(
+      item => {
+
+        const status =
+          item.dataset.status ||
+          "neu";
+
+
+        if (
+          filter === "alle" ||
+          status === filter
+        ) {
+
+          item.classList.remove(
+            "hidden-by-filter"
+          );
+
+        } else {
+
+          item.classList.add(
+            "hidden-by-filter"
+          );
+
+        }
+
+      }
+    );
+
+
+  updateFilterInfo();
+
+}
+
+
+function updateFilterInfo() {
+
+  const info =
+    document.getElementById(
+      "requestFilterInfo"
+    );
+
+
+  if (!info) {
+
+    return;
+
+  }
+
+
+  const labels = {
+
+    alle:
+      "Alle Bauanfragen",
+
+    neu:
+      "🆕 Neue Bauanfragen",
+
+    angesehen:
+      "👀 Angesehene Bauanfragen",
+
+    in_bearbeitung:
+      "🔧 Bauanfragen in Bearbeitung",
+
+    angenommen:
+      "🤝 Angenommene Bauanfragen",
+
+    abgelehnt:
+      "❌ Abgelehnte Bauanfragen",
+
+    erledigt:
+      "✅ Erledigte Bauanfragen"
+
+  };
+
+
+  info.textContent =
+    labels[
+      currentRequestFilter
+    ] ||
+    "Alle Bauanfragen";
 
 }
 
@@ -1204,17 +1601,23 @@ async function loadRequests() {
    BAUANFRAGE ÖFFNEN
 ========================================= */
 
-async function openRequest(request) {
+async function openRequest(
+  request
+) {
 
-  currentRequest = request;
+  currentRequest =
+    request;
+
 
   document
     .getElementById("listView")
     .classList.add("hidden");
 
+
   document
     .getElementById("detailView")
     .classList.remove("hidden");
+
 
   document
     .getElementById("detailTitle")
@@ -1222,58 +1625,82 @@ async function openRequest(request) {
       request.service ||
       "Bauanfrage";
 
+
   document
     .getElementById("detailService")
     .textContent =
-      request.service || "-";
+      request.service ||
+      "-";
+
 
   document
     .getElementById("detailDate")
     .textContent =
-      formatDate(request.created_at);
+      formatDate(
+        request.created_at
+      );
+
 
   document
     .getElementById("detailPlz")
     .textContent =
-      request.plz || "-";
+      request.plz ||
+      "-";
+
 
   document
     .getElementById("detailArea")
     .textContent =
-      request.area || "-";
+      request.area ||
+      "-";
+
 
   document
     .getElementById("detailDescription")
     .textContent =
-      request.description || "-";
+      request.description ||
+      "-";
+
 
   document
     .getElementById("detailName")
     .textContent =
-      request.name || "-";
+      request.name ||
+      "-";
+
 
   document
     .getElementById("detailPhone")
     .textContent =
-      request.phone || "-";
+      request.phone ||
+      "-";
+
 
   document
     .getElementById("detailEmail")
     .textContent =
-      request.email || "-";
+      request.email ||
+      "-";
+
 
   document
     .getElementById("statusSelect")
     .value =
-      request.status || "neu";
+      request.status ||
+      "neu";
+
 
   document
     .getElementById("assignmentMessage")
-    .textContent = "";
+    .textContent =
+      "";
+
 
   document
     .getElementById("statusMessage")
-    .textContent = "";
+    .textContent =
+      "";
+
 
   await loadFirmOptions(
     request.fachbetrieb_id
@@ -1291,13 +1718,20 @@ async function loadFirmOptions(
 ) {
 
   const select =
-    document.getElementById("firmSelect");
+    document
+      .getElementById(
+        "firmSelect"
+      );
+
 
   select.innerHTML = `
+
     <option value="">
       -- Kein Fachbetrieb zugewiesen --
     </option>
+
   `;
+
 
   const result =
     await supabaseClient
@@ -1318,64 +1752,88 @@ async function loadFirmOptions(
         }
       );
 
+
   if (result.error) {
 
     select.innerHTML = `
+
       <option value="">
         Fehler beim Laden der Fachbetriebe
       </option>
+
     `;
 
     return;
+
   }
 
-  (result.data || []).forEach(firm => {
 
-    if (
-      firm.aktiv === false ||
-      firm.freigeschaltet !== true
-    ) {
-      return;
-    }
+  (
+    result.data ||
+    []
+  ).forEach(
+    firm => {
 
-    const option =
-      document.createElement("option");
+      if (
+        firm.aktiv === false ||
+        firm.freigeschaltet !== true
+      ) {
 
-    option.value =
-      firm.id;
+        return;
 
-    const name =
-      firm.firma ||
-      firm.firmenname ||
-      "Fachbetrieb";
+      }
 
-    option.textContent =
-      name +
-      (
-        firm.plz
-          ? " – " +
-            firm.plz +
-            (
-              firm.ort
-                ? " " + firm.ort
-                : ""
-            )
-          : ""
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+
+      option.value =
+        firm.id;
+
+
+      const name =
+        firm.firma ||
+        firm.firmenname ||
+        "Fachbetrieb";
+
+
+      option.textContent =
+        name +
+        (
+          firm.plz
+            ? " – " +
+              firm.plz +
+              (
+                firm.ort
+                  ? " " +
+                    firm.ort
+                  : ""
+              )
+            : ""
+        );
+
+
+      if (
+        selectedId &&
+        String(firm.id) ===
+        String(selectedId)
+      ) {
+
+        option.selected =
+          true;
+
+      }
+
+
+      select.appendChild(
+        option
       );
 
-    if (
-      selectedId &&
-      String(firm.id) ===
-      String(selectedId)
-    ) {
-
-      option.selected = true;
-
     }
-
-    select.appendChild(option);
-
-  });
+  );
 
 }
 
@@ -1387,13 +1845,19 @@ async function loadFirmOptions(
 async function saveAssignment() {
 
   if (!currentRequest) {
+
     return;
+
   }
+
 
   const firmId =
     document
-      .getElementById("firmSelect")
+      .getElementById(
+        "firmSelect"
+      )
       .value;
+
 
   const message =
     document
@@ -1401,10 +1865,13 @@ async function saveAssignment() {
         "assignmentMessage"
       );
 
-  message.className = "";
+
+  message.className =
+    "";
 
   message.textContent =
     "Speichere...";
+
 
   const result =
     await supabaseClient
@@ -1412,13 +1879,15 @@ async function saveAssignment() {
       .update({
 
         fachbetrieb_id:
-          firmId || null
+          firmId ||
+          null
 
       })
       .eq(
         "id",
         currentRequest.id
       );
+
 
   if (result.error) {
 
@@ -1430,10 +1899,14 @@ async function saveAssignment() {
       result.error.message;
 
     return;
+
   }
 
+
   currentRequest.fachbetrieb_id =
-    firmId || null;
+    firmId ||
+    null;
+
 
   message.className =
     "success";
@@ -1442,6 +1915,9 @@ async function saveAssignment() {
     firmId
       ? "✅ Fachbetrieb erfolgreich zugewiesen."
       : "✅ Zuordnung entfernt.";
+
+
+  await loadRequests();
 
 }
 
@@ -1453,35 +1929,48 @@ async function saveAssignment() {
 async function saveStatus() {
 
   if (!currentRequest) {
+
     return;
+
   }
+
 
   const status =
     document
-      .getElementById("statusSelect")
+      .getElementById(
+        "statusSelect"
+      )
       .value;
+
 
   const message =
     document
-      .getElementById("statusMessage");
+      .getElementById(
+        "statusMessage"
+      );
 
-  message.className = "";
+
+  message.className =
+    "";
 
   message.textContent =
     "Speichere...";
+
 
   const result =
     await supabaseClient
       .from("bauanfragen")
       .update({
 
-        status: status
+        status:
+          status
 
       })
       .eq(
         "id",
         currentRequest.id
       );
+
 
   if (result.error) {
 
@@ -1493,10 +1982,13 @@ async function saveStatus() {
       result.error.message;
 
     return;
+
   }
+
 
   currentRequest.status =
     status;
+
 
   message.className =
     "success";
@@ -1517,11 +2009,14 @@ function showList() {
     .getElementById("detailView")
     .classList.add("hidden");
 
+
   document
     .getElementById("listView")
     .classList.remove("hidden");
 
-  currentRequest = null;
+
+  currentRequest =
+    null;
 
 }
 
@@ -1533,17 +2028,26 @@ function showList() {
 async function loadFirms() {
 
   const loading =
-    document.getElementById(
-      "firmsLoading"
-    );
+    document
+      .getElementById(
+        "firmsLoading"
+      );
+
 
   const container =
-    document.getElementById("firms");
+    document
+      .getElementById(
+        "firms"
+      );
+
 
   loading.style.display =
     "block";
 
-  container.innerHTML = "";
+
+  container.innerHTML =
+    "";
+
 
   const result =
     await supabaseClient
@@ -1556,8 +2060,10 @@ async function loadFirms() {
         }
       );
 
+
   loading.style.display =
     "none";
+
 
   if (result.error) {
 
@@ -1570,7 +2076,9 @@ async function loadFirms() {
       </div>`;
 
     return;
+
   }
+
 
   if (
     !result.data ||
@@ -1583,143 +2091,179 @@ async function loadFirms() {
       </div>`;
 
     return;
+
   }
 
-  result.data.forEach(firm => {
 
-    const card =
-      document.createElement("div");
+  result.data.forEach(
+    firm => {
 
-    card.className =
-      "firm-card";
+      const card =
+        document.createElement(
+          "div"
+        );
 
-    const name =
-      firm.firma ||
-      firm.firmenname ||
-      "Fachbetrieb";
 
-    const owner =
-      firm.inhaber || "-";
+      card.className =
+        "firm-card";
 
-    const email =
-      firm.email || "-";
 
-    const phone =
-      firm.telefon || "-";
+      const name =
+        firm.firma ||
+        firm.firmenname ||
+        "Fachbetrieb";
 
-    const plz =
-      firm.plz || "-";
 
-    const ort =
-      firm.ort || "-";
+      const owner =
+        firm.inhaber ||
+        "-";
 
-    const services =
-      firm.leistungen || "-";
 
-    const radius =
-      firm.radius_km ?? 30;
+      const email =
+        firm.email ||
+        "-";
 
-    const activeBadge =
-      firm.aktiv !== false
-        ? `
-          <span class="active-badge">
-            🟢 Aktiv
-          </span>
-        `
-        : `
-          <span class="inactive-badge">
-            ⚫ Inaktiv
-          </span>
-        `;
 
-    const approvalBadge =
-      firm.freigeschaltet === true
-        ? `
-          <span class="approved-badge">
-            🟢 Freigeschaltet
-          </span>
-        `
-        : `
-          <span class="pending-badge">
-            🟡 Prüfung läuft
-          </span>
-        `;
+      const phone =
+        firm.telefon ||
+        "-";
 
-    card.innerHTML = `
 
-      <div class="firm-name">
+      const plz =
+        firm.plz ||
+        "-";
 
-        🏢
-        ${escapeHtml(name)}
 
-      </div>
+      const ort =
+        firm.ort ||
+        "-";
 
-      <div class="firm-info">
 
-        👤
-        ${escapeHtml(owner)}
+      const services =
+        firm.leistungen ||
+        "-";
 
-        <br>
 
-        📞
-        ${escapeHtml(phone)}
+      const radius =
+        firm.radius_km ??
+        30;
 
-        <br>
 
-        ✉️
-        ${escapeHtml(email)}
+      const activeBadge =
+        firm.aktiv !== false
 
-        <br>
+          ? `
+            <span class="active-badge">
+              🟢 Aktiv
+            </span>
+          `
 
-        📍
-        ${escapeHtml(plz)}
-        ${escapeHtml(ort)}
+          : `
+            <span class="inactive-badge">
+              ⚫ Inaktiv
+            </span>
+          `;
 
-        <br>
 
-        📏
-        Radius:
-        ${escapeHtml(radius)}
-        km
+      const approvalBadge =
+        firm.freigeschaltet === true
 
-        <br>
+          ? `
+            <span class="approved-badge">
+              🟢 Freigeschaltet
+            </span>
+          `
 
-        🔧
-        ${escapeHtml(services)}
+          : `
+            <span class="pending-badge">
+              🟡 Prüfung läuft
+            </span>
+          `;
 
-      </div>
 
-      <div>
+      card.innerHTML = `
 
-        ${activeBadge}
+        <div class="firm-name">
 
-        ${approvalBadge}
+          🏢
+          ${escapeHtml(name)}
 
-      </div>
+        </div>
 
-      <div class="action-row">
 
-        <button
-          class="edit-button"
-          onclick="editFirm('${firm.id}')"
-        >
-          ✏️ Bearbeiten
-        </button>
+        <div class="firm-info">
 
-        <button
-          class="delete-button"
-          onclick="deleteFirm('${firm.id}')"
-        >
-          🗑️ Löschen
-        </button>
+          👤
+          ${escapeHtml(owner)}
 
-      </div>
+          <br>
 
-    `;
+          📞
+          ${escapeHtml(phone)}
 
-    container.appendChild(card);
+          <br>
 
-  });
+          ✉️
+          ${escapeHtml(email)}
+
+          <br>
+
+          📍
+          ${escapeHtml(plz)}
+          ${escapeHtml(ort)}
+
+          <br>
+
+          📏
+          Radius:
+          ${escapeHtml(radius)}
+          km
+
+          <br>
+
+          🔧
+          ${escapeHtml(services)}
+
+        </div>
+
+
+        <div>
+
+          ${activeBadge}
+
+          ${approvalBadge}
+
+        </div>
+
+
+        <div class="action-row">
+
+          <button
+            class="edit-button"
+            onclick="editFirm('${firm.id}')"
+          >
+            ✏️ Bearbeiten
+          </button>
+
+
+          <button
+            class="delete-button"
+            onclick="deleteFirm('${firm.id}')"
+          >
+            🗑️ Löschen
+          </button>
+
+        </div>
+
+      `;
+
+
+      container.appendChild(
+        card
+      );
+
+    }
+  );
 
 }
 
@@ -1731,14 +2275,26 @@ async function loadFirms() {
 function showFirmsList() {
 
   document
-    .getElementById("firmFormView")
-    .classList.add("hidden");
+    .getElementById(
+      "firmFormView"
+    )
+    .classList.add(
+      "hidden"
+    );
+
 
   document
-    .getElementById("firmsListView")
-    .classList.remove("hidden");
+    .getElementById(
+      "firmsListView"
+    )
+    .classList.remove(
+      "hidden"
+    );
 
-  editingFirmId = null;
+
+  editingFirmId =
+    null;
+
 
   loadFirms();
 
@@ -1754,136 +2310,243 @@ function showFirmForm(
 ) {
 
   document
-    .getElementById("firmsListView")
-    .classList.add("hidden");
+    .getElementById(
+      "firmsListView"
+    )
+    .classList.add(
+      "hidden"
+    );
+
 
   document
-    .getElementById("firmFormView")
-    .classList.remove("hidden");
+    .getElementById(
+      "firmFormView"
+    )
+    .classList.remove(
+      "hidden"
+    );
+
 
   document
-    .getElementById("firmMessage")
-    .textContent = "";
+    .getElementById(
+      "firmMessage"
+    )
+    .textContent =
+      "";
+
 
   if (!firm) {
 
-    editingFirmId = null;
+    editingFirmId =
+      null;
+
 
     document
-      .getElementById("firmFormTitle")
+      .getElementById(
+        "firmFormTitle"
+      )
       .textContent =
         "Fachbetrieb hinzufügen";
 
-    document
-      .getElementById("firmId")
-      .value = "";
 
     document
-      .getElementById("firmName")
-      .value = "";
+      .getElementById(
+        "firmId"
+      )
+      .value =
+        "";
+
 
     document
-      .getElementById("firmOwner")
-      .value = "";
+      .getElementById(
+        "firmName"
+      )
+      .value =
+        "";
+
 
     document
-      .getElementById("firmEmail")
-      .value = "";
+      .getElementById(
+        "firmOwner"
+      )
+      .value =
+        "";
+
 
     document
-      .getElementById("firmPhone")
-      .value = "";
+      .getElementById(
+        "firmEmail"
+      )
+      .value =
+        "";
+
 
     document
-      .getElementById("firmPlz")
-      .value = "";
+      .getElementById(
+        "firmPhone"
+      )
+      .value =
+        "";
+
 
     document
-      .getElementById("firmOrt")
-      .value = "";
+      .getElementById(
+        "firmPlz"
+      )
+      .value =
+        "";
+
 
     document
-      .getElementById("firmServices")
-      .value = "";
+      .getElementById(
+        "firmOrt"
+      )
+      .value =
+        "";
+
 
     document
-      .getElementById("firmRadius")
-      .value = "30";
+      .getElementById(
+        "firmServices"
+      )
+      .value =
+        "";
+
 
     document
-      .getElementById("firmActive")
-      .checked = true;
+      .getElementById(
+        "firmRadius"
+      )
+      .value =
+        "30";
+
 
     document
-      .getElementById("firmApproved")
-      .checked = false;
+      .getElementById(
+        "firmActive"
+      )
+      .checked =
+        true;
+
+
+    document
+      .getElementById(
+        "firmApproved"
+      )
+      .checked =
+        false;
+
 
     return;
+
   }
 
 
   editingFirmId =
     firm.id;
 
+
   document
-    .getElementById("firmFormTitle")
+    .getElementById(
+      "firmFormTitle"
+    )
     .textContent =
       "Fachbetrieb bearbeiten";
 
+
   document
-    .getElementById("firmId")
+    .getElementById(
+      "firmId"
+    )
     .value =
       firm.id;
 
+
   document
-    .getElementById("firmName")
+    .getElementById(
+      "firmName"
+    )
     .value =
       firm.firma ||
       firm.firmenname ||
       "";
 
-  document
-    .getElementById("firmOwner")
-    .value =
-      firm.inhaber || "";
 
   document
-    .getElementById("firmEmail")
+    .getElementById(
+      "firmOwner"
+    )
     .value =
-      firm.email || "";
+      firm.inhaber ||
+      "";
+
 
   document
-    .getElementById("firmPhone")
+    .getElementById(
+      "firmEmail"
+    )
     .value =
-      firm.telefon || "";
+      firm.email ||
+      "";
+
 
   document
-    .getElementById("firmPlz")
+    .getElementById(
+      "firmPhone"
+    )
     .value =
-      firm.plz || "";
+      firm.telefon ||
+      "";
+
 
   document
-    .getElementById("firmOrt")
+    .getElementById(
+      "firmPlz"
+    )
     .value =
-      firm.ort || "";
+      firm.plz ||
+      "";
+
 
   document
-    .getElementById("firmServices")
+    .getElementById(
+      "firmOrt"
+    )
     .value =
-      firm.leistungen || "";
+      firm.ort ||
+      "";
+
 
   document
-    .getElementById("firmRadius")
+    .getElementById(
+      "firmServices"
+    )
     .value =
-      firm.radius_km ?? 30;
+      firm.leistungen ||
+      "";
+
 
   document
-    .getElementById("firmActive")
+    .getElementById(
+      "firmRadius"
+    )
+    .value =
+      firm.radius_km ??
+      30;
+
+
+  document
+    .getElementById(
+      "firmActive"
+    )
     .checked =
       firm.aktiv !== false;
 
+
   document
-    .getElementById("firmApproved")
+    .getElementById(
+      "firmApproved"
+    )
     .checked =
       firm.freigeschaltet === true;
 
@@ -1897,17 +2560,24 @@ function showFirmForm(
 async function saveFirm() {
 
   const message =
-    document.getElementById(
-      "firmMessage"
-    );
+    document
+      .getElementById(
+        "firmMessage"
+      );
 
-  message.className = "";
+
+  message.className =
+    "";
+
 
   const firma =
     document
-      .getElementById("firmName")
+      .getElementById(
+        "firmName"
+      )
       .value
       .trim();
+
 
   if (!firma) {
 
@@ -1918,63 +2588,93 @@ async function saveFirm() {
       "Bitte einen Firmennamen eingeben.";
 
     return;
+
   }
+
 
   const inhaber =
     document
-      .getElementById("firmOwner")
+      .getElementById(
+        "firmOwner"
+      )
       .value
       .trim();
+
 
   const email =
     document
-      .getElementById("firmEmail")
+      .getElementById(
+        "firmEmail"
+      )
       .value
       .trim();
+
 
   const telefon =
     document
-      .getElementById("firmPhone")
+      .getElementById(
+        "firmPhone"
+      )
       .value
       .trim();
+
 
   const plz =
     document
-      .getElementById("firmPlz")
+      .getElementById(
+        "firmPlz"
+      )
       .value
       .trim();
+
 
   const ort =
     document
-      .getElementById("firmOrt")
+      .getElementById(
+        "firmOrt"
+      )
       .value
       .trim();
+
 
   const leistungen =
     document
-      .getElementById("firmServices")
+      .getElementById(
+        "firmServices"
+      )
       .value
       .trim();
 
+
   const radiusValue =
     document
-      .getElementById("firmRadius")
+      .getElementById(
+        "firmRadius"
+      )
       .value;
+
 
   const radius =
     radiusValue === ""
       ? 30
       : Number(radiusValue);
 
+
   const aktiv =
     document
-      .getElementById("firmActive")
+      .getElementById(
+        "firmActive"
+      )
       .checked;
+
 
   const freigeschaltet =
     document
-      .getElementById("firmApproved")
+      .getElementById(
+        "firmApproved"
+      )
       .checked;
+
 
   message.textContent =
     "Speichere...";
@@ -1982,27 +2682,35 @@ async function saveFirm() {
 
   const payload = {
 
-    firma: firma,
+    firma:
+      firma,
 
-    firmenname: firma,
+    firmenname:
+      firma,
 
     inhaber:
-      inhaber || null,
+      inhaber ||
+      null,
 
     email:
-      email || null,
+      email ||
+      null,
 
     telefon:
-      telefon || null,
+      telefon ||
+      null,
 
     plz:
-      plz || null,
+      plz ||
+      null,
 
     ort:
-      ort || null,
+      ort ||
+      null,
 
     leistungen:
-      leistungen || null,
+      leistungen ||
+      null,
 
     radius_km:
       radius,
@@ -2023,8 +2731,12 @@ async function saveFirm() {
 
     result =
       await supabaseClient
-        .from("fachbetriebe")
-        .update(payload)
+        .from(
+          "fachbetriebe"
+        )
+        .update(
+          payload
+        )
         .eq(
           "id",
           editingFirmId
@@ -2034,7 +2746,9 @@ async function saveFirm() {
 
     result =
       await supabaseClient
-        .from("fachbetriebe")
+        .from(
+          "fachbetriebe"
+        )
         .insert([
           payload
         ]);
@@ -2052,15 +2766,19 @@ async function saveFirm() {
       result.error.message;
 
     return;
+
   }
 
 
   message.className =
     "success";
 
+
   message.textContent =
     editingFirmId
+
       ? "✅ Fachbetrieb erfolgreich geändert."
+
       : "✅ Fachbetrieb erfolgreich angelegt.";
 
 
@@ -2086,13 +2804,16 @@ async function editFirm(
 
   const result =
     await supabaseClient
-      .from("fachbetriebe")
+      .from(
+        "fachbetriebe"
+      )
       .select("*")
       .eq(
         "id",
         firmId
       )
       .single();
+
 
   if (result.error) {
 
@@ -2102,7 +2823,9 @@ async function editFirm(
     );
 
     return;
+
   }
+
 
   showFirmForm(
     result.data
@@ -2124,18 +2847,25 @@ async function deleteFirm(
       "Möchtest du diesen Fachbetrieb wirklich löschen?"
     );
 
+
   if (!confirmed) {
+
     return;
+
   }
+
 
   const result =
     await supabaseClient
-      .from("fachbetriebe")
+      .from(
+        "fachbetriebe"
+      )
       .delete()
       .eq(
         "id",
         firmId
       );
+
 
   if (result.error) {
 
@@ -2145,7 +2875,9 @@ async function deleteFirm(
     );
 
     return;
+
   }
+
 
   loadFirms();
 
@@ -2162,20 +2894,23 @@ function getStatusText(
 
   switch (status) {
 
-    case "kontakt":
-      return "🔵 Kontakt aufgenommen";
+    case "angesehen":
+      return "👀 Angesehen";
 
-    case "angebot":
-      return "🟠 Angebot";
+    case "in_bearbeitung":
+      return "🔧 In Bearbeitung";
 
-    case "auftrag":
-      return "🟢 Auftrag";
+    case "angenommen":
+      return "🤝 Angenommen";
+
+    case "abgelehnt":
+      return "❌ Abgelehnt";
 
     case "erledigt":
-      return "⚫ Erledigt";
+      return "✅ Erledigt";
 
     default:
-      return "🟡 Neu";
+      return "🆕 Neu";
 
   }
 
@@ -2192,14 +2927,17 @@ function getStatusClass(
 
   switch (status) {
 
-    case "kontakt":
-      return "status-kontakt";
+    case "angesehen":
+      return "status-angesehen";
 
-    case "angebot":
-      return "status-angebot";
+    case "in_bearbeitung":
+      return "status-bearbeitung";
 
-    case "auftrag":
-      return "status-auftrag";
+    case "angenommen":
+      return "status-angenommen";
+
+    case "abgelehnt":
+      return "status-abgelehnt";
 
     case "erledigt":
       return "status-erledigt";
@@ -2221,17 +2959,24 @@ function formatDate(
 ) {
 
   if (!value) {
+
     return "-";
+
   }
+
 
   const date =
     new Date(value);
 
+
   return date.toLocaleString(
     "de-DE",
     {
-      dateStyle: "short",
-      timeStyle: "medium"
+      dateStyle:
+        "short",
+
+      timeStyle:
+        "medium"
     }
   );
 
@@ -2246,28 +2991,25 @@ function escapeHtml(
   value
 ) {
 
-  return String(value)
-
+  return String(
+    value ?? ""
+  )
     .replaceAll(
       "&",
       "&amp;"
     )
-
     .replaceAll(
       "<",
       "&lt;"
     )
-
     .replaceAll(
       ">",
       "&gt;"
     )
-
     .replaceAll(
       '"',
       "&quot;"
     )
-
     .replaceAll(
       "'",
       "&#039;"
@@ -2286,6 +3028,7 @@ async function checkSession() {
     await supabaseClient
       .auth
       .getSession();
+
 
   if (
     result.data &&
