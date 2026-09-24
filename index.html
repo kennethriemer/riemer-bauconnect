@@ -57,18 +57,20 @@
       text-decoration: none;
     }
 
+    /* HEADER */
+
     header {
       position: sticky;
       top: 0;
       z-index: 20;
-      background: white;
-      border-bottom: 1px solid #ddd;
+      background: var(--dark);
+      border-bottom: 1px solid #303a40;
     }
 
     .header-inner {
       max-width: 1100px;
       margin: auto;
-      padding: 17px 20px;
+      padding: 12px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -76,19 +78,24 @@
     }
 
     .logo {
-      font-size: 23px;
-      font-weight: 800;
-      letter-spacing: -1px;
+      display: block;
+      line-height: 0;
     }
 
-    .logo span {
-      color: var(--yellow);
+    .logo img {
+      display: block;
+      width: 190px;
+      max-width: 60vw;
+      height: auto;
     }
 
     .header-button {
+      color: white;
       font-weight: 700;
       font-size: 16px;
     }
+
+    /* HERO */
 
     .hero {
       background: var(--dark);
@@ -129,6 +136,8 @@
       font-weight: 800;
     }
 
+    /* ALLGEMEIN */
+
     section {
       padding: 50px 18px;
     }
@@ -142,6 +151,8 @@
       font-size: 32px;
       margin: 0 0 22px;
     }
+
+    /* LEISTUNGEN */
 
     .services {
       display: grid;
@@ -415,6 +426,8 @@
       margin-bottom: 2px;
     }
 
+    /* DESKTOP */
+
     @media (min-width: 700px) {
 
       .services {
@@ -433,16 +446,22 @@
         padding-bottom: 35px;
       }
 
+      .logo img {
+        width: 220px;
+      }
+
     }
+
+    /* HANDY */
 
     @media (max-width: 600px) {
 
       .header-inner {
-        padding: 15px;
+        padding: 10px 15px;
       }
 
-      .logo {
-        font-size: 20px;
+      .logo img {
+        width: 175px;
       }
 
       .hero {
@@ -485,8 +504,14 @@
       href="#start"
       class="logo"
     >
-      RIEMER <span>BAUCONNECT</span>
+
+      <img
+        src="logo-riemer-bauconnect.png"
+        alt="Riemer BauConnect"
+      >
+
     </a>
+
 
     <a
       href="#projekt"
@@ -867,7 +892,7 @@
         >
 
 
-        <!-- DATENSCHUTZ-EINWILLIGUNG -->
+        <!-- DATENSCHUTZ -->
 
         <div class="consent-box">
 
@@ -880,6 +905,7 @@
           <label for="privacyConsent">
 
             Ich habe die
+
             <a
               href="datenschutz.html"
               target="_blank"
@@ -887,6 +913,7 @@
             >
               Datenschutzerklärung
             </a>
+
             gelesen und stimme der Verarbeitung meiner Angaben
             zur Bearbeitung meiner Bauanfrage zu.
 
@@ -966,7 +993,6 @@
     <h2>
       Mein Bereich
     </h2>
-
 
     <div class="admin-card">
 
@@ -1089,19 +1115,15 @@
 
 <script>
 
-
 /* ==========================================
    SUPABASE
    ========================================== */
 
-
 const SUPABASE_URL =
   "https://ehzugjmltfcvllftpjpp.supabase.co";
 
-
 const SUPABASE_KEY =
   "sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
-
 
 const db =
   supabase.createClient(
@@ -1114,30 +1136,25 @@ const db =
    ELEMENTE
    ========================================== */
 
-
 const form =
   document.getElementById(
     "projectForm"
   );
-
 
 const button =
   document.getElementById(
     "submitButton"
   );
 
-
 const success =
   document.getElementById(
     "success"
   );
 
-
 const errorBox =
   document.getElementById(
     "error"
   );
-
 
 const privacyConsent =
   document.getElementById(
@@ -1149,13 +1166,11 @@ const privacyConsent =
    FORMULAR
    ========================================== */
 
-
 form.addEventListener(
   "submit",
   async function(e) {
 
     e.preventDefault();
-
 
     success.style.display =
       "none";
@@ -1164,9 +1179,7 @@ form.addEventListener(
       "none";
 
 
-    /* ======================================
-       DATENSCHUTZ-CHECK
-       ====================================== */
+    /* DATENSCHUTZ */
 
     if (!privacyConsent.checked) {
 
@@ -1183,9 +1196,7 @@ form.addEventListener(
     }
 
 
-    /* ======================================
-       BUTTON
-       ====================================== */
+    /* BUTTON */
 
     button.disabled =
       true;
@@ -1197,9 +1208,7 @@ form.addEventListener(
     try {
 
 
-      /* ====================================
-         DATEN
-         ==================================== */
+      /* DATEN */
 
       const payload = {
 
@@ -1251,9 +1260,7 @@ form.addEventListener(
       };
 
 
-      /* ====================================
-         SUPABASE
-         ==================================== */
+      /* SUPABASE */
 
       const result =
         await db
@@ -1276,29 +1283,22 @@ form.addEventListener(
       }
 
 
-      /* ====================================
-         ERFOLG
-         ==================================== */
+      /* ERFOLG */
 
       form.reset();
-
 
       success.textContent =
         "✅ Ihre Bauanfrage wurde erfolgreich übermittelt.\n\n" +
         "Wir kümmern uns um die weitere Zuordnung.";
 
-
       success.style.display =
         "block";
-
 
       button.disabled =
         false;
 
-
       button.textContent =
         "Anfrage absenden →";
-
 
       success.scrollIntoView({
         behavior: "smooth",
@@ -1308,15 +1308,12 @@ form.addEventListener(
 
     }
 
-
     catch(error) {
-
 
       console.error(
         "GESAMTFEHLER:",
         error
       );
-
 
       errorBox.textContent =
         "Die Anfrage konnte nicht gesendet werden.\n\n" +
@@ -1326,14 +1323,11 @@ form.addEventListener(
           "Unbekannter Fehler"
         );
 
-
       errorBox.style.display =
         "block";
 
-
       button.disabled =
         false;
-
 
       button.textContent =
         "Anfrage absenden →";
@@ -1341,9 +1335,7 @@ form.addEventListener(
     }
 
   }
-
 );
-
 
 </script>
 
