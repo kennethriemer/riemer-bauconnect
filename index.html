@@ -57,7 +57,10 @@
       text-decoration: none;
     }
 
-    /* HEADER */
+
+    /* =========================
+       HEADER
+       ========================= */
 
     header {
       position: sticky;
@@ -70,7 +73,7 @@
     .header-inner {
       max-width: 1100px;
       margin: auto;
-      padding: 12px 20px;
+      padding: 10px 15px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -84,8 +87,8 @@
 
     .logo img {
       display: block;
-      width: 190px;
-      max-width: 60vw;
+      width: 155px;
+      max-width: 55vw;
       height: auto;
     }
 
@@ -93,9 +96,13 @@
       color: white;
       font-weight: 700;
       font-size: 16px;
+      white-space: nowrap;
     }
 
-    /* HERO */
+
+    /* =========================
+       HERO
+       ========================= */
 
     .hero {
       background: var(--dark);
@@ -136,7 +143,10 @@
       font-weight: 800;
     }
 
-    /* ALLGEMEIN */
+
+    /* =========================
+       ALLGEMEIN
+       ========================= */
 
     section {
       padding: 50px 18px;
@@ -152,7 +162,10 @@
       margin: 0 0 22px;
     }
 
-    /* LEISTUNGEN */
+
+    /* =========================
+       LEISTUNGEN
+       ========================= */
 
     .services {
       display: grid;
@@ -169,7 +182,10 @@
       font-weight: 700;
     }
 
-    /* FACHBETRIEBE */
+
+    /* =========================
+       FACHBETRIEBE
+       ========================= */
 
     .firms-section {
       background: #11191e;
@@ -227,7 +243,10 @@
       font-size: 17px;
     }
 
-    /* FORMULAR */
+
+    /* =========================
+       FORMULAR
+       ========================= */
 
     .form-card {
       background: white;
@@ -267,7 +286,10 @@
       border-color: var(--yellow);
     }
 
-    /* DATENSCHUTZ CHECKBOX */
+
+    /* =========================
+       DATENSCHUTZ
+       ========================= */
 
     .consent-box {
       display: flex;
@@ -316,6 +338,11 @@
       font-weight: 700;
     }
 
+
+    /* =========================
+       BUTTON
+       ========================= */
+
     .submit-button {
       width: 100%;
       margin-top: 8px;
@@ -333,6 +360,11 @@
       opacity: .6;
       cursor: wait;
     }
+
+
+    /* =========================
+       MELDUNGEN
+       ========================= */
 
     .success {
       display: none;
@@ -358,7 +390,10 @@
       white-space: pre-wrap;
     }
 
-    /* ADMIN */
+
+    /* =========================
+       ADMIN
+       ========================= */
 
     .admin-card {
       background: white;
@@ -377,7 +412,10 @@
       font-weight: 700;
     }
 
-    /* FOOTER */
+
+    /* =========================
+       FOOTER
+       ========================= */
 
     footer {
       background: var(--dark);
@@ -398,7 +436,10 @@
       margin-right: 15px;
     }
 
-    /* MOBILE NAV */
+
+    /* =========================
+       MOBILE NAV
+       ========================= */
 
     .bottom-nav {
       position: fixed;
@@ -426,9 +467,16 @@
       margin-bottom: 2px;
     }
 
-    /* DESKTOP */
+
+    /* =========================
+       DESKTOP
+       ========================= */
 
     @media (min-width: 700px) {
+
+      .logo img {
+        width: 190px;
+      }
 
       .services {
         grid-template-columns: repeat(3, 1fr);
@@ -446,13 +494,12 @@
         padding-bottom: 35px;
       }
 
-      .logo img {
-        width: 220px;
-      }
-
     }
 
-    /* HANDY */
+
+    /* =========================
+       HANDY
+       ========================= */
 
     @media (max-width: 600px) {
 
@@ -461,7 +508,7 @@
       }
 
       .logo img {
-        width: 175px;
+        width: 155px;
       }
 
       .hero {
@@ -494,7 +541,9 @@
 <body>
 
 
-<!-- HEADER -->
+<!-- =========================
+     HEADER
+     ========================= -->
 
 <header>
 
@@ -512,7 +561,6 @@
 
     </a>
 
-
     <a
       href="#projekt"
       class="header-button"
@@ -528,7 +576,9 @@
 <main>
 
 
-<!-- START -->
+<!-- =========================
+     START
+     ========================= -->
 
 <section
   class="hero"
@@ -544,8 +594,8 @@
 
     <p>
       Riemer BauConnect bringt Bauherren
-      und passende Fachbetriebe für
-      Bau- und Straßenbauprojekte zusammen.
+      und passende Fachbetriebe für Bau-
+      und Straßenbauprojekte zusammen.
     </p>
 
     <a
@@ -560,7 +610,9 @@
 </section>
 
 
-<!-- LEISTUNGEN -->
+<!-- =========================
+     LEISTUNGEN
+     ========================= -->
 
 <section id="leistungen">
 
@@ -619,7 +671,9 @@
 </section>
 
 
-<!-- FACHBETRIEBE -->
+<!-- =========================
+     FACHBETRIEBE
+     ========================= -->
 
 <section
   class="firms-section"
@@ -736,7 +790,9 @@
 </section>
 
 
-<!-- PROJEKT -->
+<!-- =========================
+     PROJEKTANFRAGE
+     ========================= -->
 
 <section id="projekt">
 
@@ -751,8 +807,6 @@
 
       <form id="projectForm">
 
-
-        <!-- LEISTUNG -->
 
         <label for="service">
           Welche Leistung benötigen Sie?
@@ -810,8 +864,6 @@
         </select>
 
 
-        <!-- PLZ -->
-
         <label for="plz">
           PLZ
         </label>
@@ -826,8 +878,6 @@
         >
 
 
-        <!-- FLÄCHE -->
-
         <label for="area">
           Fläche / Umfang
         </label>
@@ -839,8 +889,6 @@
         >
 
 
-        <!-- BESCHREIBUNG -->
-
         <label for="description">
           Beschreibung des Projekts
         </label>
@@ -850,8 +898,6 @@
           placeholder="Beschreiben Sie kurz Ihr Bauprojekt..."
         ></textarea>
 
-
-        <!-- NAME -->
 
         <label for="name">
           Name
@@ -865,8 +911,6 @@
         >
 
 
-        <!-- TELEFON -->
-
         <label for="phone">
           Telefon
         </label>
@@ -879,8 +923,6 @@
         >
 
 
-        <!-- EMAIL -->
-
         <label for="email">
           E-Mail
         </label>
@@ -891,8 +933,6 @@
           placeholder="ihre@email.de"
         >
 
-
-        <!-- DATENSCHUTZ -->
 
         <div class="consent-box">
 
@@ -914,15 +954,14 @@
               Datenschutzerklärung
             </a>
 
-            gelesen und stimme der Verarbeitung meiner Angaben
-            zur Bearbeitung meiner Bauanfrage zu.
+            gelesen und stimme der Verarbeitung
+            meiner Angaben zur Bearbeitung meiner
+            Bauanfrage zu.
 
           </label>
 
         </div>
 
-
-        <!-- DATENSCHUTZ-HINWEIS -->
 
         <p class="privacy-note">
 
@@ -948,8 +987,6 @@
         </p>
 
 
-        <!-- ABSENDEN -->
-
         <button
           type="submit"
           class="submit-button"
@@ -959,15 +996,11 @@
         </button>
 
 
-        <!-- ERFOLG -->
-
         <div
           id="success"
           class="success"
         ></div>
 
-
-        <!-- FEHLER -->
 
         <div
           id="error"
@@ -984,7 +1017,9 @@
 </section>
 
 
-<!-- ADMIN -->
+<!-- =========================
+     ADMIN
+     ========================= -->
 
 <section>
 
@@ -1022,7 +1057,9 @@
 </main>
 
 
-<!-- FOOTER -->
+<!-- =========================
+     FOOTER
+     ========================= -->
 
 <footer>
 
@@ -1063,7 +1100,9 @@
 </footer>
 
 
-<!-- MOBILE NAV -->
+<!-- =========================
+     MOBILE NAVIGATION
+     ========================= -->
 
 <nav class="bottom-nav">
 
@@ -1113,11 +1152,11 @@
 </nav>
 
 
-<script>
+<!-- =========================
+     SUPABASE
+     ========================= -->
 
-/* ==========================================
-   SUPABASE
-   ========================================== */
+<script>
 
 const SUPABASE_URL =
   "https://ehzugjmltfcvllftpjpp.supabase.co";
@@ -1131,10 +1170,6 @@ const db =
     SUPABASE_KEY
   );
 
-
-/* ==========================================
-   ELEMENTE
-   ========================================== */
 
 const form =
   document.getElementById(
@@ -1162,15 +1197,12 @@ const privacyConsent =
   );
 
 
-/* ==========================================
-   FORMULAR
-   ========================================== */
-
 form.addEventListener(
   "submit",
   async function(e) {
 
     e.preventDefault();
+
 
     success.style.display =
       "none";
@@ -1178,8 +1210,6 @@ form.addEventListener(
     errorBox.style.display =
       "none";
 
-
-    /* DATENSCHUTZ */
 
     if (!privacyConsent.checked) {
 
@@ -1196,8 +1226,6 @@ form.addEventListener(
     }
 
 
-    /* BUTTON */
-
     button.disabled =
       true;
 
@@ -1206,9 +1234,6 @@ form.addEventListener(
 
 
     try {
-
-
-      /* DATEN */
 
       const payload = {
 
@@ -1260,8 +1285,6 @@ form.addEventListener(
       };
 
 
-      /* SUPABASE */
-
       const result =
         await db
           .from("bauanfragen")
@@ -1283,16 +1306,17 @@ form.addEventListener(
       }
 
 
-      /* ERFOLG */
-
       form.reset();
+
 
       success.textContent =
         "✅ Ihre Bauanfrage wurde erfolgreich übermittelt.\n\n" +
         "Wir kümmern uns um die weitere Zuordnung.";
 
+
       success.style.display =
         "block";
+
 
       button.disabled =
         false;
@@ -1300,20 +1324,20 @@ form.addEventListener(
       button.textContent =
         "Anfrage absenden →";
 
+
       success.scrollIntoView({
         behavior: "smooth",
         block: "center"
       });
 
 
-    }
-
-    catch(error) {
+    } catch(error) {
 
       console.error(
         "GESAMTFEHLER:",
         error
       );
+
 
       errorBox.textContent =
         "Die Anfrage konnte nicht gesendet werden.\n\n" +
@@ -1323,8 +1347,10 @@ form.addEventListener(
           "Unbekannter Fehler"
         );
 
+
       errorBox.style.display =
         "block";
+
 
       button.disabled =
         false;
@@ -1335,6 +1361,7 @@ form.addEventListener(
     }
 
   }
+
 );
 
 </script>
