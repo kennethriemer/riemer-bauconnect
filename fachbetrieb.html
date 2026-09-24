@@ -168,7 +168,7 @@
     }
 
     .login-wrap {
-      max-width: 500px;
+      max-width: 520px;
       margin: 0 auto;
       padding-top: 20px;
     }
@@ -192,6 +192,7 @@
       margin-bottom: 15px;
       font-weight: 600;
       display: none;
+      line-height: 1.45;
     }
 
     .message.success {
@@ -215,9 +216,20 @@
       color: #a8d7ff;
     }
 
-    /* =========================
-       DASHBOARD HEADER
-    ========================= */
+    .pending-box {
+      background: #493c15;
+      border: 1px solid #806b1b;
+      color: #f8e9a6;
+      border-radius: 16px;
+      padding: 20px;
+      line-height: 1.55;
+      margin-bottom: 18px;
+    }
+
+    .pending-icon {
+      font-size: 45px;
+      margin-bottom: 8px;
+    }
 
     .dashboard-title {
       text-align: center;
@@ -233,10 +245,6 @@
       margin: 7px 0 0;
       color: #999;
     }
-
-    /* =========================
-       TABS
-    ========================= */
 
     .tabs {
       display: flex;
@@ -264,10 +272,6 @@
       color: #111111;
       border-color: #ffd400;
     }
-
-    /* =========================
-       START
-    ========================= */
 
     .welcome-card {
       background: linear-gradient(
@@ -302,10 +306,6 @@
       font-weight: 700;
     }
 
-    /* =========================
-       STATISTIK
-    ========================= */
-
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -332,10 +332,6 @@
       color: #aaa;
       font-size: 14px;
     }
-
-    /* =========================
-       REQUESTS
-    ========================= */
 
     .topbar {
       display: flex;
@@ -418,10 +414,6 @@
       color: #aaa;
     }
 
-    /* =========================
-       PROFILE
-    ========================= */
-
     .profile-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -431,10 +423,6 @@
     .profile-grid .full {
       grid-column: 1 / -1;
     }
-
-    /* =========================
-       ABO
-    ========================= */
 
     .abo-price {
       font-size: 32px;
@@ -489,19 +477,15 @@
       font-weight: 700;
     }
 
-    .sandbox-box {
+    .live-box {
       margin-top: 15px;
-      background: #493c15;
-      border: 1px solid #806b1b;
-      color: #f8e9a6;
+      background: #123e27;
+      border: 1px solid #1e7044;
+      color: #8ff0ba;
       padding: 15px;
       border-radius: 14px;
       line-height: 1.5;
     }
-
-    /* =========================
-       FOOTER
-    ========================= */
 
     .footer {
       text-align: center;
@@ -588,7 +572,8 @@
         <h2>🔐 Fachbetrieb Login</h2>
 
         <p class="muted">
-          Melden Sie sich an, um Ihre Bauanfragen und Ihr Abo zu verwalten.
+          Melden Sie sich an, um Ihren Fachbetrieb zu verwalten,
+          Bauanfragen zu sehen und Ihr Abo zu verwalten.
         </p>
 
         <label>E-Mail</label>
@@ -634,10 +619,12 @@
         <h2>🏢 Fachbetrieb registrieren</h2>
 
         <p class="muted">
-          Erstellen Sie kostenlos Ihren Fachbetriebszugang.
+          Registrieren Sie Ihren Betrieb kostenlos.
+          Nach der Registrierung wird Ihr Betrieb geprüft und anschließend
+          von Riemer BauConnect freigeschaltet.
         </p>
 
-        <label>Firmenname</label>
+        <label>Firmenname *</label>
 
         <input
           id="registerFirma"
@@ -645,7 +632,7 @@
           placeholder="z. B. Hajs Bau"
         >
 
-        <label>Ansprechpartner / Inhaber</label>
+        <label>Ansprechpartner / Inhaber *</label>
 
         <input
           id="registerInhaber"
@@ -653,7 +640,7 @@
           placeholder="Vor- und Nachname"
         >
 
-        <label>E-Mail</label>
+        <label>E-Mail *</label>
 
         <input
           id="registerEmail"
@@ -662,7 +649,7 @@
           placeholder="E-Mail-Adresse"
         >
 
-        <label>Telefon</label>
+        <label>Telefon *</label>
 
         <input
           id="registerTelefon"
@@ -670,16 +657,17 @@
           placeholder="Telefonnummer"
         >
 
-        <label>PLZ</label>
+        <label>PLZ *</label>
 
         <input
           id="registerPlz"
           type="text"
           inputmode="numeric"
+          maxlength="5"
           placeholder="z. B. 24955"
         >
 
-        <label>Ort</label>
+        <label>Ort *</label>
 
         <input
           id="registerOrt"
@@ -705,7 +693,7 @@
           max="200"
         >
 
-        <label>Passwort</label>
+        <label>Passwort *</label>
 
         <input
           id="registerPassword"
@@ -730,6 +718,53 @@
         </div>
 
       </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       PENDING
+  ========================= -->
+
+  <section id="pendingScreen" class="hidden">
+
+    <div class="logo">
+      <h1>Riemer <span>BauConnect</span></h1>
+      <p>Fachbetriebsbereich</p>
+    </div>
+
+    <div class="container login-wrap">
+
+      <div class="pending-box">
+
+        <div class="pending-icon">
+          ⏳
+        </div>
+
+        <h2>
+          Registrierung wird geprüft
+        </h2>
+
+        <p>
+          Ihr Fachbetrieb wurde erfolgreich registriert.
+          Die Freischaltung erfolgt nach Prüfung durch Riemer BauConnect.
+        </p>
+
+        <p>
+          Sobald Ihr Betrieb freigeschaltet wurde, können Sie sich hier
+          einloggen und Bauanfragen erhalten.
+        </p>
+
+      </div>
+
+      <button
+        class="btn btn-dark"
+        onclick="logout()"
+      >
+        Abmelden
+      </button>
 
     </div>
 
@@ -798,9 +833,7 @@
       </div>
 
 
-      <!-- =========================
-           START TAB
-      ========================= -->
+      <!-- START -->
 
       <div id="startTab">
 
@@ -818,13 +851,11 @@
             id="freigeschaltetBox"
             class="freigeschaltet"
           >
-            ✅ Fachbetrieb freigeschaltet
+            Fachbetrieb freigeschaltet
           </div>
 
         </div>
 
-
-        <!-- STATISTIK -->
 
         <div class="card">
 
@@ -835,7 +866,6 @@
           <div class="stats-grid">
 
             <div class="stat-card">
-
               <div
                 id="statNeu"
                 class="stat-number"
@@ -846,12 +876,9 @@
               <div class="stat-label">
                 🆕 Neu
               </div>
-
             </div>
 
-
             <div class="stat-card">
-
               <div
                 id="statAngesehen"
                 class="stat-number"
@@ -862,12 +889,9 @@
               <div class="stat-label">
                 👀 Angesehen
               </div>
-
             </div>
 
-
             <div class="stat-card">
-
               <div
                 id="statBearbeitung"
                 class="stat-number"
@@ -878,12 +902,9 @@
               <div class="stat-label">
                 🔧 In Bearbeitung
               </div>
-
             </div>
 
-
             <div class="stat-card">
-
               <div
                 id="statErledigt"
                 class="stat-number"
@@ -894,15 +915,12 @@
               <div class="stat-label">
                 ✅ Erledigt
               </div>
-
             </div>
 
           </div>
 
         </div>
 
-
-        <!-- ABO KURZÜBERSICHT -->
 
         <div class="card">
 
@@ -936,9 +954,7 @@
       </div>
 
 
-      <!-- =========================
-           BAUANFRAGEN
-      ========================= -->
+      <!-- BAUANFRAGEN -->
 
       <div
         id="requestsTab"
@@ -950,7 +966,6 @@
           <div class="topbar">
 
             <div>
-
               <h2>
                 🏗️ Meine Bauanfragen
               </h2>
@@ -958,7 +973,6 @@
               <div class="small">
                 Ihnen zugewiesene Bauprojekte
               </div>
-
             </div>
 
             <button
@@ -983,9 +997,7 @@
       </div>
 
 
-      <!-- =========================
-           PROFIL
-      ========================= -->
+      <!-- PROFIL -->
 
       <div
         id="profileTab"
@@ -1022,7 +1034,6 @@
 
             </div>
 
-
             <div>
 
               <label>
@@ -1035,7 +1046,6 @@
               >
 
             </div>
-
 
             <div>
 
@@ -1050,7 +1060,6 @@
 
             </div>
 
-
             <div>
 
               <label>
@@ -1064,7 +1073,6 @@
 
             </div>
 
-
             <div>
 
               <label>
@@ -1074,10 +1082,10 @@
               <input
                 id="profilePlz"
                 type="text"
+                maxlength="5"
               >
 
             </div>
-
 
             <div>
 
@@ -1092,7 +1100,6 @@
 
             </div>
 
-
             <div class="full">
 
               <label>
@@ -1105,7 +1112,6 @@
               >
 
             </div>
-
 
             <div>
 
@@ -1124,7 +1130,6 @@
 
           </div>
 
-
           <button
             class="btn btn-primary"
             onclick="saveProfile()"
@@ -1137,9 +1142,7 @@
       </div>
 
 
-      <!-- =========================
-           ABO
-      ========================= -->
+      <!-- ABO -->
 
       <div
         id="aboTab"
@@ -1166,9 +1169,10 @@
             30 Tage kostenlos testen. Danach 19,99 € monatlich.
           </p>
 
-          <div class="sandbox-box">
-            <strong>Sandbox-Testmodus</strong><br>
-            Die 19,99 € sind aktuell noch keine echte Abbuchung.
+          <div class="live-box">
+            <strong>Riemer BauConnect – Live</strong><br>
+            Die Abrechnung erfolgt nach dem kostenlosen Testzeitraum
+            über Stripe.
           </div>
 
         </div>
@@ -1187,7 +1191,6 @@
             Wird geladen...
           </div>
 
-
           <div class="info-row">
 
             <span>
@@ -1199,7 +1202,6 @@
             </span>
 
           </div>
-
 
           <div class="info-row">
 
@@ -1213,7 +1215,6 @@
 
           </div>
 
-
           <div class="info-row">
 
             <span>
@@ -1226,7 +1227,6 @@
 
           </div>
 
-
           <div class="info-row">
 
             <span>
@@ -1238,7 +1238,6 @@
             </span>
 
           </div>
-
 
           <div id="aboActionArea">
 
@@ -1295,9 +1294,6 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
   "sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
 
-const REDIRECT_URL =
-  "https://kennethriemer.github.io/riemer-bauconnect/fachbetrieb.html";
-
 const db =
   window.supabase.createClient(
     SUPABASE_URL,
@@ -1343,14 +1339,18 @@ document.addEventListener(
 
 
 /* =========================================================
-   AUTH UI
+   SCREEN MANAGEMENT
 ========================================================= */
 
-function showAuth() {
+function hideAllScreens() {
 
   document
     .getElementById("authScreen")
-    .classList.remove("hidden");
+    .classList.add("hidden");
+
+  document
+    .getElementById("pendingScreen")
+    .classList.add("hidden");
 
   document
     .getElementById("dashboardScreen")
@@ -1359,11 +1359,31 @@ function showAuth() {
 }
 
 
-function showDashboard() {
+function showAuth() {
+
+  hideAllScreens();
 
   document
     .getElementById("authScreen")
-    .classList.add("hidden");
+    .classList.remove("hidden");
+
+}
+
+
+function showPending() {
+
+  hideAllScreens();
+
+  document
+    .getElementById("pendingScreen")
+    .classList.remove("hidden");
+
+}
+
+
+function showDashboard() {
+
+  hideAllScreens();
 
   document
     .getElementById("dashboardScreen")
@@ -1416,6 +1436,7 @@ async function checkSession() {
     } =
       await db.auth.getSession();
 
+
     if (error) {
 
       console.error(error);
@@ -1427,45 +1448,71 @@ async function checkSession() {
     }
 
 
-    if (data.session) {
-
-      currentUser =
-        data.session.user;
-
-      const firmLoaded =
-        await loadFirm();
-
-      if (firmLoaded) {
-
-        showDashboard();
-
-        fillProfile();
-
-        await loadRequests();
-
-        updateAboUI();
-
-        updateStartDashboard();
-
-        showTab("start");
-
-      } else {
-
-        showAuth();
-
-        showMessage(
-          "authMessage",
-          "Für diesen Benutzer wurde kein Fachbetriebsprofil gefunden.",
-          "error"
-        );
-
-      }
-
-    } else {
+    if (!data.session) {
 
       showAuth();
 
+      return;
+
     }
+
+
+    currentUser =
+      data.session.user;
+
+
+    const firmLoaded =
+      await loadFirm();
+
+
+    /*
+      Falls nach der E-Mail-Bestätigung noch kein Profil
+      vorhanden ist, versuchen wir die gespeicherte
+      Registrierung fertigzustellen.
+    */
+
+    if (!firmLoaded) {
+
+      const created =
+        await createPendingFirm();
+
+      if (created) {
+
+        await loadFirm();
+
+      }
+
+    }
+
+
+    if (!currentFirm) {
+
+      showMessage(
+        "authMessage",
+        "Für diesen Benutzer wurde noch kein Fachbetriebsprofil gefunden.",
+        "info"
+      );
+
+      showAuth();
+
+      return;
+
+    }
+
+
+    if (
+      currentFirm.freigeschaltet !== true
+    ) {
+
+      showPending();
+
+      return;
+
+    }
+
+
+    enterDashboard();
+
 
   } catch (error) {
 
@@ -1474,6 +1521,27 @@ async function checkSession() {
     showAuth();
 
   }
+
+}
+
+
+/* =========================================================
+   DASHBOARD EINTRITT
+========================================================= */
+
+async function enterDashboard() {
+
+  showDashboard();
+
+  fillProfile();
+
+  await loadRequests();
+
+  updateAboUI();
+
+  updateStartDashboard();
+
+  showTab("start");
 
 }
 
@@ -1489,6 +1557,7 @@ async function login() {
       .getElementById("loginEmail")
       .value
       .trim();
+
 
   const password =
     document
@@ -1532,7 +1601,7 @@ async function login() {
 
     showMessage(
       "authMessage",
-      error.message,
+      getAuthError(error),
       "error"
     );
 
@@ -1545,11 +1614,27 @@ async function login() {
     data.user;
 
 
-  const firmLoaded =
+  let firmLoaded =
     await loadFirm();
 
 
+  /*
+    Falls die Registrierung wegen aktivierter
+    E-Mail-Bestätigung zunächst nur gespeichert wurde,
+    wird sie jetzt nach dem Login angelegt.
+  */
+
   if (!firmLoaded) {
+
+    await createPendingFirm();
+
+    firmLoaded =
+      await loadFirm();
+
+  }
+
+
+  if (!firmLoaded || !currentFirm) {
 
     showMessage(
       "authMessage",
@@ -1562,17 +1647,18 @@ async function login() {
   }
 
 
-  showDashboard();
+  if (
+    currentFirm.freigeschaltet !== true
+  ) {
 
-  fillProfile();
+    showPending();
 
-  await loadRequests();
+    return;
 
-  updateAboUI();
+  }
 
-  updateStartDashboard();
 
-  showTab("start");
+  await enterDashboard();
 
 }
 
@@ -1589,17 +1675,21 @@ async function registerFirm() {
       .value
       .trim();
 
+
   const inhaber =
     document
       .getElementById("registerInhaber")
       .value
       .trim();
 
+
   const email =
     document
       .getElementById("registerEmail")
       .value
-      .trim();
+      .trim()
+      .toLowerCase();
+
 
   const telefon =
     document
@@ -1607,11 +1697,13 @@ async function registerFirm() {
       .value
       .trim();
 
+
   const plz =
     document
       .getElementById("registerPlz")
       .value
       .trim();
+
 
   const ort =
     document
@@ -1619,11 +1711,13 @@ async function registerFirm() {
       .value
       .trim();
 
+
   const leistungen =
     document
       .getElementById("registerLeistungen")
       .value
       .trim();
+
 
   const radius =
     Number(
@@ -1631,6 +1725,7 @@ async function registerFirm() {
         .getElementById("registerRadius")
         .value
     ) || 30;
+
 
   const password =
     document
@@ -1659,6 +1754,19 @@ async function registerFirm() {
   }
 
 
+  if (!/^\d{5}$/.test(plz)) {
+
+    showMessage(
+      "authMessage",
+      "Bitte eine gültige 5-stellige PLZ eingeben.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
   if (password.length < 6) {
 
     showMessage(
@@ -1672,10 +1780,69 @@ async function registerFirm() {
   }
 
 
+  if (
+    radius < 1 ||
+    radius > 200
+  ) {
+
+    showMessage(
+      "authMessage",
+      "Der Suchradius muss zwischen 1 und 200 km liegen.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
   showMessage(
     "authMessage",
     "Registrierung wird durchgeführt...",
     "info"
+  );
+
+
+  /*
+    Daten vorübergehend speichern.
+    Das ist wichtig, wenn Supabase zuerst
+    eine E-Mail-Bestätigung verlangt.
+  */
+
+  const pendingProfile = {
+
+    firma:
+      firma,
+
+    inhaber:
+      inhaber,
+
+    email:
+      email,
+
+    telefon:
+      telefon,
+
+    plz:
+      plz,
+
+    ort:
+      ort,
+
+    leistungen:
+      leistungen,
+
+    radius_km:
+      radius
+
+  };
+
+
+  localStorage.setItem(
+    "riemer_pending_fachbetrieb",
+    JSON.stringify(
+      pendingProfile
+    )
   );
 
 
@@ -1693,9 +1860,13 @@ async function registerFirm() {
 
     console.error(error);
 
+    localStorage.removeItem(
+      "riemer_pending_fachbetrieb"
+    );
+
     showMessage(
       "authMessage",
-      error.message,
+      getAuthError(error),
       "error"
     );
 
@@ -1708,7 +1879,7 @@ async function registerFirm() {
 
     showMessage(
       "authMessage",
-      "Registrierung konnte nicht abgeschlossen werden.",
+      "Die Registrierung konnte nicht abgeschlossen werden.",
       "error"
     );
 
@@ -1721,39 +1892,207 @@ async function registerFirm() {
     data.user;
 
 
+  /*
+    Wenn direkt eine Session vorhanden ist,
+    können wir das Profil sofort anlegen.
+  */
+
+  if (data.session) {
+
+    const created =
+      await createPendingFirm();
+
+
+    if (!created) {
+
+      showMessage(
+        "authMessage",
+        "Benutzer wurde erstellt, aber das Fachbetriebsprofil konnte noch nicht angelegt werden.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    await loadFirm();
+
+
+    if (
+      currentFirm &&
+      currentFirm.freigeschaltet === true
+    ) {
+
+      await enterDashboard();
+
+    } else {
+
+      showPending();
+
+    }
+
+
+    return;
+
+  }
+
+
+  /*
+    Keine Session = E-Mail-Bestätigung erforderlich.
+  */
+
+  showMessage(
+    "authMessage",
+    "Registrierung erfolgreich. Bitte bestätigen Sie Ihre E-Mail-Adresse. Danach können Sie sich hier einloggen. Ihr Fachbetrieb wird anschließend geprüft und freigeschaltet.",
+    "success"
+  );
+
+
+  showLogin();
+
+}
+
+
+/* =========================================================
+   PENDING PROFILE ERSTELLEN
+========================================================= */
+
+async function createPendingFirm() {
+
+  if (!currentUser) {
+
+    return false;
+
+  }
+
+
+  const stored =
+    localStorage.getItem(
+      "riemer_pending_fachbetrieb"
+    );
+
+
+  if (!stored) {
+
+    return false;
+
+  }
+
+
+  let profile;
+
+
+  try {
+
+    profile =
+      JSON.parse(stored);
+
+  } catch (error) {
+
+    console.error(error);
+
+    localStorage.removeItem(
+      "riemer_pending_fachbetrieb"
+    );
+
+    return false;
+
+  }
+
+
+  if (
+    !profile ||
+    !profile.firma ||
+    !profile.email
+  ) {
+
+    return false;
+
+  }
+
+
+  /*
+    Prüfen, ob bereits ein Profil existiert.
+  */
+
   const {
-    error: firmError
+    data: existing,
+    error: existingError
+  } =
+    await db
+      .from("fachbetriebe")
+      .select("id")
+      .eq(
+        "owner_user_id",
+        currentUser.id
+      )
+      .maybeSingle();
+
+
+  if (existingError) {
+
+    console.error(existingError);
+
+    return false;
+
+  }
+
+
+  if (existing) {
+
+    localStorage.removeItem(
+      "riemer_pending_fachbetrieb"
+    );
+
+    return true;
+
+  }
+
+
+  /*
+    Beide vorhandenen Namensfelder werden befüllt.
+  */
+
+  const {
+    error
   } =
     await db
       .from("fachbetriebe")
       .insert([{
 
         owner_user_id:
-          data.user.id,
+          currentUser.id,
 
         firma:
-          firma,
+          profile.firma,
+
+        firmenname:
+          profile.firma,
 
         inhaber:
-          inhaber,
+          profile.inhaber,
+
+        ansprechpartner:
+          profile.inhaber,
 
         email:
-          email,
+          profile.email,
 
         telefon:
-          telefon,
+          profile.telefon,
 
         plz:
-          plz,
+          profile.plz,
 
         ort:
-          ort,
+          profile.ort,
 
         leistungen:
-          leistungen,
+          profile.leistungen || "",
 
         radius_km:
-          radius,
+          profile.radius_km || 30,
 
         aktiv:
           true,
@@ -1770,55 +2109,24 @@ async function registerFirm() {
       }]);
 
 
-  if (firmError) {
+  if (error) {
 
-    console.error(firmError);
-
-    showMessage(
-      "authMessage",
-      "Benutzer wurde erstellt, aber das Fachbetriebsprofil konnte nicht erstellt werden: " +
-      firmError.message,
-      "error"
+    console.error(
+      "Profil konnte nicht erstellt werden:",
+      error
     );
 
-    return;
+    return false;
 
   }
 
 
-  if (data.session) {
+  localStorage.removeItem(
+    "riemer_pending_fachbetrieb"
+  );
 
-    await loadFirm();
 
-    showDashboard();
-
-    fillProfile();
-
-    await loadRequests();
-
-    updateAboUI();
-
-    updateStartDashboard();
-
-    showTab("start");
-
-    showMessage(
-      "dashboardMessage",
-      "Fachbetrieb erfolgreich registriert. Das Profil muss ggf. noch freigeschaltet werden.",
-      "success"
-    );
-
-  } else {
-
-    showMessage(
-      "authMessage",
-      "Registrierung erfolgreich. Bitte prüfen Sie Ihre E-Mail und melden Sie sich danach an.",
-      "success"
-    );
-
-    showLogin();
-
-  }
+  return true;
 
 }
 
@@ -1852,7 +2160,12 @@ async function loadFirm() {
 
   if (error) {
 
-    console.error(error);
+    console.error(
+      "loadFirm:",
+      error
+    );
+
+    currentFirm = null;
 
     return false;
 
@@ -1870,6 +2183,7 @@ async function loadFirm() {
 
   currentFirm =
     data;
+
 
   return true;
 
@@ -1892,62 +2206,80 @@ function fillProfile() {
   document
     .getElementById("profileFirma")
     .value =
-      currentFirm.firma || "";
+      currentFirm.firma ||
+      currentFirm.firmenname ||
+      "";
 
 
   document
     .getElementById("profileInhaber")
     .value =
-      currentFirm.inhaber || "";
+      currentFirm.inhaber ||
+      currentFirm.ansprechpartner ||
+      "";
 
 
   document
     .getElementById("profileEmail")
     .value =
-      currentFirm.email || "";
+      currentFirm.email ||
+      "";
 
 
   document
     .getElementById("profileTelefon")
     .value =
-      currentFirm.telefon || "";
+      currentFirm.telefon ||
+      "";
 
 
   document
     .getElementById("profilePlz")
     .value =
-      currentFirm.plz || "";
+      currentFirm.plz ||
+      "";
 
 
   document
     .getElementById("profileOrt")
     .value =
-      currentFirm.ort || "";
+      currentFirm.ort ||
+      "";
 
 
   document
     .getElementById("profileLeistungen")
     .value =
-      currentFirm.leistungen || "";
+      currentFirm.leistungen ||
+      "";
 
 
   document
     .getElementById("profileRadius")
     .value =
-      currentFirm.radius_km || 30;
+      currentFirm.radius_km ||
+      30;
 
 
   document
     .getElementById("welcomeText")
     .textContent =
-      (currentFirm.firma || "Fachbetrieb") +
+      (
+        currentFirm.firma ||
+        currentFirm.firmenname ||
+        "Fachbetrieb"
+      ) +
       " – Fachbetriebsbereich";
 
 
   document
     .getElementById("startFirmText")
     .textContent =
-      (currentFirm.firma || "Fachbetrieb") +
+      (
+        currentFirm.firma ||
+        currentFirm.firmenname ||
+        "Fachbetrieb"
+      ) +
       " – Fachbetriebsbereich";
 
 }
@@ -1968,11 +2300,13 @@ async function saveProfile() {
       .value
       .trim();
 
+
   const inhaber =
     document
       .getElementById("profileInhaber")
       .value
       .trim();
+
 
   const email =
     document
@@ -1980,11 +2314,13 @@ async function saveProfile() {
       .value
       .trim();
 
+
   const telefon =
     document
       .getElementById("profileTelefon")
       .value
       .trim();
+
 
   const plz =
     document
@@ -1992,17 +2328,20 @@ async function saveProfile() {
       .value
       .trim();
 
+
   const ort =
     document
       .getElementById("profileOrt")
       .value
       .trim();
 
+
   const leistungen =
     document
       .getElementById("profileLeistungen")
       .value
       .trim();
+
 
   const radius =
     Number(
@@ -2012,7 +2351,11 @@ async function saveProfile() {
     ) || 30;
 
 
-  if (!firma || !inhaber || !email) {
+  if (
+    !firma ||
+    !inhaber ||
+    !email
+  ) {
 
     showMessage(
       "profileMessage",
@@ -2036,7 +2379,13 @@ async function saveProfile() {
         firma:
           firma,
 
+        firmenname:
+          firma,
+
         inhaber:
+          inhaber,
+
+        ansprechpartner:
           inhaber,
 
         email:
@@ -2085,9 +2434,11 @@ async function saveProfile() {
   currentFirm =
     data;
 
+
   fillProfile();
 
   updateStartDashboard();
+
 
   showMessage(
     "profileMessage",
@@ -2108,6 +2459,13 @@ async function loadRequests() {
     document.getElementById(
       "requestsContainer"
     );
+
+
+  if (!container) {
+
+    return;
+
+  }
 
 
   if (!currentFirm) {
@@ -2150,12 +2508,14 @@ async function loadRequests() {
     container.innerHTML =
       '<div class="empty">Bauanfragen konnten nicht geladen werden.</div>';
 
+
     showMessage(
       "dashboardMessage",
       "Fehler beim Laden der Bauanfragen: " +
       error.message,
       "error"
     );
+
 
     return;
 
@@ -2167,9 +2527,13 @@ async function loadRequests() {
   );
 
 
-  if (!data || data.length === 0) {
+  if (
+    !data ||
+    data.length === 0
+  ) {
 
     container.innerHTML = `
+
       <div class="empty">
 
         <div style="font-size:40px;">
@@ -2185,7 +2549,9 @@ async function loadRequests() {
         </p>
 
       </div>
+
     `;
+
 
     updateStartDashboard();
 
@@ -2242,57 +2608,28 @@ function updateRequestStats(requests) {
     ).length;
 
 
-  const statNeu =
-    document.getElementById(
-      "statNeu"
-    );
-
-  const statAngesehen =
-    document.getElementById(
-      "statAngesehen"
-    );
-
-  const statBearbeitung =
-    document.getElementById(
-      "statBearbeitung"
-    );
-
-  const statErledigt =
-    document.getElementById(
-      "statErledigt"
-    );
-
-
-  if (statNeu) {
-
-    statNeu.textContent =
+  document
+    .getElementById("statNeu")
+    .textContent =
       neu;
 
-  }
 
-
-  if (statAngesehen) {
-
-    statAngesehen.textContent =
+  document
+    .getElementById("statAngesehen")
+    .textContent =
       angesehen;
 
-  }
 
-
-  if (statBearbeitung) {
-
-    statBearbeitung.textContent =
+  document
+    .getElementById("statBearbeitung")
+    .textContent =
       bearbeitung;
 
-  }
 
-
-  if (statErledigt) {
-
-    statErledigt.textContent =
+  document
+    .getElementById("statErledigt")
+    .textContent =
       erledigt;
-
-  }
 
 }
 
@@ -2310,7 +2647,8 @@ function renderRequest(request) {
 
 
   const status =
-    request.status || "neu";
+    request.status ||
+    "neu";
 
 
   return `
@@ -2513,8 +2851,10 @@ async function saveRequestStatus(
     await db
       .from("bauanfragen")
       .update({
+
         status:
           newStatus
+
       })
       .eq(
         "id",
@@ -2567,6 +2907,12 @@ function updateStartDashboard() {
   }
 
 
+  const firmName =
+    currentFirm.firma ||
+    currentFirm.firmenname ||
+    "Fachbetrieb";
+
+
   const startFirmText =
     document.getElementById(
       "startFirmText"
@@ -2576,8 +2922,7 @@ function updateStartDashboard() {
   if (startFirmText) {
 
     startFirmText.textContent =
-      (currentFirm.firma ||
-      "Fachbetrieb") +
+      firmName +
       " – Fachbetriebsbereich";
 
   }
@@ -2591,7 +2936,9 @@ function updateStartDashboard() {
 
   if (box) {
 
-    if (currentFirm.freigeschaltet === true) {
+    if (
+      currentFirm.freigeschaltet === true
+    ) {
 
       box.textContent =
         "✅ Fachbetrieb freigeschaltet";
@@ -2652,17 +2999,23 @@ function updateStartDashboard() {
     "Inaktiv";
 
 
-  if (status === "testphase") {
+  if (
+    status === "testphase"
+  ) {
 
     statusText =
       "30-Tage-Testphase";
 
-  } else if (status === "aktiv") {
+  } else if (
+    status === "aktiv"
+  ) {
 
     statusText =
       "Abo aktiv";
 
-  } else if (status === "gekündigt") {
+  } else if (
+    status === "gekündigt"
+  ) {
 
     statusText =
       "Gekündigt";
@@ -2732,7 +3085,9 @@ function getAboShortText() {
   }
 
 
-  if (status === "aktiv") {
+  if (
+    status === "aktiv"
+  ) {
 
     return (
       "Dein Abo ist aktiv und kostet 19,99 € pro Monat."
@@ -2746,7 +3101,7 @@ function getAboShortText() {
   ) {
 
     return (
-      "Der kostenlose Test wurde bereits genutzt. Danach bzw. beim nächsten Start gelten 19,99 € pro Monat."
+      "Der kostenlose Test wurde bereits genutzt. Danach gelten 19,99 € pro Monat."
     );
 
   }
@@ -2760,7 +3115,7 @@ function getAboShortText() {
 
 
 /* =========================================================
-   ABO
+   ABO UI
 ========================================================= */
 
 function updateAboUI() {
@@ -2829,7 +3184,10 @@ function updateAboUI() {
     );
 
 
-  if (!badge || !actionArea) {
+  if (
+    !badge ||
+    !actionArea
+  ) {
 
     return;
 
@@ -2844,12 +3202,16 @@ function updateAboUI() {
     "abo-status";
 
 
-  if (status === "testphase") {
+  if (
+    status === "testphase"
+  ) {
 
     statusText =
       "30-Tage-Testphase";
 
-  } else if (status === "aktiv") {
+  } else if (
+    status === "aktiv"
+  ) {
 
     statusText =
       "Abo aktiv";
@@ -2944,10 +3306,6 @@ function updateAboUI() {
   }
 
 
-  /* =========================
-     AKTIVES ABO
-  ========================= */
-
   if (
     status === "testphase" ||
     status === "aktiv"
@@ -2984,9 +3342,8 @@ function updateAboUI() {
           class="small"
           style="margin-top:10px;"
         >
-          Die Kündigung beendet das Abo nicht sofort.
-          Sie wird zum Ende der aktuellen Periode bzw.
-          der kostenlosen Testphase vorgemerkt.
+          Die Kündigung wird zum Ende der aktuellen
+          Periode bzw. der kostenlosen Testphase vorgemerkt.
         </div>
 
       `;
@@ -2999,10 +3356,6 @@ function updateAboUI() {
 
   }
 
-
-  /* =========================
-     GEKÜNDIGT
-  ========================= */
 
   if (
     status === "gekündigt"
@@ -3036,10 +3389,6 @@ function updateAboUI() {
 
   }
 
-
-  /* =========================
-     KEIN AKTIVES ABO
-  ========================= */
 
   actionArea.innerHTML = `
 
@@ -3083,7 +3432,10 @@ function updateAboUI() {
 
 async function startSubscription() {
 
-  if (!currentUser || !currentFirm) {
+  if (
+    !currentUser ||
+    !currentFirm
+  ) {
 
     showMessage(
       "dashboardMessage",
@@ -3097,10 +3449,23 @@ async function startSubscription() {
 
 
   if (
-    currentFirm.abo_status ===
-      "testphase" ||
-    currentFirm.abo_status ===
-      "aktiv"
+    currentFirm.freigeschaltet !== true
+  ) {
+
+    showMessage(
+      "dashboardMessage",
+      "Ihr Fachbetrieb muss zuerst freigeschaltet werden.",
+      "info"
+    );
+
+    return;
+
+  }
+
+
+  if (
+    currentFirm.abo_status === "testphase" ||
+    currentFirm.abo_status === "aktiv"
   ) {
 
     showMessage(
@@ -3149,8 +3514,6 @@ async function startSubscription() {
       !data.url
     ) {
 
-      console.error(data);
-
       throw new Error(
         "Stripe hat keine Checkout-Adresse zurückgegeben."
       );
@@ -3184,7 +3547,10 @@ async function startSubscription() {
 
 async function cancelSubscription() {
 
-  if (!currentUser || !currentFirm) {
+  if (
+    !currentUser ||
+    !currentFirm
+  ) {
 
     showMessage(
       "dashboardMessage",
@@ -3413,7 +3779,9 @@ function showTab(tab) {
   );
 
 
-  if (tab === "start") {
+  if (
+    tab === "start"
+  ) {
 
     start.classList.remove(
       "hidden"
@@ -3430,7 +3798,9 @@ function showTab(tab) {
   }
 
 
-  if (tab === "requests") {
+  if (
+    tab === "requests"
+  ) {
 
     requests.classList.remove(
       "hidden"
@@ -3447,7 +3817,9 @@ function showTab(tab) {
   }
 
 
-  if (tab === "profile") {
+  if (
+    tab === "profile"
+  ) {
 
     profile.classList.remove(
       "hidden"
@@ -3464,7 +3836,9 @@ function showTab(tab) {
   }
 
 
-  if (tab === "abo") {
+  if (
+    tab === "abo"
+  ) {
 
     abo.classList.remove(
       "hidden"
@@ -3560,7 +3934,65 @@ function clearMessage(id) {
 
 
 /* =========================================================
-   HELPERS
+   AUTH FEHLER
+========================================================= */
+
+function getAuthError(error) {
+
+  const message =
+    error &&
+    error.message
+      ? error.message
+      : "";
+
+
+  if (
+    message.toLowerCase()
+      .includes("user already registered")
+  ) {
+
+    return (
+      "Diese E-Mail-Adresse ist bereits registriert. " +
+      "Bitte verwenden Sie den Login."
+    );
+
+  }
+
+
+  if (
+    message.toLowerCase()
+      .includes("invalid login credentials")
+  ) {
+
+    return (
+      "E-Mail-Adresse oder Passwort ist falsch."
+    );
+
+  }
+
+
+  if (
+    message.toLowerCase()
+      .includes("email not confirmed")
+  ) {
+
+    return (
+      "Bitte bestätigen Sie zuerst Ihre E-Mail-Adresse."
+    );
+
+  }
+
+
+  return (
+    message ||
+    "Es ist ein unbekannter Fehler aufgetreten."
+  );
+
+}
+
+
+/* =========================================================
+   DATUM
 ========================================================= */
 
 function formatDate(value) {
@@ -3651,6 +4083,10 @@ function formatDateTime(value) {
 }
 
 
+/* =========================================================
+   STATUS
+========================================================= */
+
 function statusLabel(status) {
 
   const labels = {
@@ -3684,6 +4120,10 @@ function statusLabel(status) {
 
 }
 
+
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
 
 function escapeHtml(value) {
 
