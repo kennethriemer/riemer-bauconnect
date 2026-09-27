@@ -1465,12 +1465,6 @@ async function checkSession() {
       await loadFirm();
 
 
-    /*
-      Falls nach der E-Mail-Bestätigung noch kein Profil
-      vorhanden ist, versuchen wir die gespeicherte
-      Registrierung fertigzustellen.
-    */
-
     if (!firmLoaded) {
 
       const created =
@@ -1617,12 +1611,6 @@ async function login() {
   let firmLoaded =
     await loadFirm();
 
-
-  /*
-    Falls die Registrierung wegen aktivierter
-    E-Mail-Bestätigung zunächst nur gespeichert wurde,
-    wird sie jetzt nach dem Login angelegt.
-  */
 
   if (!firmLoaded) {
 
@@ -1803,12 +1791,6 @@ async function registerFirm() {
   );
 
 
-  /*
-    Daten vorübergehend speichern.
-    Das ist wichtig, wenn Supabase zuerst
-    eine E-Mail-Bestätigung verlangt.
-  */
-
   const pendingProfile = {
 
     firma:
@@ -1892,11 +1874,6 @@ async function registerFirm() {
     data.user;
 
 
-  /*
-    Wenn direkt eine Session vorhanden ist,
-    können wir das Profil sofort anlegen.
-  */
-
   if (data.session) {
 
     const created =
@@ -1937,10 +1914,6 @@ async function registerFirm() {
 
   }
 
-
-  /*
-    Keine Session = E-Mail-Bestätigung erforderlich.
-  */
 
   showMessage(
     "authMessage",
@@ -2012,10 +1985,6 @@ async function createPendingFirm() {
   }
 
 
-  /*
-    Prüfen, ob bereits ein Profil existiert.
-  */
-
   const {
     data: existing,
     error: existingError
@@ -2049,10 +2018,6 @@ async function createPendingFirm() {
 
   }
 
-
-  /*
-    Beide vorhandenen Namensfelder werden befüllt.
-  */
 
   const {
     error
@@ -2813,7 +2778,7 @@ function renderRequest(request) {
 
 
 /* =========================================================
-   STATUS SPEICHERN
+   STATUS SPEICHERN + KUNDEN-E-MAIL
 ========================================================= */
 
 async function saveRequestStatus(
@@ -2845,16 +2810,65 @@ async function saveRequestStatus(
     select.value;
 
 
+  /*
+    Alten Status und Kunden-E-Mail laden.
+  */
+
+  const {
+    data: oldRequest,
+    error: oldRequestError
+  } =
+    await db
+      .from("bauanfragen")
+      .select(
+        "id, status, email, name"
+      )
+      .eq(
+        "id",
+        requestId
+      )
+      .eq(
+        "fachbetrieb_id",
+        currentFirm.id
+      )
+      .single();
+
+
+  if (oldRequestError) {
+
+    console.error(
+      oldRequestError
+    );
+
+    showMessage(
+      "dashboardMessage",
+      "Auftrag konnte nicht geladen werden: " +
+      oldRequestError.message,
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  const oldStatus =
+    oldRequest.status ||
+    "neu";
+
+
+  /*
+    Status speichern.
+  */
+
   const {
     error
   } =
     await db
       .from("bauanfragen")
       .update({
-
         status:
           newStatus
-
       })
       .eq(
         "id",
@@ -2882,11 +2896,137 @@ async function saveRequestStatus(
   }
 
 
-  showMessage(
-    "dashboardMessage",
-    "Status erfolgreich gespeichert.",
-    "success"
-  );
+  /*
+    E-Mail nur beim echten Wechsel auf
+    "angenommen" auslösen.
+  */
+
+  if (
+    newStatus === "angenommen" &&
+    oldStatus !== "angenommen"
+  ) {
+
+    /*
+      Keine E-Mail-Adresse vorhanden.
+    */
+
+    if (!oldRequest.email) {
+
+      showMessage(
+        "dashboardMessage",
+        "✅ Auftrag angenommen. Der Kunde hat jedoch keine E-Mail-Adresse angegeben.",
+        "info"
+      );
+
+      await loadRequests();
+
+      return;
+
+    }
+
+
+    showMessage(
+      "dashboardMessage",
+      "Auftrag angenommen. Kunden-E-Mail wird versendet...",
+      "info"
+    );
+
+
+    try {
+
+      const {
+        data: emailResult,
+        error: emailError
+      } =
+        await db.functions.invoke(
+          "auftrag-angenommen-email",
+          {
+            body: {
+              requestId:
+                requestId
+            }
+          }
+        );
+
+
+      if (emailError) {
+
+        console.error(
+          "E-Mail-Funktion Fehler:",
+          emailError
+        );
+
+        showMessage(
+          "dashboardMessage",
+          "⚠️ Auftrag wurde angenommen, aber die Kunden-E-Mail konnte nicht versendet werden.",
+          "error"
+        );
+
+        await loadRequests();
+
+        return;
+
+      }
+
+
+      if (
+        emailResult &&
+        emailResult.error
+      ) {
+
+        console.error(
+          "E-Mail Fehler:",
+          emailResult
+        );
+
+        showMessage(
+          "dashboardMessage",
+          "⚠️ Auftrag wurde angenommen, aber die Kunden-E-Mail konnte nicht versendet werden.",
+          "error"
+        );
+
+        await loadRequests();
+
+        return;
+
+      }
+
+
+      showMessage(
+        "dashboardMessage",
+        "✅ Auftrag angenommen und Kunden-E-Mail erfolgreich versendet.",
+        "success"
+      );
+
+
+    } catch (emailError) {
+
+      console.error(
+        "E-Mail Fehler:",
+        emailError
+      );
+
+      showMessage(
+        "dashboardMessage",
+        "⚠️ Auftrag wurde angenommen, aber die Kunden-E-Mail konnte nicht versendet werden.",
+        "error"
+      );
+
+      await loadRequests();
+
+      return;
+
+    }
+
+  } else {
+
+    showMessage(
+      "dashboardMessage",
+      "Status erfolgreich gespeichert.",
+      "success"
+    );
+
+  }
 
 
   await loadRequests();
