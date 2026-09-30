@@ -10,155 +10,229 @@
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#171717;color:#fff;font-family:Arial,sans-serif}
-.wrap{max-width:1100px;margin:auto;padding:24px}
-h1{margin:0;font-size:36px}
-.brand{color:#ffd000}
-.subtitle{color:#aaa;font-size:20px;margin:8px 0 30px}
-.card{background:#222;border:1px solid #3a3a3a;border-radius:20px;padding:24px;margin-bottom:20px}
-input,button,select,textarea{font-family:inherit;font-size:16px}
-input,select,textarea{width:100%;padding:14px;border-radius:12px;border:1px solid #444;background:#111;color:#fff;margin:8px 0 15px}
-textarea{resize:vertical;min-height:120px}
-button{width:100%;padding:15px;border-radius:12px;border:0;background:#ffd000;color:#111;font-weight:bold;cursor:pointer}
+:root{color-scheme:dark}
+body{
+  margin:0;background:#171717;color:#f5f5f5;
+  font-family:Arial,sans-serif
+}
+button,input,textarea,select{font:inherit}
+button{
+  border:0;border-radius:12px;padding:14px 18px;
+  background:#ffd000;color:#151515;font-weight:700;
+  cursor:pointer
+}
 button:disabled{opacity:.55;cursor:wait}
 button.secondary{background:#333;color:#fff}
-button.danger{background:#7b2929;color:#fff}
+button.danger{background:#762d2d;color:#fff}
+button:focus-visible,input:focus-visible,
+textarea:focus-visible,select:focus-visible{
+  outline:2px solid #ffd000;outline-offset:3px
+}
+.wrap{width:100%;max-width:1000px;margin:auto;padding:20px}
+h1{margin:0;font-size:clamp(25px,5vw,36px)}
+h2{margin:0 0 12px;font-size:25px}
+h3{margin:0 0 12px}
+.brand{color:#ffd000}
+.subtitle{color:#aaa;margin:9px 0 25px;font-size:16px}
+.card{
+  background:#222;border:1px solid #3b3b3b;
+  border-radius:18px;padding:22px;margin-bottom:18px
+}
 .hidden{display:none!important}
-.error,.success{padding:15px;border-radius:12px;margin-top:15px;overflow-wrap:anywhere}
-.error{background:#6b2222}
-.success{background:#235c32}
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:20px}
-.topbar button{width:auto;padding:12px 20px}
-.tabs{display:flex;gap:10px;margin:20px 0;flex-wrap:wrap}
-.tabs button{width:auto;flex:1;min-width:150px}
+label{display:block;margin:14px 0 6px;color:#ddd}
+input,textarea,select{
+  width:100%;padding:13px;border-radius:10px;
+  border:1px solid #484848;background:#111;color:#fff
+}
+textarea{min-height:120px;resize:vertical}
+button.full{width:100%}
+.small{color:#aaa;font-size:14px;line-height:1.5}
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:15px;margin:22px 0
+}
+.topbar button{width:auto}
+.tabs{display:flex;gap:10px;margin:20px 0}
+.tabs button{flex:1;min-width:0}
 .tabs button.active{outline:2px solid #fff}
-.request,.firm{background:#292929;border:1px solid #444;border-radius:15px;padding:18px;margin-top:15px}
-.request{cursor:pointer}
-.request:hover,.firm:hover{border-color:#ffd000}
-.request-title,.firm-title{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
-.request-service,.firm-name{color:#ffd000;font-size:20px;font-weight:bold;overflow-wrap:anywhere}
-.request-date,.muted{color:#999;font-size:14px}
-.request-info,.firm-info{color:#ccc;margin-top:8px;overflow-wrap:anywhere}
-.badge{display:inline-block;background:#333;padding:6px 10px;border-radius:8px;margin-top:10px}
+.message{margin:14px 0}
+.error,.success,.notice{
+  padding:13px 15px;border-radius:10px;overflow-wrap:anywhere
+}
+.error{background:#6b2222;color:#fff}
+.success{background:#235c32;color:#fff}
+.notice{background:#303030;color:#ddd}
+.request,.firm{
+  background:#292929;border:1px solid #414141;
+  border-radius:15px;padding:18px;margin-top:14px
+}
+.request-title,.firm-title{
+  display:flex;justify-content:space-between;
+  align-items:flex-start;gap:12px
+}
+.request-service,.firm-name{
+  color:#ffd000;font-weight:700;font-size:20px;
+  overflow-wrap:anywhere
+}
+.request-date{color:#aaa;font-size:13px;margin-top:6px}
+.request-info,.firm-info{
+  color:#ccc;margin-top:9px;overflow-wrap:anywhere;
+  line-height:1.45
+}
+.badge{
+  display:inline-block;background:#353535;color:#fff;
+  padding:7px 10px;border-radius:8px;font-size:13px
+}
 .badge.pending{background:#72551b}
 .badge.approved{background:#235c32}
-.firm-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
-.firm-actions button{width:auto;flex:1;min-width:170px}
-.detail{margin-top:20px}
-.detail-row{border-bottom:1px solid #3b3b3b;padding:14px 0}
-.detail-label{color:#ffd000;font-size:14px;margin-bottom:5px}
-.detail-value{font-size:17px;word-break:break-word}
-.back{margin-bottom:15px}
-.small{color:#aaa;margin-top:6px}
-.open-edit-btn{margin-top:15px}
-.detail-actions{display:grid;gap:10px;margin-top:20px}
+.request-actions,.firm-actions,.detail-actions{
+  display:flex;gap:10px;flex-wrap:wrap;margin-top:17px
+}
+.request-actions button,.firm-actions button,
+.detail-actions button{flex:1;min-width:140px}
+.detail-header{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;margin-bottom:18px
+}
+.detail-row{
+  border-bottom:1px solid #3b3b3b;padding:13px 0
+}
+.detail-label{color:#ffd000;font-size:13px;margin-bottom:6px}
+.detail-value{font-size:16px;white-space:pre-wrap;overflow-wrap:anywhere}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 15px}
+.form-grid .wide{grid-column:1/-1}
+.divider{height:1px;background:#3b3b3b;margin:20px 0}
 a{color:#ffd000}
-
 @media(max-width:600px){
-  .wrap{padding:16px}
-  h1{font-size:30px}
-  .topbar{align-items:flex-start;flex-direction:column}
+  .wrap{padding:14px}
+  .card{padding:16px}
+  .topbar{align-items:stretch;flex-direction:column}
   .topbar button{width:100%}
   .request-title,.firm-title{flex-direction:column}
-  .firm-actions{flex-direction:column}
-  .firm-actions button{width:100%}
-  .card{padding:18px}
+  .request-actions,.firm-actions,.detail-actions{flex-direction:column}
+  .request-actions button,.firm-actions button,
+  .detail-actions button{width:100%}
+  .form-grid{grid-template-columns:1fr}
+  .form-grid .wide{grid-column:auto}
+  .tabs button{padding:13px 8px}
+  .detail-header{align-items:flex-start;flex-direction:column}
 }
 </style>
 </head>
 
 <body>
 <div class="wrap">
-  <h1>RIEMER <span class="brand">BAUCONNECT</span></h1>
-  <div class="subtitle">Verwaltungsbereich – Bauanfragen &amp; Fachbetriebe</div>
+  <header>
+    <h1>RIEMER <span class="brand">BAUCONNECT</span></h1>
+    <div class="subtitle">Verwaltung – Bauanfragen und Fachbetriebe</div>
+  </header>
 
-  <div id="loginBox" class="card">
+  <section id="loginBox" class="card">
     <h2>Admin-Login</h2>
+    <form id="loginForm">
+      <label for="email">E-Mail-Adresse</label>
+      <input id="email" type="email" autocomplete="username"
+             placeholder="E-Mail-Adresse" required>
 
-    <label for="email">E-Mail</label>
-    <input id="email" type="email" placeholder="E-Mail-Adresse" autocomplete="username">
+      <label for="password">Passwort</label>
+      <input id="password" type="password"
+             autocomplete="current-password"
+             placeholder="Passwort" required>
 
-    <label for="password">Passwort</label>
-    <input id="password" type="password" placeholder="Passwort" autocomplete="current-password">
+      <button id="loginBtn" class="full" type="submit">Anmelden</button>
+    </form>
+    <div id="loginMessage" class="message" aria-live="polite"></div>
+  </section>
 
-    <button id="loginBtn" type="button">Anmelden</button>
-    <div id="loginMessage" aria-live="polite"></div>
-  </div>
-
-  <div id="adminBox" class="hidden">
+  <main id="adminBox" class="hidden">
     <div class="topbar">
       <div>
-        <h2 style="margin:0">Verwaltung</h2>
-        <div class="small">Bauanfragen und registrierte Fachbetriebe</div>
+        <h2>Verwaltung</h2>
+        <div class="small">Kundenanfragen und registrierte Fachbetriebe</div>
       </div>
       <button id="logoutBtn" class="secondary" type="button">Abmelden</button>
     </div>
 
-    <div class="tabs">
+    <nav class="tabs" aria-label="Verwaltungsbereiche">
       <button id="requestsTab" class="active" type="button">Bauanfragen</button>
       <button id="firmsTab" type="button">Fachbetriebe</button>
-    </div>
+    </nav>
 
     <section id="requestsSection" class="card">
-      <h2>Bauanfragen</h2>
-      <div class="small">Eingegangene Kundenanfragen</div>
-
-      <button id="refreshRequestsBtn" style="margin-top:18px" type="button">
-        Bauanfragen aktualisieren
-      </button>
-
-      <div id="requestsMessage" aria-live="polite"></div>
-      <div id="requestList"></div>
+      <div id="requestListView">
+        <h2>Bauanfragen</h2>
+        <p class="small">Eingegangene Kundenanfragen verwalten.</p>
+        <button id="refreshRequestsBtn" class="full" type="button">
+          Bauanfragen aktualisieren
+        </button>
+        <div id="requestsMessage" class="message" aria-live="polite"></div>
+        <div id="requestList"></div>
+      </div>
 
       <div id="detailView" class="hidden">
-        <button id="backBtn" class="secondary back" style="margin-top:18px" type="button">
-          ← Zurück zu den Bauanfragen
-        </button>
-        <h2>Bauanfrage bearbeiten</h2>
-        <div id="detailContent"></div>
+        <div class="detail-header">
+          <div>
+            <h2>Bauanfrage bearbeiten</h2>
+            <div class="small">Änderungen speichern, bevor du zurückgehst.</div>
+          </div>
+          <button id="backBtn" class="secondary" type="button">
+            ← Zurück zur Liste
+          </button>
+        </div>
+
+        <div id="detailSummary"></div>
+
+        <div class="divider"></div>
+
+        <form id="editRequestForm">
+          <label for="editStatus">Bearbeitungsstatus</label>
+          <select id="editStatus" required>
+            <option value="neu">Neu</option>
+            <option value="in Bearbeitung">In Bearbeitung</option>
+            <option value="erledigt">Erledigt</option>
+          </select>
+
+          <label for="editDescription">Beschreibung der Anfrage</label>
+          <textarea id="editDescription"
+                    placeholder="Beschreibung der Anfrage"></textarea>
+
+          <div id="editMessage" class="message" aria-live="polite"></div>
+
+          <div class="detail-actions">
+            <button id="saveRequestBtn" type="submit">Änderungen speichern</button>
+            <button id="cancelEditBtn" class="secondary" type="button">
+              Abbrechen
+            </button>
+          </div>
+        </form>
       </div>
     </section>
 
     <section id="firmsSection" class="card hidden">
       <h2>Fachbetriebe</h2>
-      <div class="small">Registrierte Firmen prüfen und Freischaltung verwalten.</div>
-
-      <button id="refreshFirmsBtn" style="margin-top:18px" type="button">
+      <p class="small">Registrierte Betriebe prüfen und freischalten.</p>
+      <button id="refreshFirmsBtn" class="full" type="button">
         Fachbetriebe aktualisieren
       </button>
-
-      <div id="firmsMessage" aria-live="polite"></div>
+      <div id="firmsMessage" class="message" aria-live="polite"></div>
       <div id="firmList"></div>
     </section>
-  </div>
+  </main>
 </div>
 
 <script>
 "use strict";
 
+/* Supabase-Verbindung */
 const SUPABASE_URL = "https://ehzugjmltfcvllftpjpp.supabase.co";
 const SUPABASE_KEY = "sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
-
 const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const $ = id => document.getElementById(id);
 
-const loginBox = $("loginBox");
-const adminBox = $("adminBox");
-const loginMessage = $("loginMessage");
-const requestsMessage = $("requestsMessage");
-const firmsMessage = $("firmsMessage");
-const requestList = $("requestList");
-const firmList = $("firmList");
-const detailView = $("detailView");
-const detailContent = $("detailContent");
-const requestsSection = $("requestsSection");
-const firmsSection = $("firmsSection");
-const requestsTab = $("requestsTab");
-const firmsTab = $("firmsTab");
-
 let currentSection = "requests";
-let currentRequestId = null;
+let currentRequest = null;
+let requestCache = [];
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -170,13 +244,21 @@ function escapeHtml(value) {
 }
 
 function formatDate(value) {
-  if (!value) return "";
+  if (!value) return "Keine Angabe";
   const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "";
+  if (Number.isNaN(date.getTime())) return String(value);
   return date.toLocaleString("de-DE", {
     dateStyle: "short",
-    timeStyle: "medium"
+    timeStyle: "short"
   });
+}
+
+function showMessage(element, type, message) {
+  element.innerHTML = `<div class="${type}">${escapeHtml(message)}</div>`;
+}
+
+function clearMessage(element) {
+  element.innerHTML = "";
 }
 
 function formatLeistungen(value) {
@@ -185,96 +267,90 @@ function formatLeistungen(value) {
   return String(value);
 }
 
-function showError(element, message) {
-  element.innerHTML = '<div class="error">' + escapeHtml(message) + '</div>';
-}
-
-function showSuccess(element, message) {
-  element.innerHTML = '<div class="success">' + escapeHtml(message) + '</div>';
-}
-
-async function login() {
+/* LOGIN UND SITZUNG */
+$("loginForm").addEventListener("submit", async event => {
+  event.preventDefault();
   const email = $("email").value.trim();
   const password = $("password").value;
-  loginMessage.innerHTML = "";
-
-  if (!email || !password) {
-    showError(loginMessage, "Bitte E-Mail und Passwort eingeben.");
-    return;
-  }
-
   const button = $("loginBtn");
+
+  clearMessage($("loginMessage"));
   button.disabled = true;
+  button.textContent = "Anmeldung läuft …";
 
   try {
     const { error } = await client.auth.signInWithPassword({ email, password });
-
     if (error) {
-      showError(loginMessage, error.message);
+      showMessage($("loginMessage"), "error", "Anmeldung fehlgeschlagen: " + error.message);
       return;
     }
-
     await updateUI();
   } catch (error) {
-    showError(loginMessage, error.message || "Anmeldung fehlgeschlagen.");
+    showMessage($("loginMessage"), "error", error.message || "Anmeldung fehlgeschlagen.");
   } finally {
     button.disabled = false;
+    button.textContent = "Anmelden";
   }
-}
+});
 
-async function logout() {
+$("logoutBtn").addEventListener("click", async () => {
   const { error } = await client.auth.signOut();
-
   if (error) {
-    showError(loginMessage, error.message);
+    showMessage($("loginMessage"), "error", error.message);
     return;
   }
-
-  loginBox.classList.remove("hidden");
-  adminBox.classList.add("hidden");
-  loginMessage.innerHTML = "";
-}
+  currentRequest = null;
+  $("loginForm").reset();
+  await updateUI();
+});
 
 async function updateUI() {
   const { data, error } = await client.auth.getSession();
 
   if (error) {
-    showError(loginMessage, "Sitzung konnte nicht geprüft werden: " + error.message);
+    showMessage($("loginMessage"), "error", "Sitzung konnte nicht geprüft werden: " + error.message);
     return;
   }
 
-  if (data.session) {
-    loginBox.classList.add("hidden");
-    adminBox.classList.remove("hidden");
-    await showSection(currentSection);
-  } else {
-    loginBox.classList.remove("hidden");
-    adminBox.classList.add("hidden");
-  }
+  const loggedIn = Boolean(data.session);
+  $("loginBox").classList.toggle("hidden", loggedIn);
+  $("adminBox").classList.toggle("hidden", !loggedIn);
+
+  if (loggedIn) await showSection(currentSection);
 }
 
+client.auth.onAuthStateChange((_event, session) => {
+  const loggedIn = Boolean(session);
+  $("loginBox").classList.toggle("hidden", loggedIn);
+  $("adminBox").classList.toggle("hidden", !loggedIn);
+});
+
+/* BEREICHE */
 async function showSection(section) {
   currentSection = section;
   const showRequests = section === "requests";
 
-  requestsSection.classList.toggle("hidden", !showRequests);
-  firmsSection.classList.toggle("hidden", showRequests);
-  requestsTab.classList.toggle("active", showRequests);
-  firmsTab.classList.toggle("active", !showRequests);
+  $("requestsSection").classList.toggle("hidden", !showRequests);
+  $("firmsSection").classList.toggle("hidden", showRequests);
+  $("requestsTab").classList.toggle("active", showRequests);
+  $("firmsTab").classList.toggle("active", !showRequests);
 
   if (showRequests) {
+    showRequestList();
     await loadRequests();
   } else {
     await loadFirms();
   }
 }
 
+$("requestsTab").addEventListener("click", () => showSection("requests"));
+$("firmsTab").addEventListener("click", () => showSection("firms"));
+
 /* BAUANFRAGEN LADEN */
 async function loadRequests() {
-  requestsMessage.innerHTML = "";
-  requestList.innerHTML = "";
-  detailView.classList.add("hidden");
-  currentRequestId = null;
+  clearMessage($("requestsMessage"));
+  $("requestList").innerHTML = "";
+  showMessage($("requestsMessage"), "notice", "Bauanfragen werden geladen …");
 
   try {
     const { data, error } = await client
@@ -283,178 +359,191 @@ async function loadRequests() {
       .order("created_at", { ascending: false });
 
     if (error) {
-      showError(requestsMessage, "Bauanfragen konnten nicht geladen werden: " + error.message);
+      showMessage($("requestsMessage"), "error",
+        "Bauanfragen konnten nicht geladen werden: " + error.message);
       return;
     }
 
-    if (!data || data.length === 0) {
-      showSuccess(requestsMessage, "Noch keine Bauanfragen vorhanden.");
+    requestCache = data || [];
+    clearMessage($("requestsMessage"));
+
+    if (!requestCache.length) {
+      showMessage($("requestsMessage"), "notice", "Keine Bauanfragen gefunden.");
       return;
     }
 
-    requestsMessage.innerHTML = "";
-
-    data.forEach(row => {
+    requestCache.forEach(row => {
       const item = document.createElement("article");
       item.className = "request";
 
+      const status = row.status || "neu";
+      const title = row.service || row.leistung || "Bauanfrage";
+
       item.innerHTML = `
         <div class="request-title">
-          <div class="request-service">${escapeHtml(row.service || "Sonstige Anfrage")}</div>
-          <div class="request-date">${escapeHtml(formatDate(row.created_at))}</div>
+          <div>
+            <div class="request-service">${escapeHtml(title)}</div>
+            <div class="request-date">${escapeHtml(formatDate(row.created_at))}</div>
+          </div>
+          <span class="badge">${escapeHtml(status)}</span>
         </div>
         <div class="request-info">📍 ${escapeHtml(row.plz || "")}${row.area ? " – " + escapeHtml(row.area) : ""}</div>
-        <div class="request-info">👤 ${escapeHtml(row.name || "")}</div>
-        <div class="request-info">📞 ${escapeHtml(row.phone || "")}</div>
-        <div class="badge">${escapeHtml(row.status || "offen")}</div>
-        <button type="button" class="open-edit-btn">Öffnen &amp; bearbeiten</button>
+        <div class="request-info">👤 ${escapeHtml(row.name || row.firmenname || "Keine Namensangabe")}</div>
+        <div class="request-info">📞 ${escapeHtml(row.phone || row.telefon || "Keine Telefonnummer")}</div>
+        <div class="request-actions">
+          <button type="button" data-open-request>Öffnen &amp; bearbeiten</button>
+        </div>
       `;
 
-      item.querySelector(".open-edit-btn").addEventListener("click", event => {
-        event.stopPropagation();
-        showDetail(row);
+      item.querySelector("[data-open-request]").addEventListener("click", () => {
+        openRequest(row);
       });
 
-      item.addEventListener("click", () => showDetail(row));
-      requestList.appendChild(item);
+      $("requestList").appendChild(item);
     });
   } catch (error) {
-    showError(requestsMessage, "Fehler beim Laden: " + (error.message || "Unbekannter Fehler"));
+    showMessage($("requestsMessage"), "error",
+      "Unerwarteter Fehler: " + (error.message || "Unbekannter Fehler"));
   }
 }
 
-/* ANFRAGE ÖFFNEN UND BEARBEITEN */
-function showDetail(row) {
-  currentRequestId = row.id;
-  detailView.classList.remove("hidden");
+/* DETAILANSICHT: LISTE WIRD ERSETZT, NICHT UNTEN ANGEHÄNGT */
+function openRequest(row) {
+  currentRequest = { ...row };
+  clearMessage($("editMessage"));
 
-  const currentStatus = row.status || "offen";
-  const statuses = [...new Set([
-    currentStatus,
-    "neu",
-    "offen",
-    "in Bearbeitung",
-    "erledigt"
-  ])];
+  $("requestListView").classList.add("hidden");
+  $("detailView").classList.remove("hidden");
 
-  const statusOptions = statuses.map(status => `
-    <option value="${escapeHtml(status)}" ${status === currentStatus ? "selected" : ""}>
-      ${escapeHtml(status)}
-    </option>
-  `).join("");
+  const phone = row.phone || row.telefon || "";
+  const email = row.email || "";
+  const status = row.status || "neu";
 
-  detailContent.innerHTML = `
-    <div class="detail">
-      <div class="detail-row">
-        <div class="detail-label">Leistung</div>
-        <input id="editService" value="${escapeHtml(row.service || "")}">
-      </div>
-
-      <div class="detail-row">
-        <div class="detail-label">PLZ</div>
-        <input id="editPlz" value="${escapeHtml(row.plz || "")}">
-      </div>
-
-      <div class="detail-row">
-        <div class="detail-label">Gebiet / Ort</div>
-        <input id="editArea" value="${escapeHtml(row.area || "")}">
-      </div>
-
-      <div class="detail-row">
-        <div class="detail-label">Beschreibung</div>
-        <textarea id="editDescription">${escapeHtml(row.description || "")}</textarea>
-      </div>
-
-      <div class="detail-row">
-        <div class="detail-label">Kunde</div>
-        <input id="editName" value="${escapeHtml(row.name || "")}">
-      </div>
-
-      <div class="detail-row">
-        <div class="detail-label">Telefon</div>
-        <input id="editPhone" type="tel" value="${escapeHtml(row.phone || "")}">
-      </div>
-
-      <div class="detail-row">
-        <div class="detail-label">E-Mail</div>
-        <input id="editEmail" type="email" value="${escapeHtml(row.email || "")}">
-      </div>
-
-      <div class="detail-row">
-        <div class="detail-label">Status</div>
-        <select id="editStatus">${statusOptions}</select>
-      </div>
-
-      <div class="detail-actions">
-        <button id="saveRequestBtn" type="button">Änderungen speichern</button>
-        <button id="cancelEditBtn" class="secondary" type="button">Zurück zur Übersicht</button>
-      </div>
-
-      <div id="editMessage" aria-live="polite"></div>
+  $("detailSummary").innerHTML = `
+    <div class="detail-row">
+      <div class="detail-label">Leistung</div>
+      <div class="detail-value">${escapeHtml(row.service || row.leistung || "Keine Angabe")}</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Eingegangen</div>
+      <div class="detail-value">${escapeHtml(formatDate(row.created_at))}</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">PLZ</div>
+      <div class="detail-value">${escapeHtml(row.plz || "Keine Angabe")}</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Ort / Gebiet</div>
+      <div class="detail-value">${escapeHtml(row.area || "Keine Angabe")}</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Kunde</div>
+      <div class="detail-value">${escapeHtml(row.name || "Keine Angabe")}</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Telefon</div>
+      <div class="detail-value">${phone ? `<a href="tel:${escapeHtml(phone)}">${escapeHtml(phone)}</a>` : "Keine Angabe"}</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">E-Mail</div>
+      <div class="detail-value">${email ? `<a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a>` : "Keine Angabe"}</div>
     </div>
   `;
 
-  $("saveRequestBtn").addEventListener("click", () => saveRequest(row));
-  $("cancelEditBtn").addEventListener("click", () => {
-    detailView.classList.add("hidden");
-    currentRequestId = null;
-  });
+  const select = $("editStatus");
+  const knownStatuses = ["neu", "in Bearbeitung", "erledigt"];
 
-  detailView.scrollIntoView({ behavior: "smooth", block: "start" });
+  if (!knownStatuses.includes(status)) {
+    const option = document.createElement("option");
+    option.value = status;
+    option.textContent = status;
+    select.insertBefore(option, select.firstChild);
+  }
+
+  select.value = status;
+  $("editDescription").value = row.description || "";
+
+  /* Detailansicht beginnt oben im Anfragenbereich */
+  $("detailView").scrollIntoView({ behavior: "auto", block: "start" });
 }
 
-/* ÄNDERUNGEN IN SUPABASE SPEICHERN */
-async function saveRequest(row) {
-  const button = $("saveRequestBtn");
-  const message = $("editMessage");
+function showRequestList() {
+  $("detailView").classList.add("hidden");
+  $("requestListView").classList.remove("hidden");
+}
 
-  if (!row || !row.id) {
-    showError(message, "Die Anfrage-ID fehlt. Die Anfrage kann nicht gespeichert werden.");
+function closeRequest() {
+  currentRequest = null;
+  showRequestList();
+  clearMessage($("editMessage"));
+}
+
+$("backBtn").addEventListener("click", closeRequest);
+$("cancelEditBtn").addEventListener("click", closeRequest);
+$("refreshRequestsBtn").addEventListener("click", loadRequests);
+
+/* STATUS UND BESCHREIBUNG SPEICHERN */
+$("editRequestForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  if (!currentRequest || currentRequest.id == null) {
+    showMessage($("editMessage"), "error", "Die Anfrage-ID fehlt. Bitte die Anfrage erneut öffnen.");
     return;
   }
 
+  const button = $("saveRequestBtn");
   button.disabled = true;
-  message.innerHTML = "";
+  button.textContent = "Speichert …";
+  clearMessage($("editMessage"));
 
-  const changes = {
-    service: $("editService").value.trim(),
-    plz: $("editPlz").value.trim(),
-    area: $("editArea").value.trim(),
-    description: $("editDescription").value.trim(),
-    name: $("editName").value.trim(),
-    phone: $("editPhone").value.trim(),
-    email: $("editEmail").value.trim(),
-    status: $("editStatus").value
+  const updates = {
+    status: $("editStatus").value,
+    description: $("editDescription").value.trim()
   };
 
   try {
     const { data, error } = await client
       .from("bauanfragen")
-      .update(changes)
-      .eq("id", row.id)
-      .select("*")
-      .single();
+      .update(updates)
+      .eq("id", currentRequest.id)
+      .select("*");
 
     if (error) {
-      showError(message, "Speichern fehlgeschlagen: " + error.message);
+      showMessage($("editMessage"), "error",
+        "Speichern fehlgeschlagen: " + error.message);
       return;
     }
 
-    await loadRequests();
-    showDetail(data);
-    showSuccess($("editMessage"), "Änderungen wurden gespeichert.");
-  } catch (error) {
-    showError($("editMessage"), "Fehler beim Speichern: " + (error.message || "Unbekannter Fehler"));
-  } finally {
-    const saveButton = $("saveRequestBtn");
-    if (saveButton) saveButton.disabled = false;
-  }
-}
+    if (!data || data.length === 0) {
+      showMessage($("editMessage"), "error",
+        "Es wurde keine Anfrage zurückgegeben. Prüfe die UPDATE- und SELECT-RLS-Regeln sowie die Anfrage-ID.");
+      return;
+    }
 
-/* FACHBETRIEBE LADEN */
+    currentRequest = { ...currentRequest, ...data[0] };
+    showMessage($("editMessage"), "success", "Änderungen wurden gespeichert.");
+
+    /* Liste im Hintergrund aktuell halten, ohne die Detailansicht zu verlassen */
+    const { data: refreshed, error: refreshError } = await client
+      .from("bauanfragen")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (!refreshError && refreshed) requestCache = refreshed;
+  } catch (error) {
+    showMessage($("editMessage"), "error",
+      "Unerwarteter Fehler: " + (error.message || "Unbekannter Fehler"));
+  } finally {
+    button.disabled = false;
+    button.textContent = "Änderungen speichern";
+  }
+});
+
+/* FACHBETRIEBE */
 async function loadFirms() {
-  firmsMessage.innerHTML = "";
-  firmList.innerHTML = "";
+  clearMessage($("firmsMessage"));
+  $("firmList").innerHTML = "";
+  showMessage($("firmsMessage"), "notice", "Fachbetriebe werden geladen …");
 
   try {
     const { data, error } = await client
@@ -463,28 +552,27 @@ async function loadFirms() {
       .order("created_at", { ascending: false });
 
     if (error) {
-      showError(firmsMessage, "Fachbetriebe konnten nicht geladen werden: " + error.message);
+      showMessage($("firmsMessage"), "error",
+        "Fachbetriebe konnten nicht geladen werden: " + error.message);
       return;
     }
 
-    if (!data || data.length === 0) {
-      showSuccess(firmsMessage, "Keine Fachbetriebe gefunden.");
+    clearMessage($("firmsMessage"));
+
+    if (!data || !data.length) {
+      showMessage($("firmsMessage"), "notice", "Keine Fachbetriebe gefunden.");
       return;
     }
-
-    firmsMessage.innerHTML = "";
 
     data.forEach(firm => {
-      const isApproved = firm.freigeschaltet === true;
+      const approved = firm.freigeschaltet === true;
       const item = document.createElement("article");
       item.className = "firm";
 
       item.innerHTML = `
         <div class="firm-title">
           <div class="firm-name">${escapeHtml(firm.firma || firm.firmenname || "Firma ohne Namen")}</div>
-          <span class="badge ${isApproved ? "approved" : "pending"}">
-            ${isApproved ? "Freigeschaltet" : "Wartet auf Freischaltung"}
-          </span>
+          <span class="badge ${approved ? "approved" : "pending"}">${approved ? "Freigeschaltet" : "Wartet auf Freischaltung"}</span>
         </div>
         <div class="firm-info">👤 Ansprechpartner: ${escapeHtml(firm.inhaber || firm.ansprechpartner || "Keine Angabe")}</div>
         <div class="firm-info">✉️ ${escapeHtml(firm.email || "Keine E-Mail")}</div>
@@ -494,27 +582,25 @@ async function loadFirms() {
         <div class="firm-info">Umkreis: ${escapeHtml(firm.radius_km == null ? "Keine Angabe" : firm.radius_km + " km")}</div>
         <div class="firm-info">Abo-Status: ${escapeHtml(firm.abo_status || "unbekannt")}</div>
         <div class="firm-actions">
-          <button type="button" data-action="approval">
-            ${isApproved ? "Freischaltung zurücknehmen" : "Betrieb freischalten"}
-          </button>
+          <button type="button" data-firm-approval>${approved ? "Freischaltung zurücknehmen" : "Betrieb freischalten"}</button>
         </div>
       `;
 
-      item.querySelector('[data-action="approval"]').addEventListener("click", event => {
-        setFirmApproval(firm.id, !isApproved, event.currentTarget);
+      item.querySelector("[data-firm-approval]").addEventListener("click", event => {
+        setFirmApproval(firm.id, !approved, event.currentTarget);
       });
 
-      firmList.appendChild(item);
+      $("firmList").appendChild(item);
     });
   } catch (error) {
-    showError(firmsMessage, "Fehler beim Laden: " + (error.message || "Unbekannter Fehler"));
+    showMessage($("firmsMessage"), "error",
+      "Unerwarteter Fehler: " + (error.message || "Unbekannter Fehler"));
   }
 }
 
-/* FACHBETRIEB FREISCHALTEN */
 async function setFirmApproval(firmId, approved, button) {
-  if (!firmId) {
-    showError(firmsMessage, "Die Betriebs-ID fehlt.");
+  if (firmId == null) {
+    showMessage($("firmsMessage"), "error", "Die ID dieses Betriebs fehlt.");
     return;
   }
 
@@ -525,67 +611,38 @@ async function setFirmApproval(firmId, approved, button) {
   if (!window.confirm(confirmation)) return;
 
   button.disabled = true;
-  firmsMessage.innerHTML = "";
-
   try {
     const { data, error } = await client
       .from("fachbetriebe")
       .update({ freigeschaltet: approved })
       .eq("id", firmId)
-      .select("id")
-      .maybeSingle();
+      .select("id");
 
     if (error) {
-      showError(firmsMessage, "Änderung fehlgeschlagen: " + error.message);
+      showMessage($("firmsMessage"), "error",
+        "Änderung fehlgeschlagen: " + error.message);
       return;
     }
 
-    if (!data) {
-      showError(firmsMessage, "Es wurde kein Betrieb aktualisiert. Bitte RLS- und UPDATE-Berechtigungen prüfen.");
+    if (!data || data.length === 0) {
+      showMessage($("firmsMessage"), "error",
+        "Es wurde kein Betrieb geändert. Bitte UPDATE- und SELECT-RLS-Regeln prüfen.");
       return;
     }
 
-    showSuccess(firmsMessage, approved
-      ? "Fachbetrieb wurde freigeschaltet."
-      : "Freischaltung wurde zurückgenommen.");
+    showMessage($("firmsMessage"), "success",
+      approved ? "Fachbetrieb wurde freigeschaltet." : "Freischaltung wurde zurückgenommen.");
 
     await loadFirms();
   } catch (error) {
-    showError(firmsMessage, "Fehler: " + (error.message || "Unbekannter Fehler"));
+    showMessage($("firmsMessage"), "error",
+      "Unerwarteter Fehler: " + (error.message || "Unbekannter Fehler"));
   } finally {
     button.disabled = false;
   }
 }
 
-/* BUTTONS UND ANMELDUNG */
-$("loginBtn").addEventListener("click", login);
-
-$("password").addEventListener("keydown", event => {
-  if (event.key === "Enter") login();
-});
-
-$("logoutBtn").addEventListener("click", logout);
-$("refreshRequestsBtn").addEventListener("click", loadRequests);
-$("refreshFirmsBtn").addEventListener("click", loadFirms);
-
-$("backBtn").addEventListener("click", () => {
-  detailView.classList.add("hidden");
-  currentRequestId = null;
-});
-
-requestsTab.addEventListener("click", () => showSection("requests"));
-firmsTab.addEventListener("click", () => showSection("firms"));
-
-client.auth.onAuthStateChange((_event, session) => {
-  if (session) {
-    loginBox.classList.add("hidden");
-    adminBox.classList.remove("hidden");
-  } else {
-    loginBox.classList.remove("hidden");
-    adminBox.classList.add("hidden");
-  }
-});
-
+/* START */
 updateUI();
 </script>
 </body>
