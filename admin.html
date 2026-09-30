@@ -1,3050 +1,380 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#171717">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Riemer BauConnect – Admin</title>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
-
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+body{margin:0;background:#171717;color:#fff;font-family:Arial,sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:24px}
+h1{margin:0;font-size:36px}.brand{color:#ffd000}
+.subtitle{color:#aaa;font-size:20px;margin:8px 0 30px}
+.card{background:#222;border:1px solid #3a3a3a;border-radius:20px;padding:24px;margin-bottom:20px}
+input,button{width:100%;padding:15px;border-radius:12px;border:1px solid #444;font-size:16px}
+input{background:#111;color:#fff;margin:8px 0 15px}
+button{background:#ffd000;color:#111;border:0;font-weight:bold;cursor:pointer}
+button:disabled{opacity:.55;cursor:wait}
+button.secondary{background:#333;color:#fff}
+button.danger{background:#7b2929;color:#fff}
+.hidden{display:none!important}
+.error{background:#6b2222;padding:15px;border-radius:12px;margin-top:15px;overflow-wrap:anywhere}
+.success{background:#235c32;padding:15px;border-radius:12px;margin-top:15px;overflow-wrap:anywhere}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:20px}
+.topbar button{width:auto;padding:12px 20px}
+.tabs{display:flex;gap:10px;margin:20px 0;flex-wrap:wrap}
+.tabs button{width:auto;flex:1;min-width:150px}
+.tabs button.active{outline:2px solid #fff}
+.request,.firm{background:#292929;border:1px solid #444;border-radius:15px;padding:18px;margin-top:15px}
+.request{cursor:pointer}.request:hover,.firm:hover{border-color:#ffd000}
+.request-title,.firm-title{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.request-service,.firm-name{color:#ffd000;font-size:20px;font-weight:bold;overflow-wrap:anywhere}
+.request-date,.muted{color:#999;font-size:14px}
+.request-info,.firm-info{color:#ccc;margin-top:8px;overflow-wrap:anywhere}
+.badge{display:inline-block;background:#333;padding:6px 10px;border-radius:8px;margin-top:10px}
+.badge.pending{background:#72551b}.badge.approved{background:#235c32}
+.firm-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.firm-actions button{width:auto;flex:1;min-width:170px}
+.detail{margin-top:20px}
+.detail-row{border-bottom:1px solid #3b3b3b;padding:14px 0}
+.detail-label{color:#ffd000;font-size:14px;margin-bottom:5px}
+.detail-value{font-size:17px;word-break:break-word}
+.back{margin-bottom:15px}
+.small{color:#aaa;margin-top:6px}
+@media(max-width:600px){
+.wrap{padding:16px}h1{font-size:30px}
+.topbar{align-items:flex-start;flex-direction:column}
+.topbar button{width:100%}
+.request-title,.firm-title{flex-direction:column}
+.firm-actions{flex-direction:column}
+.firm-actions button{width:100%}
+.card{padding:18px}
 }
-
-body {
-  margin: 0;
-  background: #171717;
-  color: #fff;
-  font-family: Arial, sans-serif;
-}
-
-.wrap {
-  max-width: 950px;
-  margin: auto;
-  padding: 20px;
-}
-
-h1 {
-  margin: 0 0 6px;
-  font-size: 30px;
-}
-
-h2 {
-  margin-top: 0;
-}
-
-h3 {
-  margin-top: 0;
-}
-
-.small {
-  color: #aaa;
-  margin-bottom: 20px;
-}
-
-.card {
-  background: #222;
-  border: 1px solid #444;
-  border-radius: 14px;
-  padding: 18px;
-  margin-bottom: 15px;
-}
-
-input,
-button,
-select,
-textarea {
-  width: 100%;
-  padding: 14px;
-  border-radius: 10px;
-  border: 1px solid #555;
-  font-size: 16px;
-}
-
-input,
-select,
-textarea {
-  background: #111;
-  color: #fff;
-}
-
-textarea {
-  min-height: 110px;
-  resize: vertical;
-}
-
-button {
-  background: #ffd400;
-  color: #111;
-  border: 0;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-button:hover {
-  opacity: .9;
-}
-
-button:disabled {
-  opacity: .5;
-}
-
-.hidden {
-  display: none !important;
-}
-
-.error {
-  color: #ff7070;
-  margin-top: 12px;
-  line-height: 1.5;
-}
-
-.success {
-  color: #66e08a;
-  margin-top: 12px;
-  line-height: 1.5;
-}
-
-.warning {
-  color: #ffd400;
-  margin-top: 12px;
-  line-height: 1.5;
-}
-
-.login {
-  max-width: 450px;
-  margin: 70px auto;
-  padding: 20px;
-}
-
-.login input {
-  margin-bottom: 12px;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 20px;
-}
-
-.header button {
-  width: auto;
-  padding: 12px 18px;
-  background: #333;
-  color: #fff;
-}
-
-.tabs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.tab-button {
-  background: #333;
-  color: #fff;
-  padding: 17px;
-  font-size: 18px;
-}
-
-.tab-button.active {
-  background: #ffd400;
-  color: #111;
-}
-
-.request {
-  cursor: pointer;
-}
-
-.request:hover {
-  border-color: #ffd400;
-}
-
-.request-title {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-
-.request-info {
-  color: #bbb;
-  line-height: 1.6;
-}
-
-.status {
-  display: inline-block;
-  padding: 7px 12px;
-  border-radius: 20px;
-  margin-top: 10px;
-  font-size: 14px;
-  font-weight: bold;
-}
-
-.status-neu {
-  background: #d8aa00;
-  color: #111;
-}
-
-.status-angesehen {
-  background: #2478d8;
-  color: #fff;
-}
-
-.status-bearbeitung {
-  background: #e87818;
-  color: #fff;
-}
-
-.status-angenommen {
-  background: #239447;
-  color: #fff;
-}
-
-.status-abgelehnt {
-  background: #a52a2a;
-  color: #fff;
-}
-
-.status-erledigt {
-  background: #555;
-  color: #fff;
-}
-
-.detail-row {
-  border-bottom: 1px solid #444;
-  padding: 13px 0;
-}
-
-.detail-label {
-  color: #aaa;
-  font-size: 13px;
-  margin-bottom: 6px;
-}
-
-.detail-value {
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-
-.back {
-  background: #333;
-  color: #fff;
-  margin-bottom: 15px;
-}
-
-.loading {
-  color: #aaa;
-  padding: 20px 0;
-}
-
-.empty {
-  color: #aaa;
-  text-align: center;
-  padding: 30px;
-}
-
-.action-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 15px;
-}
-
-.edit-button {
-  background: #ffd400;
-  color: #111;
-}
-
-.delete-button {
-  background: #c62828;
-  color: #fff;
-}
-
-.save-button {
-  margin-top: 15px;
-}
-
-.cancel-button {
-  background: #333;
-  color: #fff;
-  margin-top: 10px;
-}
-
-.firm-card {
-  background: #222;
-  border: 1px solid #444;
-  border-radius: 14px;
-  padding: 18px;
-  margin-bottom: 15px;
-}
-
-.firm-name {
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.firm-info {
-  color: #bbb;
-  line-height: 1.7;
-}
-
-.active-badge,
-.inactive-badge,
-.approved-badge,
-.pending-badge {
-  display: inline-block;
-  padding: 7px 11px;
-  border-radius: 15px;
-  margin-top: 8px;
-  margin-right: 6px;
-  font-size: 13px;
-  font-weight: bold;
-}
-
-.active-badge {
-  background: #4caf50;
-  color: #fff;
-}
-
-.inactive-badge {
-  background: #555;
-  color: #fff;
-}
-
-.approved-badge {
-  background: #16883a;
-  color: #fff;
-}
-
-.pending-badge {
-  background: #8a7000;
-  color: #fff;
-}
-
-.form-label {
-  display: block;
-  color: #aaa;
-  margin: 16px 0 7px;
-}
-
-.checkbox-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 18px;
-  color: #ddd;
-}
-
-.checkbox-row input {
-  width: auto;
-}
-
-.assign-box,
-.approval-box {
-  background: #181818;
-  border: 1px solid #444;
-  border-radius: 12px;
-  padding: 15px;
-  margin-top: 18px;
-}
-
-.assign-title,
-.approval-title {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-
-.assign-info,
-.approval-text {
-  color: #aaa;
-  font-size: 14px;
-  margin-bottom: 12px;
-}
-
-.assign-message {
-  margin-top: 10px;
-}
-
-/* FILTER */
-
-.status-filter-wrap {
-  margin-top: 15px;
-}
-
-.status-filter {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 5px;
-}
-
-.status-filter button {
-  width: auto;
-  min-width: max-content;
-  padding: 10px 13px;
-  background: #333;
-  color: #fff;
-  border: 1px solid #555;
-  border-radius: 999px;
-}
-
-.status-filter button.active {
-  background: #ffd400;
-  color: #111;
-  border-color: #ffd400;
-}
-
-.request.hidden-by-filter {
-  display: none !important;
-}
-
-.filter-info {
-  color: #aaa;
-  margin: 10px 0 15px;
-  font-size: 14px;
-}
-
-@media (max-width:600px) {
-
-  .wrap {
-    padding: 14px;
-  }
-
-  .header {
-    align-items: flex-start;
-  }
-
-  .header button {
-    white-space: nowrap;
-  }
-
-  .tabs {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .tab-button {
-    font-size: 16px;
-    padding: 15px 8px;
-  }
-
-  .action-row {
-    grid-template-columns: 1fr;
-  }
-
-}
-
 </style>
 </head>
-
 <body>
+<div class="wrap">
+  <h1>RIEMER <span class="brand">BAUCONNECT</span></h1>
+  <div class="subtitle">Verwaltungsbereich – Bauanfragen & Fachbetriebe</div>
 
-<!-- LOGIN -->
-
-<div id="loginScreen" class="login">
-
-  <div class="card">
-
-    <h1>Riemer BauConnect</h1>
-
-    <div class="small">
-      Adminbereich
-    </div>
-
-    <input
-      id="email"
-      type="email"
-      placeholder="E-Mail"
-      autocomplete="username"
-    >
-
-    <input
-      id="password"
-      type="password"
-      placeholder="Passwort"
-      autocomplete="current-password"
-    >
-
-    <button onclick="login()">
-      Einloggen
-    </button>
-
-    <div id="loginError" class="error"></div>
-
+  <div id="loginBox" class="card">
+    <h2>Admin-Login</h2>
+    <label for="email">E-Mail</label>
+    <input id="email" type="email" placeholder="E-Mail-Adresse" autocomplete="username">
+    <label for="password">Passwort</label>
+    <input id="password" type="password" placeholder="Passwort" autocomplete="current-password">
+    <button id="loginBtn">Anmelden</button>
+    <div id="loginMessage" aria-live="polite"></div>
   </div>
 
+  <div id="adminBox" class="hidden">
+    <div class="topbar">
+      <div>
+        <h2 style="margin:0">Verwaltung</h2>
+        <div class="small">Bauanfragen und registrierte Fachbetriebe</div>
+      </div>
+      <button id="logoutBtn" class="secondary">Abmelden</button>
+    </div>
+
+    <div class="tabs">
+      <button id="requestsTab" class="active" type="button">Bauanfragen</button>
+      <button id="firmsTab" type="button">Fachbetriebe</button>
+    </div>
+
+    <section id="requestsSection" class="card">
+      <h2>Bauanfragen</h2>
+      <div class="small">Eingegangene Kundenanfragen</div>
+      <button id="refreshRequestsBtn" style="margin-top:18px">Bauanfragen aktualisieren</button>
+      <div id="requestsMessage" aria-live="polite"></div>
+      <div id="requestList"></div>
+      <div id="detailView" class="hidden">
+        <button id="backBtn" class="secondary back" style="margin-top:18px">← Zurück zu den Bauanfragen</button>
+        <h2>Bauanfrage</h2>
+        <div id="detailContent"></div>
+      </div>
+    </section>
+
+    <section id="firmsSection" class="card hidden">
+      <h2>Fachbetriebe</h2>
+      <div class="small">Registrierte Firmen prüfen und Freischaltung verwalten.</div>
+      <button id="refreshFirmsBtn" style="margin-top:18px">Fachbetriebe aktualisieren</button>
+      <div id="firmsMessage" aria-live="polite"></div>
+      <div id="firmList"></div>
+    </section>
+  </div>
 </div>
-
-
-<!-- ADMIN -->
-
-<div id="adminScreen" class="wrap hidden">
-
-  <div class="header">
-
-    <div>
-
-      <h1>
-        Riemer BauConnect
-      </h1>
-
-      <div class="small">
-        Adminbereich
-      </div>
-
-    </div>
-
-    <button onclick="logout()">
-      Abmelden
-    </button>
-
-  </div>
-
-
-  <!-- TABS -->
-
-  <div class="tabs">
-
-    <button
-      id="requestsTab"
-      class="tab-button active"
-      onclick="showRequestsTab()"
-    >
-      🏗️ Bauanfragen
-    </button>
-
-    <button
-      id="firmsTab"
-      class="tab-button"
-      onclick="showFirmsTab()"
-    >
-      🏢 Fachbetriebe
-    </button>
-
-  </div>
-
-
-  <!-- =========================
-       BAUANFRAGEN
-  ========================= -->
-
-  <div id="requestsSection">
-
-    <div id="listView">
-
-      <div class="card">
-
-        <div style="
-          display:flex;
-          justify-content:space-between;
-          align-items:center;
-          gap:10px;
-        ">
-
-          <h2>
-            Bauanfragen
-          </h2>
-
-          <button
-            onclick="loadRequests()"
-            style="width:auto;"
-          >
-            🔄 Aktualisieren
-          </button>
-
-        </div>
-
-
-        <!-- FILTER -->
-
-        <div class="status-filter-wrap">
-
-          <div
-            id="statusFilter"
-            class="status-filter"
-          >
-
-            <button
-              class="active"
-              onclick="setRequestFilter('alle',this)"
-            >
-              Alle
-            </button>
-
-            <button
-              onclick="setRequestFilter('neu',this)"
-            >
-              🆕 Neu
-            </button>
-
-            <button
-              onclick="setRequestFilter('angesehen',this)"
-            >
-              👀 Angesehen
-            </button>
-
-            <button
-              onclick="setRequestFilter('in_bearbeitung',this)"
-            >
-              🔧 Bearbeitung
-            </button>
-
-            <button
-              onclick="setRequestFilter('angenommen',this)"
-            >
-              🤝 Angenommen
-            </button>
-
-            <button
-              onclick="setRequestFilter('abgelehnt',this)"
-            >
-              ❌ Abgelehnt
-            </button>
-
-            <button
-              onclick="setRequestFilter('erledigt',this)"
-            >
-              ✅ Erledigt
-            </button>
-
-          </div>
-
-        </div>
-
-
-        <div
-          id="requestFilterInfo"
-          class="filter-info"
-        >
-          Alle Bauanfragen
-        </div>
-
-
-        <div
-          id="loading"
-          class="loading"
-        >
-          Lade Bauanfragen...
-        </div>
-
-
-        <div id="requests"></div>
-
-      </div>
-
-    </div>
-
-
-    <!-- DETAIL -->
-
-    <div
-      id="detailView"
-      class="hidden"
-    >
-
-      <button
-        class="back"
-        onclick="showList()"
-      >
-        ← Zurück zu den Bauanfragen
-      </button>
-
-
-      <div class="card">
-
-        <h2 id="detailTitle">
-          Bauanfrage
-        </h2>
-
-
-        <div class="detail-row">
-
-          <div class="detail-label">
-            Leistung
-          </div>
-
-          <div
-            id="detailService"
-            class="detail-value"
-          ></div>
-
-        </div>
-
-
-        <div class="detail-row">
-
-          <div class="detail-label">
-            Datum
-          </div>
-
-          <div
-            id="detailDate"
-            class="detail-value"
-          ></div>
-
-        </div>
-
-
-        <div class="detail-row">
-
-          <div class="detail-label">
-            PLZ
-          </div>
-
-          <div
-            id="detailPlz"
-            class="detail-value"
-          ></div>
-
-        </div>
-
-
-        <div class="detail-row">
-
-          <div class="detail-label">
-            Ort / Bereich
-          </div>
-
-          <div
-            id="detailArea"
-            class="detail-value"
-          ></div>
-
-        </div>
-
-
-        <div class="detail-row">
-
-          <div class="detail-label">
-            Beschreibung
-          </div>
-
-          <div
-            id="detailDescription"
-            class="detail-value"
-          ></div>
-
-        </div>
-
-
-        <div class="detail-row">
-
-          <div class="detail-label">
-            Name
-          </div>
-
-          <div
-            id="detailName"
-            class="detail-value"
-          ></div>
-
-        </div>
-
-
-        <div class="detail-row">
-
-          <div class="detail-label">
-            Telefon
-          </div>
-
-          <div
-            id="detailPhone"
-            class="detail-value"
-          ></div>
-
-        </div>
-
-
-        <div class="detail-row">
-
-          <div class="detail-label">
-            E-Mail
-          </div>
-
-          <div
-            id="detailEmail"
-            class="detail-value"
-          ></div>
-
-        </div>
-
-
-        <!-- ZUWEISUNG -->
-
-        <div class="assign-box">
-
-          <div class="assign-title">
-            🏢 Fachbetrieb zuweisen
-          </div>
-
-          <div class="assign-info">
-            Es werden nur aktive und freigeschaltete
-            Fachbetriebe angezeigt.
-          </div>
-
-
-          <select id="firmSelect">
-
-            <option value="">
-              -- Kein Fachbetrieb zugewiesen --
-            </option>
-
-          </select>
-
-
-          <button
-            onclick="saveAssignment()"
-            class="save-button"
-          >
-            💾 Fachbetrieb zuweisen
-          </button>
-
-
-          <div
-            id="assignmentMessage"
-            class="assign-message"
-          ></div>
-
-        </div>
-
-
-        <!-- STATUS -->
-
-        <div class="detail-row">
-
-          <div class="detail-label">
-            Status ändern
-          </div>
-
-
-          <select id="statusSelect">
-
-            <option value="neu">
-              🆕 Neu
-            </option>
-
-            <option value="angesehen">
-              👀 Angesehen
-            </option>
-
-            <option value="in_bearbeitung">
-              🔧 In Bearbeitung
-            </option>
-
-            <option value="angenommen">
-              🤝 Angenommen
-            </option>
-
-            <option value="abgelehnt">
-              ❌ Abgelehnt
-            </option>
-
-            <option value="erledigt">
-              ✅ Erledigt
-            </option>
-
-          </select>
-
-
-          <button
-            onclick="saveStatus()"
-            class="save-button"
-          >
-            💾 Status speichern
-          </button>
-
-
-          <div id="statusMessage"></div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- =========================
-       FACHBETRIEBE
-  ========================= -->
-
-  <div
-    id="firmsSection"
-    class="hidden"
-  >
-
-    <div id="firmsListView">
-
-      <div class="card">
-
-        <div style="
-          display:flex;
-          justify-content:space-between;
-          align-items:center;
-          gap:10px;
-        ">
-
-          <h2>
-            Fachbetriebe
-          </h2>
-
-          <button
-            onclick="showFirmForm()"
-            style="width:auto;"
-          >
-            ➕ Fachbetrieb
-          </button>
-
-        </div>
-
-
-        <div
-          id="firmsLoading"
-          class="loading"
-        >
-          Lade Fachbetriebe...
-        </div>
-
-
-        <div id="firms"></div>
-
-      </div>
-
-    </div>
-
-
-    <!-- FIRMENFORMULAR -->
-
-    <div
-      id="firmFormView"
-      class="hidden"
-    >
-
-      <button
-        class="back"
-        onclick="showFirmsList()"
-      >
-        ← Zurück zu den Fachbetrieben
-      </button>
-
-
-      <div class="card">
-
-        <h2 id="firmFormTitle">
-          Fachbetrieb hinzufügen
-        </h2>
-
-
-        <input
-          type="hidden"
-          id="firmId"
-        >
-
-
-        <label class="form-label">
-          Firmenname *
-        </label>
-
-        <input
-          id="firmName"
-          type="text"
-          placeholder="z. B. Muster Tiefbau GmbH"
-        >
-
-
-        <label class="form-label">
-          Inhaber
-        </label>
-
-        <input
-          id="firmOwner"
-          type="text"
-          placeholder="Vor- und Nachname"
-        >
-
-
-        <label class="form-label">
-          E-Mail
-        </label>
-
-        <input
-          id="firmEmail"
-          type="email"
-          placeholder="firma@example.de"
-        >
-
-
-        <label class="form-label">
-          Telefon
-        </label>
-
-        <input
-          id="firmPhone"
-          type="tel"
-          placeholder="0461 123456"
-        >
-
-
-        <label class="form-label">
-          PLZ
-        </label>
-
-        <input
-          id="firmPlz"
-          type="text"
-          inputmode="numeric"
-          maxlength="5"
-          placeholder="24955"
-        >
-
-
-        <label class="form-label">
-          Ort
-        </label>
-
-        <input
-          id="firmOrt"
-          type="text"
-          placeholder="Harrislee"
-        >
-
-
-        <label class="form-label">
-          Leistungen
-        </label>
-
-        <textarea
-          id="firmServices"
-          placeholder="Straßenbau, Pflasterarbeiten, Erdarbeiten..."
-        ></textarea>
-
-
-        <label class="form-label">
-          Radius in km
-        </label>
-
-        <input
-          id="firmRadius"
-          type="number"
-          min="0"
-          value="30"
-        >
-
-
-        <label class="checkbox-row">
-
-          <input
-            id="firmActive"
-            type="checkbox"
-            checked
-          >
-
-          Fachbetrieb ist aktiv
-
-        </label>
-
-
-        <label class="checkbox-row">
-
-          <input
-            id="firmApproved"
-            type="checkbox"
-          >
-
-          Fachbetrieb ist freigeschaltet
-
-        </label>
-
-
-        <div class="approval-box">
-
-          <div class="approval-title">
-            🔐 Freischaltung
-          </div>
-
-          <div class="approval-text">
-            Neue Fachbetriebe bleiben zunächst in Prüfung.
-            Erst nach deiner Freigabe können sie als
-            freigeschaltet gelten.
-          </div>
-
-        </div>
-
-
-        <button
-          onclick="saveFirm()"
-          class="save-button"
-        >
-          💾 Fachbetrieb speichern
-        </button>
-
-
-        <button
-          onclick="showFirmsList()"
-          class="cancel-button"
-        >
-          Abbrechen
-        </button>
-
-
-        <div id="firmMessage"></div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
-
 
 <script>
+const SUPABASE_URL = "https://ehzugjmltfcvllftpjpp.supabase.co";
+const SUPABASE_KEY = "sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
+const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-/* =========================================
-   SUPABASE
-========================================= */
-
-const SUPABASE_URL =
-  "https://ehzugjmltfcvllftpjpp.supabase.co";
-
-const SUPABASE_KEY =
-  "sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
-
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
-
-
-let currentRequest = null;
-let editingFirmId = null;
-let currentRequestFilter = "alle";
-
-
-/* =========================================
-   LOGIN
-========================================= */
+const loginBox = document.getElementById("loginBox");
+const adminBox = document.getElementById("adminBox");
+const loginMessage = document.getElementById("loginMessage");
+const requestsMessage = document.getElementById("requestsMessage");
+const firmsMessage = document.getElementById("firmsMessage");
+const requestList = document.getElementById("requestList");
+const firmList = document.getElementById("firmList");
+const detailView = document.getElementById("detailView");
+const detailContent = document.getElementById("detailContent");
+const requestsSection = document.getElementById("requestsSection");
+const firmsSection = document.getElementById("firmsSection");
+const requestsTab = document.getElementById("requestsTab");
+const firmsTab = document.getElementById("firmsTab");
 
 async function login() {
-
-  const email =
-    document
-      .getElementById("email")
-      .value
-      .trim();
-
-  const password =
-    document
-      .getElementById("password")
-      .value;
-
-  const error =
-    document
-      .getElementById("loginError");
-
-  error.textContent = "";
-
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  loginMessage.innerHTML = "";
 
   if (!email || !password) {
-
-    error.textContent =
-      "Bitte E-Mail und Passwort eingeben.";
-
+    loginMessage.innerHTML = '<div class="error">Bitte E-Mail und Passwort eingeben.</div>';
     return;
-
   }
 
+  const { error } = await client.auth.signInWithPassword({ email, password });
 
-  const result =
-    await supabaseClient.auth.signInWithPassword({
-
-      email:
-        email,
-
-      password:
-        password
-
-    });
-
-
-  if (result.error) {
-
-    error.textContent =
-      result.error.message;
-
+  if (error) {
+    loginMessage.innerHTML = '<div class="error">' + escapeHtml(error.message) + '</div>';
     return;
-
   }
 
-
-  showAdmin();
-
+  await updateUI();
 }
-
-
-/* =========================================
-   LOGOUT
-========================================= */
 
 async function logout() {
-
-  await supabaseClient.auth.signOut();
-
-
-  document
-    .getElementById("adminScreen")
-    .classList.add("hidden");
-
-
-  document
-    .getElementById("loginScreen")
-    .classList.remove("hidden");
-
+  await client.auth.signOut();
+  updateUI();
 }
 
+async function updateUI() {
+  const { data: { session }, error } = await client.auth.getSession();
 
-/* =========================================
-   ADMIN
-========================================= */
+  if (error) {
+    loginMessage.innerHTML = '<div class="error">Sitzung konnte nicht geprüft werden: ' + escapeHtml(error.message) + '</div>';
+    return;
+  }
 
-function showAdmin() {
-
-  document
-    .getElementById("loginScreen")
-    .classList.add("hidden");
-
-
-  document
-    .getElementById("adminScreen")
-    .classList.remove("hidden");
-
-
-  showRequestsTab();
-
+  if (session) {
+    loginBox.classList.add("hidden");
+    adminBox.classList.remove("hidden");
+    showSection("requests");
+    await loadRequests();
+  } else {
+    loginBox.classList.remove("hidden");
+    adminBox.classList.add("hidden");
+  }
 }
 
+function showSection(section) {
+  const showRequests = section === "requests";
 
-/* =========================================
-   TABS
-========================================= */
+  requestsSection.classList.toggle("hidden", !showRequests);
+  firmsSection.classList.toggle("hidden", showRequests);
+  requestsTab.classList.toggle("active", showRequests);
+  firmsTab.classList.toggle("active", !showRequests);
 
-function showRequestsTab() {
-
-  document
-    .getElementById("requestsSection")
-    .classList.remove("hidden");
-
-
-  document
-    .getElementById("firmsSection")
-    .classList.add("hidden");
-
-
-  document
-    .getElementById("requestsTab")
-    .classList.add("active");
-
-
-  document
-    .getElementById("firmsTab")
-    .classList.remove("active");
-
-
-  showList();
-
-  loadRequests();
-
+  if (showRequests) {
+    loadRequests();
+  } else {
+    loadFirms();
+  }
 }
-
-
-function showFirmsTab() {
-
-  document
-    .getElementById("requestsSection")
-    .classList.add("hidden");
-
-
-  document
-    .getElementById("firmsSection")
-    .classList.remove("hidden");
-
-
-  document
-    .getElementById("requestsTab")
-    .classList.remove("active");
-
-
-  document
-    .getElementById("firmsTab")
-    .classList.add("active");
-
-
-  showFirmsList();
-
-}
-
-
-/* =========================================
-   BAUANFRAGEN LADEN
-========================================= */
 
 async function loadRequests() {
+  requestsMessage.innerHTML = '<div class="success">Bauanfragen werden geladen...</div>';
+  requestList.innerHTML = "";
+  detailView.classList.add("hidden");
 
-  const loading =
-    document
-      .getElementById("loading");
+  const { data, error } = await client
+    .from("Bauanfragen")
+    .select("*")
+    .order("created_at", { ascending: false });
 
-  const container =
-    document
-      .getElementById("requests");
-
-
-  loading.style.display =
-    "block";
-
-  container.innerHTML =
-    "";
-
-
-  const result =
-    await supabaseClient
-      .from("bauanfragen")
-      .select("*")
-      .order(
-        "created_at",
-        {
-          ascending: false
-        }
-      );
-
-
-  loading.style.display =
-    "none";
-
-
-  if (result.error) {
-
-    container.innerHTML =
-      `<div class="error">
-        Fehler beim Laden:
-        ${escapeHtml(result.error.message)}
-      </div>`;
-
+  if (error) {
+    requestsMessage.innerHTML = '<div class="error">Bauanfragen konnten nicht geladen werden: ' + escapeHtml(error.message) + '</div>';
     return;
-
   }
 
+  requestsMessage.innerHTML = "";
 
-  if (
-    !result.data ||
-    result.data.length === 0
-  ) {
-
-    container.innerHTML =
-      `<div class="empty">
-        Keine Bauanfragen vorhanden.
-      </div>`;
-
+  if (!data || data.length === 0) {
+    requestList.innerHTML = '<div class="success">Noch keine Bauanfragen vorhanden.</div>';
     return;
-
   }
 
+  data.forEach(row => {
+    const item = document.createElement("div");
+    item.className = "request";
 
-  result.data.forEach(
-    request => {
+    item.innerHTML = `
+      <div class="request-title">
+        <div class="request-service">${escapeHtml(row.service || "Sonstige Anfrage")}</div>
+        <div class="request-date">${escapeHtml(formatDate(row.created_at))}</div>
+      </div>
+      <div class="request-info">📍 ${escapeHtml(row.plz || "")}${row.area ? " – " + escapeHtml(row.area) : ""}</div>
+      <div class="request-info">👤 ${escapeHtml(row.name || "")}</div>
+      <div class="request-info">📞 ${escapeHtml(row.phone || "")}</div>
+      <div class="badge">${escapeHtml(row.status || "offen")}</div>`;
 
-      const item =
-        document.createElement(
-          "div"
-        );
-
-
-      item.className =
-        "card request";
-
-
-      const status =
-        request.status ||
-        "neu";
-
-
-      item.dataset.status =
-        status;
-
-
-      if (
-        currentRequestFilter !== "alle" &&
-        status !== currentRequestFilter
-      ) {
-
-        item.classList.add(
-          "hidden-by-filter"
-        );
-
-      }
-
-
-      const assignedText =
-        request.fachbetrieb_id
-          ? "<br>🏢 Fachbetrieb zugewiesen"
-          : "";
-
-
-      item.innerHTML = `
-
-        <div class="request-title">
-
-          ${escapeHtml(
-            request.service ||
-            "Bauanfrage"
-          )}
-
-        </div>
-
-
-        <div class="request-info">
-
-          PLZ:
-          ${escapeHtml(
-            request.plz ||
-            "-"
-          )}
-
-          <br>
-
-          ${escapeHtml(
-            request.name ||
-            "-"
-          )}
-
-          <br>
-
-          ${formatDate(
-            request.created_at
-          )}
-
-          ${assignedText}
-
-        </div>
-
-
-        <span
-          class="status ${getStatusClass(status)}"
-        >
-
-          ${getStatusText(status)}
-
-        </span>
-
-      `;
-
-
-      item.onclick =
-        () => {
-
-          openRequest(
-            request
-          );
-
-        };
-
-
-      container.appendChild(
-        item
-      );
-
-    }
-  );
-
-
-  updateFilterInfo();
-
+    item.addEventListener("click", () => showDetail(row));
+    requestList.appendChild(item);
+  });
 }
 
+function showDetail(row) {
+  detailView.classList.remove("hidden");
 
-/* =========================================
-   STATUS FILTER
-========================================= */
+  detailContent.innerHTML = `
+    <div class="detail">
+      <div class="detail-row"><div class="detail-label">Leistung</div><div class="detail-value">${escapeHtml(row.service || "")}</div></div>
+      <div class="detail-row"><div class="detail-label">Datum</div><div class="detail-value">${escapeHtml(formatDate(row.created_at))}</div></div>
+      <div class="detail-row"><div class="detail-label">PLZ</div><div class="detail-value">${escapeHtml(row.plz || "")}</div></div>
+      <div class="detail-row"><div class="detail-label">Gebiet / Ort</div><div class="detail-value">${escapeHtml(row.area || "Keine Angabe")}</div></div>
+      <div class="detail-row"><div class="detail-label">Beschreibung</div><div class="detail-value">${escapeHtml(row.description || "Keine Beschreibung angegeben.")}</div></div>
+      <div class="detail-row"><div class="detail-label">Kunde</div><div class="detail-value">${escapeHtml(row.name || "")}</div></div>
+      <div class="detail-row"><div class="detail-label">Telefon</div><div class="detail-value"><a href="tel:${escapeHtml(row.phone || "")}" style="color:#ffd000">${escapeHtml(row.phone || "")}</a></div></div>
+      <div class="detail-row"><div class="detail-label">E-Mail</div><div class="detail-value">${row.email ? `<a href="mailto:${escapeHtml(row.email)}" style="color:#ffd000">${escapeHtml(row.email)}</a>` : "Keine E-Mail angegeben."}</div></div>
+      <div class="detail-row"><div class="detail-label">Status</div><div class="detail-value"><span class="badge">${escapeHtml(row.status || "offen")}</span></div></div>
+    </div>`;
 
-function setRequestFilter(
-  filter,
-  button
-) {
-
-  currentRequestFilter =
-    filter;
-
-
-  document
-    .querySelectorAll(
-      "#statusFilter button"
-    )
-    .forEach(
-      item => {
-
-        item.classList.remove(
-          "active"
-        );
-
-      }
-    );
-
-
-  if (button) {
-
-    button.classList.add(
-      "active"
-    );
-
-  }
-
-
-  document
-    .querySelectorAll(
-      "#requests .request"
-    )
-    .forEach(
-      item => {
-
-        const status =
-          item.dataset.status ||
-          "neu";
-
-
-        if (
-          filter === "alle" ||
-          status === filter
-        ) {
-
-          item.classList.remove(
-            "hidden-by-filter"
-          );
-
-        } else {
-
-          item.classList.add(
-            "hidden-by-filter"
-          );
-
-        }
-
-      }
-    );
-
-
-  updateFilterInfo();
-
+  detailView.scrollIntoView({ behavior: "smooth", block: "start" });
 }
-
-
-function updateFilterInfo() {
-
-  const info =
-    document.getElementById(
-      "requestFilterInfo"
-    );
-
-
-  if (!info) {
-
-    return;
-
-  }
-
-
-  const labels = {
-
-    alle:
-      "Alle Bauanfragen",
-
-    neu:
-      "🆕 Neue Bauanfragen",
-
-    angesehen:
-      "👀 Angesehene Bauanfragen",
-
-    in_bearbeitung:
-      "🔧 Bauanfragen in Bearbeitung",
-
-    angenommen:
-      "🤝 Angenommene Bauanfragen",
-
-    abgelehnt:
-      "❌ Abgelehnte Bauanfragen",
-
-    erledigt:
-      "✅ Erledigte Bauanfragen"
-
-  };
-
-
-  info.textContent =
-    labels[
-      currentRequestFilter
-    ] ||
-    "Alle Bauanfragen";
-
-}
-
-
-/* =========================================
-   BAUANFRAGE ÖFFNEN
-========================================= */
-
-async function openRequest(
-  request
-) {
-
-  currentRequest =
-    request;
-
-
-  document
-    .getElementById("listView")
-    .classList.add("hidden");
-
-
-  document
-    .getElementById("detailView")
-    .classList.remove("hidden");
-
-
-  document
-    .getElementById("detailTitle")
-    .textContent =
-      request.service ||
-      "Bauanfrage";
-
-
-  document
-    .getElementById("detailService")
-    .textContent =
-      request.service ||
-      "-";
-
-
-  document
-    .getElementById("detailDate")
-    .textContent =
-      formatDate(
-        request.created_at
-      );
-
-
-  document
-    .getElementById("detailPlz")
-    .textContent =
-      request.plz ||
-      "-";
-
-
-  document
-    .getElementById("detailArea")
-    .textContent =
-      request.area ||
-      "-";
-
-
-  document
-    .getElementById("detailDescription")
-    .textContent =
-      request.description ||
-      "-";
-
-
-  document
-    .getElementById("detailName")
-    .textContent =
-      request.name ||
-      "-";
-
-
-  document
-    .getElementById("detailPhone")
-    .textContent =
-      request.phone ||
-      "-";
-
-
-  document
-    .getElementById("detailEmail")
-    .textContent =
-      request.email ||
-      "-";
-
-
-  document
-    .getElementById("statusSelect")
-    .value =
-      request.status ||
-      "neu";
-
-
-  document
-    .getElementById("assignmentMessage")
-    .textContent =
-      "";
-
-
-  document
-    .getElementById("statusMessage")
-    .textContent =
-      "";
-
-
-  await loadFirmOptions(
-    request.fachbetrieb_id
-  );
-
-}
-
-
-/* =========================================
-   FACHBETRIEBE FÜR ZUWEISUNG
-========================================= */
-
-async function loadFirmOptions(
-  selectedId = null
-) {
-
-  const select =
-    document
-      .getElementById(
-        "firmSelect"
-      );
-
-
-  select.innerHTML = `
-
-    <option value="">
-      -- Kein Fachbetrieb zugewiesen --
-    </option>
-
-  `;
-
-
-  const result =
-    await supabaseClient
-      .from("fachbetriebe")
-      .select(`
-        id,
-        firma,
-        firmenname,
-        plz,
-        ort,
-        aktiv,
-        freigeschaltet
-      `)
-      .order(
-        "firma",
-        {
-          ascending: true
-        }
-      );
-
-
-  if (result.error) {
-
-    select.innerHTML = `
-
-      <option value="">
-        Fehler beim Laden der Fachbetriebe
-      </option>
-
-    `;
-
-    return;
-
-  }
-
-
-  (
-    result.data ||
-    []
-  ).forEach(
-    firm => {
-
-      if (
-        firm.aktiv === false ||
-        firm.freigeschaltet !== true
-      ) {
-
-        return;
-
-      }
-
-
-      const option =
-        document.createElement(
-          "option"
-        );
-
-
-      option.value =
-        firm.id;
-
-
-      const name =
-        firm.firma ||
-        firm.firmenname ||
-        "Fachbetrieb";
-
-
-      option.textContent =
-        name +
-        (
-          firm.plz
-            ? " – " +
-              firm.plz +
-              (
-                firm.ort
-                  ? " " +
-                    firm.ort
-                  : ""
-              )
-            : ""
-        );
-
-
-      if (
-        selectedId &&
-        String(firm.id) ===
-        String(selectedId)
-      ) {
-
-        option.selected =
-          true;
-
-      }
-
-
-      select.appendChild(
-        option
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================================
-   FACHBETRIEB ZUWEISEN
-========================================= */
-
-async function saveAssignment() {
-
-  if (!currentRequest) {
-
-    return;
-
-  }
-
-
-  const firmId =
-    document
-      .getElementById(
-        "firmSelect"
-      )
-      .value;
-
-
-  const message =
-    document
-      .getElementById(
-        "assignmentMessage"
-      );
-
-
-  message.className =
-    "";
-
-  message.textContent =
-    "Speichere...";
-
-
-  const result =
-    await supabaseClient
-      .from("bauanfragen")
-      .update({
-
-        fachbetrieb_id:
-          firmId ||
-          null
-
-      })
-      .eq(
-        "id",
-        currentRequest.id
-      );
-
-
-  if (result.error) {
-
-    message.className =
-      "error";
-
-    message.textContent =
-      "Fehler: " +
-      result.error.message;
-
-    return;
-
-  }
-
-
-  currentRequest.fachbetrieb_id =
-    firmId ||
-    null;
-
-
-  message.className =
-    "success";
-
-  message.textContent =
-    firmId
-      ? "✅ Fachbetrieb erfolgreich zugewiesen."
-      : "✅ Zuordnung entfernt.";
-
-
-  await loadRequests();
-
-}
-
-
-/* =========================================
-   STATUS SPEICHERN
-========================================= */
-
-async function saveStatus() {
-
-  if (!currentRequest) {
-
-    return;
-
-  }
-
-
-  const status =
-    document
-      .getElementById(
-        "statusSelect"
-      )
-      .value;
-
-
-  const message =
-    document
-      .getElementById(
-        "statusMessage"
-      );
-
-
-  message.className =
-    "";
-
-  message.textContent =
-    "Speichere...";
-
-
-  const result =
-    await supabaseClient
-      .from("bauanfragen")
-      .update({
-
-        status:
-          status
-
-      })
-      .eq(
-        "id",
-        currentRequest.id
-      );
-
-
-  if (result.error) {
-
-    message.className =
-      "error";
-
-    message.textContent =
-      "Fehler: " +
-      result.error.message;
-
-    return;
-
-  }
-
-
-  currentRequest.status =
-    status;
-
-
-  message.className =
-    "success";
-
-  message.textContent =
-    "Status erfolgreich gespeichert.";
-
-}
-
-
-/* =========================================
-   ZURÜCK
-========================================= */
 
 function showList() {
-
-  document
-    .getElementById("detailView")
-    .classList.add("hidden");
-
-
-  document
-    .getElementById("listView")
-    .classList.remove("hidden");
-
-
-  currentRequest =
-    null;
-
+  detailView.classList.add("hidden");
 }
-
-
-/* =========================================
-   FACHBETRIEBE LADEN
-========================================= */
 
 async function loadFirms() {
+  firmsMessage.innerHTML = '<div class="success">Fachbetriebe werden geladen...</div>';
+  firmList.innerHTML = "";
 
-  const loading =
-    document
-      .getElementById(
-        "firmsLoading"
-      );
+  const { data, error } = await client
+    .from("fachbetriebe")
+    .select("*")
+    .order("created_at", { ascending: false });
 
+  if (error) {
+    firmsMessage.innerHTML =
+      '<div class="error">Fachbetriebe konnten nicht geladen werden: ' + escapeHtml(error.message) +
+      '<br><br>Bitte prüfen: Existiert die Tabelle <b>fachbetriebe</b> und darf das angemeldete Admin-Konto sie lesen? Die Supabase-RLS-Regeln müssen den Admin-Zugriff erlauben.</div>';
+    return;
+  }
 
-  const container =
-    document
-      .getElementById(
-        "firms"
-      );
+  firmsMessage.innerHTML = "";
 
+  if (!data || data.length === 0) {
+    firmList.innerHTML = '<div class="success">Keine Fachbetriebe in der Tabelle „fachbetriebe“ gefunden. Wenn sich bereits jemand registriert hat, prüfen wir als Nächstes die Registrierung und Supabase-Berechtigungen.</div>';
+    return;
+  }
 
-  loading.style.display =
-    "block";
+  data.forEach(firm => {
+    const isApproved = firm.freigeschaltet === true;
+    const item = document.createElement("article");
+    item.className = "firm";
 
-
-  container.innerHTML =
-    "";
-
-
-  const result =
-    await supabaseClient
-      .from("fachbetriebe")
-      .select("*")
-      .order(
-        "firma",
-        {
-          ascending: true
-        }
-      );
-
-
-  loading.style.display =
-    "none";
-
-
-  if (result.error) {
-
-    container.innerHTML =
-      `<div class="error">
-        Fehler beim Laden:
-        ${escapeHtml(
-          result.error.message
-        )}
+    item.innerHTML = `
+      <div class="firm-title">
+        <div class="firm-name">${escapeHtml(firm.firma || firm.firmenname || "Firma ohne Namen")}</div>
+        <span class="badge ${isApproved ? "approved" : "pending"}">${isApproved ? "Freigeschaltet" : "Wartet auf Freischaltung"}</span>
+      </div>
+      <div class="firm-info">👤 Ansprechpartner: ${escapeHtml(firm.inhaber || firm.ansprechpartner || "Keine Angabe")}</div>
+      <div class="firm-info">✉️ ${escapeHtml(firm.email || "Keine E-Mail")}</div>
+      <div class="firm-info">📞 ${escapeHtml(firm.telefon || "Keine Telefonnummer")}</div>
+      <div class="firm-info">📍 ${escapeHtml([firm.plz, firm.ort].filter(Boolean).join(" ") || "Kein Ort angegeben")}</div>
+      <div class="firm-info">🛠️ Leistungen: ${escapeHtml(formatLeistungen(firm.leistungen))}</div>
+      <div class="firm-info">Umkreis: ${escapeHtml(firm.radius_km == null ? "Keine Angabe" : String(firm.radius_km) + " km")}</div>
+      <div class="firm-info">Abo-Status: ${escapeHtml(firm.abo_status || "unbekannt")}</div>
+      <div class="firm-actions">
+        <button type="button" data-action="${isApproved ? "revoke" : "approve"}">${isApproved ? "Freischaltung zurücknehmen" : "Betrieb freischalten"}</button>
       </div>`;
 
-    return;
-
-  }
-
-
-  if (
-    !result.data ||
-    result.data.length === 0
-  ) {
-
-    container.innerHTML =
-      `<div class="empty">
-        Noch keine Fachbetriebe vorhanden.
-      </div>`;
-
-    return;
-
-  }
-
-
-  result.data.forEach(
-    firm => {
-
-      const card =
-        document.createElement(
-          "div"
-        );
-
-
-      card.className =
-        "firm-card";
-
-
-      const name =
-        firm.firma ||
-        firm.firmenname ||
-        "Fachbetrieb";
-
-
-      const owner =
-        firm.inhaber ||
-        "-";
-
-
-      const email =
-        firm.email ||
-        "-";
-
-
-      const phone =
-        firm.telefon ||
-        "-";
-
-
-      const plz =
-        firm.plz ||
-        "-";
-
-
-      const ort =
-        firm.ort ||
-        "-";
-
-
-      const services =
-        firm.leistungen ||
-        "-";
-
-
-      const radius =
-        firm.radius_km ??
-        30;
-
-
-      const activeBadge =
-        firm.aktiv !== false
-
-          ? `
-            <span class="active-badge">
-              🟢 Aktiv
-            </span>
-          `
-
-          : `
-            <span class="inactive-badge">
-              ⚫ Inaktiv
-            </span>
-          `;
-
-
-      const approvalBadge =
-        firm.freigeschaltet === true
-
-          ? `
-            <span class="approved-badge">
-              🟢 Freigeschaltet
-            </span>
-          `
-
-          : `
-            <span class="pending-badge">
-              🟡 Prüfung läuft
-            </span>
-          `;
-
-
-      card.innerHTML = `
-
-        <div class="firm-name">
-
-          🏢
-          ${escapeHtml(name)}
-
-        </div>
-
-
-        <div class="firm-info">
-
-          👤
-          ${escapeHtml(owner)}
-
-          <br>
-
-          📞
-          ${escapeHtml(phone)}
-
-          <br>
-
-          ✉️
-          ${escapeHtml(email)}
-
-          <br>
-
-          📍
-          ${escapeHtml(plz)}
-          ${escapeHtml(ort)}
-
-          <br>
-
-          📏
-          Radius:
-          ${escapeHtml(radius)}
-          km
-
-          <br>
-
-          🔧
-          ${escapeHtml(services)}
-
-        </div>
-
-
-        <div>
-
-          ${activeBadge}
-
-          ${approvalBadge}
-
-        </div>
-
-
-        <div class="action-row">
-
-          <button
-            class="edit-button"
-            onclick="editFirm('${firm.id}')"
-          >
-            ✏️ Bearbeiten
-          </button>
-
-
-          <button
-            class="delete-button"
-            onclick="deleteFirm('${firm.id}')"
-          >
-            🗑️ Löschen
-          </button>
-
-        </div>
-
-      `;
-
-
-      container.appendChild(
-        card
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================================
-   FIRMENLISTE
-========================================= */
-
-function showFirmsList() {
-
-  document
-    .getElementById(
-      "firmFormView"
-    )
-    .classList.add(
-      "hidden"
+    const actionButton = item.querySelector("button[data-action]");
+    actionButton.addEventListener("click", () =>
+      setFirmApproval(firm.id, !isApproved, actionButton)
     );
 
-
-  document
-    .getElementById(
-      "firmsListView"
-    )
-    .classList.remove(
-      "hidden"
-    );
-
-
-  editingFirmId =
-    null;
-
-
-  loadFirms();
-
+    firmList.appendChild(item);
+  });
 }
 
-
-/* =========================================
-   FIRMENFORMULAR
-========================================= */
-
-function showFirmForm(
-  firm = null
-) {
-
-  document
-    .getElementById(
-      "firmsListView"
-    )
-    .classList.add(
-      "hidden"
-    );
-
-
-  document
-    .getElementById(
-      "firmFormView"
-    )
-    .classList.remove(
-      "hidden"
-    );
-
-
-  document
-    .getElementById(
-      "firmMessage"
-    )
-    .textContent =
-      "";
-
-
-  if (!firm) {
-
-    editingFirmId =
-      null;
-
-
-    document
-      .getElementById(
-        "firmFormTitle"
-      )
-      .textContent =
-        "Fachbetrieb hinzufügen";
-
-
-    document
-      .getElementById(
-        "firmId"
-      )
-      .value =
-        "";
-
-
-    document
-      .getElementById(
-        "firmName"
-      )
-      .value =
-        "";
-
-
-    document
-      .getElementById(
-        "firmOwner"
-      )
-      .value =
-        "";
-
-
-    document
-      .getElementById(
-        "firmEmail"
-      )
-      .value =
-        "";
-
-
-    document
-      .getElementById(
-        "firmPhone"
-      )
-      .value =
-        "";
-
-
-    document
-      .getElementById(
-        "firmPlz"
-      )
-      .value =
-        "";
-
-
-    document
-      .getElementById(
-        "firmOrt"
-      )
-      .value =
-        "";
-
-
-    document
-      .getElementById(
-        "firmServices"
-      )
-      .value =
-        "";
-
-
-    document
-      .getElementById(
-        "firmRadius"
-      )
-      .value =
-        "30";
-
-
-    document
-      .getElementById(
-        "firmActive"
-      )
-      .checked =
-        true;
-
-
-    document
-      .getElementById(
-        "firmApproved"
-      )
-      .checked =
-        false;
-
-
+async function setFirmApproval(firmId, approved, button) {
+  if (!firmId) {
+    firmsMessage.innerHTML = '<div class="error">Dieser Betrieb hat keine ID. Bitte Tabellenstruktur in Supabase prüfen.</div>';
     return;
-
   }
 
+  const confirmation = approved
+    ? "Diesen Fachbetrieb freischalten?"
+    : "Die Freischaltung dieses Fachbetriebs zurücknehmen?";
 
-  editingFirmId =
-    firm.id;
+  if (!window.confirm(confirmation)) return;
 
+  button.disabled = true;
+  firmsMessage.innerHTML = '<div class="success">Freischaltung wird gespeichert...</div>';
 
-  document
-    .getElementById(
-      "firmFormTitle"
-    )
-    .textContent =
-      "Fachbetrieb bearbeiten";
+  const { error } = await client
+    .from("fachbetriebe")
+    .update({ freigeschaltet: approved })
+    .eq("id", firmId);
 
+  if (error) {
+    firmsMessage.innerHTML =
+      '<div class="error">Änderung fehlgeschlagen: ' + escapeHtml(error.message) +
+      '<br><br>Wahrscheinliche Ursache: Es fehlt eine passende UPDATE-RLS-Regel oder die Spalte „freigeschaltet“ heißt anders. Bitte keine Service-Role-Schlüssel in diese HTML-Datei eintragen.</div>';
 
-  document
-    .getElementById(
-      "firmId"
-    )
-    .value =
-      firm.id;
-
-
-  document
-    .getElementById(
-      "firmName"
-    )
-    .value =
-      firm.firma ||
-      firm.firmenname ||
-      "";
-
-
-  document
-    .getElementById(
-      "firmOwner"
-    )
-    .value =
-      firm.inhaber ||
-      "";
-
-
-  document
-    .getElementById(
-      "firmEmail"
-    )
-    .value =
-      firm.email ||
-      "";
-
-
-  document
-    .getElementById(
-      "firmPhone"
-    )
-    .value =
-      firm.telefon ||
-      "";
-
-
-  document
-    .getElementById(
-      "firmPlz"
-    )
-    .value =
-      firm.plz ||
-      "";
-
-
-  document
-    .getElementById(
-      "firmOrt"
-    )
-    .value =
-      firm.ort ||
-      "";
-
-
-  document
-    .getElementById(
-      "firmServices"
-    )
-    .value =
-      firm.leistungen ||
-      "";
-
-
-  document
-    .getElementById(
-      "firmRadius"
-    )
-    .value =
-      firm.radius_km ??
-      30;
-
-
-  document
-    .getElementById(
-      "firmActive"
-    )
-    .checked =
-      firm.aktiv !== false;
-
-
-  document
-    .getElementById(
-      "firmApproved"
-    )
-    .checked =
-      firm.freigeschaltet === true;
-
-}
-
-
-/* =========================================
-   FACHBETRIEB SPEICHERN
-========================================= */
-
-async function saveFirm() {
-
-  const message =
-    document
-      .getElementById(
-        "firmMessage"
-      );
-
-
-  message.className =
-    "";
-
-
-  const firma =
-    document
-      .getElementById(
-        "firmName"
-      )
-      .value
-      .trim();
-
-
-  if (!firma) {
-
-    message.className =
-      "error";
-
-    message.textContent =
-      "Bitte einen Firmennamen eingeben.";
-
+    button.disabled = false;
     return;
-
   }
 
+  firmsMessage.innerHTML = '<div class="success">' +
+    (approved ? "Fachbetrieb wurde freigeschaltet." : "Freischaltung wurde zurückgenommen.") +
+    '</div>';
 
-  const inhaber =
-    document
-      .getElementById(
-        "firmOwner"
-      )
-      .value
-      .trim();
-
-
-  const email =
-    document
-      .getElementById(
-        "firmEmail"
-      )
-      .value
-      .trim();
-
-
-  const telefon =
-    document
-      .getElementById(
-        "firmPhone"
-      )
-      .value
-      .trim();
-
-
-  const plz =
-    document
-      .getElementById(
-        "firmPlz"
-      )
-      .value
-      .trim();
-
-
-  const ort =
-    document
-      .getElementById(
-        "firmOrt"
-      )
-      .value
-      .trim();
-
-
-  const leistungen =
-    document
-      .getElementById(
-        "firmServices"
-      )
-      .value
-      .trim();
-
-
-  const radiusValue =
-    document
-      .getElementById(
-        "firmRadius"
-      )
-      .value;
-
-
-  const radius =
-    radiusValue === ""
-      ? 30
-      : Number(radiusValue);
-
-
-  const aktiv =
-    document
-      .getElementById(
-        "firmActive"
-      )
-      .checked;
-
-
-  const freigeschaltet =
-    document
-      .getElementById(
-        "firmApproved"
-      )
-      .checked;
-
-
-  message.textContent =
-    "Speichere...";
-
-
-  const payload = {
-
-    firma:
-      firma,
-
-    firmenname:
-      firma,
-
-    inhaber:
-      inhaber ||
-      null,
-
-    email:
-      email ||
-      null,
-
-    telefon:
-      telefon ||
-      null,
-
-    plz:
-      plz ||
-      null,
-
-    ort:
-      ort ||
-      null,
-
-    leistungen:
-      leistungen ||
-      null,
-
-    radius_km:
-      radius,
-
-    aktiv:
-      aktiv,
-
-    freigeschaltet:
-      freigeschaltet
-
-  };
-
-
-  let result;
-
-
-  if (editingFirmId) {
-
-    result =
-      await supabaseClient
-        .from(
-          "fachbetriebe"
-        )
-        .update(
-          payload
-        )
-        .eq(
-          "id",
-          editingFirmId
-        );
-
-  } else {
-
-    result =
-      await supabaseClient
-        .from(
-          "fachbetriebe"
-        )
-        .insert([
-          payload
-        ]);
-
-  }
-
-
-  if (result.error) {
-
-    message.className =
-      "error";
-
-    message.textContent =
-      "Fehler: " +
-      result.error.message;
-
-    return;
-
-  }
-
-
-  message.className =
-    "success";
-
-
-  message.textContent =
-    editingFirmId
-
-      ? "✅ Fachbetrieb erfolgreich geändert."
-
-      : "✅ Fachbetrieb erfolgreich angelegt.";
-
-
-  setTimeout(
-    () => {
-
-      showFirmsList();
-
-    },
-    700
-  );
-
+  await loadFirms();
 }
 
-
-/* =========================================
-   FIRMEN BEARBEITEN
-========================================= */
-
-async function editFirm(
-  firmId
-) {
-
-  const result =
-    await supabaseClient
-      .from(
-        "fachbetriebe"
-      )
-      .select("*")
-      .eq(
-        "id",
-        firmId
-      )
-      .single();
-
-
-  if (result.error) {
-
-    alert(
-      "Fehler beim Laden: " +
-      result.error.message
-    );
-
-    return;
-
-  }
-
-
-  showFirmForm(
-    result.data
-  );
-
+function formatLeistungen(value) {
+  if (Array.isArray(value)) return value.join(", ");
+  if (value == null || value === "") return "Keine Angabe";
+  return String(value);
 }
 
+function formatDate(value) {
+  if (!value) return "";
 
-/* =========================================
-   FIRMEN LÖSCHEN
-========================================= */
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
 
-async function deleteFirm(
-  firmId
-) {
-
-  const confirmed =
-    confirm(
-      "Möchtest du diesen Fachbetrieb wirklich löschen?"
-    );
-
-
-  if (!confirmed) {
-
-    return;
-
-  }
-
-
-  const result =
-    await supabaseClient
-      .from(
-        "fachbetriebe"
-      )
-      .delete()
-      .eq(
-        "id",
-        firmId
-      );
-
-
-  if (result.error) {
-
-    alert(
-      "Fehler beim Löschen: " +
-      result.error.message
-    );
-
-    return;
-
-  }
-
-
-  loadFirms();
-
+  return date.toLocaleString("de-DE", {
+    dateStyle: "short",
+    timeStyle: "medium"
+  });
 }
 
-
-/* =========================================
-   STATUS TEXT
-========================================= */
-
-function getStatusText(
-  status
-) {
-
-  switch (status) {
-
-    case "angesehen":
-      return "👀 Angesehen";
-
-    case "in_bearbeitung":
-      return "🔧 In Bearbeitung";
-
-    case "angenommen":
-      return "🤝 Angenommen";
-
-    case "abgelehnt":
-      return "❌ Abgelehnt";
-
-    case "erledigt":
-      return "✅ Erledigt";
-
-    default:
-      return "🆕 Neu";
-
-  }
-
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
+document.getElementById("loginBtn").addEventListener("click", login);
+document.getElementById("logoutBtn").addEventListener("click", logout);
+document.getElementById("refreshRequestsBtn").addEventListener("click", loadRequests);
+document.getElementById("refreshFirmsBtn").addEventListener("click", loadFirms);
+document.getElementById("backBtn").addEventListener("click", showList);
 
-/* =========================================
-   STATUS KLASSE
-========================================= */
+requestsTab.addEventListener("click", () => showSection("requests"));
+firmsTab.addEventListener("click", () => showSection("firms"));
 
-function getStatusClass(
-  status
-) {
-
-  switch (status) {
-
-    case "angesehen":
-      return "status-angesehen";
-
-    case "in_bearbeitung":
-      return "status-bearbeitung";
-
-    case "angenommen":
-      return "status-angenommen";
-
-    case "abgelehnt":
-      return "status-abgelehnt";
-
-    case "erledigt":
-      return "status-erledigt";
-
-    default:
-      return "status-neu";
-
-  }
-
-}
-
-
-/* =========================================
-   DATUM
-========================================= */
-
-function formatDate(
-  value
-) {
-
-  if (!value) {
-
-    return "-";
-
-  }
-
-
-  const date =
-    new Date(value);
-
-
-  return date.toLocaleString(
-    "de-DE",
-    {
-      dateStyle:
-        "short",
-
-      timeStyle:
-        "medium"
-    }
-  );
-
-}
-
-
-/* =========================================
-   HTML SICHERN
-========================================= */
-
-function escapeHtml(
-  value
-) {
-
-  return String(
-    value ?? ""
-  )
-    .replaceAll(
-      "&",
-      "&amp;"
-    )
-    .replaceAll(
-      "<",
-      "&lt;"
-    )
-    .replaceAll(
-      ">",
-      "&gt;"
-    )
-    .replaceAll(
-      '"',
-      "&quot;"
-    )
-    .replaceAll(
-      "'",
-      "&#039;"
-    );
-
-}
-
-
-/* =========================================
-   SESSION PRÜFEN
-========================================= */
-
-async function checkSession() {
-
-  const result =
-    await supabaseClient
-      .auth
-      .getSession();
-
-
-  if (
-    result.data &&
-    result.data.session
-  ) {
-
-    showAdmin();
-
-  }
-
-}
-
-
-checkSession();
-
+client.auth.onAuthStateChange(() => updateUI());
+updateUI();
 </script>
-
 </body>
 </html>
