@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Riemer BauConnect – Fachbetrieb</title>
-
   <meta name="theme-color" content="#111111">
 
   <style>
@@ -274,11 +273,7 @@
     }
 
     .welcome-card {
-      background: linear-gradient(
-        135deg,
-        #1d1d1d,
-        #141414
-      );
+      background: linear-gradient(135deg, #1d1d1d, #141414);
       border: 1px solid #353535;
       border-radius: 20px;
       padding: 24px;
@@ -487,6 +482,27 @@
       line-height: 1.5;
     }
 
+    /* NEU: Kontolöschung */
+
+    .account-deletion-card {
+      border-color: #45402a;
+    }
+
+    .account-deletion-card h2 {
+      color: #ffd400;
+    }
+
+    .account-deletion-card a {
+      color: #ffd400;
+      font-weight: 700;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+    }
+
+    .account-deletion-card a:hover {
+      text-decoration: underline;
+    }
+
     .footer {
       text-align: center;
       color: #666;
@@ -495,7 +511,6 @@
     }
 
     @media (max-width: 650px) {
-
       .container {
         padding: 14px;
       }
@@ -594,10 +609,7 @@
           placeholder="Ihr Passwort"
         >
 
-        <button
-          class="btn btn-primary"
-          onclick="login()"
-        >
+        <button class="btn btn-primary" onclick="login()">
           Einloggen
         </button>
 
@@ -610,7 +622,6 @@
         </div>
 
       </div>
-
 
       <!-- REGISTRIERUNG -->
 
@@ -625,87 +636,33 @@
         </p>
 
         <label>Firmenname *</label>
-
-        <input
-          id="registerFirma"
-          type="text"
-          placeholder="z. B. Hajs Bau"
-        >
+        <input id="registerFirma" type="text" placeholder="z. B. Hajs Bau">
 
         <label>Ansprechpartner / Inhaber *</label>
-
-        <input
-          id="registerInhaber"
-          type="text"
-          placeholder="Vor- und Nachname"
-        >
+        <input id="registerInhaber" type="text" placeholder="Vor- und Nachname">
 
         <label>E-Mail *</label>
-
-        <input
-          id="registerEmail"
-          type="email"
-          autocomplete="email"
-          placeholder="E-Mail-Adresse"
-        >
+        <input id="registerEmail" type="email" autocomplete="email" placeholder="E-Mail-Adresse">
 
         <label>Telefon *</label>
-
-        <input
-          id="registerTelefon"
-          type="tel"
-          placeholder="Telefonnummer"
-        >
+        <input id="registerTelefon" type="tel" placeholder="Telefonnummer">
 
         <label>PLZ *</label>
-
-        <input
-          id="registerPlz"
-          type="text"
-          inputmode="numeric"
-          maxlength="5"
-          placeholder="z. B. 24955"
-        >
+        <input id="registerPlz" type="text" inputmode="numeric" maxlength="5" placeholder="z. B. 24955">
 
         <label>Ort *</label>
-
-        <input
-          id="registerOrt"
-          type="text"
-          placeholder="z. B. Harrislee"
-        >
+        <input id="registerOrt" type="text" placeholder="z. B. Harrislee">
 
         <label>Leistungen</label>
-
-        <input
-          id="registerLeistungen"
-          type="text"
-          placeholder="z. B. Straßenbau, Asphalt, Tiefbau"
-        >
+        <input id="registerLeistungen" type="text" placeholder="z. B. Straßenbau, Asphalt, Tiefbau">
 
         <label>Suchradius in km</label>
-
-        <input
-          id="registerRadius"
-          type="number"
-          value="30"
-          min="1"
-          max="200"
-        >
+        <input id="registerRadius" type="number" value="30" min="1" max="200">
 
         <label>Passwort *</label>
+        <input id="registerPassword" type="password" autocomplete="new-password" placeholder="Mindestens 6 Zeichen">
 
-        <input
-          id="registerPassword"
-          type="password"
-          autocomplete="new-password"
-          placeholder="Mindestens 6 Zeichen"
-        >
-
-        <button
-          class="btn btn-primary"
-          onclick="registerFirm()"
-        >
+        <button class="btn btn-primary" onclick="registerFirm()">
           Fachbetrieb registrieren
         </button>
 
@@ -739,13 +696,9 @@
 
       <div class="pending-box">
 
-        <div class="pending-icon">
-          ⏳
-        </div>
+        <div class="pending-icon">⏳</div>
 
-        <h2>
-          Registrierung wird geprüft
-        </h2>
+        <h2>Registrierung wird geprüft</h2>
 
         <p>
           Ihr Fachbetrieb wurde erfolgreich registriert.
@@ -759,10 +712,7 @@
 
       </div>
 
-      <button
-        class="btn btn-dark"
-        onclick="logout()"
-      >
+      <button class="btn btn-dark" onclick="logout()">
         Abmelden
       </button>
 
@@ -786,47 +736,27 @@
 
       <div id="dashboardMessage" class="message"></div>
 
-
       <!-- TABS -->
 
       <div class="tabs">
 
-        <button
-          id="tabStart"
-          class="tab active"
-          onclick="showTab('start')"
-        >
+        <button id="tabStart" class="tab active" onclick="showTab('start')">
           Start
         </button>
 
-        <button
-          id="tabRequests"
-          class="tab"
-          onclick="showTab('requests')"
-        >
+        <button id="tabRequests" class="tab" onclick="showTab('requests')">
           Bauanfragen
         </button>
 
-        <button
-          id="tabProfile"
-          class="tab"
-          onclick="showTab('profile')"
-        >
+        <button id="tabProfile" class="tab" onclick="showTab('profile')">
           Profil
         </button>
 
-        <button
-          id="tabAbo"
-          class="tab"
-          onclick="showTab('abo')"
-        >
+        <button id="tabAbo" class="tab" onclick="showTab('abo')">
           Abo
         </button>
 
-        <button
-          class="tab"
-          onclick="logout()"
-        >
+        <button class="tab" onclick="logout()">
           Abmelden
         </button>
 
@@ -839,113 +769,59 @@
 
         <div class="welcome-card">
 
-          <h2>
-            Mein Fachbetrieb
-          </h2>
+          <h2>Mein Fachbetrieb</h2>
 
-          <p id="startFirmText">
-            Fachbetriebsbereich
-          </p>
+          <p id="startFirmText">Fachbetriebsbereich</p>
 
-          <div
-            id="freigeschaltetBox"
-            class="freigeschaltet"
-          >
+          <div id="freigeschaltetBox" class="freigeschaltet">
             Fachbetrieb freigeschaltet
           </div>
 
         </div>
 
-
         <div class="card">
 
-          <h3>
-            📊 Anfrage-Übersicht
-          </h3>
+          <h3>📊 Anfrage-Übersicht</h3>
 
           <div class="stats-grid">
 
             <div class="stat-card">
-              <div
-                id="statNeu"
-                class="stat-number"
-              >
-                0
-              </div>
-
-              <div class="stat-label">
-                🆕 Neu
-              </div>
+              <div id="statNeu" class="stat-number">0</div>
+              <div class="stat-label">🆕 Neu</div>
             </div>
 
             <div class="stat-card">
-              <div
-                id="statAngesehen"
-                class="stat-number"
-              >
-                0
-              </div>
-
-              <div class="stat-label">
-                👀 Angesehen
-              </div>
+              <div id="statAngesehen" class="stat-number">0</div>
+              <div class="stat-label">👀 Angesehen</div>
             </div>
 
             <div class="stat-card">
-              <div
-                id="statBearbeitung"
-                class="stat-number"
-              >
-                0
-              </div>
-
-              <div class="stat-label">
-                🔧 In Bearbeitung
-              </div>
+              <div id="statBearbeitung" class="stat-number">0</div>
+              <div class="stat-label">🔧 In Bearbeitung</div>
             </div>
 
             <div class="stat-card">
-              <div
-                id="statErledigt"
-                class="stat-number"
-              >
-                0
-              </div>
-
-              <div class="stat-label">
-                ✅ Erledigt
-              </div>
+              <div id="statErledigt" class="stat-number">0</div>
+              <div class="stat-label">✅ Erledigt</div>
             </div>
 
           </div>
 
         </div>
 
-
         <div class="card">
 
-          <h3>
-            🚀 Dein Abo
-          </h3>
+          <h3>🚀 Dein Abo</h3>
 
-          <div
-            id="startAboStatus"
-            class="abo-status"
-          >
+          <div id="startAboStatus" class="abo-status">
             Wird geladen...
           </div>
 
-          <p
-            id="startAboText"
-            class="muted"
-          >
+          <p id="startAboText" class="muted">
             Abo wird geprüft...
           </p>
 
-          <button
-            class="btn btn-dark"
-            onclick="showTab('abo')"
-          >
+          <button class="btn btn-dark" onclick="showTab('abo')">
             Abo verwalten
           </button>
 
@@ -956,40 +832,25 @@
 
       <!-- BAUANFRAGEN -->
 
-      <div
-        id="requestsTab"
-        class="hidden"
-      >
+      <div id="requestsTab" class="hidden">
 
         <div class="card">
 
           <div class="topbar">
 
             <div>
-              <h2>
-                🏗️ Meine Bauanfragen
-              </h2>
-
-              <div class="small">
-                Ihnen zugewiesene Bauprojekte
-              </div>
+              <h2>🏗️ Meine Bauanfragen</h2>
+              <div class="small">Ihnen zugewiesene Bauprojekte</div>
             </div>
 
-            <button
-              class="btn btn-dark icon-btn"
-              onclick="loadRequests()"
-            >
+            <button class="btn btn-dark icon-btn" onclick="loadRequests()">
               🔄
             </button>
 
           </div>
 
           <div id="requestsContainer">
-
-            <div class="loading">
-              Bauanfragen werden geladen...
-            </div>
-
+            <div class="loading">Bauanfragen werden geladen...</div>
           </div>
 
         </div>
@@ -999,143 +860,100 @@
 
       <!-- PROFIL -->
 
-      <div
-        id="profileTab"
-        class="hidden"
-      >
+      <div id="profileTab" class="hidden">
 
         <div class="card">
 
-          <h2>
-            👤 Mein Fachbetrieb
-          </h2>
+          <h2>👤 Mein Fachbetrieb</h2>
 
           <p class="muted">
             Hier können Sie Ihre Unternehmensdaten bearbeiten.
           </p>
 
-          <div
-            id="profileMessage"
-            class="message"
-          ></div>
+          <div id="profileMessage" class="message"></div>
 
           <div class="profile-grid">
 
             <div>
-
-              <label>
-                Firmenname
-              </label>
-
-              <input
-                id="profileFirma"
-                type="text"
-              >
-
+              <label>Firmenname</label>
+              <input id="profileFirma" type="text">
             </div>
 
             <div>
-
-              <label>
-                Ansprechpartner / Inhaber
-              </label>
-
-              <input
-                id="profileInhaber"
-                type="text"
-              >
-
+              <label>Ansprechpartner / Inhaber</label>
+              <input id="profileInhaber" type="text">
             </div>
 
             <div>
-
-              <label>
-                E-Mail
-              </label>
-
-              <input
-                id="profileEmail"
-                type="email"
-              >
-
+              <label>E-Mail</label>
+              <input id="profileEmail" type="email">
             </div>
 
             <div>
-
-              <label>
-                Telefon
-              </label>
-
-              <input
-                id="profileTelefon"
-                type="tel"
-              >
-
+              <label>Telefon</label>
+              <input id="profileTelefon" type="tel">
             </div>
 
             <div>
-
-              <label>
-                PLZ
-              </label>
-
-              <input
-                id="profilePlz"
-                type="text"
-                maxlength="5"
-              >
-
+              <label>PLZ</label>
+              <input id="profilePlz" type="text" maxlength="5">
             </div>
 
             <div>
-
-              <label>
-                Ort
-              </label>
-
-              <input
-                id="profileOrt"
-                type="text"
-              >
-
+              <label>Ort</label>
+              <input id="profileOrt" type="text">
             </div>
 
             <div class="full">
-
-              <label>
-                Leistungen
-              </label>
-
-              <input
-                id="profileLeistungen"
-                type="text"
-              >
-
+              <label>Leistungen</label>
+              <input id="profileLeistungen" type="text">
             </div>
 
             <div>
-
-              <label>
-                Suchradius
-              </label>
-
-              <input
-                id="profileRadius"
-                type="number"
-                min="1"
-                max="200"
-              >
-
+              <label>Suchradius</label>
+              <input id="profileRadius" type="number" min="1" max="200">
             </div>
 
           </div>
 
-          <button
-            class="btn btn-primary"
-            onclick="saveProfile()"
-          >
+          <button class="btn btn-primary" onclick="saveProfile()">
             💾 Profil speichern
           </button>
+
+        </div>
+
+
+        <!-- NEU: KONTOLÖSCHUNG UND DATENSCHUTZ -->
+
+        <div class="card account-deletion-card">
+
+          <h2>🔒 Kontolöschung und Datenschutz</h2>
+
+          <p class="muted" style="line-height: 1.7;">
+            Sie möchten Ihr Fachbetrieb-Konto bei Riemer BauConnect
+            löschen lassen? Senden Sie Ihre Anfrage bitte per E-Mail
+            an unsere Support-Adresse.
+          </p>
+
+          <p style="margin: 16px 0;">
+            <strong class="yellow">E-Mail:</strong><br>
+
+            <a href="mailto:info@riemer-bauconnect.de">
+              info@riemer-bauconnect.de
+            </a>
+          </p>
+
+          <p class="muted" style="line-height: 1.7;">
+            Bitte geben Sie den Namen Ihres Fachbetriebs und die
+            zugehörige registrierte E-Mail-Adresse an, damit wir
+            Ihre Anfrage zuordnen können.
+          </p>
+
+          <p class="small" style="line-height: 1.6;">
+            Wir prüfen Ihre Anfrage und informieren Sie über die
+            weitere Bearbeitung. Gesetzliche Aufbewahrungspflichten
+            bleiben unberührt.
+          </p>
 
         </div>
 
@@ -1144,16 +962,11 @@
 
       <!-- ABO -->
 
-      <div
-        id="aboTab"
-        class="hidden"
-      >
+      <div id="aboTab" class="hidden">
 
         <div class="card">
 
-          <h2>
-            💳 Fachbetriebs-Abo
-          </h2>
+          <h2>💳 Fachbetriebs-Abo</h2>
 
           <p class="muted">
             Mit dem Fachbetriebs-Abo erhalten Sie Zugang zu qualifizierten
@@ -1177,84 +990,43 @@
 
         </div>
 
-
         <div class="card">
 
-          <h3>
-            📋 Abo-Status
-          </h3>
+          <h3>📋 Abo-Status</h3>
 
-          <div
-            id="aboStatusBadge"
-            class="abo-status"
-          >
+          <div id="aboStatusBadge" class="abo-status">
             Wird geladen...
           </div>
 
           <div class="info-row">
-
-            <span>
-              Testphase bis
-            </span>
-
-            <span id="aboTrialEnd">
-              –
-            </span>
-
+            <span>Testphase bis</span>
+            <span id="aboTrialEnd">–</span>
           </div>
 
           <div class="info-row">
-
-            <span>
-              Aktuelle Periode bis
-            </span>
-
-            <span id="aboPeriodEnd">
-              –
-            </span>
-
+            <span>Aktuelle Periode bis</span>
+            <span id="aboPeriodEnd">–</span>
           </div>
 
           <div class="info-row">
-
-            <span>
-              Kündigung
-            </span>
-
-            <span id="aboCancellation">
-              Nicht gekündigt
-            </span>
-
+            <span>Kündigung</span>
+            <span id="aboCancellation">Nicht gekündigt</span>
           </div>
 
           <div class="info-row">
-
-            <span>
-              Kostenlosen Test bereits genutzt
-            </span>
-
-            <span id="aboTrialUsed">
-              Nein
-            </span>
-
+            <span>Kostenlosen Test bereits genutzt</span>
+            <span id="aboTrialUsed">Nein</span>
           </div>
 
           <div id="aboActionArea">
-
-            <div class="loading">
-              Abo wird geprüft...
-            </div>
-
+            <div class="loading">Abo wird geprüft...</div>
           </div>
 
         </div>
 
-
         <div class="card">
 
-          <h3>
-            ℹ️ Wichtig
-          </h3>
+          <h3>ℹ️ Wichtig</h3>
 
           <p class="muted">
             Die ersten 30 Tage sind kostenlos.
@@ -1323,12 +1095,9 @@ document.addEventListener(
       async (event, session) => {
 
         if (event === "SIGNED_OUT") {
-
           currentUser = null;
           currentFirm = null;
-
           showAuth();
-
         }
 
       }
@@ -1343,82 +1112,36 @@ document.addEventListener(
 ========================================================= */
 
 function hideAllScreens() {
-
-  document
-    .getElementById("authScreen")
-    .classList.add("hidden");
-
-  document
-    .getElementById("pendingScreen")
-    .classList.add("hidden");
-
-  document
-    .getElementById("dashboardScreen")
-    .classList.add("hidden");
-
+  document.getElementById("authScreen").classList.add("hidden");
+  document.getElementById("pendingScreen").classList.add("hidden");
+  document.getElementById("dashboardScreen").classList.add("hidden");
 }
-
 
 function showAuth() {
-
   hideAllScreens();
-
-  document
-    .getElementById("authScreen")
-    .classList.remove("hidden");
-
+  document.getElementById("authScreen").classList.remove("hidden");
 }
-
 
 function showPending() {
-
   hideAllScreens();
-
-  document
-    .getElementById("pendingScreen")
-    .classList.remove("hidden");
-
+  document.getElementById("pendingScreen").classList.remove("hidden");
 }
-
 
 function showDashboard() {
-
   hideAllScreens();
-
-  document
-    .getElementById("dashboardScreen")
-    .classList.remove("hidden");
-
+  document.getElementById("dashboardScreen").classList.remove("hidden");
 }
-
 
 function showLogin() {
-
-  document
-    .getElementById("loginCard")
-    .classList.remove("hidden");
-
-  document
-    .getElementById("registerCard")
-    .classList.add("hidden");
-
+  document.getElementById("loginCard").classList.remove("hidden");
+  document.getElementById("registerCard").classList.add("hidden");
   clearMessage("authMessage");
-
 }
 
-
 function showRegister() {
-
-  document
-    .getElementById("loginCard")
-    .classList.add("hidden");
-
-  document
-    .getElementById("registerCard")
-    .classList.remove("hidden");
-
+  document.getElementById("loginCard").classList.add("hidden");
+  document.getElementById("registerCard").classList.remove("hidden");
   clearMessage("authMessage");
-
 }
 
 
@@ -1430,57 +1153,32 @@ async function checkSession() {
 
   try {
 
-    const {
-      data,
-      error
-    } =
-      await db.auth.getSession();
-
+    const { data, error } = await db.auth.getSession();
 
     if (error) {
-
       console.error(error);
-
       showAuth();
-
       return;
-
     }
-
 
     if (!data.session) {
-
       showAuth();
-
       return;
-
     }
 
+    currentUser = data.session.user;
 
-    currentUser =
-      data.session.user;
-
-
-    const firmLoaded =
-      await loadFirm();
-
+    const firmLoaded = await loadFirm();
 
     if (!firmLoaded) {
-
-      const created =
-        await createPendingFirm();
+      const created = await createPendingFirm();
 
       if (created) {
-
         await loadFirm();
-
       }
-
     }
 
-
     if (!currentFirm) {
-
       showMessage(
         "authMessage",
         "Für diesen Benutzer wurde noch kein Fachbetriebsprofil gefunden.",
@@ -1488,32 +1186,19 @@ async function checkSession() {
       );
 
       showAuth();
-
       return;
-
     }
 
-
-    if (
-      currentFirm.freigeschaltet !== true
-    ) {
-
+    if (currentFirm.freigeschaltet !== true) {
       showPending();
-
       return;
-
     }
-
 
     enterDashboard();
 
-
   } catch (error) {
-
     console.error(error);
-
     showAuth();
-
   }
 
 }
@@ -1526,13 +1211,11 @@ async function checkSession() {
 async function enterDashboard() {
 
   showDashboard();
-
   fillProfile();
 
   await loadRequests();
 
   updateAboUI();
-
   updateStartDashboard();
 
   showTab("start");
@@ -1546,105 +1229,49 @@ async function enterDashboard() {
 
 async function login() {
 
-  const email =
-    document
-      .getElementById("loginEmail")
-      .value
-      .trim();
-
-
-  const password =
-    document
-      .getElementById("loginPassword")
-      .value;
-
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value;
 
   if (!email || !password) {
-
-    showMessage(
-      "authMessage",
-      "Bitte E-Mail und Passwort eingeben.",
-      "error"
-    );
-
+    showMessage("authMessage", "Bitte E-Mail und Passwort eingeben.", "error");
     return;
-
   }
 
+  showMessage("authMessage", "Login wird durchgeführt...", "info");
 
-  showMessage(
-    "authMessage",
-    "Login wird durchgeführt...",
-    "info"
-  );
-
-
-  const {
-    data,
-    error
-  } =
-    await db.auth.signInWithPassword({
-      email,
-      password
-    });
-
+  const { data, error } = await db.auth.signInWithPassword({
+    email,
+    password
+  });
 
   if (error) {
-
     console.error(error);
-
-    showMessage(
-      "authMessage",
-      getAuthError(error),
-      "error"
-    );
-
+    showMessage("authMessage", getAuthError(error), "error");
     return;
-
   }
 
+  currentUser = data.user;
 
-  currentUser =
-    data.user;
-
-
-  let firmLoaded =
-    await loadFirm();
-
+  let firmLoaded = await loadFirm();
 
   if (!firmLoaded) {
-
     await createPendingFirm();
-
-    firmLoaded =
-      await loadFirm();
-
+    firmLoaded = await loadFirm();
   }
 
-
   if (!firmLoaded || !currentFirm) {
-
     showMessage(
       "authMessage",
       "Login erfolgreich, aber es wurde kein Fachbetriebsprofil gefunden.",
       "error"
     );
-
     return;
-
   }
 
-
-  if (
-    currentFirm.freigeschaltet !== true
-  ) {
-
+  if (currentFirm.freigeschaltet !== true) {
     showPending();
-
     return;
-
   }
-
 
   await enterDashboard();
 
@@ -1657,270 +1284,104 @@ async function login() {
 
 async function registerFirm() {
 
-  const firma =
-    document
-      .getElementById("registerFirma")
-      .value
-      .trim();
+  const firma = document.getElementById("registerFirma").value.trim();
+  const inhaber = document.getElementById("registerInhaber").value.trim();
+  const email = document.getElementById("registerEmail").value.trim().toLowerCase();
+  const telefon = document.getElementById("registerTelefon").value.trim();
+  const plz = document.getElementById("registerPlz").value.trim();
+  const ort = document.getElementById("registerOrt").value.trim();
+  const leistungen = document.getElementById("registerLeistungen").value.trim();
+  const radius = Number(document.getElementById("registerRadius").value) || 30;
+  const password = document.getElementById("registerPassword").value;
 
-
-  const inhaber =
-    document
-      .getElementById("registerInhaber")
-      .value
-      .trim();
-
-
-  const email =
-    document
-      .getElementById("registerEmail")
-      .value
-      .trim()
-      .toLowerCase();
-
-
-  const telefon =
-    document
-      .getElementById("registerTelefon")
-      .value
-      .trim();
-
-
-  const plz =
-    document
-      .getElementById("registerPlz")
-      .value
-      .trim();
-
-
-  const ort =
-    document
-      .getElementById("registerOrt")
-      .value
-      .trim();
-
-
-  const leistungen =
-    document
-      .getElementById("registerLeistungen")
-      .value
-      .trim();
-
-
-  const radius =
-    Number(
-      document
-        .getElementById("registerRadius")
-        .value
-    ) || 30;
-
-
-  const password =
-    document
-      .getElementById("registerPassword")
-      .value;
-
-
-  if (
-    !firma ||
-    !inhaber ||
-    !email ||
-    !telefon ||
-    !plz ||
-    !ort ||
-    !password
-  ) {
-
-    showMessage(
-      "authMessage",
-      "Bitte alle Pflichtfelder ausfüllen.",
-      "error"
-    );
-
+  if (!firma || !inhaber || !email || !telefon || !plz || !ort || !password) {
+    showMessage("authMessage", "Bitte alle Pflichtfelder ausfüllen.", "error");
     return;
-
   }
-
 
   if (!/^\d{5}$/.test(plz)) {
-
-    showMessage(
-      "authMessage",
-      "Bitte eine gültige 5-stellige PLZ eingeben.",
-      "error"
-    );
-
+    showMessage("authMessage", "Bitte eine gültige 5-stellige PLZ eingeben.", "error");
     return;
-
   }
-
 
   if (password.length < 6) {
-
-    showMessage(
-      "authMessage",
-      "Das Passwort muss mindestens 6 Zeichen lang sein.",
-      "error"
-    );
-
+    showMessage("authMessage", "Das Passwort muss mindestens 6 Zeichen lang sein.", "error");
     return;
-
   }
 
-
-  if (
-    radius < 1 ||
-    radius > 200
-  ) {
-
-    showMessage(
-      "authMessage",
-      "Der Suchradius muss zwischen 1 und 200 km liegen.",
-      "error"
-    );
-
+  if (radius < 1 || radius > 200) {
+    showMessage("authMessage", "Der Suchradius muss zwischen 1 und 200 km liegen.", "error");
     return;
-
   }
 
-
-  showMessage(
-    "authMessage",
-    "Registrierung wird durchgeführt...",
-    "info"
-  );
-
+  showMessage("authMessage", "Registrierung wird durchgeführt...", "info");
 
   const pendingProfile = {
-
-    firma:
-      firma,
-
-    inhaber:
-      inhaber,
-
-    email:
-      email,
-
-    telefon:
-      telefon,
-
-    plz:
-      plz,
-
-    ort:
-      ort,
-
-    leistungen:
-      leistungen,
-
-    radius_km:
-      radius
-
+    firma,
+    inhaber,
+    email,
+    telefon,
+    plz,
+    ort,
+    leistungen,
+    radius_km: radius
   };
-
 
   localStorage.setItem(
     "riemer_pending_fachbetrieb",
-    JSON.stringify(
-      pendingProfile
-    )
+    JSON.stringify(pendingProfile)
   );
 
-
-  const {
-    data,
-    error
-  } =
-    await db.auth.signUp({
-      email,
-      password
-    });
-
+  const { data, error } = await db.auth.signUp({
+    email,
+    password
+  });
 
   if (error) {
-
     console.error(error);
 
-    localStorage.removeItem(
-      "riemer_pending_fachbetrieb"
-    );
+    localStorage.removeItem("riemer_pending_fachbetrieb");
 
-    showMessage(
-      "authMessage",
-      getAuthError(error),
-      "error"
-    );
-
+    showMessage("authMessage", getAuthError(error), "error");
     return;
-
   }
-
 
   if (!data.user) {
-
-    showMessage(
-      "authMessage",
-      "Die Registrierung konnte nicht abgeschlossen werden.",
-      "error"
-    );
-
+    showMessage("authMessage", "Die Registrierung konnte nicht abgeschlossen werden.", "error");
     return;
-
   }
 
-
-  currentUser =
-    data.user;
-
+  currentUser = data.user;
 
   if (data.session) {
 
-    const created =
-      await createPendingFirm();
-
+    const created = await createPendingFirm();
 
     if (!created) {
-
       showMessage(
         "authMessage",
         "Benutzer wurde erstellt, aber das Fachbetriebsprofil konnte noch nicht angelegt werden.",
         "error"
       );
-
       return;
-
     }
-
 
     await loadFirm();
 
-
-    if (
-      currentFirm &&
-      currentFirm.freigeschaltet === true
-    ) {
-
+    if (currentFirm && currentFirm.freigeschaltet === true) {
       await enterDashboard();
-
     } else {
-
       showPending();
-
     }
 
-
     return;
-
   }
-
 
   showMessage(
     "authMessage",
     "Registrierung erfolgreich. Bitte bestätigen Sie Ihre E-Mail-Adresse. Danach können Sie sich hier einloggen. Ihr Fachbetrieb wird anschließend geprüft und freigeschaltet.",
     "success"
   );
-
 
   showLogin();
 
@@ -1933,163 +1394,68 @@ async function registerFirm() {
 
 async function createPendingFirm() {
 
-  if (!currentUser) {
+  if (!currentUser) return false;
 
-    return false;
+  const stored = localStorage.getItem("riemer_pending_fachbetrieb");
 
-  }
-
-
-  const stored =
-    localStorage.getItem(
-      "riemer_pending_fachbetrieb"
-    );
-
-
-  if (!stored) {
-
-    return false;
-
-  }
-
+  if (!stored) return false;
 
   let profile;
 
-
   try {
-
-    profile =
-      JSON.parse(stored);
-
+    profile = JSON.parse(stored);
   } catch (error) {
-
     console.error(error);
-
-    localStorage.removeItem(
-      "riemer_pending_fachbetrieb"
-    );
-
+    localStorage.removeItem("riemer_pending_fachbetrieb");
     return false;
-
   }
 
-
-  if (
-    !profile ||
-    !profile.firma ||
-    !profile.email
-  ) {
-
+  if (!profile || !profile.firma || !profile.email) {
     return false;
-
   }
 
-
-  const {
-    data: existing,
-    error: existingError
-  } =
-    await db
-      .from("fachbetriebe")
-      .select("id")
-      .eq(
-        "owner_user_id",
-        currentUser.id
-      )
-      .maybeSingle();
-
+  const { data: existing, error: existingError } = await db
+    .from("fachbetriebe")
+    .select("id")
+    .eq("owner_user_id", currentUser.id)
+    .maybeSingle();
 
   if (existingError) {
-
     console.error(existingError);
-
     return false;
-
   }
-
 
   if (existing) {
-
-    localStorage.removeItem(
-      "riemer_pending_fachbetrieb"
-    );
-
+    localStorage.removeItem("riemer_pending_fachbetrieb");
     return true;
-
   }
 
-
-  const {
-    error
-  } =
-    await db
-      .from("fachbetriebe")
-      .insert([{
-
-        owner_user_id:
-          currentUser.id,
-
-        firma:
-          profile.firma,
-
-        firmenname:
-          profile.firma,
-
-        inhaber:
-          profile.inhaber,
-
-        ansprechpartner:
-          profile.inhaber,
-
-        email:
-          profile.email,
-
-        telefon:
-          profile.telefon,
-
-        plz:
-          profile.plz,
-
-        ort:
-          profile.ort,
-
-        leistungen:
-          profile.leistungen || "",
-
-        radius_km:
-          profile.radius_km || 30,
-
-        aktiv:
-          true,
-
-        freigeschaltet:
-          false,
-
-        abo_status:
-          "inaktiv",
-
-        abo_trial_used:
-          false
-
-      }]);
-
+  const { error } = await db
+    .from("fachbetriebe")
+    .insert([{
+      owner_user_id: currentUser.id,
+      firma: profile.firma,
+      firmenname: profile.firma,
+      inhaber: profile.inhaber,
+      ansprechpartner: profile.inhaber,
+      email: profile.email,
+      telefon: profile.telefon,
+      plz: profile.plz,
+      ort: profile.ort,
+      leistungen: profile.leistungen || "",
+      radius_km: profile.radius_km || 30,
+      aktiv: true,
+      freigeschaltet: false,
+      abo_status: "inaktiv",
+      abo_trial_used: false
+    }]);
 
   if (error) {
-
-    console.error(
-      "Profil konnte nicht erstellt werden:",
-      error
-    );
-
+    console.error("Profil konnte nicht erstellt werden:", error);
     return false;
-
   }
 
-
-  localStorage.removeItem(
-    "riemer_pending_fachbetrieb"
-  );
-
+  localStorage.removeItem("riemer_pending_fachbetrieb");
 
   return true;
 
@@ -2102,53 +1468,26 @@ async function createPendingFirm() {
 
 async function loadFirm() {
 
-  if (!currentUser) {
+  if (!currentUser) return false;
 
-    return false;
-
-  }
-
-
-  const {
-    data,
-    error
-  } =
-    await db
-      .from("fachbetriebe")
-      .select("*")
-      .eq(
-        "owner_user_id",
-        currentUser.id
-      )
-      .maybeSingle();
-
+  const { data, error } = await db
+    .from("fachbetriebe")
+    .select("*")
+    .eq("owner_user_id", currentUser.id)
+    .maybeSingle();
 
   if (error) {
-
-    console.error(
-      "loadFirm:",
-      error
-    );
-
+    console.error("loadFirm:", error);
     currentFirm = null;
-
     return false;
-
   }
-
 
   if (!data) {
-
     currentFirm = null;
-
     return false;
-
   }
 
-
-  currentFirm =
-    data;
-
+  currentFirm = data;
 
   return true;
 
@@ -2161,249 +1500,99 @@ async function loadFirm() {
 
 function fillProfile() {
 
-  if (!currentFirm) {
+  if (!currentFirm) return;
 
-    return;
+  document.getElementById("profileFirma").value =
+    currentFirm.firma || currentFirm.firmenname || "";
 
-  }
+  document.getElementById("profileInhaber").value =
+    currentFirm.inhaber || currentFirm.ansprechpartner || "";
 
+  document.getElementById("profileEmail").value =
+    currentFirm.email || "";
 
-  document
-    .getElementById("profileFirma")
-    .value =
-      currentFirm.firma ||
-      currentFirm.firmenname ||
-      "";
+  document.getElementById("profileTelefon").value =
+    currentFirm.telefon || "";
 
+  document.getElementById("profilePlz").value =
+    currentFirm.plz || "";
 
-  document
-    .getElementById("profileInhaber")
-    .value =
-      currentFirm.inhaber ||
-      currentFirm.ansprechpartner ||
-      "";
+  document.getElementById("profileOrt").value =
+    currentFirm.ort || "";
 
+  document.getElementById("profileLeistungen").value =
+    currentFirm.leistungen || "";
 
-  document
-    .getElementById("profileEmail")
-    .value =
-      currentFirm.email ||
-      "";
+  document.getElementById("profileRadius").value =
+    currentFirm.radius_km || 30;
 
+  document.getElementById("welcomeText").textContent =
+    (currentFirm.firma || currentFirm.firmenname || "Fachbetrieb") +
+    " – Fachbetriebsbereich";
 
-  document
-    .getElementById("profileTelefon")
-    .value =
-      currentFirm.telefon ||
-      "";
-
-
-  document
-    .getElementById("profilePlz")
-    .value =
-      currentFirm.plz ||
-      "";
-
-
-  document
-    .getElementById("profileOrt")
-    .value =
-      currentFirm.ort ||
-      "";
-
-
-  document
-    .getElementById("profileLeistungen")
-    .value =
-      currentFirm.leistungen ||
-      "";
-
-
-  document
-    .getElementById("profileRadius")
-    .value =
-      currentFirm.radius_km ||
-      30;
-
-
-  document
-    .getElementById("welcomeText")
-    .textContent =
-      (
-        currentFirm.firma ||
-        currentFirm.firmenname ||
-        "Fachbetrieb"
-      ) +
-      " – Fachbetriebsbereich";
-
-
-  document
-    .getElementById("startFirmText")
-    .textContent =
-      (
-        currentFirm.firma ||
-        currentFirm.firmenname ||
-        "Fachbetrieb"
-      ) +
-      " – Fachbetriebsbereich";
+  document.getElementById("startFirmText").textContent =
+    (currentFirm.firma || currentFirm.firmenname || "Fachbetrieb") +
+    " – Fachbetriebsbereich";
 
 }
 
 
 async function saveProfile() {
 
-  if (!currentFirm || !currentUser) {
+  if (!currentFirm || !currentUser) return;
 
-    return;
+  const firma = document.getElementById("profileFirma").value.trim();
+  const inhaber = document.getElementById("profileInhaber").value.trim();
+  const email = document.getElementById("profileEmail").value.trim();
+  const telefon = document.getElementById("profileTelefon").value.trim();
+  const plz = document.getElementById("profilePlz").value.trim();
+  const ort = document.getElementById("profileOrt").value.trim();
+  const leistungen = document.getElementById("profileLeistungen").value.trim();
+  const radius = Number(document.getElementById("profileRadius").value) || 30;
 
-  }
-
-
-  const firma =
-    document
-      .getElementById("profileFirma")
-      .value
-      .trim();
-
-
-  const inhaber =
-    document
-      .getElementById("profileInhaber")
-      .value
-      .trim();
-
-
-  const email =
-    document
-      .getElementById("profileEmail")
-      .value
-      .trim();
-
-
-  const telefon =
-    document
-      .getElementById("profileTelefon")
-      .value
-      .trim();
-
-
-  const plz =
-    document
-      .getElementById("profilePlz")
-      .value
-      .trim();
-
-
-  const ort =
-    document
-      .getElementById("profileOrt")
-      .value
-      .trim();
-
-
-  const leistungen =
-    document
-      .getElementById("profileLeistungen")
-      .value
-      .trim();
-
-
-  const radius =
-    Number(
-      document
-        .getElementById("profileRadius")
-        .value
-    ) || 30;
-
-
-  if (
-    !firma ||
-    !inhaber ||
-    !email
-  ) {
-
+  if (!firma || !inhaber || !email) {
     showMessage(
       "profileMessage",
       "Bitte Firmenname, Ansprechpartner und E-Mail ausfüllen.",
       "error"
     );
-
     return;
-
   }
 
-
-  const {
-    data,
-    error
-  } =
-    await db
-      .from("fachbetriebe")
-      .update({
-
-        firma:
-          firma,
-
-        firmenname:
-          firma,
-
-        inhaber:
-          inhaber,
-
-        ansprechpartner:
-          inhaber,
-
-        email:
-          email,
-
-        telefon:
-          telefon,
-
-        plz:
-          plz,
-
-        ort:
-          ort,
-
-        leistungen:
-          leistungen,
-
-        radius_km:
-          radius
-
-      })
-      .eq(
-        "id",
-        currentFirm.id
-      )
-      .select()
-      .single();
-
+  const { data, error } = await db
+    .from("fachbetriebe")
+    .update({
+      firma,
+      firmenname: firma,
+      inhaber,
+      ansprechpartner: inhaber,
+      email,
+      telefon,
+      plz,
+      ort,
+      leistungen,
+      radius_km: radius
+    })
+    .eq("id", currentFirm.id)
+    .select()
+    .single();
 
   if (error) {
-
     console.error(error);
 
     showMessage(
       "profileMessage",
-      "Profil konnte nicht gespeichert werden: " +
-      error.message,
+      "Profil konnte nicht gespeichert werden: " + error.message,
       "error"
     );
 
     return;
-
   }
 
-
-  currentFirm =
-    data;
-
+  currentFirm = data;
 
   fillProfile();
-
   updateStartDashboard();
-
 
   showMessage(
     "profileMessage",
@@ -2420,119 +1609,54 @@ async function saveProfile() {
 
 async function loadRequests() {
 
-  const container =
-    document.getElementById(
-      "requestsContainer"
-    );
+  const container = document.getElementById("requestsContainer");
 
-
-  if (!container) {
-
-    return;
-
-  }
-
+  if (!container) return;
 
   if (!currentFirm) {
-
-    container.innerHTML =
-      '<div class="empty">Kein Fachbetriebsprofil gefunden.</div>';
-
+    container.innerHTML = '<div class="empty">Kein Fachbetriebsprofil gefunden.</div>';
     return;
-
   }
 
+  container.innerHTML = '<div class="loading">Bauanfragen werden geladen...</div>';
 
-  container.innerHTML =
-    '<div class="loading">Bauanfragen werden geladen...</div>';
-
-
-  const {
-    data,
-    error
-  } =
-    await db
-      .from("bauanfragen")
-      .select("*")
-      .eq(
-        "fachbetrieb_id",
-        currentFirm.id
-      )
-      .order(
-        "created_at",
-        {
-          ascending: false
-        }
-      );
-
+  const { data, error } = await db
+    .from("bauanfragen")
+    .select("*")
+    .eq("fachbetrieb_id", currentFirm.id)
+    .order("created_at", { ascending: false });
 
   if (error) {
-
     console.error(error);
 
-    container.innerHTML =
-      '<div class="empty">Bauanfragen konnten nicht geladen werden.</div>';
-
+    container.innerHTML = '<div class="empty">Bauanfragen konnten nicht geladen werden.</div>';
 
     showMessage(
       "dashboardMessage",
-      "Fehler beim Laden der Bauanfragen: " +
-      error.message,
+      "Fehler beim Laden der Bauanfragen: " + error.message,
       "error"
     );
 
-
     return;
-
   }
 
+  updateRequestStats(data || []);
 
-  updateRequestStats(
-    data || []
-  );
-
-
-  if (
-    !data ||
-    data.length === 0
-  ) {
+  if (!data || data.length === 0) {
 
     container.innerHTML = `
-
       <div class="empty">
-
-        <div style="font-size:40px;">
-          🏗️
-        </div>
-
-        <h3>
-          Noch keine Bauanfragen
-        </h3>
-
-        <p>
-          Ihnen wurden bisher keine Bauanfragen zugewiesen.
-        </p>
-
+        <div style="font-size:40px;">🏗️</div>
+        <h3>Noch keine Bauanfragen</h3>
+        <p>Ihnen wurden bisher keine Bauanfragen zugewiesen.</p>
       </div>
-
     `;
 
-
     updateStartDashboard();
-
     return;
-
   }
 
-
-  container.innerHTML =
-    data
-      .map(
-        request =>
-          renderRequest(request)
-      )
-      .join("");
-
+  container.innerHTML = data.map(request => renderRequest(request)).join("");
 
   updateStartDashboard();
 
@@ -2545,56 +1669,26 @@ async function loadRequests() {
 
 function updateRequestStats(requests) {
 
-  const neu =
-    requests.filter(
-      request =>
-        (request.status || "neu") === "neu"
-    ).length;
+  const neu = requests.filter(
+    request => (request.status || "neu") === "neu"
+  ).length;
 
+  const angesehen = requests.filter(
+    request => request.status === "angesehen"
+  ).length;
 
-  const angesehen =
-    requests.filter(
-      request =>
-        request.status === "angesehen"
-    ).length;
+  const bearbeitung = requests.filter(
+    request => request.status === "in_bearbeitung"
+  ).length;
 
+  const erledigt = requests.filter(
+    request => request.status === "erledigt"
+  ).length;
 
-  const bearbeitung =
-    requests.filter(
-      request =>
-        request.status === "in_bearbeitung"
-    ).length;
-
-
-  const erledigt =
-    requests.filter(
-      request =>
-        request.status === "erledigt"
-    ).length;
-
-
-  document
-    .getElementById("statNeu")
-    .textContent =
-      neu;
-
-
-  document
-    .getElementById("statAngesehen")
-    .textContent =
-      angesehen;
-
-
-  document
-    .getElementById("statBearbeitung")
-    .textContent =
-      bearbeitung;
-
-
-  document
-    .getElementById("statErledigt")
-    .textContent =
-      erledigt;
+  document.getElementById("statNeu").textContent = neu;
+  document.getElementById("statAngesehen").textContent = angesehen;
+  document.getElementById("statBearbeitung").textContent = bearbeitung;
+  document.getElementById("statErledigt").textContent = erledigt;
 
 }
 
@@ -2605,28 +1699,16 @@ function updateRequestStats(requests) {
 
 function renderRequest(request) {
 
-  const created =
-    formatDate(
-      request.created_at
-    );
-
-
-  const status =
-    request.status ||
-    "neu";
-
+  const created = formatDate(request.created_at);
+  const status = request.status || "neu";
 
   return `
-
     <div class="request">
 
       <div class="request-header">
 
         <div class="request-title">
-          ${escapeHtml(
-            request.service ||
-            "Bauanfrage"
-          )}
+          ${escapeHtml(request.service || "Bauanfrage")}
         </div>
 
         <div class="badge">
@@ -2635,49 +1717,32 @@ function renderRequest(request) {
 
       </div>
 
-
       <div class="request-info">
 
         <div>
           📍 <strong>PLZ:</strong>
-          ${escapeHtml(
-            request.plz || "–"
-          )}
-
+          ${escapeHtml(request.plz || "–")}
           ${
             request.area
-              ? " – " +
-                escapeHtml(
-                  request.area
-                )
+              ? " – " + escapeHtml(request.area)
               : ""
           }
         </div>
 
-
         <div>
           👤 <strong>Kunde:</strong>
-          ${escapeHtml(
-            request.name || "–"
-          )}
+          ${escapeHtml(request.name || "–")}
         </div>
-
 
         <div>
           📞 <strong>Telefon:</strong>
-          ${escapeHtml(
-            request.phone || "–"
-          )}
+          ${escapeHtml(request.phone || "–")}
         </div>
-
 
         <div>
           ✉️ <strong>E-Mail:</strong>
-          ${escapeHtml(
-            request.email || "–"
-          )}
+          ${escapeHtml(request.email || "–")}
         </div>
-
 
         <div>
           🕒 <strong>Eingegangen:</strong>
@@ -2686,80 +1751,47 @@ function renderRequest(request) {
 
       </div>
 
-
       ${
         request.description
           ? `
             <div class="request-description">
-              ${escapeHtml(
-                request.description
-              )}
+              ${escapeHtml(request.description)}
             </div>
           `
           : ""
       }
 
-
       <div class="status-row">
 
-        <label>
-          Status ändern
-        </label>
+        <label>Status ändern</label>
 
+        <select id="status-${request.id}">
 
-        <select
-          id="status-${request.id}"
-        >
-
-          <option
-            value="neu"
-            ${status === "neu" ? "selected" : ""}
-          >
+          <option value="neu" ${status === "neu" ? "selected" : ""}>
             Neu
           </option>
 
-
-          <option
-            value="angesehen"
-            ${status === "angesehen" ? "selected" : ""}
-          >
+          <option value="angesehen" ${status === "angesehen" ? "selected" : ""}>
             Angesehen
           </option>
 
-
-          <option
-            value="in_bearbeitung"
-            ${status === "in_bearbeitung" ? "selected" : ""}
-          >
+          <option value="in_bearbeitung" ${status === "in_bearbeitung" ? "selected" : ""}>
             In Bearbeitung
           </option>
 
-
-          <option
-            value="angenommen"
-            ${status === "angenommen" ? "selected" : ""}
-          >
+          <option value="angenommen" ${status === "angenommen" ? "selected" : ""}>
             Angenommen
           </option>
 
-
-          <option
-            value="abgelehnt"
-            ${status === "abgelehnt" ? "selected" : ""}
-          >
+          <option value="abgelehnt" ${status === "abgelehnt" ? "selected" : ""}>
             Abgelehnt
           </option>
 
-
-          <option
-            value="erledigt"
-            ${status === "erledigt" ? "selected" : ""}
-          >
+          <option value="erledigt" ${status === "erledigt" ? "selected" : ""}>
             Erledigt
           </option>
 
         </select>
-
 
         <button
           class="btn btn-primary"
@@ -2771,7 +1803,6 @@ function renderRequest(request) {
       </div>
 
     </div>
-
   `;
 
 }
@@ -2781,137 +1812,58 @@ function renderRequest(request) {
    STATUS SPEICHERN + KUNDEN-E-MAIL
 ========================================================= */
 
-async function saveRequestStatus(
-  requestId
-) {
+async function saveRequestStatus(requestId) {
 
-  if (!currentFirm) {
+  if (!currentFirm) return;
 
-    return;
+  const select = document.getElementById("status-" + requestId);
 
-  }
+  if (!select) return;
 
+  const newStatus = select.value;
 
-  const select =
-    document.getElementById(
-      "status-" +
-      requestId
-    );
-
-
-  if (!select) {
-
-    return;
-
-  }
-
-
-  const newStatus =
-    select.value;
-
-
-  /*
-    Alten Status und Kunden-E-Mail laden.
-  */
-
-  const {
-    data: oldRequest,
-    error: oldRequestError
-  } =
-    await db
-      .from("bauanfragen")
-      .select(
-        "id, status, email, name"
-      )
-      .eq(
-        "id",
-        requestId
-      )
-      .eq(
-        "fachbetrieb_id",
-        currentFirm.id
-      )
-      .single();
-
+  const { data: oldRequest, error: oldRequestError } = await db
+    .from("bauanfragen")
+    .select("id, status, email, name")
+    .eq("id", requestId)
+    .eq("fachbetrieb_id", currentFirm.id)
+    .single();
 
   if (oldRequestError) {
-
-    console.error(
-      oldRequestError
-    );
+    console.error(oldRequestError);
 
     showMessage(
       "dashboardMessage",
-      "Auftrag konnte nicht geladen werden: " +
-      oldRequestError.message,
+      "Auftrag konnte nicht geladen werden: " + oldRequestError.message,
       "error"
     );
 
     return;
-
   }
 
+  const oldStatus = oldRequest.status || "neu";
 
-  const oldStatus =
-    oldRequest.status ||
-    "neu";
-
-
-  /*
-    Status speichern.
-  */
-
-  const {
-    error
-  } =
-    await db
-      .from("bauanfragen")
-      .update({
-        status:
-          newStatus
-      })
-      .eq(
-        "id",
-        requestId
-      )
-      .eq(
-        "fachbetrieb_id",
-        currentFirm.id
-      );
-
+  const { error } = await db
+    .from("bauanfragen")
+    .update({ status: newStatus })
+    .eq("id", requestId)
+    .eq("fachbetrieb_id", currentFirm.id);
 
   if (error) {
-
     console.error(error);
 
     showMessage(
       "dashboardMessage",
-      "Status konnte nicht gespeichert werden: " +
-      error.message,
+      "Status konnte nicht gespeichert werden: " + error.message,
       "error"
     );
 
     return;
-
   }
 
-
-  /*
-    E-Mail nur beim echten Wechsel auf
-    "angenommen" auslösen.
-  */
-
-  if (
-    newStatus === "angenommen" &&
-    oldStatus !== "angenommen"
-  ) {
-
-    /*
-      Keine E-Mail-Adresse vorhanden.
-    */
+  if (newStatus === "angenommen" && oldStatus !== "angenommen") {
 
     if (!oldRequest.email) {
-
       showMessage(
         "dashboardMessage",
         "✅ Auftrag angenommen. Der Kunde hat jedoch keine E-Mail-Adresse angegeben.",
@@ -2919,11 +1871,8 @@ async function saveRequestStatus(
       );
 
       await loadRequests();
-
       return;
-
     }
-
 
     showMessage(
       "dashboardMessage",
@@ -2931,30 +1880,20 @@ async function saveRequestStatus(
       "info"
     );
 
-
     try {
 
-      const {
-        data: emailResult,
-        error: emailError
-      } =
+      const { data: emailResult, error: emailError } =
         await db.functions.invoke(
           "auftrag-angenommen-email",
           {
             body: {
-              requestId:
-                requestId
+              requestId
             }
           }
         );
 
-
       if (emailError) {
-
-        console.error(
-          "E-Mail-Funktion Fehler:",
-          emailError
-        );
+        console.error("E-Mail-Funktion Fehler:", emailError);
 
         showMessage(
           "dashboardMessage",
@@ -2963,21 +1902,11 @@ async function saveRequestStatus(
         );
 
         await loadRequests();
-
         return;
-
       }
 
-
-      if (
-        emailResult &&
-        emailResult.error
-      ) {
-
-        console.error(
-          "E-Mail Fehler:",
-          emailResult
-        );
+      if (emailResult && emailResult.error) {
+        console.error("E-Mail Fehler:", emailResult);
 
         showMessage(
           "dashboardMessage",
@@ -2986,11 +1915,8 @@ async function saveRequestStatus(
         );
 
         await loadRequests();
-
         return;
-
       }
-
 
       showMessage(
         "dashboardMessage",
@@ -2998,13 +1924,9 @@ async function saveRequestStatus(
         "success"
       );
 
-
     } catch (emailError) {
 
-      console.error(
-        "E-Mail Fehler:",
-        emailError
-      );
+      console.error("E-Mail Fehler:", emailError);
 
       showMessage(
         "dashboardMessage",
@@ -3013,9 +1935,7 @@ async function saveRequestStatus(
       );
 
       await loadRequests();
-
       return;
-
     }
 
   } else {
@@ -3028,7 +1948,6 @@ async function saveRequestStatus(
 
   }
 
-
   await loadRequests();
 
 }
@@ -3040,153 +1959,65 @@ async function saveRequestStatus(
 
 function updateStartDashboard() {
 
-  if (!currentFirm) {
-
-    return;
-
-  }
-
+  if (!currentFirm) return;
 
   const firmName =
     currentFirm.firma ||
     currentFirm.firmenname ||
     "Fachbetrieb";
 
-
-  const startFirmText =
-    document.getElementById(
-      "startFirmText"
-    );
-
+  const startFirmText = document.getElementById("startFirmText");
 
   if (startFirmText) {
-
-    startFirmText.textContent =
-      firmName +
-      " – Fachbetriebsbereich";
-
+    startFirmText.textContent = firmName + " – Fachbetriebsbereich";
   }
 
-
-  const box =
-    document.getElementById(
-      "freigeschaltetBox"
-    );
-
+  const box = document.getElementById("freigeschaltetBox");
 
   if (box) {
 
-    if (
-      currentFirm.freigeschaltet === true
-    ) {
+    if (currentFirm.freigeschaltet === true) {
 
-      box.textContent =
-        "✅ Fachbetrieb freigeschaltet";
-
-      box.style.background =
-        "#15251c";
-
-      box.style.borderColor =
-        "#315d43";
-
-      box.style.color =
-        "#9bf0bd";
+      box.textContent = "✅ Fachbetrieb freigeschaltet";
+      box.style.background = "#15251c";
+      box.style.borderColor = "#315d43";
+      box.style.color = "#9bf0bd";
 
     } else {
 
-      box.textContent =
-        "⏳ Fachbetrieb wartet auf Freischaltung";
-
-      box.style.background =
-        "#493c15";
-
-      box.style.borderColor =
-        "#806b1b";
-
-      box.style.color =
-        "#f8e9a6";
+      box.textContent = "⏳ Fachbetrieb wartet auf Freischaltung";
+      box.style.background = "#493c15";
+      box.style.borderColor = "#806b1b";
+      box.style.color = "#f8e9a6";
 
     }
 
   }
 
+  const status = currentFirm.abo_status || "inaktiv";
+  const startAboStatus = document.getElementById("startAboStatus");
+  const startAboText = document.getElementById("startAboText");
 
-  const status =
-    currentFirm.abo_status ||
-    "inaktiv";
+  if (!startAboStatus) return;
 
+  let statusText = "Inaktiv";
 
-  const startAboStatus =
-    document.getElementById(
-      "startAboStatus"
-    );
-
-
-  const startAboText =
-    document.getElementById(
-      "startAboText"
-    );
-
-
-  if (!startAboStatus) {
-
-    return;
-
+  if (status === "testphase") {
+    statusText = "30-Tage-Testphase";
+  } else if (status === "aktiv") {
+    statusText = "Abo aktiv";
+  } else if (status === "gekündigt") {
+    statusText = "Gekündigt";
+  } else if (status === "zahlung_offen") {
+    statusText = "Zahlung offen";
   }
 
-
-  let statusText =
-    "Inaktiv";
-
-
-  if (
-    status === "testphase"
-  ) {
-
-    statusText =
-      "30-Tage-Testphase";
-
-  } else if (
-    status === "aktiv"
-  ) {
-
-    statusText =
-      "Abo aktiv";
-
-  } else if (
-    status === "gekündigt"
-  ) {
-
-    statusText =
-      "Gekündigt";
-
-  } else if (
-    status === "zahlung_offen"
-  ) {
-
-    statusText =
-      "Zahlung offen";
-
+  if (currentFirm.abo_cancel_at_period_end === true) {
+    statusText += " – Kündigung vorgemerkt";
   }
 
-
-  if (
-    currentFirm.abo_cancel_at_period_end ===
-    true
-  ) {
-
-    statusText +=
-      " – Kündigung vorgemerkt";
-
-  }
-
-
-  startAboStatus.textContent =
-    statusText;
-
-
-  startAboText.textContent =
-    getAboShortText();
+  startAboStatus.textContent = statusText;
+  startAboText.textContent = getAboShortText();
 
 }
 
@@ -3198,58 +2029,28 @@ function updateStartDashboard() {
 function getAboShortText() {
 
   if (!currentFirm) {
-
     return "Abo wird geprüft...";
-
   }
 
+  const status = currentFirm.abo_status || "inaktiv";
 
-  const status =
-    currentFirm.abo_status ||
-    "inaktiv";
-
-
-  if (
-    status === "testphase" &&
-    currentFirm.abo_trial_end
-  ) {
-
+  if (status === "testphase" && currentFirm.abo_trial_end) {
     return (
       "Dein kostenloser Test läuft bis " +
-      formatDateTime(
-        currentFirm.abo_trial_end
-      ) +
+      formatDateTime(currentFirm.abo_trial_end) +
       ". Danach 19,99 € pro Monat."
     );
-
   }
 
-
-  if (
-    status === "aktiv"
-  ) {
-
-    return (
-      "Dein Abo ist aktiv und kostet 19,99 € pro Monat."
-    );
-
+  if (status === "aktiv") {
+    return "Dein Abo ist aktiv und kostet 19,99 € pro Monat.";
   }
 
-
-  if (
-    currentFirm.abo_trial_used === true
-  ) {
-
-    return (
-      "Der kostenlose Test wurde bereits genutzt. Danach gelten 19,99 € pro Monat."
-    );
-
+  if (currentFirm.abo_trial_used === true) {
+    return "Der kostenlose Test wurde bereits genutzt. Danach gelten 19,99 € pro Monat.";
   }
 
-
-  return (
-    "30 Tage kostenlos testen. Danach 19,99 € pro Monat."
-  );
+  return "30 Tage kostenlos testen. Danach 19,99 € pro Monat.";
 
 }
 
@@ -3260,216 +2061,81 @@ function getAboShortText() {
 
 function updateAboUI() {
 
-  if (!currentFirm) {
+  if (!currentFirm) return;
 
-    return;
+  const status = currentFirm.abo_status || "inaktiv";
+  const trialEnd = currentFirm.abo_trial_end;
+  const periodEnd = currentFirm.abo_current_period_end;
+  const cancelAtPeriodEnd = currentFirm.abo_cancel_at_period_end === true;
+  const trialUsed = currentFirm.abo_trial_used === true;
 
+  const badge = document.getElementById("aboStatusBadge");
+  const trialElement = document.getElementById("aboTrialEnd");
+  const periodElement = document.getElementById("aboPeriodEnd");
+  const cancellationElement = document.getElementById("aboCancellation");
+  const trialUsedElement = document.getElementById("aboTrialUsed");
+  const actionArea = document.getElementById("aboActionArea");
+
+  if (!badge || !actionArea) return;
+
+  let statusText = "Inaktiv";
+
+  badge.className = "abo-status";
+
+  if (status === "testphase") {
+    statusText = "30-Tage-Testphase";
+  } else if (status === "aktiv") {
+    statusText = "Abo aktiv";
+    badge.classList.add("active");
+  } else if (status === "gekündigt") {
+    statusText = "Gekündigt";
+    badge.classList.add("cancel");
+  } else if (status === "zahlung_offen") {
+    statusText = "Zahlung offen";
+    badge.classList.add("cancel");
   }
 
-
-  const status =
-    currentFirm.abo_status ||
-    "inaktiv";
-
-
-  const trialEnd =
-    currentFirm.abo_trial_end;
-
-
-  const periodEnd =
-    currentFirm.abo_current_period_end;
-
-
-  const cancelAtPeriodEnd =
-    currentFirm.abo_cancel_at_period_end === true;
-
-
-  const trialUsed =
-    currentFirm.abo_trial_used === true;
-
-
-  const badge =
-    document.getElementById(
-      "aboStatusBadge"
-    );
-
-
-  const trialElement =
-    document.getElementById(
-      "aboTrialEnd"
-    );
-
-
-  const periodElement =
-    document.getElementById(
-      "aboPeriodEnd"
-    );
-
-
-  const cancellationElement =
-    document.getElementById(
-      "aboCancellation"
-    );
-
-
-  const trialUsedElement =
-    document.getElementById(
-      "aboTrialUsed"
-    );
-
-
-  const actionArea =
-    document.getElementById(
-      "aboActionArea"
-    );
-
-
-  if (
-    !badge ||
-    !actionArea
-  ) {
-
-    return;
-
+  if (cancelAtPeriodEnd) {
+    statusText += " – Kündigung vorgemerkt";
+    badge.classList.add("cancel");
   }
 
+  badge.textContent = statusText;
 
-  let statusText =
-    "Inaktiv";
-
-
-  badge.className =
-    "abo-status";
-
-
-  if (
-    status === "testphase"
-  ) {
-
-    statusText =
-      "30-Tage-Testphase";
-
-  } else if (
-    status === "aktiv"
-  ) {
-
-    statusText =
-      "Abo aktiv";
-
-    badge.classList.add(
-      "active"
-    );
-
-  } else if (
-    status === "gekündigt"
-  ) {
-
-    statusText =
-      "Gekündigt";
-
-    badge.classList.add(
-      "cancel"
-    );
-
-  } else if (
-    status === "zahlung_offen"
-  ) {
-
-    statusText =
-      "Zahlung offen";
-
-    badge.classList.add(
-      "cancel"
-    );
-
-  }
-
+  trialElement.textContent = trialEnd ? formatDateTime(trialEnd) : "–";
+  periodElement.textContent = periodEnd ? formatDateTime(periodEnd) : "–";
+  trialUsedElement.textContent = trialUsed ? "Ja" : "Nein";
 
   if (cancelAtPeriodEnd) {
 
-    statusText +=
-      " – Kündigung vorgemerkt";
-
-    badge.classList.add(
-      "cancel"
-    );
-
-  }
-
-
-  badge.textContent =
-    statusText;
-
-
-  trialElement.textContent =
-    trialEnd
-      ? formatDateTime(
-          trialEnd
-        )
-      : "–";
-
-
-  periodElement.textContent =
-    periodEnd
-      ? formatDateTime(
-          periodEnd
-        )
-      : "–";
-
-
-  trialUsedElement.textContent =
-    trialUsed
-      ? "Ja"
-      : "Nein";
-
-
-  if (cancelAtPeriodEnd) {
-
-    const cancellationDate =
-      periodEnd ||
-      trialEnd;
-
+    const cancellationDate = periodEnd || trialEnd;
 
     cancellationElement.textContent =
       cancellationDate
-        ? "Vorgemerkt zum " +
-          formatDateTime(
-            cancellationDate
-          )
+        ? "Vorgemerkt zum " + formatDateTime(cancellationDate)
         : "Kündigung vorgemerkt";
 
   } else {
 
-    cancellationElement.textContent =
-      "Nicht gekündigt";
+    cancellationElement.textContent = "Nicht gekündigt";
 
   }
 
-
-  if (
-    status === "testphase" ||
-    status === "aktiv"
-  ) {
+  if (status === "testphase" || status === "aktiv") {
 
     if (cancelAtPeriodEnd) {
 
       actionArea.innerHTML = `
-
-        <div
-          class="message info"
-          style="display:block;"
-        >
+        <div class="message info" style="display:block;">
           Ihre Kündigung wurde vorgemerkt.
           Ihr Zugang bleibt bis zum Ende der aktuellen
           Test- bzw. Abrechnungsperiode bestehen.
         </div>
-
       `;
 
     } else {
 
       actionArea.innerHTML = `
-
         <button
           id="cancelAboButton"
           class="btn btn-danger"
@@ -3478,88 +2144,55 @@ function updateAboUI() {
           ❌ Abo kündigen
         </button>
 
-        <div
-          class="small"
-          style="margin-top:10px;"
-        >
+        <div class="small" style="margin-top:10px;">
           Die Kündigung wird zum Ende der aktuellen
           Periode bzw. der kostenlosen Testphase vorgemerkt.
         </div>
-
       `;
 
     }
 
     updateStartDashboard();
-
     return;
-
   }
 
-
-  if (
-    status === "gekündigt"
-  ) {
+  if (status === "gekündigt") {
 
     actionArea.innerHTML = `
-
-      <div
-        class="message info"
-        style="display:block;"
-      >
+      <div class="message info" style="display:block;">
         Dieses Abo wurde gekündigt.
       </div>
 
-      <button
-        class="btn btn-primary"
-        onclick="startSubscription()"
-      >
+      <button class="btn btn-primary" onclick="startSubscription()">
         ${
           trialUsed
             ? "💳 Abo erneut starten – 19,99 € / Monat"
             : "🚀 30 Tage kostenlos testen"
         }
       </button>
-
     `;
 
     updateStartDashboard();
-
     return;
-
   }
 
-
   actionArea.innerHTML = `
-
-    <button
-      class="btn btn-primary"
-      onclick="startSubscription()"
-    >
-
+    <button class="btn btn-primary" onclick="startSubscription()">
       ${
         trialUsed
           ? "💳 Abo starten – 19,99 € / Monat"
           : "🚀 30 Tage kostenlos testen"
       }
-
     </button>
 
-    <div
-      class="small"
-      style="margin-top:10px;"
-    >
-
+    <div class="small" style="margin-top:10px;">
       ${
         trialUsed
           ? "Der kostenlose Test wurde bereits genutzt."
           : "30 Tage kostenlos. Danach 19,99 € pro Monat."
       }
-
     </div>
-
   `;
-
 
   updateStartDashboard();
 
@@ -3572,52 +2205,31 @@ function updateAboUI() {
 
 async function startSubscription() {
 
-  if (
-    !currentUser ||
-    !currentFirm
-  ) {
-
-    showMessage(
-      "dashboardMessage",
-      "Bitte zuerst einloggen.",
-      "error"
-    );
-
+  if (!currentUser || !currentFirm) {
+    showMessage("dashboardMessage", "Bitte zuerst einloggen.", "error");
     return;
-
   }
 
-
-  if (
-    currentFirm.freigeschaltet !== true
-  ) {
-
+  if (currentFirm.freigeschaltet !== true) {
     showMessage(
       "dashboardMessage",
       "Ihr Fachbetrieb muss zuerst freigeschaltet werden.",
       "info"
     );
-
     return;
-
   }
-
 
   if (
     currentFirm.abo_status === "testphase" ||
     currentFirm.abo_status === "aktiv"
   ) {
-
     showMessage(
       "dashboardMessage",
       "Für diesen Fachbetrieb besteht bereits ein aktives Abo.",
       "info"
     );
-
     return;
-
   }
-
 
   try {
 
@@ -3627,43 +2239,22 @@ async function startSubscription() {
       "info"
     );
 
-
-    const {
-      data,
-      error
-    } =
-      await db.functions.invoke(
-        "stripe-checkout"
-      );
-
+    const { data, error } =
+      await db.functions.invoke("stripe-checkout");
 
     if (error) {
-
       console.error(error);
-
       throw new Error(
         error.message ||
         "Stripe Checkout konnte nicht gestartet werden."
       );
-
     }
 
-
-    if (
-      !data ||
-      !data.url
-    ) {
-
-      throw new Error(
-        "Stripe hat keine Checkout-Adresse zurückgegeben."
-      );
-
+    if (!data || !data.url) {
+      throw new Error("Stripe hat keine Checkout-Adresse zurückgegeben.");
     }
 
-
-    window.location.href =
-      data.url;
-
+    window.location.href = data.url;
 
   } catch (error) {
 
@@ -3671,8 +2262,7 @@ async function startSubscription() {
 
     showMessage(
       "dashboardMessage",
-      "Fehler beim Start des Abos: " +
-      error.message,
+      "Fehler beim Start des Abos: " + error.message,
       "error"
     );
 
@@ -3687,121 +2277,59 @@ async function startSubscription() {
 
 async function cancelSubscription() {
 
-  if (
-    !currentUser ||
-    !currentFirm
-  ) {
-
-    showMessage(
-      "dashboardMessage",
-      "Bitte zuerst einloggen.",
-      "error"
-    );
-
+  if (!currentUser || !currentFirm) {
+    showMessage("dashboardMessage", "Bitte zuerst einloggen.", "error");
     return;
-
   }
 
-
-  if (
-    !currentFirm.stripe_subscription_id
-  ) {
-
+  if (!currentFirm.stripe_subscription_id) {
     showMessage(
       "dashboardMessage",
       "Für diesen Fachbetrieb wurde keine Stripe-Subscription gefunden.",
       "error"
     );
-
     return;
-
   }
 
+  const confirmed = confirm(
+    "Möchtest du das Abo wirklich kündigen?\n\n" +
+    "Die Kündigung wird zum Ende der aktuellen " +
+    "Test- bzw. Abrechnungsperiode vorgemerkt."
+  );
 
-  const confirmed =
-    confirm(
-      "Möchtest du das Abo wirklich kündigen?\n\n" +
-      "Die Kündigung wird zum Ende der aktuellen " +
-      "Test- bzw. Abrechnungsperiode vorgemerkt."
-    );
+  if (!confirmed) return;
 
-
-  if (!confirmed) {
-
-    return;
-
-  }
-
-
-  const button =
-    document.getElementById(
-      "cancelAboButton"
-    );
-
+  const button = document.getElementById("cancelAboButton");
 
   if (button) {
-
-    button.disabled =
-      true;
-
-    button.textContent =
-      "Kündigung wird durchgeführt...";
-
+    button.disabled = true;
+    button.textContent = "Kündigung wird durchgeführt...";
   }
-
 
   try {
 
-    const {
-      data,
-      error
-    } =
-      await db.functions.invoke(
-        "stripe-cancel-subscription"
-      );
-
+    const { data, error } =
+      await db.functions.invoke("stripe-cancel-subscription");
 
     if (error) {
-
       console.error(error);
-
-      throw new Error(
-        error.message ||
-        "Abo konnte nicht gekündigt werden."
-      );
-
+      throw new Error(error.message || "Abo konnte nicht gekündigt werden.");
     }
 
-
-    if (
-      data &&
-      data.error
-    ) {
-
-      throw new Error(
-        data.error
-      );
-
+    if (data && data.error) {
+      throw new Error(data.error);
     }
 
-
-    const reloaded =
-      await loadFirm();
-
+    const reloaded = await loadFirm();
 
     if (!reloaded) {
-
       throw new Error(
         "Fachbetriebsprofil konnte nach der Kündigung nicht neu geladen werden."
       );
-
     }
 
-
     updateAboUI();
-
     updateStartDashboard();
-
 
     showMessage(
       "dashboardMessage",
@@ -3809,27 +2337,19 @@ async function cancelSubscription() {
       "success"
     );
 
-
   } catch (error) {
 
     console.error(error);
 
     showMessage(
       "dashboardMessage",
-      "Kündigung fehlgeschlagen: " +
-      error.message,
+      "Kündigung fehlgeschlagen: " + error.message,
       "error"
     );
 
-
     if (button) {
-
-      button.disabled =
-        false;
-
-      button.textContent =
-        "❌ Abo kündigen";
-
+      button.disabled = false;
+      button.textContent = "❌ Abo kündigen";
     }
 
   }
@@ -3843,153 +2363,51 @@ async function cancelSubscription() {
 
 function showTab(tab) {
 
-  const start =
-    document.getElementById(
-      "startTab"
-    );
+  const start = document.getElementById("startTab");
+  const requests = document.getElementById("requestsTab");
+  const profile = document.getElementById("profileTab");
+  const abo = document.getElementById("aboTab");
 
-  const requests =
-    document.getElementById(
-      "requestsTab"
-    );
+  const tabStart = document.getElementById("tabStart");
+  const tabRequests = document.getElementById("tabRequests");
+  const tabProfile = document.getElementById("tabProfile");
+  const tabAbo = document.getElementById("tabAbo");
 
-  const profile =
-    document.getElementById(
-      "profileTab"
-    );
+  start.classList.add("hidden");
+  requests.classList.add("hidden");
+  profile.classList.add("hidden");
+  abo.classList.add("hidden");
 
-  const abo =
-    document.getElementById(
-      "aboTab"
-    );
+  tabStart.classList.remove("active");
+  tabRequests.classList.remove("active");
+  tabProfile.classList.remove("active");
+  tabAbo.classList.remove("active");
 
-
-  const tabStart =
-    document.getElementById(
-      "tabStart"
-    );
-
-  const tabRequests =
-    document.getElementById(
-      "tabRequests"
-    );
-
-  const tabProfile =
-    document.getElementById(
-      "tabProfile"
-    );
-
-  const tabAbo =
-    document.getElementById(
-      "tabAbo"
-    );
-
-
-  start.classList.add(
-    "hidden"
-  );
-
-  requests.classList.add(
-    "hidden"
-  );
-
-  profile.classList.add(
-    "hidden"
-  );
-
-  abo.classList.add(
-    "hidden"
-  );
-
-
-  tabStart.classList.remove(
-    "active"
-  );
-
-  tabRequests.classList.remove(
-    "active"
-  );
-
-  tabProfile.classList.remove(
-    "active"
-  );
-
-  tabAbo.classList.remove(
-    "active"
-  );
-
-
-  if (
-    tab === "start"
-  ) {
-
-    start.classList.remove(
-      "hidden"
-    );
-
-    tabStart.classList.add(
-      "active"
-    );
-
+  if (tab === "start") {
+    start.classList.remove("hidden");
+    tabStart.classList.add("active");
     updateStartDashboard();
-
     return;
-
   }
 
-
-  if (
-    tab === "requests"
-  ) {
-
-    requests.classList.remove(
-      "hidden"
-    );
-
-    tabRequests.classList.add(
-      "active"
-    );
-
+  if (tab === "requests") {
+    requests.classList.remove("hidden");
+    tabRequests.classList.add("active");
     loadRequests();
-
     return;
-
   }
 
-
-  if (
-    tab === "profile"
-  ) {
-
-    profile.classList.remove(
-      "hidden"
-    );
-
-    tabProfile.classList.add(
-      "active"
-    );
-
+  if (tab === "profile") {
+    profile.classList.remove("hidden");
+    tabProfile.classList.add("active");
     fillProfile();
-
     return;
-
   }
 
-
-  if (
-    tab === "abo"
-  ) {
-
-    abo.classList.remove(
-      "hidden"
-    );
-
-    tabAbo.classList.add(
-      "active"
-    );
-
+  if (tab === "abo") {
+    abo.classList.remove("hidden");
+    tabAbo.classList.add("active");
     updateAboUI();
-
   }
 
 }
@@ -4003,14 +2421,10 @@ async function logout() {
 
   await db.auth.signOut();
 
-  currentUser =
-    null;
-
-  currentFirm =
-    null;
+  currentUser = null;
+  currentFirm = null;
 
   showAuth();
-
   showLogin();
 
 }
@@ -4020,55 +2434,26 @@ async function logout() {
    MESSAGES
 ========================================================= */
 
-function showMessage(
-  id,
-  text,
-  type
-) {
+function showMessage(id, text, type) {
 
-  const element =
-    document.getElementById(
-      id
-    );
+  const element = document.getElementById(id);
 
+  if (!element) return;
 
-  if (!element) {
-
-    return;
-
-  }
-
-
-  element.textContent =
-    text;
-
-  element.className =
-    "message " +
-    type;
+  element.textContent = text;
+  element.className = "message " + type;
 
 }
 
 
 function clearMessage(id) {
 
-  const element =
-    document.getElementById(
-      id
-    );
+  const element = document.getElementById(id);
 
+  if (!element) return;
 
-  if (!element) {
-
-    return;
-
-  }
-
-
-  element.textContent =
-    "";
-
-  element.className =
-    "message";
+  element.textContent = "";
+  element.className = "message";
 
 }
 
@@ -4080,53 +2465,26 @@ function clearMessage(id) {
 function getAuthError(error) {
 
   const message =
-    error &&
-    error.message
+    error && error.message
       ? error.message
       : "";
 
-
-  if (
-    message.toLowerCase()
-      .includes("user already registered")
-  ) {
-
+  if (message.toLowerCase().includes("user already registered")) {
     return (
       "Diese E-Mail-Adresse ist bereits registriert. " +
       "Bitte verwenden Sie den Login."
     );
-
   }
 
-
-  if (
-    message.toLowerCase()
-      .includes("invalid login credentials")
-  ) {
-
-    return (
-      "E-Mail-Adresse oder Passwort ist falsch."
-    );
-
+  if (message.toLowerCase().includes("invalid login credentials")) {
+    return "E-Mail-Adresse oder Passwort ist falsch.";
   }
 
-
-  if (
-    message.toLowerCase()
-      .includes("email not confirmed")
-  ) {
-
-    return (
-      "Bitte bestätigen Sie zuerst Ihre E-Mail-Adresse."
-    );
-
+  if (message.toLowerCase().includes("email not confirmed")) {
+    return "Bitte bestätigen Sie zuerst Ihre E-Mail-Adresse.";
   }
 
-
-  return (
-    message ||
-    "Es ist ein unbekannter Fehler aufgetreten."
-  );
+  return message || "Es ist ein unbekannter Fehler aufgetreten.";
 
 }
 
@@ -4137,88 +2495,36 @@ function getAuthError(error) {
 
 function formatDate(value) {
 
-  if (!value) {
+  if (!value) return "–";
 
-    return "–";
+  const date = new Date(value);
 
-  }
+  if (isNaN(date.getTime())) return "–";
 
-
-  const date =
-    new Date(value);
-
-
-  if (
-    isNaN(
-      date.getTime()
-    )
-  ) {
-
-    return "–";
-
-  }
-
-
-  return date.toLocaleDateString(
-    "de-DE",
-    {
-      day:
-        "2-digit",
-
-      month:
-        "2-digit",
-
-      year:
-        "numeric"
-    }
-  );
+  return date.toLocaleDateString("de-DE", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric"
+  });
 
 }
 
 
 function formatDateTime(value) {
 
-  if (!value) {
+  if (!value) return "–";
 
-    return "–";
+  const date = new Date(value);
 
-  }
+  if (isNaN(date.getTime())) return "–";
 
-
-  const date =
-    new Date(value);
-
-
-  if (
-    isNaN(
-      date.getTime()
-    )
-  ) {
-
-    return "–";
-
-  }
-
-
-  return date.toLocaleString(
-    "de-DE",
-    {
-      day:
-        "2-digit",
-
-      month:
-        "2-digit",
-
-      year:
-        "numeric",
-
-      hour:
-        "2-digit",
-
-      minute:
-        "2-digit"
-    }
-  );
+  return date.toLocaleString("de-DE", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
 
 }
 
@@ -4230,33 +2536,15 @@ function formatDateTime(value) {
 function statusLabel(status) {
 
   const labels = {
-
-    neu:
-      "Neu",
-
-    angesehen:
-      "Angesehen",
-
-    in_bearbeitung:
-      "In Bearbeitung",
-
-    angenommen:
-      "Angenommen",
-
-    abgelehnt:
-      "Abgelehnt",
-
-    erledigt:
-      "Erledigt"
-
+    neu: "Neu",
+    angesehen: "Angesehen",
+    in_bearbeitung: "In Bearbeitung",
+    angenommen: "Angenommen",
+    abgelehnt: "Abgelehnt",
+    erledigt: "Erledigt"
   };
 
-
-  return (
-    labels[status] ||
-    status ||
-    "Neu"
-  );
+  return labels[status] || status || "Neu";
 
 }
 
@@ -4267,37 +2555,16 @@ function statusLabel(status) {
 
 function escapeHtml(value) {
 
-  if (
-    value === null ||
-    value === undefined
-  ) {
-
+  if (value === null || value === undefined) {
     return "";
-
   }
 
-
   return String(value)
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-    .replace(
-      /</g,
-      "&lt;"
-    )
-    .replace(
-      />/g,
-      "&gt;"
-    )
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-    .replace(
-      /'/g,
-      "&#039;"
-    );
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 
 }
 
