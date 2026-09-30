@@ -122,117 +122,148 @@ a{color:#ffd000}
 
 <body>
 <div class="wrap">
-  <header>
-    <h1>RIEMER <span class="brand">BAUCONNECT</span></h1>
-    <div class="subtitle">Verwaltung – Bauanfragen und Fachbetriebe</div>
-  </header>
 
-  <section id="loginBox" class="card">
-    <h2>Admin-Login</h2>
-    <form id="loginForm">
-      <label for="email">E-Mail-Adresse</label>
-      <input id="email" type="email" autocomplete="username"
-             placeholder="E-Mail-Adresse" required>
+<header>
+  <h1>RIEMER <span class="brand">BAUCONNECT</span></h1>
+  <div class="subtitle">Verwaltung – Bauanfragen und Fachbetriebe</div>
+</header>
 
-      <label for="password">Passwort</label>
-      <input id="password" type="password"
-             autocomplete="current-password"
-             placeholder="Passwort" required>
+<section id="loginBox" class="card">
+  <h2>Admin-Login</h2>
 
-      <button id="loginBtn" class="full" type="submit">Anmelden</button>
-    </form>
-    <div id="loginMessage" class="message" aria-live="polite"></div>
-  </section>
+  <form id="loginForm">
+    <label for="email">E-Mail-Adresse</label>
+    <input id="email" type="email" autocomplete="username"
+      placeholder="E-Mail-Adresse" required>
 
-  <main id="adminBox" class="hidden">
-    <div class="topbar">
-      <div>
-        <h2>Verwaltung</h2>
-        <div class="small">Kundenanfragen und registrierte Fachbetriebe</div>
-      </div>
-      <button id="logoutBtn" class="secondary" type="button">Abmelden</button>
+    <label for="password">Passwort</label>
+    <input id="password" type="password"
+      autocomplete="current-password"
+      placeholder="Passwort" required>
+
+    <button id="loginBtn" class="full" type="submit">Anmelden</button>
+  </form>
+
+  <div id="loginMessage" class="message" aria-live="polite"></div>
+</section>
+
+<main id="adminBox" class="hidden">
+
+  <div class="topbar">
+    <div>
+      <h2>Verwaltung</h2>
+      <div class="small">Kundenanfragen und registrierte Fachbetriebe</div>
+    </div>
+    <button id="logoutBtn" class="secondary" type="button">Abmelden</button>
+  </div>
+
+  <nav class="tabs" aria-label="Verwaltungsbereiche">
+    <button id="requestsTab" class="active" type="button">Bauanfragen</button>
+    <button id="firmsTab" type="button">Fachbetriebe</button>
+  </nav>
+
+  <section id="requestsSection" class="card">
+
+    <div id="requestListView">
+      <h2>Bauanfragen</h2>
+      <p class="small">Eingegangene Kundenanfragen verwalten und Betriebe zuweisen.</p>
+
+      <button id="refreshRequestsBtn" class="full" type="button">
+        Bauanfragen aktualisieren
+      </button>
+
+      <div id="requestsMessage" class="message" aria-live="polite"></div>
+      <div id="requestList"></div>
     </div>
 
-    <nav class="tabs" aria-label="Verwaltungsbereiche">
-      <button id="requestsTab" class="active" type="button">Bauanfragen</button>
-      <button id="firmsTab" type="button">Fachbetriebe</button>
-    </nav>
+    <div id="detailView" class="hidden">
 
-    <section id="requestsSection" class="card">
-      <div id="requestListView">
-        <h2>Bauanfragen</h2>
-        <p class="small">Eingegangene Kundenanfragen verwalten.</p>
-        <button id="refreshRequestsBtn" class="full" type="button">
-          Bauanfragen aktualisieren
+      <div class="detail-header">
+        <div>
+          <h2>Bauanfrage bearbeiten</h2>
+          <div class="small">Status, Beschreibung und Fachbetrieb bearbeiten.</div>
+        </div>
+
+        <button id="backBtn" class="secondary" type="button">
+          ← Zurück zur Liste
         </button>
-        <div id="requestsMessage" class="message" aria-live="polite"></div>
-        <div id="requestList"></div>
       </div>
 
-      <div id="detailView" class="hidden">
-        <div class="detail-header">
-          <div>
-            <h2>Bauanfrage bearbeiten</h2>
-            <div class="small">Änderungen speichern, bevor du zurückgehst.</div>
-          </div>
-          <button id="backBtn" class="secondary" type="button">
-            ← Zurück zur Liste
+      <div id="detailSummary"></div>
+
+      <div class="divider"></div>
+
+      <form id="editRequestForm">
+
+        <label for="editStatus">Bearbeitungsstatus</label>
+        <select id="editStatus" required>
+          <option value="neu">Neu</option>
+          <option value="in Bearbeitung">In Bearbeitung</option>
+          <option value="erledigt">Erledigt</option>
+        </select>
+
+        <!-- NEU: Fachbetrieb zuweisen -->
+        <label for="editFirm">Bauanfrage einem Fachbetrieb zuweisen</label>
+        <select id="editFirm">
+          <option value="">Noch keinem Betrieb zugewiesen</option>
+        </select>
+
+        <div class="small">
+          Hier werden freigeschaltete Fachbetriebe angezeigt.
+        </div>
+
+        <label for="editDescription">Beschreibung der Anfrage</label>
+        <textarea id="editDescription"
+          placeholder="Beschreibung der Anfrage"></textarea>
+
+        <div id="editMessage" class="message" aria-live="polite"></div>
+
+        <div class="detail-actions">
+          <button id="saveRequestBtn" type="submit">
+            Änderungen speichern
+          </button>
+          <button id="cancelEditBtn" class="secondary" type="button">
+            Abbrechen
           </button>
         </div>
 
-        <div id="detailSummary"></div>
+      </form>
+    </div>
+  </section>
 
-        <div class="divider"></div>
+  <section id="firmsSection" class="card hidden">
+    <h2>Fachbetriebe</h2>
+    <p class="small">Registrierte Betriebe prüfen und freischalten.</p>
 
-        <form id="editRequestForm">
-          <label for="editStatus">Bearbeitungsstatus</label>
-          <select id="editStatus" required>
-            <option value="neu">Neu</option>
-            <option value="in Bearbeitung">In Bearbeitung</option>
-            <option value="erledigt">Erledigt</option>
-          </select>
+    <button id="refreshFirmsBtn" class="full" type="button">
+      Fachbetriebe aktualisieren
+    </button>
 
-          <label for="editDescription">Beschreibung der Anfrage</label>
-          <textarea id="editDescription"
-                    placeholder="Beschreibung der Anfrage"></textarea>
+    <div id="firmsMessage" class="message" aria-live="polite"></div>
+    <div id="firmList"></div>
+  </section>
 
-          <div id="editMessage" class="message" aria-live="polite"></div>
-
-          <div class="detail-actions">
-            <button id="saveRequestBtn" type="submit">Änderungen speichern</button>
-            <button id="cancelEditBtn" class="secondary" type="button">
-              Abbrechen
-            </button>
-          </div>
-        </form>
-      </div>
-    </section>
-
-    <section id="firmsSection" class="card hidden">
-      <h2>Fachbetriebe</h2>
-      <p class="small">Registrierte Betriebe prüfen und freischalten.</p>
-      <button id="refreshFirmsBtn" class="full" type="button">
-        Fachbetriebe aktualisieren
-      </button>
-      <div id="firmsMessage" class="message" aria-live="polite"></div>
-      <div id="firmList"></div>
-    </section>
-  </main>
+</main>
 </div>
 
 <script>
 "use strict";
 
-/* Supabase-Verbindung */
+/* SUPABASE */
 const SUPABASE_URL = "https://ehzugjmltfcvllftpjpp.supabase.co";
 const SUPABASE_KEY = "sb_publishable_Ieo0pxh7y8L4nr2xMS7fQQ_mPonnlOm";
-const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const client = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 
 const $ = id => document.getElementById(id);
 
 let currentSection = "requests";
 let currentRequest = null;
 let requestCache = [];
+let firmCache = [];
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -245,8 +276,10 @@ function escapeHtml(value) {
 
 function formatDate(value) {
   if (!value) return "Keine Angabe";
+
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return String(value);
+
   return date.toLocaleString("de-DE", {
     dateStyle: "short",
     timeStyle: "short"
@@ -254,7 +287,8 @@ function formatDate(value) {
 }
 
 function showMessage(element, type, message) {
-  element.innerHTML = `<div class="${type}">${escapeHtml(message)}</div>`;
+  element.innerHTML =
+    `<div class="${type}">${escapeHtml(message)}</div>`;
 }
 
 function clearMessage(element) {
@@ -267,9 +301,10 @@ function formatLeistungen(value) {
   return String(value);
 }
 
-/* LOGIN UND SITZUNG */
+/* LOGIN */
 $("loginForm").addEventListener("submit", async event => {
   event.preventDefault();
+
   const email = $("email").value.trim();
   const password = $("password").value;
   const button = $("loginBtn");
@@ -279,14 +314,28 @@ $("loginForm").addEventListener("submit", async event => {
   button.textContent = "Anmeldung läuft …";
 
   try {
-    const { error } = await client.auth.signInWithPassword({ email, password });
+    const { error } = await client.auth.signInWithPassword({
+      email,
+      password
+    });
+
     if (error) {
-      showMessage($("loginMessage"), "error", "Anmeldung fehlgeschlagen: " + error.message);
+      showMessage(
+        $("loginMessage"),
+        "error",
+        "Anmeldung fehlgeschlagen: " + error.message
+      );
       return;
     }
+
     await updateUI();
+
   } catch (error) {
-    showMessage($("loginMessage"), "error", error.message || "Anmeldung fehlgeschlagen.");
+    showMessage(
+      $("loginMessage"),
+      "error",
+      error.message || "Anmeldung fehlgeschlagen."
+    );
   } finally {
     button.disabled = false;
     button.textContent = "Anmelden";
@@ -295,10 +344,12 @@ $("loginForm").addEventListener("submit", async event => {
 
 $("logoutBtn").addEventListener("click", async () => {
   const { error } = await client.auth.signOut();
+
   if (error) {
     showMessage($("loginMessage"), "error", error.message);
     return;
   }
+
   currentRequest = null;
   $("loginForm").reset();
   await updateUI();
@@ -308,19 +359,27 @@ async function updateUI() {
   const { data, error } = await client.auth.getSession();
 
   if (error) {
-    showMessage($("loginMessage"), "error", "Sitzung konnte nicht geprüft werden: " + error.message);
+    showMessage(
+      $("loginMessage"),
+      "error",
+      "Sitzung konnte nicht geprüft werden: " + error.message
+    );
     return;
   }
 
   const loggedIn = Boolean(data.session);
+
   $("loginBox").classList.toggle("hidden", loggedIn);
   $("adminBox").classList.toggle("hidden", !loggedIn);
 
-  if (loggedIn) await showSection(currentSection);
+  if (loggedIn) {
+    await showSection(currentSection);
+  }
 }
 
 client.auth.onAuthStateChange((_event, session) => {
   const loggedIn = Boolean(session);
+
   $("loginBox").classList.toggle("hidden", loggedIn);
   $("adminBox").classList.toggle("hidden", !loggedIn);
 });
@@ -343,14 +402,24 @@ async function showSection(section) {
   }
 }
 
-$("requestsTab").addEventListener("click", () => showSection("requests"));
-$("firmsTab").addEventListener("click", () => showSection("firms"));
+$("requestsTab").addEventListener("click", () => {
+  showSection("requests");
+});
+
+$("firmsTab").addEventListener("click", () => {
+  showSection("firms");
+});
 
 /* BAUANFRAGEN LADEN */
 async function loadRequests() {
   clearMessage($("requestsMessage"));
   $("requestList").innerHTML = "";
-  showMessage($("requestsMessage"), "notice", "Bauanfragen werden geladen …");
+
+  showMessage(
+    $("requestsMessage"),
+    "notice",
+    "Bauanfragen werden geladen …"
+  );
 
   try {
     const { data, error } = await client
@@ -359,8 +428,11 @@ async function loadRequests() {
       .order("created_at", { ascending: false });
 
     if (error) {
-      showMessage($("requestsMessage"), "error",
-        "Bauanfragen konnten nicht geladen werden: " + error.message);
+      showMessage(
+        $("requestsMessage"),
+        "error",
+        "Bauanfragen konnten nicht geladen werden: " + error.message
+      );
       return;
     }
 
@@ -368,7 +440,11 @@ async function loadRequests() {
     clearMessage($("requestsMessage"));
 
     if (!requestCache.length) {
-      showMessage($("requestsMessage"), "notice", "Keine Bauanfragen gefunden.");
+      showMessage(
+        $("requestsMessage"),
+        "notice",
+        "Keine Bauanfragen gefunden."
+      );
       return;
     }
 
@@ -379,36 +455,129 @@ async function loadRequests() {
       const status = row.status || "neu";
       const title = row.service || row.leistung || "Bauanfrage";
 
+      const assignedFirm = row.fachbetrieb_id
+        ? firmCache.find(firm =>
+            String(firm.id) === String(row.fachbetrieb_id)
+          )
+        : null;
+
       item.innerHTML = `
         <div class="request-title">
           <div>
             <div class="request-service">${escapeHtml(title)}</div>
-            <div class="request-date">${escapeHtml(formatDate(row.created_at))}</div>
+            <div class="request-date">
+              ${escapeHtml(formatDate(row.created_at))}
+            </div>
           </div>
           <span class="badge">${escapeHtml(status)}</span>
         </div>
-        <div class="request-info">📍 ${escapeHtml(row.plz || "")}${row.area ? " – " + escapeHtml(row.area) : ""}</div>
-        <div class="request-info">👤 ${escapeHtml(row.name || row.firmenname || "Keine Namensangabe")}</div>
-        <div class="request-info">📞 ${escapeHtml(row.phone || row.telefon || "Keine Telefonnummer")}</div>
+
+        <div class="request-info">
+          📍 ${escapeHtml(row.plz || "")}
+          ${row.area ? " – " + escapeHtml(row.area) : ""}
+        </div>
+
+        <div class="request-info">
+          👤 ${escapeHtml(row.name || row.firmenname || "Keine Namensangabe")}
+        </div>
+
+        <div class="request-info">
+          📞 ${escapeHtml(row.phone || row.telefon || "Keine Telefonnummer")}
+        </div>
+
+        <div class="request-info">
+          🏢 Zugewiesen:
+          ${escapeHtml(
+            assignedFirm
+              ? (assignedFirm.firma || assignedFirm.firmenname || "Fachbetrieb")
+              : (row.fachbetrieb_id ? "Betriebs-ID: " + row.fachbetrieb_id : "Noch nicht zugewiesen")
+          )}
+        </div>
+
         <div class="request-actions">
-          <button type="button" data-open-request>Öffnen &amp; bearbeiten</button>
+          <button type="button" data-open-request>
+            Öffnen &amp; bearbeiten
+          </button>
         </div>
       `;
 
-      item.querySelector("[data-open-request]").addEventListener("click", () => {
-        openRequest(row);
-      });
+      item.querySelector("[data-open-request]")
+        .addEventListener("click", () => openRequest(row));
 
       $("requestList").appendChild(item);
     });
+
   } catch (error) {
-    showMessage($("requestsMessage"), "error",
-      "Unerwarteter Fehler: " + (error.message || "Unbekannter Fehler"));
+    showMessage(
+      $("requestsMessage"),
+      "error",
+      "Unerwarteter Fehler: " +
+        (error.message || "Unbekannter Fehler")
+    );
   }
 }
 
-/* DETAILANSICHT: LISTE WIRD ERSETZT, NICHT UNTEN ANGEHÄNGT */
-function openRequest(row) {
+/* FACHBETRIEBE FÜR DIE ZUWEISUNG LADEN */
+async function loadAssignmentFirms(selectedId = null) {
+  const select = $("editFirm");
+
+  select.innerHTML = "";
+  const emptyOption = document.createElement("option");
+  emptyOption.value = "";
+  emptyOption.textContent = "Noch keinem Betrieb zugewiesen";
+  select.appendChild(emptyOption);
+
+  try {
+    const { data, error } = await client
+      .from("fachbetriebe")
+      .select("id, firma, firmenname, freigeschaltet")
+      .order("firmenname", { ascending: true });
+
+    if (error) {
+      showMessage(
+        $("editMessage"),
+        "error",
+        "Fachbetriebe konnten nicht geladen werden: " + error.message
+      );
+      return false;
+    }
+
+    firmCache = data || [];
+
+    const firms = firmCache.filter(firm =>
+      firm.freigeschaltet === true ||
+      String(firm.id) === String(selectedId)
+    );
+
+    firms.forEach(firm => {
+      const option = document.createElement("option");
+      option.value = firm.id;
+
+      const name = firm.firma || firm.firmenname || "Firma ohne Namen";
+
+      option.textContent =
+        name +
+        (firm.freigeschaltet === true ? "" : " (nicht freigeschaltet)");
+
+      select.appendChild(option);
+    });
+
+    select.value = selectedId ? String(selectedId) : "";
+    return true;
+
+  } catch (error) {
+    showMessage(
+      $("editMessage"),
+      "error",
+      "Fehler beim Laden der Betriebe: " +
+        (error.message || "Unbekannter Fehler")
+    );
+    return false;
+  }
+}
+
+/* BAUANFRAGE ÖFFNEN */
+async function openRequest(row) {
   currentRequest = { ...row };
   clearMessage($("editMessage"));
 
@@ -422,36 +591,58 @@ function openRequest(row) {
   $("detailSummary").innerHTML = `
     <div class="detail-row">
       <div class="detail-label">Leistung</div>
-      <div class="detail-value">${escapeHtml(row.service || row.leistung || "Keine Angabe")}</div>
+      <div class="detail-value">
+        ${escapeHtml(row.service || row.leistung || "Keine Angabe")}
+      </div>
     </div>
+
     <div class="detail-row">
       <div class="detail-label">Eingegangen</div>
-      <div class="detail-value">${escapeHtml(formatDate(row.created_at))}</div>
+      <div class="detail-value">
+        ${escapeHtml(formatDate(row.created_at))}
+      </div>
     </div>
+
     <div class="detail-row">
       <div class="detail-label">PLZ</div>
       <div class="detail-value">${escapeHtml(row.plz || "Keine Angabe")}</div>
     </div>
+
     <div class="detail-row">
       <div class="detail-label">Ort / Gebiet</div>
       <div class="detail-value">${escapeHtml(row.area || "Keine Angabe")}</div>
     </div>
+
     <div class="detail-row">
       <div class="detail-label">Kunde</div>
       <div class="detail-value">${escapeHtml(row.name || "Keine Angabe")}</div>
     </div>
+
     <div class="detail-row">
       <div class="detail-label">Telefon</div>
-      <div class="detail-value">${phone ? `<a href="tel:${escapeHtml(phone)}">${escapeHtml(phone)}</a>` : "Keine Angabe"}</div>
+      <div class="detail-value">
+        ${phone
+          ? `<a href="tel:${escapeHtml(phone)}">${escapeHtml(phone)}</a>`
+          : "Keine Angabe"}
+      </div>
     </div>
+
     <div class="detail-row">
       <div class="detail-label">E-Mail</div>
-      <div class="detail-value">${email ? `<a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a>` : "Keine Angabe"}</div>
+      <div class="detail-value">
+        ${email
+          ? `<a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a>`
+          : "Keine Angabe"}
+      </div>
     </div>
   `;
 
   const select = $("editStatus");
   const knownStatuses = ["neu", "in Bearbeitung", "erledigt"];
+
+  Array.from(select.options).forEach(option => {
+    if (!knownStatuses.includes(option.value)) option.remove();
+  });
 
   if (!knownStatuses.includes(status)) {
     const option = document.createElement("option");
@@ -463,8 +654,12 @@ function openRequest(row) {
   select.value = status;
   $("editDescription").value = row.description || "";
 
-  /* Detailansicht beginnt oben im Anfragenbereich */
-  $("detailView").scrollIntoView({ behavior: "auto", block: "start" });
+  await loadAssignmentFirms(row.fachbetrieb_id);
+
+  $("detailView").scrollIntoView({
+    behavior: "auto",
+    block: "start"
+  });
 }
 
 function showRequestList() {
@@ -482,12 +677,16 @@ $("backBtn").addEventListener("click", closeRequest);
 $("cancelEditBtn").addEventListener("click", closeRequest);
 $("refreshRequestsBtn").addEventListener("click", loadRequests);
 
-/* STATUS UND BESCHREIBUNG SPEICHERN */
+/* STATUS, BESCHREIBUNG UND FACHBETRIEB SPEICHERN */
 $("editRequestForm").addEventListener("submit", async event => {
   event.preventDefault();
 
   if (!currentRequest || currentRequest.id == null) {
-    showMessage($("editMessage"), "error", "Die Anfrage-ID fehlt. Bitte die Anfrage erneut öffnen.");
+    showMessage(
+      $("editMessage"),
+      "error",
+      "Die Anfrage-ID fehlt. Bitte die Anfrage erneut öffnen."
+    );
     return;
   }
 
@@ -496,9 +695,12 @@ $("editRequestForm").addEventListener("submit", async event => {
   button.textContent = "Speichert …";
   clearMessage($("editMessage"));
 
+  const selectedFirmId = $("editFirm").value || null;
+
   const updates = {
     status: $("editStatus").value,
-    description: $("editDescription").value.trim()
+    description: $("editDescription").value.trim(),
+    fachbetrieb_id: selectedFirmId
   };
 
   try {
@@ -509,41 +711,72 @@ $("editRequestForm").addEventListener("submit", async event => {
       .select("*");
 
     if (error) {
-      showMessage($("editMessage"), "error",
-        "Speichern fehlgeschlagen: " + error.message);
+      showMessage(
+        $("editMessage"),
+        "error",
+        "Speichern fehlgeschlagen: " + error.message
+      );
       return;
     }
 
     if (!data || data.length === 0) {
-      showMessage($("editMessage"), "error",
-        "Es wurde keine Anfrage zurückgegeben. Prüfe die UPDATE- und SELECT-RLS-Regeln sowie die Anfrage-ID.");
+      showMessage(
+        $("editMessage"),
+        "error",
+        "Es wurde keine Anfrage zurückgegeben. Prüfe die UPDATE- und SELECT-RLS-Regeln sowie die Anfrage-ID."
+      );
       return;
     }
 
     currentRequest = { ...currentRequest, ...data[0] };
-    showMessage($("editMessage"), "success", "Änderungen wurden gespeichert.");
 
-    /* Liste im Hintergrund aktuell halten, ohne die Detailansicht zu verlassen */
-    const { data: refreshed, error: refreshError } = await client
-      .from("bauanfragen")
-      .select("*")
-      .order("created_at", { ascending: false });
+    showMessage(
+      $("editMessage"),
+      "success",
+      "Änderungen und Fachbetriebszuweisung wurden gespeichert."
+    );
 
-    if (!refreshError && refreshed) requestCache = refreshed;
+    /* Cache aktualisieren, ohne die Detailansicht zu schließen */
+    const index = requestCache.findIndex(
+      item => String(item.id) === String(currentRequest.id)
+    );
+
+    if (index !== -1) {
+      requestCache[index] = { ...currentRequest };
+    }
+
+    /* Betriebsdaten erneut laden, damit die Zuordnung korrekt angezeigt wird */
+    const { data: refreshedFirms, error: firmsError } = await client
+      .from("fachbetriebe")
+      .select("id, firma, firmenname, freigeschaltet");
+
+    if (!firmsError && refreshedFirms) {
+      firmCache = refreshedFirms;
+    }
+
   } catch (error) {
-    showMessage($("editMessage"), "error",
-      "Unerwarteter Fehler: " + (error.message || "Unbekannter Fehler"));
+    showMessage(
+      $("editMessage"),
+      "error",
+      "Unerwarteter Fehler: " +
+        (error.message || "Unbekannter Fehler")
+    );
   } finally {
     button.disabled = false;
     button.textContent = "Änderungen speichern";
   }
 });
 
-/* FACHBETRIEBE */
+/* FACHBETRIEBE IM ADMIN ANZEIGEN */
 async function loadFirms() {
   clearMessage($("firmsMessage"));
   $("firmList").innerHTML = "";
-  showMessage($("firmsMessage"), "notice", "Fachbetriebe werden geladen …");
+
+  showMessage(
+    $("firmsMessage"),
+    "notice",
+    "Fachbetriebe werden geladen …"
+  );
 
   try {
     const { data, error } = await client
@@ -552,55 +785,118 @@ async function loadFirms() {
       .order("created_at", { ascending: false });
 
     if (error) {
-      showMessage($("firmsMessage"), "error",
-        "Fachbetriebe konnten nicht geladen werden: " + error.message);
+      showMessage(
+        $("firmsMessage"),
+        "error",
+        "Fachbetriebe konnten nicht geladen werden: " + error.message
+      );
       return;
     }
 
+    firmCache = data || [];
     clearMessage($("firmsMessage"));
 
-    if (!data || !data.length) {
-      showMessage($("firmsMessage"), "notice", "Keine Fachbetriebe gefunden.");
+    if (!firmCache.length) {
+      showMessage(
+        $("firmsMessage"),
+        "notice",
+        "Keine Fachbetriebe gefunden."
+      );
       return;
     }
 
-    data.forEach(firm => {
+    firmCache.forEach(firm => {
       const approved = firm.freigeschaltet === true;
       const item = document.createElement("article");
       item.className = "firm";
 
       item.innerHTML = `
         <div class="firm-title">
-          <div class="firm-name">${escapeHtml(firm.firma || firm.firmenname || "Firma ohne Namen")}</div>
-          <span class="badge ${approved ? "approved" : "pending"}">${approved ? "Freigeschaltet" : "Wartet auf Freischaltung"}</span>
+          <div class="firm-name">
+            ${escapeHtml(firm.firma || firm.firmenname || "Firma ohne Namen")}
+          </div>
+          <span class="badge ${approved ? "approved" : "pending"}">
+            ${approved ? "Freigeschaltet" : "Wartet auf Freischaltung"}
+          </span>
         </div>
-        <div class="firm-info">👤 Ansprechpartner: ${escapeHtml(firm.inhaber || firm.ansprechpartner || "Keine Angabe")}</div>
-        <div class="firm-info">✉️ ${escapeHtml(firm.email || "Keine E-Mail")}</div>
-        <div class="firm-info">📞 ${escapeHtml(firm.telefon || "Keine Telefonnummer")}</div>
-        <div class="firm-info">📍 ${escapeHtml([firm.plz, firm.ort].filter(Boolean).join(" ") || "Kein Ort angegeben")}</div>
-        <div class="firm-info">🛠️ Leistungen: ${escapeHtml(formatLeistungen(firm.leistungen))}</div>
-        <div class="firm-info">Umkreis: ${escapeHtml(firm.radius_km == null ? "Keine Angabe" : firm.radius_km + " km")}</div>
-        <div class="firm-info">Abo-Status: ${escapeHtml(firm.abo_status || "unbekannt")}</div>
+
+        <div class="firm-info">
+          👤 Ansprechpartner:
+          ${escapeHtml(firm.inhaber || firm.ansprechpartner || "Keine Angabe")}
+        </div>
+
+        <div class="firm-info">
+          ✉️ ${escapeHtml(firm.email || "Keine E-Mail")}
+        </div>
+
+        <div class="firm-info">
+          📞 ${escapeHtml(firm.telefon || "Keine Telefonnummer")}
+        </div>
+
+        <div class="firm-info">
+          📍 ${escapeHtml(
+            [firm.plz, firm.ort].filter(Boolean).join(" ") ||
+            "Kein Ort angegeben"
+          )}
+        </div>
+
+        <div class="firm-info">
+          🛠️ Leistungen:
+          ${escapeHtml(formatLeistungen(firm.leistungen))}
+        </div>
+
+        <div class="firm-info">
+          Umkreis:
+          ${escapeHtml(
+            firm.radius_km == null
+              ? "Keine Angabe"
+              : firm.radius_km + " km"
+          )}
+        </div>
+
+        <div class="firm-info">
+          Abo-Status: ${escapeHtml(firm.abo_status || "unbekannt")}
+        </div>
+
         <div class="firm-actions">
-          <button type="button" data-firm-approval>${approved ? "Freischaltung zurücknehmen" : "Betrieb freischalten"}</button>
+          <button type="button" data-firm-approval>
+            ${approved
+              ? "Freischaltung zurücknehmen"
+              : "Betrieb freischalten"}
+          </button>
         </div>
       `;
 
-      item.querySelector("[data-firm-approval]").addEventListener("click", event => {
-        setFirmApproval(firm.id, !approved, event.currentTarget);
-      });
+      item.querySelector("[data-firm-approval]")
+        .addEventListener("click", event => {
+          setFirmApproval(
+            firm.id,
+            !approved,
+            event.currentTarget
+          );
+        });
 
       $("firmList").appendChild(item);
     });
+
   } catch (error) {
-    showMessage($("firmsMessage"), "error",
-      "Unerwarteter Fehler: " + (error.message || "Unbekannter Fehler"));
+    showMessage(
+      $("firmsMessage"),
+      "error",
+      "Unerwarteter Fehler: " +
+        (error.message || "Unbekannter Fehler")
+    );
   }
 }
 
+/* BETRIEB FREISCHALTEN */
 async function setFirmApproval(firmId, approved, button) {
   if (firmId == null) {
-    showMessage($("firmsMessage"), "error", "Die ID dieses Betriebs fehlt.");
+    showMessage(
+      $("firmsMessage"),
+      "error",
+      "Die ID dieses Betriebs fehlt."
+    );
     return;
   }
 
@@ -611,6 +907,7 @@ async function setFirmApproval(firmId, approved, button) {
   if (!window.confirm(confirmation)) return;
 
   button.disabled = true;
+
   try {
     const { data, error } = await client
       .from("fachbetriebe")
@@ -619,24 +916,40 @@ async function setFirmApproval(firmId, approved, button) {
       .select("id");
 
     if (error) {
-      showMessage($("firmsMessage"), "error",
-        "Änderung fehlgeschlagen: " + error.message);
+      showMessage(
+        $("firmsMessage"),
+        "error",
+        "Änderung fehlgeschlagen: " + error.message
+      );
       return;
     }
 
     if (!data || data.length === 0) {
-      showMessage($("firmsMessage"), "error",
-        "Es wurde kein Betrieb geändert. Bitte UPDATE- und SELECT-RLS-Regeln prüfen.");
+      showMessage(
+        $("firmsMessage"),
+        "error",
+        "Es wurde kein Betrieb geändert. Bitte UPDATE- und SELECT-RLS-Regeln prüfen."
+      );
       return;
     }
 
-    showMessage($("firmsMessage"), "success",
-      approved ? "Fachbetrieb wurde freigeschaltet." : "Freischaltung wurde zurückgenommen.");
+    showMessage(
+      $("firmsMessage"),
+      "success",
+      approved
+        ? "Fachbetrieb wurde freigeschaltet."
+        : "Freischaltung wurde zurückgenommen."
+    );
 
     await loadFirms();
+
   } catch (error) {
-    showMessage($("firmsMessage"), "error",
-      "Unerwarteter Fehler: " + (error.message || "Unbekannter Fehler"));
+    showMessage(
+      $("firmsMessage"),
+      "error",
+      "Unerwarteter Fehler: " +
+        (error.message || "Unbekannter Fehler")
+    );
   } finally {
     button.disabled = false;
   }
